@@ -1,11 +1,27 @@
 import { Component, OnInit } from '@angular/core';
-//import { UseApiRequests } from '../services/freeapiservices';
 import {MatDialog} from '@angular/material/dialog';
 import { PopupCompComponent } from '../app/views/popup-comp/popup-comp.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 
+import { xrxDeviceConfigGetDeviceInformation } from '../assets/Xrx/XRXDeviceConfig';
+import {xrxStringToDom} from '../assets/Xrx/XRXXmlHandler';
+import {xrxSessionGetSessionInfo,xrxSessionGetSessionInfoRequest}  from  '../assets/Xrx/XRXSession';
+import {xrxGetElementValue} from '../assets/Xrx/XRXXmlHandler';
+import {xrxCallWebservice,xrxCallAjax} from '../assets/Xrx/XRXWebservices';
 import { LogService } from '../app/services/log.service';
+
+
+declare const _: any;
+
+enum StatusCodes {
+  success = 200,
+  badRequest = 400
+}
+
+enum ErrorCodes {
+  ok = 'OK'
+}
 
 interface Images {
   id: string,
@@ -33,16 +49,14 @@ export class AppComponent implements OnInit {
   title: "Note Converter App";
 
   constructor(
+    
     //private UseApi: UseApiRequests,
     private  logger: LogService,
     private dialog: MatDialog,
     private formBuilder: FormBuilder,
     private http: HttpClient,
-    ) {
-
-      this.generateNewJobID();
-
-    }
+    ) 
+    {this.Strings();this.Device('http://localhost',5000,true);this.Session('http://127.0.0.1',5000,true,'');}
 
   
   ngOnInit(){
@@ -105,15 +119,81 @@ export class AppComponent implements OnInit {
       });
   }
 
-  generateNewJobID() {
-    const guid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-    const r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
-
-    //this.log.debug('Inside generateNewJobID method ',r);
-
-      return v.toString(16);
+  Strings = async () => {
+    var regex = /(\w+)\-?/g;
+    const locale = regex.exec(window.navigator.language || window.navigator.language)[1] || 'en';
+    //const locale = navigator.language;
+    const response = await fetch(`api/strings?lang=${encodeURIComponent(locale)}`);
+    const data = await response.json();
+    console.log('locale',data.strings)
+    localStorage.setItem('locale',data.strings);
+    return data.strings;
+  };
+  
+  Device(url: string, timeout: number , async: boolean): Promise<any> {
+    return new Promise((resolve, reject) => {
+      const successCallback = (envelope: any, response: any) => {
+        const doc = xrxStringToDom(response);
+        const info = xrxStringToDom((doc).find('devcfg\\:Information, Information').text());
+        const generation = Number((info).find('style > generation').text());
+        const model = (info).find('model').text();
+        const isVersalink = _.includes(model.toLowerCase(), 'versalink') || _.includes(model.toLowerCase(), 'primelink');
+        const isAltalink = _.includes(model.toLowerCase(), 'altalink');
+        const isThirdGenBrowser = _.includes(navigator.userAgent.toLowerCase(), "x3g_");
+        const result = {
+          isThirdGenBrowser: isThirdGenBrowser,
+          generation: generation,
+          isVersalink: isVersalink,
+          isAltalink: isAltalink,
+          isEighthGen: generation < 9.0,
+          model: model
+        };
+        resolve(result);
+      };
+      const errorCallback = (result: any) => {
+        reject(result);
+      };
+      xrxDeviceConfigGetDeviceInformation(
+        url,
+        successCallback.toString(),
+        errorCallback.toString(),
+        timeout,
+        async
+      );
     });
-    return guid;
+  }
+
+  Session(url: string,timeout:number,async:boolean, ldap: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+      const successCallback = (envelope: string, response: string)=>  {
+        var data = xrxSessionGetSessionInfoRequest(response);
+        var userEmail = "";
+        if (data !== null) {
+          var userName = xrxGetElementValue(data, "username");
+          if (userName !== null && userName.toLowerCase() !== 'guest')
+            userEmail = xrxGetElementValue(data, "from");
+
+          const result ={
+            email:userEmail
+          };
+          resolve(result.email.toString());
+        }
+      };
+      const errorCallback = (result: any) => {
+        result={
+          email:""
+        };
+        reject(result);
+      };
+      xrxSessionGetSessionInfo(
+        url,
+        successCallback.toString(),
+        errorCallback.toString(),
+        timeout,
+        async,
+        ldap
+      );
+    });
   }
 
   }

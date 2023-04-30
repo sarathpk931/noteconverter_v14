@@ -15,7 +15,6 @@ import {StorageService} from '../app/services/storage.service';
 
 import {LogViewComponent} from '../app/views/log-view/log-view.component';
 
-
 @NgModule({
   declarations: [
     AppComponent,
