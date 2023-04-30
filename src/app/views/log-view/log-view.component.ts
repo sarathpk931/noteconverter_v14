@@ -7,19 +7,9 @@ import { LogService } from '../../services/log.service';
   styleUrls: ['./log-view.component.scss']
 })
 export class LogViewComponent {
-  
-  
 
   constructor(private logger: LogService) {
     
   }
-
-  throwError() {
-    try {
-      throw new Error('This is a test error');
-    } catch (error) {
-      this.logger.log(error);
-    }
-  } 
   
 }
