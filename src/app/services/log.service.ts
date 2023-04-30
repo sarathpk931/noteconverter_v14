@@ -9,7 +9,7 @@ import { StorageService } from '../services/storage.service';
 export class LogService {
 
   private storageProvider: Storage;
-
+  private readonly filename = 'app-errors.log';
 
 
   constructor(
@@ -40,6 +40,19 @@ export class LogService {
     this.http.post('api/log', argParms, config).subscribe();
   }
 
+  log(error: Error): void {
+    const logEntry = new Date().toISOString() + ': ' + error.message + '\n';
+
+    const file = new Blob([logEntry], { type: 'text/plain' });
+    const a = document.createElement('a');
+    const url = URL.createObjectURL(file);
+    a.href = url;
+    a.download = this.filename;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  
   
 }
 

@@ -5,7 +5,7 @@ import { PopupCompComponent } from '../app/views/popup-comp/popup-comp.component
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 
-import { LogService } from '../services/log.service';
+import { LogService } from '../app/services/log.service';
 
 interface Images {
   id: string,

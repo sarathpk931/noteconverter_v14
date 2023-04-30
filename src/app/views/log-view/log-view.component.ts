@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { LogService } from '../../../services/log.service';
+import { LogService } from '../../services/log.service';
 
 @Component({
   selector: 'app-log-view',
@@ -10,9 +10,16 @@ export class LogViewComponent {
   
   
 
-  constructor() {
+  constructor(private logger: LogService) {
     
   }
 
+  throwError() {
+    try {
+      throw new Error('This is a test error');
+    } catch (error) {
+      this.logger.log(error);
+    }
+  } 
   
 }

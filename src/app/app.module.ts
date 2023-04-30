@@ -26,7 +26,8 @@ import {LogViewComponent} from '../app/views/log-view/log-view.component';
     BrowserAnimationsModule,
     MatDialogModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RouterModule
   ],
   providers: [
     AppInitializerProvider,
