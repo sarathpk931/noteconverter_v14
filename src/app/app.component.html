@@ -7,7 +7,7 @@
           
           <button class="btn scan-btn" [ngClass]="!noteConvertorForm?.valid ? 'disabled' : ''">
             Scan
-            <input  [disabled]="!noteConvertorForm?.valid" (change)="scanDocument($event)" type="file"  name="Scan" />
+            <!-- <input  [disabled]="!noteConvertorForm?.valid" (change)="scanDocument($event)" type="file"  name="Scan" /> -->
           </button>
         </h1>
         <div class="note"></div>
