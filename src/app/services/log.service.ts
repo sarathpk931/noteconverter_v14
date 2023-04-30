@@ -51,9 +51,6 @@ export class LogService {
     a.click();
     URL.revokeObjectURL(url);
   }
-
-  
-  
 }
 
 export const LogTypes = {
