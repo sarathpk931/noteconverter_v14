@@ -1,0 +1,100 @@
+<div class="custom-container">
+  <div class="content">
+    <form [formGroup]="noteConvertorForm">
+    <div class="node-convertor">
+      <div class="section-1">
+        <h1 class="text-center">Xerox® Note Converter
+          
+          <button class="btn scan-btn" [ngClass]="!noteConvertorForm?.valid ? 'disabled' : ''">
+            Scan
+            <input  [disabled]="!noteConvertorForm?.valid" (change)="scanDocument($event)" type="file"  name="Scan" />
+          </button>
+        </h1>
+        <div class="note"></div>
+        <div class="form">
+          <div class="form-group">
+            <input type="email" formControlName="email" class="form-control" name="" placeholder="Enter email to receive text file"/>
+          </div>
+          <div class="form-group">
+            <input type="email" formControlName="confirmEmail" class="form-control" name="" placeholder="Confirmation Email"/>
+          </div>
+          <div class="row">
+            <div class="col-sm-10 col-xs-7">
+              <div class="form-group">
+                <div class="file-name form-control">
+                  {{file?.name}}
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-2 col-xs-5">
+              <div class="form-group">
+                <div class="file-type form-control">
+                  {{getFileType(file?.type)}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="section-2">
+        <ul>
+          <li>
+            <div class="row">
+              <div class="col-xs-6 text-left">
+                <div>
+                  <select
+                  class="custom-select mb-3"
+                  (change)="getScanType()"
+                  formControlName="selectScanType"
+                >
+                  <option selected disabled value="">Choose Scan Type</option>
+                  <option *ngFor="let scanType of scanTypes" [ngValue]="scanType">
+                    {{ scanType }}
+                  </option>
+                </select>
+                </div>
+              </div>
+              <div class="col-xs-6 text-right">
+                <div class="description">
+                  {{scannedType}}
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="row">
+              <div class="col-xs-6 text-left">
+                <div class="description">Original Size</div>
+              </div>
+              <div class="col-xs-6 text-right">
+                <div class="description">
+                  Auto Detect
+                </div>
+              </div>
+            </div>
+          </li>
+          
+        </ul>
+        <div class="reset-privacy">
+          <div class="row">
+            <div class="col-xs-6">
+              <button class="btn" (click)="resetForm()">Reset</button>
+            </div>
+            <div class="col-xs-6">
+              <button class="btn" (click)="showPrivacySetting = !showPrivacySetting">Privacy Statement</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </form>
+  </div>
+</div>
+<div class="custom-overlay" *ngIf="showPrivacySetting" (click)="showPrivacySetting = !showPrivacySetting">
+    <p class="text">
+      A properly written Privacy Policy tells customers what data you collect about them when they engage with your business (e.g., through your website) or purchase one of your products/services, and why you're collecting that information. It also lets people know how long their information will be stored, who can access these records and more.
+    </p>
+</div>
+<div class="loader" *ngIf="showLoader">
+    <img src="../assets/images/loader.gif" alt="loader"/>
+</div>
