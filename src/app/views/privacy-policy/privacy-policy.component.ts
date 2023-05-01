@@ -1,7 +1,8 @@
 import { Component,OnInit,Renderer2,ElementRef, EventEmitter,Input,Output } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { MatDialogRef } from '@angular/material/dialog';
 //import { DomSanitizer, SafeHtml} from '@angular/platform-browser';
-import {  BsModalRef } from 'ngx-bootstrap/modal';
+//import {  BsModalRef } from 'ngx-bootstrap/modal';
 import { ModalService} from '../../services/modal.service';
 
 
@@ -18,45 +19,44 @@ export class PrivacyPolicyComponent implements OnInit {
 
  
 
-  constructor(private http: HttpClient,private renderer: Renderer2, private el : ElementRef,
-      private modalService : ModalService, public bsModalRef : BsModalRef){}
-//, private sanitizer: DomSanitizer
+  constructor(private http: HttpClient,private modalService : ModalService,public modalRef : MatDialogRef<any>){}
+
   ngOnInit(): void {
-     
-      const url = "https://appgallery.services.xerox.com/api/apps/template-privacy-policy";//,{params:{timeout: 10}}
-      this.http.get(url,{responseType : 'text'})
+    const progress = this.modalService.showProgressAlert('Alert','');
+    const url ='https://appgallery.services.xerox.com/api/apps/template-privacy-policy';
+    this.http
+      .get(url, {responseType:'text'
+      })
       .subscribe({
-        
-        next : (response)=> {
-         //debugger;
-           this.privacyPolicy = (response as any);
-           console.log(this.privacyPolicy);
-           //this.sanitizedHtmlContent = this.sanitizer.bypassSecurityTrustHtml(this.privacyPolicy);
-         
-          // this.showVersion =  "v1.0";//strings.VERSION
-          // progress.close();
-           //setTimeout(this.disableLinks,250);
-        },
-        error: (error) => {
-          debugger;
-           this.showVersion = "v1.0";//strings.VERSION;
-          // progress.close();
-          //modalService.showGeneralError(error);
-        }
-      });
-    }
+        next:(response) => {
+          this.privacyPolicy = (response as string);
+          console.log(this.privacyPolicy);
           
-
+        },
+        error:(error) => {
+          this.showVersion = 'v1.0'; //this.strings.VERSION
+          progress.close();
+          //this.modalService.showGeneralError(error);
+        }
+    });
+    }
+      
     closeModal():void{
-      this.modalService.closeModal(this.bsModalRef);
+      this.modalService.closeModal(this.modalRef);
     }
 
-  disableLinks() :void{
+    private disableLinks(): void {
+      const links = document.getElementsByTagName('a');
+      for (let i = 0; i < links.length; i++) {
+        links[i].style.pointerEvents = 'none';
+      }
+    }
+  /* disableLinks() :void{
     const links  = this.el.nativeElement.querySelectorAll('a');
      links.array.forEach(link => {
       this.renderer.setStyle(link,'pointer-events','none');
     });
-  }
+  } */
 }
   
 

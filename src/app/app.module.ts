@@ -2,7 +2,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule,MatDialogRef } from '@angular/material/dialog';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
@@ -12,17 +12,18 @@ import { AppRoutingModule } from './app-routing.module';
 
 import {LogService} from '../app/services/log.service';
 import {StorageService} from '../app/services/storage.service';
-
+import { PrivacyPolicyComponent } from './views/privacy-policy/privacy-policy.component';
+import { ProgressAlertComponent } from './views/progress-alert/progress-alert.component';
+//import { ScanScreenComponent } from './views/scan-screen/scan-screen.component';
 /* 
-import { ScanScreenComponent } from './views/scan-screen/scan-screen.component';
 import { AlertBannerComponent } from './views/alert-banner/alert-banner.component';
 import { BasicAlertComponent } from './views/basic-alert/basic-alert.component';
 import { FeaturePopoverComponent } from './views/feature-popover/feature-popover.component';
 import { FileFormatModalComponent } from './views/file-format-modal/file-format-modal.component';
 import { GeneralAlertComponent } from './views/general-alert/general-alert.component';
 import { KeypadComponent } from './views/keypad/keypad.component';
-import { PrivacyPolicyComponent } from './views/privacy-policy/privacy-policy.component';
-import { ProgressAlertComponent } from './views/progress-alert/progress-alert.component';
+
+
 import { ProgressBannerComponent } from './views/progress-banner/progress-banner.component';
 import { SpinBoxComponent } from './views/spin-box/spin-box.component';
 import { ToggleSwitchComponent } from './views/toggle-switch/toggle-switch.component';
@@ -44,11 +45,16 @@ import { PasswordMaskPipe } from './filters/password-mask.pipe';
 import { StringFormatPipe } from './filters/string-format.pipe';
 import { TranslatePipe } from './filters/translate.pipe';
 import { ParseDeviceConfigPipe } from './filters/parse-device-config.pipe';
+import { ModalService } from './services/modal.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     LogViewComponent,
+    PrivacyPolicyComponent,
+    ProgressAlertComponent,
+    
+
   ],
   imports: [
     BrowserModule,
@@ -58,13 +64,16 @@ import { ParseDeviceConfigPipe } from './filters/parse-device-config.pipe';
     MatDialogModule,
     FormsModule,
     ReactiveFormsModule,
-    
-    
   ],
   providers: [
     AppInitializerProvider,
     StorageService,
     LogService,
+    ModalService,
+    
+    AppComponent,
+    
+    
   ],
   bootstrap: [AppComponent]
 })

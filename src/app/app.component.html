@@ -90,10 +90,8 @@
     </form>
   </div>
 </div>
-<div class="custom-overlay" *ngIf="showPrivacySetting" (click)="showPrivacySetting = !showPrivacySetting">
-    <p class="text">
-      A properly written Privacy Policy tells customers what data you collect about them when they engage with your business (e.g., through your website) or purchase one of your products/services, and why you're collecting that information. It also lets people know how long their information will be stored, who can access these records and more.
-    </p>
+<div class="custom-overlay" *ngIf="!showPrivacySetting" (click)="showPrivacyStatement()">
+  
 </div>
 <div class="loader" *ngIf="showLoader">
     <img src="../assets/images/loader.gif" alt="loader"/>

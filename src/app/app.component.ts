@@ -10,7 +10,8 @@ import {xrxSessionGetSessionInfo,xrxSessionGetSessionInfoRequest}  from  '../ass
 import {xrxGetElementValue} from '../assets/Xrx/XRXXmlHandler';
 import {xrxCallWebservice,xrxCallAjax} from '../assets/Xrx/XRXWebservices';
 import { LogService } from '../app/services/log.service';
-
+import {ModalService} from '../app/services/modal.service';
+import { PrivacyPolicyComponent } from '../app/views/privacy-policy/privacy-policy.component';
 
 declare const _: any;
 
@@ -50,7 +51,7 @@ export class AppComponent implements OnInit {
 
   constructor(
     
-    //private UseApi: UseApiRequests,
+    private modalService:ModalService, 
     private  logger: LogService,
     private dialog: MatDialog,
     private formBuilder: FormBuilder,
@@ -207,6 +208,12 @@ export class AppComponent implements OnInit {
     });
   }
 
+  showPrivacyStatement(){
+    //this.dialog.open(PrivacyPolicyComponent);
+     this.modalService.openLargeModal(PrivacyPolicyComponent);
+    //modalRef.content.closeBtnName = 'Close';
+    //this.bsModalRef = this.modalService.show(PrivacyPolicyComponent);
+  }
   }
 
 
