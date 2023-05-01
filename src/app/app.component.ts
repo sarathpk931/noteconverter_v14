@@ -71,6 +71,17 @@ export class AppComponent implements OnInit {
     });
   }
 
+  matchingEmailsValidator(emailKey: string, confirmEmailKey: string) 
+    { return (group: FormGroup): {[key: string]: any} => 
+      { 
+          const email = group.controls[emailKey]; 
+          const confirmEmail = group.controls[confirmEmailKey]; 
+          if (email.value !== confirmEmail.value) { 
+              return { emailsNotMatch: true }; 
+            } 
+            return null; 
+       }; 
+    }
   /* scanDocument(event:any){
     this.showLoader = true;
     this.file = event.target.files[0];

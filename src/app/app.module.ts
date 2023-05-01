@@ -13,7 +13,37 @@ import { AppRoutingModule } from './app-routing.module';
 import {LogService} from '../app/services/log.service';
 import {StorageService} from '../app/services/storage.service';
 
+/* 
+import { ScanScreenComponent } from './views/scan-screen/scan-screen.component';
+import { AlertBannerComponent } from './views/alert-banner/alert-banner.component';
+import { BasicAlertComponent } from './views/basic-alert/basic-alert.component';
+import { FeaturePopoverComponent } from './views/feature-popover/feature-popover.component';
+import { FileFormatModalComponent } from './views/file-format-modal/file-format-modal.component';
+import { GeneralAlertComponent } from './views/general-alert/general-alert.component';
+import { KeypadComponent } from './views/keypad/keypad.component';
+import { PrivacyPolicyComponent } from './views/privacy-policy/privacy-policy.component';
+import { ProgressAlertComponent } from './views/progress-alert/progress-alert.component';
+import { ProgressBannerComponent } from './views/progress-banner/progress-banner.component';
+import { SpinBoxComponent } from './views/spin-box/spin-box.component';
+import { ToggleSwitchComponent } from './views/toggle-switch/toggle-switch.component';
+import { ImagePreviewerComponent } from './views/image-previewer/image-previewer.component';
+import { LogoutConfirmationComponent } from './views/logout-confirmation/logout-confirmation.component'; */
 import {LogViewComponent} from '../app/views/log-view/log-view.component';
+import {XasStringDirective} from '../app/Directives/xas-string.directive';
+
+//pipes
+
+import { ParseSnmpPipe } from './filters/parse-snmp.pipe';
+import { OrderObjectByPipe } from './filters/order-object-by.pipe';
+import { ErrorPipe } from './filters/error.pipe';
+import { ParseDeviceCapabilitiesPipe } from './filters/parse-device-capabilities.pipe';
+import { ParseDevicePrintCapabilitiesPipe } from './filters/parse-device-print-capabilities.pipe';
+import { IsUserDeviceAdminPipe } from './filters/is-user-device-admin.pipe';
+import { ConvertProtocolPipe } from './filters/convert-protocol.pipe';
+import { PasswordMaskPipe } from './filters/password-mask.pipe';
+import { StringFormatPipe } from './filters/string-format.pipe';
+import { TranslatePipe } from './filters/translate.pipe';
+import { ParseDeviceConfigPipe } from './filters/parse-device-config.pipe';
 
 @NgModule({
   declarations: [
@@ -28,6 +58,7 @@ import {LogViewComponent} from '../app/views/log-view/log-view.component';
     MatDialogModule,
     FormsModule,
     ReactiveFormsModule,
+    
     
   ],
   providers: [
