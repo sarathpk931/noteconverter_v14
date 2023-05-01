@@ -35,7 +35,7 @@ export class XasStringDirective {
 
         if (matches.length !== formatString.length)
                                 throw ("Format string length mismatch between " + this.xasString + " and " + this.formatValues);
-debugger;
+
         matches.forEach((match,index) =>{ debugger;
           const fv = formatValues[index].toString().trim();
           string = string.replace(match, fv);

@@ -144,36 +144,37 @@ export class AppComponent implements OnInit {
   
   Device(url: string, timeout: number , async: boolean): Promise<any> {
     return new Promise((resolve, reject) => {
-      const successCallback = (envelope: any, response: any) => {
-        const doc = xrxStringToDom(response);
-        const info = xrxStringToDom((doc).find('devcfg\\:Information, Information').text());
-        const generation = Number((info).find('style > generation').text());
-        const model = (info).find('model').text();
-        const isVersalink = _.includes(model.toLowerCase(), 'versalink') || _.includes(model.toLowerCase(), 'primelink');
-        const isAltalink = _.includes(model.toLowerCase(), 'altalink');
-        const isThirdGenBrowser = _.includes(navigator.userAgent.toLowerCase(), "x3g_");
-        const result = {
-          isThirdGenBrowser: isThirdGenBrowser,
-          generation: generation,
-          isVersalink: isVersalink,
-          isAltalink: isAltalink,
-          isEighthGen: generation < 9.0,
-          model: model
+    function successCallback (envelope: any, response: any)  {
+     const doc = xrxStringToDom(response);
+     const info = xrxStringToDom((doc).find('devcfg\\:Information, Information').text());
+     const generation = Number((info).find('style > generation').text());
+     const model = (info).find('model').text();
+     const isVersalink = _.includes(model.toLowerCase(), 'versalink') || _.includes(model.toLowerCase(), 'primelink');
+     const isAltalink = _.includes(model.toLowerCase(), 'altalink');
+     const isThirdGenBrowser = _.includes(navigator.userAgent.toLowerCase(), "x3g_");
+     const result = {
+        isThirdGenBrowser: isThirdGenBrowser,
+        generation: generation,
+        isVersalink: isVersalink,
+        isAltalink: isAltalink,
+        isEighthGen: generation < 9.0,
+        model: model
         };
+        localStorage.setItem('Device Info',result.toString());
         resolve(result);
       };
-      const errorCallback = (result: any) => {
-        reject(result);
-      };
-      xrxDeviceConfigGetDeviceInformation(
+        function errorCallback  (result: any)  {
+        reject(result);};
+        xrxDeviceConfigGetDeviceInformation(
         url,
-        successCallback.toString(),
-        errorCallback.toString(),
+        successCallback,
+        errorCallback,
         timeout,
         async
-      );
-    });
-  }
+        );
+      });
+    
+    }
 
   Session(url: string,timeout:number,async:boolean, ldap: string): Promise<any> {
     return new Promise((resolve, reject) => {

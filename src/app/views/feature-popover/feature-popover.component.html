@@ -1,0 +1,45 @@
+<div class="popover popup_updated"> <!--{{$ctrl.feature.name}}-->
+    <div class="header-right">
+        <button type="button" class="btn btn-medium btn-glyph xrx-close" (click)="closeModal()"></button>
+    </div>
+    <div class="contents"> 
+        <div class="popover-scroll-content">
+            <ul class="action-list button-group">
+                <li *ngFor="let option of fileFormatOption">
+                    <button class="btn btn-medium btn-image" (click)="selectOption(option)">
+                        
+                        <!-- Option icon -->
+                        <div class="image-container" *ngIf="option.icon" >
+                            <img class="image" src="../../../assets/Content/Images/{{option.icon}}">
+                        </div>
+                         <!-- Option text -->
+                         <div class="text-container">
+                            <span class="left-text" >{{option.title}}</span>
+                        </div>
+                         <!-- Option glyph -->
+                         <div class="glyph-container" *ngIf="option.glyph">
+                            &nbsp;&nbsp;<span ngClass="option.glyph"></span>
+                        </div>
+                    </button>
+                </li>
+               
+            </ul>
+        </div>
+    </div>
+
+    <!-- <arrow>
+        <div style="width:1px; height:25px;"></div>
+        <div style="width:1px; height:23px;margin-top:1px;"></div>
+        <div style="width:1px; height:21px;margin-top:2px;"></div>
+        <div style="width:1px; height:19px;margin-top:3px;"></div>
+        <div style="width:1px; height:17px;margin-top:4px;"></div>
+        <div style="width:1px; height:15px;margin-top:5px;"></div>
+        <div style="width:1px; height:13px;margin-top:6px;"></div>
+        <div style="width:1px; height:11px;margin-top:7px;"></div>
+        <div style="width:1px; height:9px;margin-top:8px;"></div>
+        <div style="width:1px; height:7px;margin-top:9px;"></div>
+        <div style="width:1px; height:5px;margin-top:10px;"></div>
+        <div style="width:1px; height:3px;margin-top:11px;"></div>
+        <div style="width:1px; height:1px;margin-top:12px;"></div>
+    </arrow> -->
+</div>

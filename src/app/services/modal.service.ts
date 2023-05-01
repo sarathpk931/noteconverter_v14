@@ -44,11 +44,25 @@ export class ModalService {
     }
    }
 
-   public openLargeModal(component : any):void{
+  public openLargeModal(component : any):void{
     const dialogRef = this.dialog.open(component, {
-      maxWidth: '100vw',
-      maxHeight: '100vh',
-      panelClass: 'mat-dialog-large'
+      maxWidth: '400vw',
+      maxHeight: '600vh',
+      panelClass: 'mat-dialog-large',
+      data:{closeBtnName:'Close'}
     });
   }
+
+  setData(data:any){
+    this.fromData.next(data);
+  }
+
+  public openModal(component : any){
+        
+    const modalRef : MatDialogRef<any>  = this.dialog.open(component, {
+      
+    })
+    return modalRef;
+  }
+
 }
