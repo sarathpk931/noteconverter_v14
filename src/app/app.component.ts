@@ -12,12 +12,13 @@ import {xrxCallWebservice,xrxCallAjax} from '../assets/Xrx/XRXWebservices';
 import { LogService } from '../app/services/log.service';
 import {ModalService} from '../app/services/modal.service';
 import { PrivacyPolicyComponent } from '../app/views/privacy-policy/privacy-policy.component';
-import {FeaturePopoverComponent} from '../app/views/feature-popover/feature-popover.component';
-
 import { ScanOptionsService} from '../app/services/scan-options.service';
 import { FileFormat, FileFormatOption} from '../app/model/common';
+import {FeaturePopoverComponent} from '../app/views/feature-popover/feature-popover.component';
 
 declare const _: any;
+
+let Deviceconfigxmlresponse:string;
 
 enum StatusCodes {
   success = 200,
@@ -270,7 +271,6 @@ export class AppComponent implements OnInit {
   get f():{[key: string]: AbstractControl}{
     return this.noteConvertorForm.controls;
   }
-
   openFileFormat(){
     this.modalService.setData({
       from : this.const_fileFormat
@@ -294,6 +294,8 @@ export class AppComponent implements OnInit {
     const modalRef = this.modalService.openModal(FeaturePopoverComponent);
     //modalRef.content.closeBtnName = 'Close';
   }
+
+
 
   }
 
