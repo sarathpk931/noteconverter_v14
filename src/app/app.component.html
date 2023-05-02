@@ -38,7 +38,7 @@
             </div>
             <div class="col-sm-2 col-xs-5">
               <div class="">	
-                <div class="file-type form-control" >	<!--(click)="openFileFormat();"-->
+                <div (click)="openFileFormat();" class="file-type form-control" >	<!---->
                   {{selectedFileFormatOptions.title}} 	
                   <!--<label [(ngModel)]="selectedFileFormat.title"></label>-->	
                  <!--{{getFileType(file?.type)}}-->	
@@ -61,7 +61,7 @@
               </div>	
                 
               <div class="col-lg-6 text-end content_updated">                   	
-                <span  class="text-right" >{{selectedTypeOptions.title}}</span>   <!--(click)="openScan();"-->                 	
+                <span  class="text-right" (click)="openScan();" >{{selectedTypeOptions.title}}</span>   <!---->                 	
               </div>            	
             </div>	
                 
@@ -77,7 +77,7 @@
               </div>	
                    
               <div class="col-lg-6 text-end content_updated"> 	
-                <span class="text-right" >{{selectedSizeOptions.title}}</span>  <!--(click)="openSize();"-->	
+                <span class="text-right" (click)="openSize();">{{selectedSizeOptions.title}}</span>  <!---->	
               </div>         	
             </div>            	
             </li>          

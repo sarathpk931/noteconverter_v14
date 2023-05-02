@@ -12,6 +12,7 @@ import {xrxCallWebservice,xrxCallAjax} from '../assets/Xrx/XRXWebservices';
 import { LogService } from '../app/services/log.service';
 import {ModalService} from '../app/services/modal.service';
 import { PrivacyPolicyComponent } from '../app/views/privacy-policy/privacy-policy.component';
+import {FeaturePopoverComponent} from '../app/views/feature-popover/feature-popover.component';
 
 import { ScanOptionsService} from '../app/services/scan-options.service';
 import { FileFormat, FileFormatOption} from '../app/model/common';
@@ -93,6 +94,25 @@ export class AppComponent implements OnInit {
       this.selectedTypeOptions = this.selectedType.options.find(item => item.isDefault === true);
       this.selectedSize = this.scanOptionService.getFileFormat(this.anySize);
       this.selectedSizeOptions = this.selectedSize.options.find(item => item.isDefault === true);
+
+      //observables to show selected values
+      this.scanOptionService.selectedFileFormatC.subscribe(object =>{
+        if(object){
+          this.selectedFileFormatOptions = object;
+        }
+      })
+
+      this.scanOptionService.selectedTypeC.subscribe(type =>{
+        if(type){
+          this.selectedTypeOptions = type;
+        }
+      })
+
+      this.scanOptionService.selectedSizeC.subscribe(size =>{
+        if(size){
+          this.selectedSizeOptions = size;
+        }
+      })
   }
 
   createForm(){
@@ -250,6 +270,31 @@ export class AppComponent implements OnInit {
   get f():{[key: string]: AbstractControl}{
     return this.noteConvertorForm.controls;
   }
+
+  openFileFormat(){
+    this.modalService.setData({
+      from : this.const_fileFormat
+    });
+    const modalRef = this.modalService.openModal(FeaturePopoverComponent);
+    //modalRef.content.closeBtnName = 'Close';
+  }
+
+  openScan(){
+    this.modalService.setData({
+      from : this.const_type
+    });
+    const modalRef = this.modalService.openModal(FeaturePopoverComponent);
+    //modalRef.content.closeBtnName = 'Close';
+  }
+
+  openSize(){
+    this.modalService.setData({
+      from : this.const_size
+    });
+    const modalRef = this.modalService.openModal(FeaturePopoverComponent);
+    //modalRef.content.closeBtnName = 'Close';
+  }
+
   }
 
 
