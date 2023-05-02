@@ -58,7 +58,7 @@ import { ScanScreenComponent } from './views/scan-screen/scan-screen.component';
     ProgressAlertComponent,
     ScanScreenComponent,
     FeaturePopoverComponent,
-    
+    XasStringDirective
 
   ],
   imports: [

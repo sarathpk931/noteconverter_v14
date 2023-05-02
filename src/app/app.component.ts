@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {MatDialog} from '@angular/material/dialog';
+import {MatDialog,MatDialogRef} from '@angular/material/dialog';
 import { PopupCompComponent } from '../app/views/popup-comp/popup-comp.component';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators,AbstractControl } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 
 import { xrxDeviceConfigGetDeviceInformation } from '../assets/Xrx/XRXDeviceConfig';
@@ -12,6 +12,9 @@ import {xrxCallWebservice,xrxCallAjax} from '../assets/Xrx/XRXWebservices';
 import { LogService } from '../app/services/log.service';
 import {ModalService} from '../app/services/modal.service';
 import { PrivacyPolicyComponent } from '../app/views/privacy-policy/privacy-policy.component';
+
+import { ScanOptionsService} from '../app/services/scan-options.service';
+import { FileFormat, FileFormatOption} from '../app/model/common';
 
 declare const _: any;
 
@@ -49,6 +52,23 @@ export class AppComponent implements OnInit {
   showLoader=false;
   title: "Note Converter App";
 
+  const_fileFormat : string = "fileFormat";
+   const_type : string = "type";
+   const_size : string = 'size';
+
+   anyFileFormat = {from : 'fileFormat'};
+   anyType = {from : 'type'};
+   anySize = {from : 'size'};
+
+  matDialogRef: MatDialogRef<any>;
+  selectedFileFormat : FileFormat;
+  selectedFileFormatOptions : FileFormatOption;
+  selectedType : FileFormat;
+  selectedTypeOptions : FileFormatOption;
+  selectedSize : FileFormat;
+  selectedSizeOptions : FileFormatOption;
+  submitted = false;
+
   constructor(
     
     private modalService:ModalService, 
@@ -56,12 +76,23 @@ export class AppComponent implements OnInit {
     private dialog: MatDialog,
     private formBuilder: FormBuilder,
     private http: HttpClient,
+    private scanOptionService : ScanOptionsService
     ) 
-    {this.Strings();this.Device('http://localhost',5000,true);this.Session('http://127.0.0.1',5000,true,'');}
+    {}
 
   
   ngOnInit(){
+    this.Strings();
+    this.Device('http://localhost',5000,true);
+    this.Session('http://127.0.0.1',5000,true,'');
     this.createForm();
+
+    this.selectedFileFormat = this.scanOptionService.getFileFormat(this.anyFileFormat);
+      this.selectedFileFormatOptions = this.selectedFileFormat.options.find(item => item.isDefault === true);
+      this.selectedType = this.scanOptionService.getFileFormat(this.anyType);
+      this.selectedTypeOptions = this.selectedType.options.find(item => item.isDefault === true);
+      this.selectedSize = this.scanOptionService.getFileFormat(this.anySize);
+      this.selectedSizeOptions = this.selectedSize.options.find(item => item.isDefault === true);
   }
 
   createForm(){
@@ -214,6 +245,10 @@ export class AppComponent implements OnInit {
      this.modalService.openLargeModal(PrivacyPolicyComponent);
     //modalRef.content.closeBtnName = 'Close';
     //this.bsModalRef = this.modalService.show(PrivacyPolicyComponent);
+  }
+
+  get f():{[key: string]: AbstractControl}{
+    return this.noteConvertorForm.controls;
   }
   }
 
