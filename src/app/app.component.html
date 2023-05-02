@@ -1,11 +1,12 @@
 <div class="custom-container">
   <div class="content">
     <form [formGroup]="noteConvertorForm">
-    <div class="node-convertor">
+    <div class="node-convertor  form_updated">
       <div class="section-1">
         <h1 class="text-center">Xerox® Note Converter
           
-          <button class="btn scan-btn" [ngClass]="!noteConvertorForm?.valid ? 'disabled' : ''">
+           <button class="btn scan-btn" [ngClass]="!noteConvertorForm?.valid ? 'disabled' : ''"> 
+            
             Scan
             <!-- <input  [disabled]="!noteConvertorForm?.valid" (change)="scanDocument($event)" type="file"  name="Scan" /> -->
           </button>
@@ -15,22 +16,33 @@
           <div class="form-group">
             <input type="email" formControlName="email" class="form-control" name="" placeholder="Enter email to receive text file"/>
           </div>
+          <div  *ngIf="f['email'].touched && f['email'].invalid" class=""> <!--alert alert-danger-->	
+            <div *ngIf="f['email'].errors && f['email'].errors['required']" class="error_updated">Email is required</div>	
+            <div *ngIf="f['email'].errors && f['email'].errors['email']" class="error_updated">Please enter a valid email address</div>	
+           </div> 
           <div class="form-group">
             <input type="email" formControlName="confirmEmail" class="form-control" name="" placeholder="Confirmation Email"/>
           </div>
+          <div  *ngIf="f['confirmEmail'].touched && f['confirmEmail'].invalid" class=""> <!--alert alert-danger-->	
+            <div *ngIf="f['confirmEmail'].errors && f['confirmEmail'].errors['required']" class="error_updated" >Confirm Email is required</div>	
+            <div *ngIf="f['confirmEmail'].errors && f['confirmEmail'].errors['email']" class="error_updated">Please enter a valid email address</div>	
+            <div *ngIf="f['email'] != f['confirmEmail']" class="error_updated">Confirm email should be same as email</div>	
+           </div> 
           <div class="row">
             <div class="col-sm-10 col-xs-7">
-              <div class="form-group">
-                <div class="file-name form-control">
-                  {{file?.name}}
-                </div>
+              <div class="">	
+                <div class="">	
+                   <input type="text" id="txtFileName" class="form-control" placeholder="File Name" />	
+                </div>	
               </div>
             </div>
             <div class="col-sm-2 col-xs-5">
-              <div class="form-group">
-                <div class="file-type form-control">
-                  {{getFileType(file?.type)}}
-                </div>
+              <div class="">	
+                <div (click)="openFileFormat();" class="file-type form-control" >	<!---->
+                  {{selectedFileFormatOptions.title}} 	
+                  <!--<label [(ngModel)]="selectedFileFormat.title"></label>-->	
+                 <!--{{getFileType(file?.type)}}-->	
+                </div>	
               </div>
             </div>
           </div>
@@ -39,49 +51,48 @@
       <div class="section-2">
         <ul>
           <li>
-            <div class="row">
-              <div class="col-xs-6 text-left">
-                <div>
-                  <select
-                  class="custom-select mb-3"
-                  (change)="getScanType()"
-                  formControlName="selectScanType"
-                >
-                  <option selected disabled value="">Choose Scan Type</option>
-                  <option *ngFor="let scanType of scanTypes" [ngValue]="scanType">
-                    {{ scanType }}
-                  </option>
-                </select>
-                </div>
-              </div>
-              <div class="col-xs-6 text-right">
-                <div class="description">
-                  {{scannedType}}
-                </div>
-              </div>
-            </div>
-          </li>
-          <li>
-            <div class="row">
-              <div class="col-xs-6 text-left">
-                <div class="description">Original Size</div>
-              </div>
-              <div class="col-xs-6 text-right">
-                <div class="description">
-                  Auto Detect
-                </div>
-              </div>
-            </div>
-          </li>
+            <div class="row">  	
+              <div class="col-lg-6">	
+                <div class="d-inline-block image_updated">	
+                  <img class="img-fluid" src="assets/Content/Images/{{selectedType.icon}}">	
+                </div>        	
+               <span class="text-left" xasString="{{selectedType.title}}"></span> 	
+               <!-- <span class="text-left" xasString=""></span> 	 -->
+              </div>	
+                
+              <div class="col-lg-6 text-end content_updated">                   	
+                <span  class="text-right" (click)="openScan();" >{{selectedTypeOptions.title}}</span>   <!---->                 	
+              </div>            	
+            </div>	
+                
+              </li>            	
+              <li>            	
+             <div class="row" > 	
+              <div class="col-lg-6">	
+                <div class="d-inline-block image_updated">	
+                  <img class="img-fluid" src="assets/Content/Images/{{selectedSize.icon}}">	
+                </div>            	
+                <span class="text-left" xasString="{{selectedSize.title}}"></span> 	
+                <!-- <span class="text-left" xasString=""></span> 	 -->
+              </div>	
+                   
+              <div class="col-lg-6 text-end content_updated"> 	
+                <span class="text-right" (click)="openSize();">{{selectedSizeOptions.title}}</span>  <!---->	
+              </div>         	
+            </div>            	
+            </li>          
           
         </ul>
         <div class="reset-privacy">
           <div class="row">
-            <div class="col-xs-6">
+            <div class="col-lg-6 col-xs-6">
               <button class="btn" (click)="resetForm()">Reset</button>
             </div>
-            <div class="col-xs-6">
+            <!-- <div class="col-xs-6">
               <button class="btn" (click)="showPrivacySetting = !showPrivacySetting">Privacy Statement</button>
+            </div> -->
+            <div class="col-lg-6 col-xs-6 ">	
+              <button class="btn" (click)="showPrivacyStatement();">Privacy Statement</button>	
             </div>
           </div>
         </div>

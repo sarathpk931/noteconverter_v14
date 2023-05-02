@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {MatDialog} from '@angular/material/dialog';
+import {MatDialog,MatDialogRef} from '@angular/material/dialog';
 import { PopupCompComponent } from '../app/views/popup-comp/popup-comp.component';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators,AbstractControl } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 
 import { xrxDeviceConfigGetDeviceInformation } from '../assets/Xrx/XRXDeviceConfig';
@@ -12,8 +12,6 @@ import {xrxCallWebservice,xrxCallAjax} from '../assets/Xrx/XRXWebservices';
 import { LogService } from '../app/services/log.service';
 import {ModalService} from '../app/services/modal.service';
 import { PrivacyPolicyComponent } from '../app/views/privacy-policy/privacy-policy.component';
-import { xml2js } from 'xml-js';
-
 
 declare const _: any;
 
@@ -53,8 +51,6 @@ export class AppComponent implements OnInit {
   showLoader=false;
   title: "Note Converter App";
 
- 
-
   constructor(
     
     private modalService:ModalService, 
@@ -62,17 +58,42 @@ export class AppComponent implements OnInit {
     private dialog: MatDialog,
     private formBuilder: FormBuilder,
     private http: HttpClient,
+    private scanOptionService : ScanOptionsService
     ) 
-    {//this.Strings();
-      //this.Device('http://localhost',5000,true);
-      //this.Session('http://127.0.0.1',5000,true,'');
-      this.parsedeviceinfoxml();
-    }
+    {this.Strings();this.Device('http://localhost',5000,true);this.Session('http://127.0.0.1',5000,true,'');}
 
-    
   
   ngOnInit(){
+    this.Strings();
+    this.Device('http://localhost',5000,true);
+    this.Session('http://127.0.0.1',5000,true,'');
     this.createForm();
+
+    this.selectedFileFormat = this.scanOptionService.getFileFormat(this.anyFileFormat);
+      this.selectedFileFormatOptions = this.selectedFileFormat.options.find(item => item.isDefault === true);
+      this.selectedType = this.scanOptionService.getFileFormat(this.anyType);
+      this.selectedTypeOptions = this.selectedType.options.find(item => item.isDefault === true);
+      this.selectedSize = this.scanOptionService.getFileFormat(this.anySize);
+      this.selectedSizeOptions = this.selectedSize.options.find(item => item.isDefault === true);
+
+      //observables to show selected values
+      this.scanOptionService.selectedFileFormatC.subscribe(object =>{
+        if(object){
+          this.selectedFileFormatOptions = object;
+        }
+      })
+
+      this.scanOptionService.selectedTypeC.subscribe(type =>{
+        if(type){
+          this.selectedTypeOptions = type;
+        }
+      })
+
+      this.scanOptionService.selectedSizeC.subscribe(size =>{
+        if(size){
+          this.selectedSizeOptions = size;
+        }
+      })
   }
 
   createForm(){
@@ -226,19 +247,6 @@ export class AppComponent implements OnInit {
     //modalRef.content.closeBtnName = 'Close';
     //this.bsModalRef = this.modalService.show(PrivacyPolicyComponent);
   }
-
-  
-  Deviceconfigxmlresponse ='<DeviceInformation> <schemaVersion><MajorVersion>1</MajorVersion><MinorVersion>4</MinorVersion><Revision>6</Revision></schemaVersion><device><name>nwood202</name><mac>00:00:aa:fa:14:3f</mac><serial>128dfb4f-c218-4755-a294-6f70b4832e43</serial><model>XeroxWorkCentre7525v1MultifunctionSystem</model></device><display><canvasSize><width>800</width><height>480</height></canvasSize><touchable><offset><width>0</width><height>0</height></offset><region><width>800</width><height>480</height></region></touchable><iconSize><small><width>48</width><height>48</height></small><tools><width>0</width><height>0</height></tools></iconSize><dpi>110</dpi><bitdepth>16</bitdepth><colorspace>color</colorspace><dotPitch>.231</dotPitch><physical><totalResolution><width>800</width><height>480</height></totalResolution><size>8.5"</size><aspectRatio>5:3</aspectRatio></physical></display><style><generation>7.8</generation><colorPalette><name>HighColor</name></colorPalette></style><invocationPoints><serviceSelectButton><name>ServiceSelectButtonA</name><label><font><family>XeroxSansSerif</family><size>11</size></font><numberOfLines>2</numberOfLines><justification>centered</justification><locale>onBottom</locale></label><icon><size><width>48</width><height>48</height></size></icon></serviceSelectButton><serviceSelectButton><name>ServiceSelectButtonB</name><label><font><family>XeroxSansSerif</family><size>15</size></font><numberOfLines>2</numberOfLines><justification>centered</justification><locale>onBottom</locale></label><icon><size><width>96</width><height>96</height></size></icon></serviceSelectButton><serviceSelectButton><name>ServiceSelectButtonC</name><label><font><family>XeroxSansSerif</family><size>17</size></font><numberOfLines>2</numberOfLines><justification>centered</justification><locale>onBottom</locale></label><icon><size><width>128</width><height>128</height></size></icon></serviceSelectButton></invocationPoints><webUI><version><systemSoftware>061.121.221.28308</systemSoftware><uiSoftware>061.121.24120</uiSoftware><netControllerSoftware>061.121.25025</netControllerSoftware><eipSoftware><majorVersion>2</majorVersion><minorVersion>5</minorVersion><revision>0</revision></eipSoftware><registrationWS><majorVersion>1</majorVersion><minorVersion>5</minorVersion><revision>0</revision></registrationWS><sessionWS><majorVersion>1</majorVersion><minorVersion>0</minorVersion><revision>2</revision></sessionWS><scanWS><majorVersion>1</majorVersion><minorVersion>1</minorVersion><revision>0</revision></scanWS><accessConfigWS><majorVersion>1</majorVersion><minorVersion>1</minorVersion><revision>0</revision></accessConfigWS><uiConfigWS><majorVersion>1</majorVersion><minorVersion>2</minorVersion><revision>0</revision></uiConfigWS><connectivityConfigWS><majorVersion>1</majorVersion><minorVersion>1</minorVersion><revision>0</revision></connectivityConfigWS><securityConfigWS><majorVersion>1</majorVersion><minorVersion>2</minorVersion><revision>1</revision></securityConfigWS><scanTemplateMgmtWS><majorVersion>1</majorVersion><minorVersion>1</minorVersion><revision>0</revision></scanTemplateMgmtWS><convenienceAuthWS><majorVersion>1</majorVersion><minorVersion>0</minorVersion><revision>0</revision></convenienceAuthWS><copyWS><majorVersion>1</majorVersion><minorVersion>0</minorVersion><revision>0</revision></copyWS><massStorageWS><majorVersion>1</majorVersion><minorVersion>0</minorVersion><revision>0</revision></massStorageWS><cardReaderWS><majorVersion>1</majorVersion><minorVersion>0</minorVersion><revision>0</revision></cardReaderWS><jobManagementWS><majorVersion>1</majorVersion><minorVersion>0</minorVersion><revision>0</revision></jobManagementWS><jobLimitsWS><majorVersion>1</majorVersion><minorVersion>0</minorVersion><revision>0</revision></jobLimitsWS><jobLimitsDeviceClientWS><majorVersion>1</majorVersion><minorVersion>0</minorVersion><revision>0</revision></jobLimitsDeviceClientWS><convenienceAuthClientWS><majorVersion>1</majorVersion><minorVersion>0</minorVersion><revision>0</revision></convenienceAuthClientWS><offboxValidationClientWS><majorVersion>1</majorVersion><minorVersion>0</minorVersion><revision>7</revision></offboxValidationClientWS><SendCardDataDeviceClientWS><majorVersion>1</majorVersion><minorVersion>0</minorVersion><revision>0</revision></SendCardDataDeviceClientWS><sessionSchema>http://schemas.xerox.com/office/cui/sessioninformation/1</sessionSchema><deviceInformationSchema>http://schemas.xerox.com/office/cui/deviceinformation/1</deviceInformationSchema><deviceTextSchema>http://schemas.xerox.com/office/cui/displaytext/1</deviceTextSchema><accessConfigSchema><MajorVersion>1</MajorVersion><MinorVersion>0</MinorVersion><Revision>4</Revision></accessConfigSchema><SendCardDataSchema><MajorVersion>1</MajorVersion><MinorVersion>0</MinorVersion><Revision>0</Revision></SendCardDataSchema><DeviceInfo><MajorVersion>1</MajorVersion><MinorVersion>4</MinorVersion><Revision>6</Revision></DeviceInfo><DirectoryListingSchema><MajorVersion>1</MajorVersion><MinorVersion>0</MinorVersion><Revision>0</Revision></DirectoryListingSchema><JobLimitsDeviceClientSchema><MajorVersion>1</MajorVersion><MinorVersion>0</MinorVersion><Revision>9</Revision></JobLimitsDeviceClientSchema><JobLimitsSchema><MajorVersion>1</MajorVersion><MinorVersion>0</MinorVersion><Revision>8</Revision></JobLimitsSchema><JobModelSchema><MajorVersion>1</MajorVersion><MinorVersion>0</MinorVersion><Revision>16</Revision></JobModelSchema><JobModelCapabilitiesSchema><MajorVersion>1</MajorVersion><MinorVersion>0</MinorVersion><Revision>5</Revision></JobModelCapabilitiesSchema><PartitionsInfoSchema><MajorVersion>1</MajorVersion><MinorVersion>0</MinorVersion><Revision>0</Revision></PartitionsInfoSchema><PeripheralsInfoSchema><MajorVersion>1</MajorVersion><MinorVersion>0</MinorVersion><Revision>0</Revision></PeripheralsInfoSchema><SessionInfoSchema><MajorVersion>1</MajorVersion><MinorVersion>1</MinorVersion><Revision>1</Revision></SessionInfoSchema></version></DeviceInformation>';
-  
-  parsedeviceinfoxml()
-  {
-    debugger;
-    var parser =new DOMParser();
-    var xmldoc = parser.parseFromString(Deviceconfigxmlresponse,'text/xml');
-    console.log(xmldoc);
-    document.getElementById('DeviceInformation');
   }
-
-}
 
 

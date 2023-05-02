@@ -46,10 +46,13 @@ export class ModalService {
 
   public openLargeModal(component : any):void{
     const dialogRef = this.dialog.open(component, {
-      maxWidth: '400vw',
-      maxHeight: '600vh',
-      panelClass: 'mat-dialog-large',
-      data:{closeBtnName:'Close'}
+      //maxWidth: '400vw',
+      //maxHeight: '600vh',
+      //panelClass: 'mat-dialog-large',
+      width : 'auto',
+      height : 'auto',
+      data:{closeBtnName:'Close'},
+      hasBackdrop : false
     });
   }
 
