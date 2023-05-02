@@ -64,7 +64,7 @@ export class ScanScreenComponent {
 
     ngOnInit(){
       this.createForm();
-
+alert("Scanscreen");
       
       this.selectedFileFormat = this.scanOptionService.getFileFormat(this.anyFileFormat);
       this.selectedFileFormatOptions = this.selectedFileFormat.options.find(item => item.isDefault === true);
