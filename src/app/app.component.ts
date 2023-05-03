@@ -197,10 +197,15 @@ export class AppComponent implements OnInit {
   Device(url: string, timeout: number , async: boolean): Promise<any> {
     return new Promise((resolve, reject) => {
     function successCallback (envelope: any, response: any)  {
+      debugger;
      const doc = xrxStringToDom(response);
-     const info = xrxStringToDom((doc).find('devcfg\\:Information, Information').text());
-     const generation = Number((info).find('style > generation').text());
-     const model = (info).find('model').text();
+     //const info = xrxStringToDom((doc).find('devcfg\\:Information, Information').text());
+     const info = doc.querySelector("devcfg\\:Information, Information");
+     const parser = new DOMParser();
+    const xmlDoc = parser.parseFromString(info.firstChild.data, 'text/xml');
+    const generation = Number(xmlDoc.getElementsByTagName('generation')[0].textContent);
+     //const generation = Number((info).find('style > generation').text());
+     const model = xmlDoc.getElementsByTagName('model')[0].textContent;//(info).find('model').text();
      const isVersalink = _.includes(model.toLowerCase(), 'versalink') || _.includes(model.toLowerCase(), 'primelink');
      const isAltalink = _.includes(model.toLowerCase(), 'altalink');
      const isThirdGenBrowser = _.includes(navigator.userAgent.toLowerCase(), "x3g_");
