@@ -51,6 +51,9 @@
 .privacy_updated
 {
     padding:0px !important;
+    margin: 0px !important;
+    width: 100% !important;
+    top:10%;
 }
 .privacy_content
 {
@@ -73,6 +76,8 @@
 .popup_updated
 {
     --bs-popover-max-width:100% !important;
+    width: 100%;
+    top: 10%;
 }
 .popup_updated .header-right
 {
@@ -93,4 +98,9 @@ clear:both;
 {
     background: #000;
     color:#fff;
+}
+.mat-dialog-container
+{
+    padding:0px !important;
+    overflow: hidden !important;
 }
