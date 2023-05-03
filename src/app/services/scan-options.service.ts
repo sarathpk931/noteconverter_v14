@@ -61,9 +61,9 @@ private scanFeatures: FileFormat[]= [
       title: 'SDE_2SIDED',
        icon: '2_sided_2_48.png'
     }, {
-      value: 'SECOND_SIDED_ROTATION',
-      title: 'SDE_2SIDED',
-      icon: '2_sided_2_48.png',
+      value: 'SECOND_SIDE_ROTATION',
+      title: 'SDE_2SIDED_ROTATE_SIDE',
+      icon: '2_sided_rotate_48.png',
     }],
     subFeatures: []
   },
