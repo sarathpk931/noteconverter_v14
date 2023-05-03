@@ -84,10 +84,10 @@ export class AppComponent implements OnInit {
 
   
   ngOnInit(){
-    this.Strings();
-    this.Device('http://localhost',5000,true);
-    this.Session('http://127.0.0.1',5000,true,'');
-    this.createForm();
+    // this.Strings();
+    // this.Device('http://localhost',5000,true);
+    // this.Session('http://127.0.0.1',5000,true,'');
+     this.createForm();
 
     this.selectedFileFormat = this.scanOptionService.getFileFormat(this.anyFileFormat);
       this.selectedFileFormatOptions = this.selectedFileFormat.options.find(item => item.isDefault === true);
