@@ -3,6 +3,7 @@ import {MatDialog,MatDialogRef} from '@angular/material/dialog';
 import { PopupCompComponent } from '../app/views/popup-comp/popup-comp.component';
 import { FormBuilder, FormGroup, Validators,AbstractControl } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import {Router} from '@angular/router';
 
 import { xrxDeviceConfigGetDeviceInformation } from '../assets/Xrx/XRXDeviceConfig';
 import {xrxStringToDom} from '../assets/Xrx/XRXXmlHandler';
@@ -72,6 +73,7 @@ export class AppComponent implements OnInit {
     private formBuilder: FormBuilder,
     private http: HttpClient,
     private scanOptionService : ScanOptionsService,
+    private router : Router
     ) 
     {}
 
@@ -80,33 +82,34 @@ export class AppComponent implements OnInit {
     this.Strings();
     this.Device('http://localhost',5000,true);
     this.Session('http://127.0.0.1',5000,true,'');
-     this.createForm();
+    this.router.navigate(['scanScreen']);
+     //this.createForm();
 
-    this.selectedFileFormat = this.scanOptionService.getFileFormat(this.anyFileFormat);
-      this.selectedFileFormatOptions = this.selectedFileFormat.options.find(item => item.isDefault === true);
-      this.selectedType = this.scanOptionService.getFileFormat(this.anyType);
-      this.selectedTypeOptions = this.selectedType.options.find(item => item.isDefault === true);
-      this.selectedSize = this.scanOptionService.getFileFormat(this.anySize);
-      this.selectedSizeOptions = this.selectedSize.options.find(item => item.isDefault === true);
+    // this.selectedFileFormat = this.scanOptionService.getFileFormat(this.anyFileFormat);
+    //   this.selectedFileFormatOptions = this.selectedFileFormat.options.find(item => item.isDefault === true);
+    //   this.selectedType = this.scanOptionService.getFileFormat(this.anyType);
+    //   this.selectedTypeOptions = this.selectedType.options.find(item => item.isDefault === true);
+    //   this.selectedSize = this.scanOptionService.getFileFormat(this.anySize);
+    //   this.selectedSizeOptions = this.selectedSize.options.find(item => item.isDefault === true);
 
-      //observables to show selected values
-      this.scanOptionService.selectedFileFormatC.subscribe(object =>{
-        if(object){
-          this.selectedFileFormatOptions = object;
-        }
-      })
+    //   //observables to show selected values
+    //   this.scanOptionService.selectedFileFormatC.subscribe(object =>{
+    //     if(object){
+    //       this.selectedFileFormatOptions = object;
+    //     }
+    //   })
 
-      this.scanOptionService.selectedTypeC.subscribe(type =>{
-        if(type){
-          this.selectedTypeOptions = type;
-        }
-      })
+    //   this.scanOptionService.selectedTypeC.subscribe(type =>{
+    //     if(type){
+    //       this.selectedTypeOptions = type;
+        //}
+      // })
 
-      this.scanOptionService.selectedSizeC.subscribe(size =>{
-        if(size){
-          this.selectedSizeOptions = size;
-        }
-      })
+      // this.scanOptionService.selectedSizeC.subscribe(size =>{
+      //   if(size){
+      //     this.selectedSizeOptions = size;
+      //   }
+      // })
   }
 
   createForm(){
