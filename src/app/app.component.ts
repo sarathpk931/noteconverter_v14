@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
 
 import { xrxDeviceConfigGetDeviceInformation } from '../assets/Xrx/XRXDeviceConfig';
 import {xrxStringToDom} from '../assets/Xrx/XRXXmlHandler';
-import {xrxSessionGetSessionInfo,xrxSessionGetSessionInfoRequest}  from  '../assets/Xrx/XRXSession';
+import {xrxSessionGetSessionInfo,xrxSessionGetSessionInfoRequest,xrxSessionParseGetSessionInfo}  from  '../assets/Xrx/XRXSession';
 import {xrxGetElementValue} from '../assets/Xrx/XRXXmlHandler';
 import {xrxCallWebservice,xrxCallAjax} from '../assets/Xrx/XRXWebservices';
 import { LogService } from '../app/services/log.service';
@@ -29,11 +29,6 @@ enum ErrorCodes {
   ok = 'OK'
 }
 
-interface Images {
-  id: string,
-  author: string,
-  download_url: string
-}
 
 @Component({
   selector: 'app-root',
@@ -42,9 +37,7 @@ interface Images {
 })
 export class AppComponent implements OnInit {
 
-  images: Images[] | [];
   noteConvertorForm: FormGroup;
-  scanTypes: any = ['1 Sided Scanning', '2 Sided Scanning'];
   scannedType:string;
   file={
     name:'File Name',
@@ -78,7 +71,7 @@ export class AppComponent implements OnInit {
     private dialog: MatDialog,
     private formBuilder: FormBuilder,
     private http: HttpClient,
-    private scanOptionService : ScanOptionsService
+    private scanOptionService : ScanOptionsService,
     ) 
     {}
 
@@ -197,15 +190,14 @@ export class AppComponent implements OnInit {
   Device(url: string, timeout: number , async: boolean): Promise<any> {
     return new Promise((resolve, reject) => {
     function successCallback (envelope: any, response: any)  {
-      debugger;
+   
      const doc = xrxStringToDom(response);
-     //const info = xrxStringToDom((doc).find('devcfg\\:Information, Information').text());
      const info = doc.querySelector("devcfg\\:Information, Information");
      const parser = new DOMParser();
     const xmlDoc = parser.parseFromString(info.firstChild.data, 'text/xml');
     const generation = Number(xmlDoc.getElementsByTagName('generation')[0].textContent);
-     //const generation = Number((info).find('style > generation').text());
-     const model = xmlDoc.getElementsByTagName('model')[0].textContent;//(info).find('model').text();
+
+     const model = xmlDoc.getElementsByTagName('model')[0].textContent;
      const isVersalink = _.includes(model.toLowerCase(), 'versalink') || _.includes(model.toLowerCase(), 'primelink');
      const isAltalink = _.includes(model.toLowerCase(), 'altalink');
      const isThirdGenBrowser = _.includes(navigator.userAgent.toLowerCase(), "x3g_");
@@ -217,7 +209,12 @@ export class AppComponent implements OnInit {
         isEighthGen: generation < 9.0,
         model: model
         };
-        localStorage.setItem('Device Info',result.toString());
+        localStorage.setItem('Generation',result.generation.toString());
+        localStorage.setItem('IsThirdGenBrowser',result.isThirdGenBrowser.toString());
+        localStorage.setItem('isVersaLink',result.isVersalink.toString());
+        localStorage.setItem('isAltaLink',result.isAltalink.toString());
+        localStorage.setItem('isEighthGen',result.isEighthGen.toString());
+        localStorage.setItem('Model',result.model.toString());
         resolve(result);
       };
         function errorCallback  (result: any)  {
@@ -235,11 +232,21 @@ export class AppComponent implements OnInit {
 
   Session(url: string,timeout:number,async:boolean, ldap: string): Promise<any> {
     return new Promise((resolve, reject) => {
-      const successCallback = (envelope: string, response: string)=>  {
-        var data = xrxSessionGetSessionInfoRequest(response);
+      function successCallback (envelope: string, response: string) {
+        debugger;
+        //var data = xrxSessionGetSessionInfoRequest(response);
+        var data =xrxSessionParseGetSessionInfo(response);
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(data.firstChild, 'text/xml');
+        
+        
         var userEmail = "";
         if (data !== null) {
-          var userName = xrxGetElementValue(data, "username");
+          //var userName = xrxGetElementValue(xmlDoc, "username");
+          const userName = data.firstChild.getElementsByTagName('qualifiedUsername')[0].firstChild.textContent;
+          localStorage.setItem('User Name',userName.toString());
+          var password = data.firstChild.getElementsByTagName('qualifiedUsername')[0].lastChild.textContent;
+          localStorage.setItem('Password',password.toString());
           if (userName !== null && userName.toLowerCase() !== 'guest')
             userEmail = xrxGetElementValue(data, "from");
 
@@ -249,7 +256,7 @@ export class AppComponent implements OnInit {
           resolve(result.email.toString());
         }
       };
-      const errorCallback = (result: any) => {
+      function errorCallback (result: any) {
         result={
           email:""
         };
@@ -257,8 +264,8 @@ export class AppComponent implements OnInit {
       };
       xrxSessionGetSessionInfo(
         url,
-        successCallback.toString(),
-        errorCallback.toString(),
+        successCallback,
+        errorCallback,
         timeout,
         async,
         ldap

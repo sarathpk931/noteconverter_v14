@@ -22,6 +22,8 @@
 
 import {XRX_SOAPEND,xrxCreateTag,xrxCallWebservice,xrxCallAjax} from './XRXWebservices';
 
+import {xrxStringToDom,xrxGetElementValue,xrxGetValue,xrxGetTheElement,xrxFindElements,xrxGetElementName} from './XRXXmlHandler';
+
 var XRX_SESSION_NAMESPACE = 'xmlns="http://www.xerox.com/webservices/office/cuisession/1"';
 
 var XRX_SESSION_INFORMATION_NAMESPACE = 'xmlns="http://schemas.xerox.com/office/cui/sessioninformation/1"';
