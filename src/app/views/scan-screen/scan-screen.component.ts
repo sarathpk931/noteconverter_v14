@@ -147,15 +147,7 @@ export class ScanScreenComponent {
         
         }
 
-    getFileType(fullFileType){
-      if(fullFileType){
-        let tempFile = fullFileType.split('/');
-        return tempFile[tempFile.length - 1];
-      }
-    }
-    getScanType() {
-      this.scannedType = this.noteConvertorForm.get('selectScanType').value
-    }
+   
     resetForm(){
       this.noteConvertorForm.patchValue({
         email:'',
@@ -208,7 +200,4 @@ export class ScanScreenComponent {
       //modalRef.content.closeBtnName = 'Close';
     }
 
-  //  ngOnDestroy(){
-  //   this.scanOptionService.selectedFileFormatC.unsubscribe();
-  //  }
 }

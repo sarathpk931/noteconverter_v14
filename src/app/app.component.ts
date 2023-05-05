@@ -1,7 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {MatDialog,MatDialogRef} from '@angular/material/dialog';
-import { PopupCompComponent } from '../app/views/popup-comp/popup-comp.component';
-import { FormBuilder, FormGroup, Validators,AbstractControl } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import {Router} from '@angular/router';
 
@@ -11,24 +8,11 @@ import {xrxSessionGetSessionInfo,xrxSessionGetSessionInfoRequest,xrxSessionParse
 import {xrxGetElementValue} from '../assets/Xrx/XRXXmlHandler';
 import {xrxCallWebservice,xrxCallAjax} from '../assets/Xrx/XRXWebservices';
 import { LogService } from '../app/services/log.service';
-import {ModalService} from '../app/services/modal.service';
-import { PrivacyPolicyComponent } from '../app/views/privacy-policy/privacy-policy.component';
-import { ScanOptionsService} from '../app/services/scan-options.service';
-import { FileFormat, FileFormatOption} from '../app/model/common';
-import {FeaturePopoverComponent} from '../app/views/feature-popover/feature-popover.component';
+
 
 declare const _: any;
 
 let Deviceconfigxmlresponse:string;
-
-enum StatusCodes {
-  success = 200,
-  badRequest = 400
-}
-
-enum ErrorCodes {
-  ok = 'OK'
-}
 
 
 @Component({
@@ -38,41 +22,12 @@ enum ErrorCodes {
 })
 export class AppComponent implements OnInit {
 
-  noteConvertorForm: FormGroup;
-  scannedType:string;
-  file={
-    name:'File Name',
-    type:'Type'
-  };
-  showPrivacySetting=false;
-  showLoader=false;
   title: "Note Converter App";
-
-  const_fileFormat : string = "fileFormat";
-   const_type : string = "type";
-   const_size : string = 'size';
-
-   anyFileFormat = {from : 'fileFormat'};
-   anyType = {from : 'type'};
-   anySize = {from : 'size'};
-
-  matDialogRef: MatDialogRef<any>;
-  selectedFileFormat : FileFormat;
-  selectedFileFormatOptions : FileFormatOption;
-  selectedType : FileFormat;
-  selectedTypeOptions : FileFormatOption;
-  selectedSize : FileFormat;
-  selectedSizeOptions : FileFormatOption;
-  submitted = false;
 
   constructor(
     
-    private modalService:ModalService, 
     private  logger: LogService,
-    private dialog: MatDialog,
-    private formBuilder: FormBuilder,
     private http: HttpClient,
-    private scanOptionService : ScanOptionsService,
     private router : Router
     ) 
     {}
@@ -83,101 +38,9 @@ export class AppComponent implements OnInit {
     this.Device('http://localhost',5000,true);
     this.Session('http://127.0.0.1',5000,true,'');
     this.router.navigate(['scanScreen']);
-     //this.createForm();
-
-    // this.selectedFileFormat = this.scanOptionService.getFileFormat(this.anyFileFormat);
-    //   this.selectedFileFormatOptions = this.selectedFileFormat.options.find(item => item.isDefault === true);
-    //   this.selectedType = this.scanOptionService.getFileFormat(this.anyType);
-    //   this.selectedTypeOptions = this.selectedType.options.find(item => item.isDefault === true);
-    //   this.selectedSize = this.scanOptionService.getFileFormat(this.anySize);
-    //   this.selectedSizeOptions = this.selectedSize.options.find(item => item.isDefault === true);
-
-    //   //observables to show selected values
-    //   this.scanOptionService.selectedFileFormatC.subscribe(object =>{
-    //     if(object){
-    //       this.selectedFileFormatOptions = object;
-    //     }
-    //   })
-
-    //   this.scanOptionService.selectedTypeC.subscribe(type =>{
-    //     if(type){
-    //       this.selectedTypeOptions = type;
-        //}
-      // })
-
-      // this.scanOptionService.selectedSizeC.subscribe(size =>{
-      //   if(size){
-      //     this.selectedSizeOptions = size;
-      //   }
-      // })
+    
   }
 
-  createForm(){
-    this.noteConvertorForm = this.formBuilder.group({
-      email:['',[Validators.required]],
-      confirmEmail:['',[Validators.required]],
-      selectScanType: ['',[Validators.required]],
-    });
-  }
-
-  matchingEmailsValidator(emailKey: string, confirmEmailKey: string) 
-    { return (group: FormGroup): {[key: string]: any} => 
-      { 
-          const email = group.controls[emailKey]; 
-          const confirmEmail = group.controls[confirmEmailKey]; 
-          if (email.value !== confirmEmail.value) { 
-              return { emailsNotMatch: true }; 
-            } 
-            return null; 
-       }; 
-    }
-  /* scanDocument(event:any){
-    this.showLoader = true;
-    this.file = event.target.files[0];
-    const formData = new FormData();
-    formData.append('xerox_file',event.target.files[0]);
-    //this.UseApi.saveFileLocaly(formData).subscribe((res:any)=>{
-      this.showLoader = false;
-      if(res.status === 200){
-        this.openSuccessPopup();
-      }
-    },err=>{
-      this.showLoader = false;
-    });
-    // this.openSuccessPopup();
-  } */
-
-  getFileType(fullFileType){
-    if(fullFileType){
-      let tempFile = fullFileType.split('/');
-      return tempFile[tempFile.length - 1];
-    }
-  }
-
-  getScanType() {
-    this.scannedType = this.noteConvertorForm.get('selectScanType').value
-  }
-
-  resetForm(){
-    this.noteConvertorForm.patchValue({
-      email:'',
-      confirmEmail:'',
-      selectScanType:''
-    });
-    this.file = {
-      name:'File Name',
-      type:'Type'
-    };
-    this.scannedType='';
-  }
-
-  openSuccessPopup(){
-      this.dialog.open(PopupCompComponent,{
-        width:'550px',
-        height:'250px',
-        backdropClass:'custom-backdrop-color'
-      });
-  }
 
   Strings = async () => {
     var regex = /(\w+)\-?/g;
@@ -275,41 +138,6 @@ export class AppComponent implements OnInit {
       );
     });
   }
-
-  showPrivacyStatement(){
-    //this.dialog.open(PrivacyPolicyComponent);
-     this.modalService.openLargeModal(PrivacyPolicyComponent);
-    //modalRef.content.closeBtnName = 'Close';
-    //this.bsModalRef = this.modalService.show(PrivacyPolicyComponent);
-  }
-
-  get f():{[key: string]: AbstractControl}{
-    return this.noteConvertorForm.controls;
-  }
-  openFileFormat(){
-    this.modalService.setData({
-      from : this.const_fileFormat
-    });
-    const modalRef = this.modalService.openModal(FeaturePopoverComponent);
-    //modalRef.content.closeBtnName = 'Close';
-  }
-
-  openScan(){
-    this.modalService.setData({
-      from : this.const_type
-    });
-    const modalRef = this.modalService.openModal(FeaturePopoverComponent);
-    //modalRef.content.closeBtnName = 'Close';
-  }
-
-  openSize(){
-    this.modalService.setData({
-      from : this.const_size
-    });
-    const modalRef = this.modalService.openModal(FeaturePopoverComponent);
-    //modalRef.content.closeBtnName = 'Close';
-  }
-
 
 
   }
