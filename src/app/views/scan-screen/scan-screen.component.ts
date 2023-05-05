@@ -12,11 +12,6 @@ import { ModalService} from '../../services/modal.service';
 import { ScanOptionsService} from '../../services/scan-options.service';
 import { FileFormat, FileFormatOption} from '../../model/common';
 
-interface Images {
-  id: string,
-  author: string,
-  download_url: string
-}
 
 @Component({
   selector: 'app-scan-screen',
@@ -25,10 +20,6 @@ interface Images {
 })
 export class ScanScreenComponent {
 
-  images: Images[] | [];
-  
-  scanTypes: any = ['1 Sided Scanning', '2 Sided Scanning'];
-  scannedType:string;
   file={
     name:'File Name',
     type:'Type'
@@ -65,14 +56,8 @@ export class ScanScreenComponent {
     ngOnInit(){
       this.createForm();
 
+      this.getDefaultValues();
       
-      this.selectedFileFormat = this.scanOptionService.getFileFormat(this.anyFileFormat);
-      this.selectedFileFormatOptions = this.selectedFileFormat.options.find(item => item.isDefault === true);
-      this.selectedType = this.scanOptionService.getFileFormat(this.anyType);
-      this.selectedTypeOptions = this.selectedType.options.find(item => item.isDefault === true);
-      this.selectedSize = this.scanOptionService.getFileFormat(this.anySize);
-      this.selectedSizeOptions = this.selectedSize.options.find(item => item.isDefault === true);
-
       //observables to show selected values
       this.scanOptionService.selectedFileFormatC.subscribe(object =>{
         if(object){
@@ -92,27 +77,31 @@ export class ScanScreenComponent {
         }
       })
     }
+    getDefaultValues(){
+      this.selectedFileFormat = this.scanOptionService.getFileFormat(this.anyFileFormat);
+      this.selectedFileFormatOptions = this.selectedFileFormat.options.find(item => item.isDefault === true);
+      this.selectedType = this.scanOptionService.getFileFormat(this.anyType);
+      this.selectedTypeOptions = this.selectedType.options.find(item => item.isDefault === true);
+      this.selectedSize = this.scanOptionService.getFileFormat(this.anySize);
+      this.selectedSizeOptions = this.selectedSize.options.find(item => item.isDefault === true);
+    }
+
     createForm(){
       this.noteConvertorForm = this.formBuilder.group({
         email:['',[Validators.required,Validators.email]],
         confirmEmail:['',[Validators.required,Validators.email]],
-   
+        fileName : ['']
       },
-      { validator: this.matchingEmailsValidator('email', 'confirmEmail') }
+      { validators: this.emailMatchValidator },
      );
     }
-    matchingEmailsValidator(emailKey: string, confirmEmailKey: string) 
-      { return (group: FormGroup): {[key: string]: any} => 
-        { 
-            const email = group.controls[emailKey]; 
-            const confirmEmail = group.controls[confirmEmailKey]; 
-            if (email.value !== confirmEmail.value) { 
-                return { emailsNotMatch: true }; 
-              } 
-              return null; 
-         }; 
-      }
 
+     emailMatchValidator(form: FormGroup) {
+      const email = form.get('email').value;
+      const confirmEmail = form.get('confirmEmail').value;
+      return email === confirmEmail ? null : { emailsMatch: true };
+    }
+  
       get f():{[key: string]: AbstractControl}{
         return this.noteConvertorForm.controls;
       }
@@ -152,13 +141,9 @@ export class ScanScreenComponent {
       this.noteConvertorForm.patchValue({
         email:'',
         confirmEmail:'',
-        selectScanType:''
+        fileName : ''
       });
-      this.file = {
-        name:'File Name',
-        type:'Type'
-      };
-      this.scannedType='';
+      this.getDefaultValues();
     }
     
     openSuccessPopup(){
