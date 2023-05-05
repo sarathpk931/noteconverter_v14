@@ -110,7 +110,10 @@ clear:both;
     overflow: hidden;
 }
 
-
+.cdk-overlay-backdrop.cdk-overlay-backdrop-showing
+{
+    opacity: 0 !important;;
+}
 
 
 
