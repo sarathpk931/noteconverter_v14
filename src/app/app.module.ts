@@ -15,6 +15,9 @@ import {LogService} from '../app/services/log.service';
 import {StorageService} from '../app/services/storage.service';
 import {ScanOptionsService} from '../app/services/scan-options.service';
 import {ErrorHandlerService} from '../app/services/error-handler.service';
+import {JobService} from '../app//services/job.service';
+import {ApiService} from '../app/services/api.service';
+import {ConfigurationService} from '../app/services/configuration.service';
 
 
 import { PrivacyPolicyComponent } from './views/privacy-policy/privacy-policy.component';
@@ -82,7 +85,11 @@ import { ScanScreenComponent } from './views/scan-screen/scan-screen.component';
     ModalService,
     ScanOptionsService,
     AppComponent,
-    ErrorHandlerService
+    ErrorHandlerService,
+    JobService,
+    ApiService,
+    ConfigurationService,
+
     
     
   ],
