@@ -68,4 +68,19 @@ export class ModalService {
     return modalRef;
   }
 
+  public showAlert(string: any)
+  {
+      //dependency in error handler service Ln:20, function to be written
+  }
+
+  public closeAllModals()
+  {
+    //dependency in error handler service Ln:29, function to be written
+  }
+
+  public openComponentModal(component: any,data:any)
+  {
+    //dependency in error handler service Ln:29, function to be written
+  }
+
 }

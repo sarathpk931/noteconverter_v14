@@ -1,0 +1,23 @@
+<!-- Copyright © 2019 Xerox Corporation. All Rights Reserved. -->
+
+<div class="alert">
+
+    <div class="alert-container">
+
+        <div class="alert-content">
+
+            <h3 class="alert-title" xas-string=""></h3><!--{{$ctrl.title}}-->
+            <div class="alert-additional-info" xas-string=""></div><!--{{$ctrl.additionalInfo}}-->
+            <div ng-if="$ctrl.additionalInfo2" class="alert-additional-info" xas-string=""></div><!--{{$ctrl.additionalInfo2}}-->
+
+
+            <div class="alert-button-container">
+                <button type="button" class="" xas-string="" ng-click="$ctrl.button1()" tabindex="-1"></button><!--{{$ctrl.button1Classes}} {{$ctrl.button1Text}} -->
+                <button type="button" class=""
+                        ng-if="$ctrl.resolve.data.button2Callback!=null" xas-string="" ng-click="$ctrl.button2()" tabindex="-1"></button>
+            </div><!--{{$ctrl.button2Classes}} {{$ctrl.button2Text}} -->
+
+        </div>
+
+    </div>
+</div>

@@ -14,6 +14,8 @@ import { AppRoutingModule } from './app-routing.module';
 import {LogService} from '../app/services/log.service';
 import {StorageService} from '../app/services/storage.service';
 import {ScanOptionsService} from '../app/services/scan-options.service';
+import {ErrorHandlerService} from '../app/services/error-handler.service';
+
 
 import { PrivacyPolicyComponent } from './views/privacy-policy/privacy-policy.component';
 import { ProgressAlertComponent } from './views/progress-alert/progress-alert.component';
@@ -32,6 +34,7 @@ import { SpinBoxComponent } from './views/spin-box/spin-box.component';
 import { ToggleSwitchComponent } from './views/toggle-switch/toggle-switch.component';
 import { ImagePreviewerComponent } from './views/image-previewer/image-previewer.component';
 import { LogoutConfirmationComponent } from './views/logout-confirmation/logout-confirmation.component'; */
+import { GeneralAlertComponent } from '../app/views/general-alert/general-alert.component';
 import {LogViewComponent} from '../app/views/log-view/log-view.component';
 import {XasStringDirective} from '../app/Directives/xas-string.directive';
 
@@ -59,7 +62,8 @@ import { ScanScreenComponent } from './views/scan-screen/scan-screen.component';
     ProgressAlertComponent,
     ScanScreenComponent,
     FeaturePopoverComponent,
-    XasStringDirective
+    XasStringDirective,
+    GeneralAlertComponent
 
   ],
   imports: [
@@ -78,6 +82,7 @@ import { ScanScreenComponent } from './views/scan-screen/scan-screen.component';
     ModalService,
     ScanOptionsService,
     AppComponent,
+    ErrorHandlerService
     
     
   ],
