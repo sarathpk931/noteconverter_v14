@@ -22,9 +22,9 @@ import { FeaturePopoverComponent } from './views/feature-popover/feature-popover
 import { AlertBannerComponent } from './views/alert-banner/alert-banner.component';
 import { BasicAlertComponent } from './views/basic-alert/basic-alert.component';
 
-import { FileFormatModalComponent } from './views/file-format-modal/file-format-modal.component';
+import { FileFormatModalComponent } from './views/file-format-modal/file-format-modal.component';*/
 import { GeneralAlertComponent } from './views/general-alert/general-alert.component';
-import { KeypadComponent } from './views/keypad/keypad.component';
+/*import { KeypadComponent } from './views/keypad/keypad.component';
 
 
 import { ProgressBannerComponent } from './views/progress-banner/progress-banner.component';
@@ -50,6 +50,8 @@ import { TranslatePipe } from './filters/translate.pipe';
 import { ParseDeviceConfigPipe } from './filters/parse-device-config.pipe';
 import { ModalService } from './services/modal.service';
 import { ScanScreenComponent } from './views/scan-screen/scan-screen.component';
+import {ScanService} from './services/scan.service';
+import {JobService} from './services/job.service';
 
 @NgModule({
   declarations: [
@@ -59,8 +61,8 @@ import { ScanScreenComponent } from './views/scan-screen/scan-screen.component';
     ProgressAlertComponent,
     ScanScreenComponent,
     FeaturePopoverComponent,
-    XasStringDirective
-
+    XasStringDirective,
+    GeneralAlertComponent
   ],
   imports: [
     BrowserModule,
@@ -78,8 +80,8 @@ import { ScanScreenComponent } from './views/scan-screen/scan-screen.component';
     ModalService,
     ScanOptionsService,
     AppComponent,
-    
-    
+    ScanService,
+    JobService
   ],
   bootstrap: [AppComponent]
 })

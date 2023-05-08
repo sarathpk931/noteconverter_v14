@@ -44,6 +44,10 @@ export class ModalService {
     }
    }
 
+   closeAllModals(): void {
+    //this.modalService.hide();
+  }
+
   public openLargeModal(component : any):void{
     const dialogRef = this.dialog.open(component, {
       //maxWidth: '400vw',
@@ -68,4 +72,23 @@ export class ModalService {
     return modalRef;
   }
 
+  showSimpleAlert(
+    title: string,
+    body: string,
+    buttonText: string = 'SDE_CLOSE'
+  )
+ //: BsModalRef 
+ {
+ //   return this.modalService.show(BasicAlertComponent, {
+ //     initialState: { title, body, buttonText }
+ //   }
+// );
+ }
+
+ openComponentModal(componentName: any, data?: any) {
+ //return this.modalService.show(componentName, { initialState: { data } });
+ return this.openModal(componentName);
 }
+
+}
+

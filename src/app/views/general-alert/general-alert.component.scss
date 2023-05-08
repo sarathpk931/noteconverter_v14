@@ -1,0 +1,42 @@
+.alert {
+    //.blanket;
+    z-index: 1500;
+
+    .alert-container {
+        display: table;
+        margin: 0 auto;
+        height: 100%;
+        width: 100%;
+        text-align: center;
+
+        .alert-content {
+            color: rgba(255, 255, 255, 0.6);
+            display: table-cell;
+            vertical-align: middle;
+            height: 100%;
+
+            .alert-title {
+                //.text-large;
+                font-weight: bold;
+            }
+
+            h1, h2, h3 {
+                color: white !important;
+            }
+
+            .alert-additional-info {
+                //.text-medium;
+                margin-top: 10px;
+                color: #9f9f9f !important;
+            }
+
+            .alert-button-container {
+                margin-top: 10px;
+
+                .btn {
+                    min-width: 160px;
+                }
+            }
+        }
+    }
+}
