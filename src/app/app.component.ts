@@ -8,6 +8,8 @@ import {xrxSessionGetSessionInfo,xrxSessionGetSessionInfoRequest,xrxSessionParse
 import {xrxGetElementValue} from '../assets/Xrx/XRXXmlHandler';
 import {xrxCallWebservice,xrxCallAjax} from '../assets/Xrx/XRXWebservices';
 import { LogService } from '../app/services/log.service';
+import {Common} from '../app/model/common';
+import { RadioControlValueAccessor } from '@angular/forms';
 
 
 declare const _: any;
@@ -34,10 +36,19 @@ export class AppComponent implements OnInit {
 
   
   ngOnInit(){
+
     this.Strings();
-    this.Device('http://localhost',5000,true);
-    this.Session('http://127.0.0.1',5000,true,'');
+    this.Device('http://localhost',5000,true).then((result)=>{
+      Common.global_Generation=result.generation.toString();
+      Common.global_isEighthGen=result.isEighthGen;
+      Common.global_IsThirdGenBrowser=result.IsThirdGenBrowser;
+
+    });
+    this.Session('http://127.0.0.1',5000,true,'').then((value)=>{
+      Common.global_email=value;
+    });
     this.router.navigate(['scanScreen']);
+    
     
   }
 

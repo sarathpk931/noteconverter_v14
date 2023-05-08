@@ -14,6 +14,7 @@ import { FileFormat, FileFormatOption} from '../../model/common';
 import { ScanService } from '../../services/scan.service';
 import { ErrorHandlerService } from '../../services/error-handler.service';
 import { AppComponent } from '../../app.component';
+import {Common} from '../../model/common'
 
 
 @Component({
@@ -64,7 +65,22 @@ export class ScanScreenComponent {
 
     ngOnInit(){
 
-      //this.scanOptionService.email = this.session.email;
+      
+      this.scanOptionService.email =Common.global_email;
+
+      // If we have an email in session, attempt to validate fields (to enable scan button)
+      if (Common.global_email) 
+      {
+        this.validateAllFields();
+      }
+
+      // If not eigth gen, whenever scroll-container scrolls (its an accident, so scrolltop to 0) to fix shadows
+      /* if (!this.device.isEighthGen && !this.device.isThirdGenBrowser) {
+      const scrollContainer = document.querySelector('.scroll-container') as HTMLElement; //TODO:reference package https://www.npmjs.com/package/angular-iscroll
+      scrollContainer.addEventListener('scroll', _.debounce(() => {
+        scrollContainer.scrollTop = 0;
+      }, 250, { leading: true }));
+      } */
 
       this.createForm();
 
@@ -196,4 +212,7 @@ export class ScanScreenComponent {
       //modalRef.content.closeBtnName = 'Close';
     }
 
+    validateAllFields(): void {
+      // TODO: Implement validateAllFields function
+    }
 }

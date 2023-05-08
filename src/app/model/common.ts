@@ -43,4 +43,12 @@ export interface ScanFeature {
 }
   
 export class Common {
+
+    public static global_email:string;
+    public static global_Generation:string;
+    public static global_IsThirdGenBrowser:string;
+    public static global_isVersaLink:string;
+    public static global_isAltaLink:string;
+    public static global_isEighthGen:string;
+    public static global_Model:string
 }
