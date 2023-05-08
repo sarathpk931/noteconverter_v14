@@ -11,6 +11,9 @@ import { PopupCompComponent} from '../popup-comp/popup-comp.component';
 import { ModalService} from '../../services/modal.service';
 import { ScanOptionsService} from '../../services/scan-options.service';
 import { FileFormat, FileFormatOption} from '../../model/common';
+import { ScanService } from '../../services/scan.service';
+import { ErrorHandlerService } from '../../services/error-handler.service';
+import { AppComponent } from '../../app.component';
 
 
 @Component({
@@ -26,7 +29,11 @@ export class ScanScreenComponent {
   }; 
   showPrivacySetting=false;
   showLoader=false;
-
+  validationStatus: boolean = false;
+  isCreditsEnabled: boolean = false;
+  maxPagesPerJobStyle: string = 'text-align:left !important;';
+  emailHasError: boolean = false;
+  
   noteConvertorForm:  FormGroup;
 
    const_fileFormat : string = "fileFormat";
@@ -50,10 +57,15 @@ export class ScanScreenComponent {
     private dialog: MatDialog,
     private formBuilder: FormBuilder,
     private modalService : ModalService,
-    private scanOptionService : ScanOptionsService
+    private scanOptionService : ScanOptionsService,
+    private scanService :ScanService,
+    private appComponent : AppComponent
     ) {}
 
     ngOnInit(){
+
+      //this.scanOptionService.email = this.session.email;
+
       this.createForm();
 
       this.getDefaultValues();
@@ -102,11 +114,11 @@ export class ScanScreenComponent {
       return email === confirmEmail ? null : { emailsMatch: true };
     }
   
-      get f():{[key: string]: AbstractControl}{
+    get f():{[key: string]: AbstractControl}{
         return this.noteConvertorForm.controls;
-      }
+    }
 
-      scanDocument(event:any){
+    scanDocument(event:any){
           debugger;
           
           this.showLoader = true;
@@ -134,8 +146,7 @@ export class ScanScreenComponent {
           });
           
         
-        }
-
+    }
    
     resetForm(){
       this.noteConvertorForm.patchValue({

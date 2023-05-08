@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { LogService } from './log.service';
-import { FileFormat,FileFormatOption} from '../model/common';
+import { FileFormat,FileFormatOption,ScanFeatureOption,ScanFeature} from '../model/common';
 
 @Injectable({
   providedIn: 'root'
@@ -13,38 +13,48 @@ export class ScanOptionsService {
   const_type : string = "type";
   const_size : string = 'size';
 
-private fileFormat : FileFormat[] =[
+  fileName ='Xerox Scan';
+  email ='';
+
+  public fileFormat:FileFormat[]=[
   // Plex
   {
   name : "fileFormat",
   title: "SDE_FILE_FORMAT",
   icon: "file_name_and_format_48.png",
-  options: [{
-    value: 'docx',
-    title: '.docx',
-    icon: 'filetype_docx_48.png',
-    isDefault: true
-  }, {
-    value: 'txt',
-    title: '.txt',
-    icon:'filetype_txt_48.png'
-  }],
-  subFeatures: [{
+  options: [
+    {
+      value: 'docx',
+      title: '.docx',
+      icon: 'filetype_docx_48.png',
+      isDefault: true
+    }, 
+    {
+      value: 'txt',
+      title: '.txt',
+      icon:'filetype_txt_48.png'
+    }
+  ],
+  subFeatures: [
+    {
     name: 'archivalFormat',
     title: 'SDE_ARCHIVAL_PDFA',
-enabledIf: 'pdf',
-type: 'toggle',
-options: [{
-  value: false,
-  isDefault: true,
-}, {
-  value: true
-    }]
-  }]
-}];
+    enabledIf: 'pdf',
+    type: 'toggle',
+    options: [
+      {
+        value: false,
+        isDefault: true,
+      }, 
+        {
+          value: true
+        },
+      ],
+    },
+  ],
+  }];
 
-
-private scanFeatures: FileFormat[]= [
+  public scanFeatures: FileFormat[]= [
   // Plex
   {
     name: 'plex',
@@ -52,23 +62,23 @@ private scanFeatures: FileFormat[]= [
     icon: '2_sided_48.png',
     options: [
       {
-      value: 'ONE_SIDED',
-      title: 'SDE_1SIDED',
-      icon: '2_sided_1_48.png',
-      isDefault: true,
-    }, {
-      value: 'TWO_SIDED',
-      title: 'SDE_2SIDED',
-       icon: '2_sided_2_48.png'
-    }, {
-      value: 'SECOND_SIDE_ROTATION',
-      title: 'SDE_2SIDED_ROTATE_SIDE',
-      icon: '2_sided_rotate_48.png',
-    }],
-    subFeatures: []
+        value: 'ONE_SIDED',
+        title: 'SDE_1SIDED',
+        icon: '2_sided_1_48.png',
+        isDefault: true,
+      }, 
+      {
+        value: 'TWO_SIDED',
+        title: 'SDE_2SIDED',
+        icon: '2_sided_2_48.png'
+      }, 
+      {
+        value: 'SECOND_SIDE_ROTATION',
+        title: 'SDE_2SIDED_ROTATE_SIDE',
+        icon: '2_sided_rotate_48.png',
+      },
+    ],
   },
-  
-  
   // Original Size
   {
     name: 'originalSize',
@@ -115,21 +125,27 @@ private scanFeatures: FileFormat[]= [
       value: 'A3_Landscape',
       title:'A3',
       glyph:'xrx-landscape'
-    }
-    ],
-    subFeatures: [] // define subfeatures here if needed 
-  }];
+    },
+  ],
+},    
+  ];
 
-  private selectedFileFormat : BehaviorSubject<FileFormatOption> = new BehaviorSubject(null);
+  public selectedFileFormat : BehaviorSubject<FileFormatOption> = new BehaviorSubject(null);
   selectedFileFormatC = this.selectedFileFormat.asObservable();
-  private selectedType : BehaviorSubject<FileFormatOption> = new BehaviorSubject(null);
+  public selectedType : BehaviorSubject<FileFormatOption> = new BehaviorSubject(null);
   selectedTypeC = this.selectedType.asObservable();
-  private selectedSize : BehaviorSubject<FileFormatOption> = new BehaviorSubject(null);
+  public selectedSize : BehaviorSubject<FileFormatOption> = new BehaviorSubject(null);
   selectedSizeC = this.selectedSize.asObservable();
 
-  constructor(private logService: LogService) { }
+  constructor(private logService: LogService)
+  {
+    this.setDefaults(this.fileFormat);
+    this.scanFeatures.forEach((feature) => {
+      this.setDefaults(feature);
+    });
+  }
 
-  public resetFeatureSettings(): void {
+  resetFeatureSettings(): void {
     this.scanFeatures.forEach(feature => {
       this.setDefaults(feature);
     });
@@ -139,14 +155,23 @@ private scanFeatures: FileFormat[]= [
   
   // Set defaults for each of the features (and the fileformat). We want these to be actual
   // object references because of how we manipulate them
-  public setDefaults(feature: any): void {
-    feature.subFeatures?.forEach(subFeature => {
+  setDefaults(feature: any) {
+    if (feature && feature.subFeatures) {
+      feature.subFeatures.forEach((subFeature: ScanFeature) => {
+          this.setDefaults(subFeature);
+      });
+  }
+
+  if (feature && feature.options) {
+      feature.selectedOption = feature.options.find((option: any) => option.isDefault);
+  }
+    /* feature.subFeatures.forEach((subFeature:any) => {
       this.setDefaults(subFeature);
 
       if (feature.options) {
-        feature.selectedOption = feature.options.find(option => option.isDefault);
+        feature.selectedOption = feature.options.find((option:any) => option.isDefault);
       }
-    });
+    }); */
   }
 
     getFileFormat(feature : any): FileFormat {
@@ -180,7 +205,7 @@ private scanFeatures: FileFormat[]= [
     }
     //set selected value from pop up
     getSelectedOption( from : string){
-debugger;
+      debugger;
       if(from == this.const_fileFormat)
       {
         return this.selectedFileFormat;
@@ -202,4 +227,86 @@ debugger;
       }
       return null;
     }
-}
+
+    getValues() {
+      const featuresList = this.scanFeatures;
+  
+      // const langStr = featuresList[0].selectedOption.value;
+      // logService.logMsg('scanOptionsService => getValues => langStr:' + langStr, 'information');
+  
+      const sidedStr = featuresList[0].options[0].value;    //selectedOption
+      const originalSizeStr = featuresList[0].options[0].value; //SelectedOption
+  
+      const values: any = {};
+  
+      switch (originalSizeStr) {
+        case '8_5_x_11_Portrait':
+          values.mediaSize = 'NA_8.5x11LEF';
+          values.orientation = 'PORTRAIT';
+          break;
+        case '8_5_x_11_Landscape':
+          values.mediaSize = 'NA_8.5x11SEF';
+          values.orientation = 'LANDSCAPE';
+          break;
+        case '8_5_x_14_Landscape':
+          values.mediaSize = 'NA_8.5x14SEF';
+          values.orientation = 'LANDSCAPE';
+          break;
+        case '11_x_17_Landscape':
+          values.mediaSize = 'NA_11x17SEF';
+          values.orientation = 'LANDSCAPE';
+          break;
+        case 'A4_Portrait':
+          values.mediaSize = 'ISO_A4LEF';
+          values.orientation = 'PORTRAIT';
+          break;
+        case 'A4_Landscape':
+          values.mediaSize = 'ISO_A4SEF';
+          values.orientation = 'LANDSCAPE';
+          break;
+        case 'A3_Landscape':
+          values.mediaSize = 'ISO_A3SEF';
+          values.orientation = 'LANDSCAPE';
+          break;
+        default:
+          values.mediaSize = 'AUTO';
+          values.orientation = 'PORTRAIT';
+          break;
+      }
+  
+      values.fileFormat = this.fileFormat[0].options;
+      values.archivalFormat = this.fileFormat[0].name;
+      values.colorMode = 'AUTO';
+      values.combineFiles = true;
+      // values.language = langStr;
+      values.originalType = 'MIXED';
+      values.plex = sidedStr;
+      values.quality = '128';
+      values.resolution = 'RES_300X300';
+      values.searchableText = 'SEARCHABLE_IMAGE';
+      // values.fileName = this.fileName;
+      // To fix bug where the popover config menus do not appear (only dim the screen) when selecting non-latin-char-based languages.
+      values.fileName = window.btoa((encodeURIComponent(this.fileName)));
+      values.email = this.email;
+      return values;
+    }
+
+    // updateDisabledOptions(feature: ScanFeature): void {
+    //   const currentOptions = this.getValues();
+    
+    //   feature.options.forEach((option) => {
+    //     option.disabledIf.forEach((disabledCondition) => {
+    //       if (currentOptions[disabledCondition.feature] === disabledCondition.value) {
+    //         option.disabled = true;
+    //         option.disabledMessage = disabledCondition.message;
+    //         return false;
+    //       } else {
+    //         option.disabled = false;
+    //         option.disabledMessage = null;
+    //       }
+    //     });
+    //   });
+    // }
+    
+  }
+

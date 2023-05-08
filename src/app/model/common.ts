@@ -27,5 +27,20 @@ export interface FileFeatureSubFeatureOption {
     isDefault?: boolean;
 }
 
+export interface ScanFeatureOption {
+    value: string;
+    title: string;
+    icon?: string;
+    glyph?: string;
+    isDefault?: boolean;
+}
+
+export interface ScanFeature {
+    name: string;
+    title: string;
+    icon: string;
+    options: ScanFeatureOption[];
+}
+  
 export class Common {
 }
