@@ -14,6 +14,11 @@ import { AppRoutingModule } from './app-routing.module';
 import {LogService} from '../app/services/log.service';
 import {StorageService} from '../app/services/storage.service';
 import {ScanOptionsService} from '../app/services/scan-options.service';
+import {ErrorHandlerService} from '../app/services/error-handler.service';
+import {JobService} from '../app//services/job.service';
+import {ApiService} from '../app/services/api.service';
+import {ConfigurationService} from '../app/services/configuration.service';
+
 
 import { PrivacyPolicyComponent } from './views/privacy-policy/privacy-policy.component';
 import { ProgressAlertComponent } from './views/progress-alert/progress-alert.component';
@@ -51,7 +56,6 @@ import { ParseDeviceConfigPipe } from './filters/parse-device-config.pipe';
 import { ModalService } from './services/modal.service';
 import { ScanScreenComponent } from './views/scan-screen/scan-screen.component';
 import {ScanService} from './services/scan.service';
-import {JobService} from './services/job.service';
 
 @NgModule({
   declarations: [
@@ -80,8 +84,13 @@ import {JobService} from './services/job.service';
     ModalService,
     ScanOptionsService,
     AppComponent,
+    ErrorHandlerService,
+    JobService,
+    ApiService,
+    ConfigurationService,
     ScanService,
-    JobService
+    
+    
   ],
   bootstrap: [AppComponent]
 })

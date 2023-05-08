@@ -1,41 +1,34 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ApiService } from './api.service';
-import { Observable } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
-import { of } from 'rxjs';
 import { ConfigurationService } from './configuration.service';
 import { LogService } from './log.service';
-import { AppComponent } from '../../app/app.component';
-
 
 @Injectable({
   providedIn: 'root'
 })
+
+
+
 export class JobService {
 
-  constructor(
-    private http: HttpClient,
-    private apiService: ApiService,
-    private configurationService: ConfigurationService,
-    private logService: LogService,
-    private appcomponent : AppComponent
-    ) { }
+  constructor(private http: HttpClient, private apiService: ApiService,
+    private configurationService: ConfigurationService, private logService: LogService) { }
 
-    
-
-    registerJob(featureValues: any):Observable<any> {
+    registerJob(featureValues: any) {
 
       const config = { headers: new HttpHeaders({ "Content-Type": "text/json; charset=utf-8" }) };
   
       const parsedFilename = featureValues.fileName + '.pdf';
   
+      var  LocalizedLanguage:'en'; //to be defined and injected based on browser language ,assigned default 'en'for local testing
+
       const job = {
         jobId: featureValues.jobid,
         emailAddress: featureValues.email,
         timeZoneOffsetMinutes: new Date().getTimezoneOffset(),
         filename: parsedFilename,
-        localizedLanguage: this.appcomponent.Strings,   //get localizedLanguage from appcomponent strings method respnse, // Need to define this variable
+        localizedLanguage: LocalizedLanguage, // Need to define this variable
         appId: this.configurationService.getSetting('appId'),
         deviceId: this.configurationService.getSetting('deviceId'),
         orientation: featureValues.orientation,
@@ -51,11 +44,12 @@ export class JobService {
         job: job
       };
   
-      return this.http.post(this.apiService.apiUrl("/api/v1/job"), request, config).pipe(
-        tap((result) => {
-          this.logService.logMsg('jobService -> registerJob -> success -> result.data:' + result.toString(), 'information');
-        }),
-        catchError((error) => {
+      return this.http.post(this.apiService.apiUrl("/api/v1/job"), request, config).toPromise()
+        .then((result: any) => {
+          this.logService.logMsg('jobService -> registerJob -> success -> result.data:' + result.data, 'information');
+          return result.data;
+        })
+        .catch((error: any) => {
           this.logService.logMsg('jobService -> registerJob -> ERROR...', 'error');
   
           if (error != null && error.data != null && error.data.ExceptionMessage != null) {
@@ -63,12 +57,10 @@ export class JobService {
           }
   
           if (error && error.status == 401) {
-            // Need to define $rootScope and $broadcast to broadcast this error
-            //$rootScope.$broadcast("globalAppMessage", "unauthorized");
+            // Need to define $rootScope and $broadcast
+           // $rootScope.$broadcast("globalAppMessage", "unauthorized");
           }
-          return of([]);
-        })
-      );
+        });
     }
 
     generateNewJobID() {

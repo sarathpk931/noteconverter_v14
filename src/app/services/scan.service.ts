@@ -133,7 +133,7 @@ export class ScanService {
   
       this.modalService.showProgressAlert(this.appComponent.Strings['SDE_SCANNING1'],'');
   
-      return this.jobService.registerJob(model).toPromise().then(function(result){
+      return this.jobService.registerJob(model).then(function(result){ //.toPromise()
         
           const tStr = template.toString();
           this.logService.logMsg('scanService => scan => template:' + tStr, 'information');
@@ -287,7 +287,7 @@ export class ScanService {
 
     const title = 'SDE_DOCUMENT_SUCCESSFULLY_SCANNED'; //strings to be replaced from app resources in Web Solution file
     const msg = 'SDE_WILL_RECEIVE_EMAIL2'.replace('{0}', 'Xerox Note Converter');
-    this.modalService.showSimpleAlert(title, msg);
+    //this.modalService.showSimpleAlert(title, msg);
 
     this.logService.logMsg('if (jobState === Completed && jobStateReason == JobCompletedSuccessfully) { ', 'information');
     //$rootScope.$broadcast('jobProgress', 'JOB_COMPLETED_SUCCESSFULLY'); to be implemented
