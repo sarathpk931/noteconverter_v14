@@ -38,6 +38,7 @@ export class AppComponent implements OnInit {
   
   ngOnInit(){
     this.router.navigate(['scanScreen']);
+    //this.Device(AppSetting.url,5000,true);
   }
 
 
@@ -51,52 +52,56 @@ export class AppComponent implements OnInit {
     localStorage.setItem('locale',data.strings);
     return data.strings;
   }
-}
-  /*
-  
-  Device(url: string, timeout: number , async: boolean): Promise<any> {
-    return new Promise((resolve, reject) => {
-    function successCallback (envelope: any, response: any)  {
+
+  // Device(url: string, timeout: number , async: boolean): Promise<any> {
+  //   return new Promise((resolve, reject) => {
+  //   function successCallback (envelope: any, response: any)  {
    
-     const doc = xrxStringToDom(response);
-     const info = doc.querySelector("devcfg\\:Information, Information");
-     const parser = new DOMParser();
-    const xmlDoc = parser.parseFromString(info.firstChild.data, 'text/xml');
-    const generation = Number(xmlDoc.getElementsByTagName('generation')[0].textContent);
+  //    const doc = xrxStringToDom(response);
+  //    const info = doc.querySelector("devcfg\\:Information, Information");
+  //    const parser = new DOMParser();
+  //   const xmlDoc = parser.parseFromString(info.firstChild.data, 'text/xml');
+  //   const generation = Number(xmlDoc.getElementsByTagName('generation')[0].textContent);
 
-     const model = xmlDoc.getElementsByTagName('model')[0].textContent;
-     const isVersalink = _.includes(model.toLowerCase(), 'versalink') || _.includes(model.toLowerCase(), 'primelink');
-     const isAltalink = _.includes(model.toLowerCase(), 'altalink');
-     const isThirdGenBrowser = _.includes(navigator.userAgent.toLowerCase(), "x3g_");
-     const result = {
-        isThirdGenBrowser: isThirdGenBrowser,
-        generation: generation,
-        isVersalink: isVersalink,
-        isAltalink: isAltalink,
-        isEighthGen: generation < 9.0,
-        model: model
-        };
-        localStorage.setItem('Generation',result.generation.toString());
-        localStorage.setItem('IsThirdGenBrowser',result.isThirdGenBrowser.toString());
-        localStorage.setItem('isVersaLink',result.isVersalink.toString());
-        localStorage.setItem('isAltaLink',result.isAltalink.toString());
-        localStorage.setItem('isEighthGen',result.isEighthGen.toString());
-        localStorage.setItem('Model',result.model.toString());
-        resolve(result);
-      };
-        function errorCallback  (result: any)  {
-        reject(result);};
-        xrxDeviceConfigGetDeviceInformation(
-        url,
-        successCallback,
-        errorCallback,
-        timeout,
-        async
-        );
-      });
-    
-    }
-
+  //    const model = xmlDoc.getElementsByTagName('model')[0].textContent;
+  //    const isVersalink = _.includes(model.toLowerCase(), 'versalink') || _.includes(model.toLowerCase(), 'primelink');
+  //    const isAltalink = _.includes(model.toLowerCase(), 'altalink');
+  //    const isThirdGenBrowser = _.includes(navigator.userAgent.toLowerCase(), "x3g_");
+  //    const result = {
+  //       isThirdGenBrowser: isThirdGenBrowser,
+  //       generation: generation,
+  //       isVersalink: isVersalink,
+  //       isAltalink: isAltalink,
+  //       isEighthGen: generation < 9.0,
+  //       model: model
+  //       };
+        
+  //       // localStorage.setItem('Generation',result.generation.toString());
+  //       // localStorage.setItem('IsThirdGenBrowser',result.isThirdGenBrowser.toString());
+  //       // localStorage.setItem('isVersaLink',result.isVersalink.toString());
+  //       // localStorage.setItem('isAltaLink',result.isAltalink.toString());
+  //       // localStorage.setItem('isEighthGen',result.isEighthGen.toString());
+  //       // localStorage.setItem('Model',result.model.toString());
+  //       resolve(result);
+        
+  //     };
+  //       function errorCallback  (result: any)  {
+  //       reject(result);};
+  //       xrxDeviceConfigGetDeviceInformation(
+  //       url,
+  //       successCallback,
+  //       errorCallback,
+  //       timeout,
+  //       async
+  //       );
+  //     });
+  //     this.router.navigate(['scanScreen']);
+  //   }
+}
+  
+  
+  
+/*
   Session(url: string,timeout:number,async:boolean, ldap: string): Promise<any> {
     return new Promise((resolve, reject) => {
       function successCallback (envelope: string, response: string) {

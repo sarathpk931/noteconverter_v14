@@ -15,7 +15,8 @@ import { FileFormat, FileFormatOption} from '../../model/global';
 import { ScanService } from '../../services/scan.service';
 import { ErrorHandlerService } from '../../services/error-handler.service';
 import { AppComponent } from '../../app.component';
-import {Global} from '../../model/global'
+import {Global} from '../../model/global';
+import {AppModule} from '../../app.module';
 
 
 @Component({
@@ -55,6 +56,9 @@ export class ScanScreenComponent {
   selectedSizeOptions : FileFormatOption;
   submitted = false;
 
+  generation = AppModule.Generation;
+  model = AppModule.model;
+
   constructor(
     private dialog: MatDialog,
     private formBuilder: FormBuilder,
@@ -64,23 +68,24 @@ export class ScanScreenComponent {
     private scanService :ScanService,
     private appComponent : AppComponent
     
-    ) {}
+    ) {
+
+    }
 
     ngOnInit(){
+      console.log(this.generation);
+      console.log("model :" + this.model);
 
-      
-      this.scanOptionService.email =global.global_email;
-
-      this.activatedRoute.queryParams.subscribe(params => {
+      /* this.activatedRoute.queryParams.subscribe(params => {
       const paramsJsonStr = JSON.stringify(params, null, 2);
       console.log(`scanScreen -> paramsJsonStr: ${paramsJsonStr}`);
-      });
+      }); */
 
       // If we have an email in session, attempt to validate fields (to enable scan button)
-      if (Global.Email) 
-      {
-        this.validateAllFields();
-      }
+      // if (Global.Email) 
+      // {
+      //   this.validateAllFields();
+      // }
 
       // If not eigth gen, whenever scroll-container scrolls (its an accident, so scrolltop to 0) to fix shadows
       /* if (!this.device.isEighthGen && !this.device.isThirdGenBrowser) {
