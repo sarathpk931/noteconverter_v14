@@ -1,7 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 .cdk-overlay-pane{
     width: 400px;
-    max-width: 80vw;
+    max-width: 100% !important;
     position: absolute !important;
     display: block;
     left: 0;
@@ -39,6 +39,11 @@
 .image_updated
 {
     margin-right:10px;
+    width:50px;
+}
+.text-end
+{
+    padding-right:17px !important;
 }
 .content_updated
 {
@@ -53,7 +58,7 @@
     padding:0px !important;
     margin: 0px !important;
     width: 100% !important;
-    top:10%;
+   
 }
 .privacy_content
 {
@@ -112,11 +117,45 @@ clear:both;
 
 .cdk-overlay-backdrop.cdk-overlay-backdrop-showing
 {
-    opacity: 0 !important;;
+    opacity: 0 !important;
 }
-
-
-
+@media (max-width: 768px) {
+.custom-container
+{
+    max-width: 100% !important; 
+    padding:0px !important;
+    
+}
+.custom-container .content
+{
+    margin: 0px !important;
+    border-radius: 0px !important;
+}
+}
+.button_click
+{
+    position: relative;
+}
+.button_click .button_event_1
+{
+    position: absolute;
+    width:100%;
+    height:100px;
+    top:0px;  
+    z-index: 9999;
+}
+.button_click .button_event_2
+{
+    position: absolute;
+    width:100%;
+    height:100px;
+    top:0px;  
+    z-index: 9999;
+}
+.cdk-global-scrollblock
+{
+    overflow-y: auto !important;
+}
 @media (min-width: 768px) {
     .container {
     width : 750px;

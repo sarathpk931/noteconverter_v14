@@ -40,31 +40,53 @@
       <div class="section-2">
         <ul>
           <li>
-            <div class="row">  	
-              <div class="col-lg-6">	
-                <div class="d-inline-block image_updated">	
-                  <img class="img-fluid" src="assets/Content/Images/{{selectedType.icon}}">	
-                </div>        	
-               <span class="text-left" xasString="{{selectedType.title}}"></span> 	
+            <div class="row button_click"> 
+              <div class="button_event_1" (click)="openScan();"></div> 	
+              
+             
+              <div class="col-lg-6 col-xs-6">	
+                <table>
+                  <tr>
+                    <td>
+                      <div class="d-inline-block image_updated">	
+                        <img class="img-fluid" src="assets/Content/Images/{{selectedType.icon}}">	
+                      </div> 
+                    </td>
+                    <td>
+                      <span class="text-left" xasString="{{selectedType.title}}"></span> 	
+                    </td>
+                  </tr>
+                </table>
               </div>	
                 
-              <div class="col-lg-6 text-end content_updated">                   	
-                <span  class="text-right" (click)="openScan();" >{{selectedTypeOptions.title}}</span>   <!---->                 	
+              <div class="col-lg-6 col-xs-6 text-end content_updated">                   	
+                <span  class="text-right"  >{{selectedTypeOptions.title}}</span>   <!---->                 	
               </div>            	
             </div>	
                 
               </li>            	
               <li>            	
-             <div class="row" > 	
-              <div class="col-lg-6">	
-                <div class="d-inline-block image_updated">	
-                  <img class="img-fluid" src="assets/Content/Images/{{selectedSize.icon}}">	
-                </div>            	
-                <span class="text-left" xasString="{{selectedSize.title}}"></span> 	
+             <div class="row button_click" > 	
+              <div class="button_event_2" (click)="openSize();"></div> 	
+              <div class="col-lg-6 col-xs-6 ">	
+                <table>
+                  <tr>
+                    <td>
+                      <div class="d-inline-block image_updated">	
+                        <img class="img-fluid" src="assets/Content/Images/{{selectedSize.icon}}">	
+                      </div>    
+                      </td>
+                      <td>
+                        <span class="text-left" xasString="{{selectedSize.title}}"></span> 	
+                      </td>
+                      </tr>
+                </table>
+                        	
+              
               </div>	
                    
-              <div class="col-lg-6 text-end content_updated"> 	
-                <span class="text-right" (click)="openSize();">{{selectedSizeOptions.title}}</span>  <!---->	
+              <div class="col-lg-6 col-xs-6 text-end content_updated"> 	
+                <span class="text-right" >{{selectedSizeOptions.title}}</span>  <!---->	
               </div>         	
             </div>            	
             </li>          
@@ -75,13 +97,15 @@
             <div class="col-lg-6 col-xs-6">
               <button class="btn" (click)="resetForm()">Reset</button>
             </div>
-
             <div class="col-lg-6 col-xs-6 ">	
               <button class="btn" (click)="showPrivacyStatement();">Privacy Statement</button>	
             </div>
           </div>
         </div>
-      </div>
+        
+          
+        </div>
+      
     </div>
     </form>
   </div>
