@@ -15,9 +15,11 @@ import { FileFormat, FileFormatOption} from '../../model/global';
 import { ScanService } from '../../services/scan.service';
 import { ErrorHandlerService } from '../../services/error-handler.service';
 import { AppComponent } from '../../app.component';
-import {Global} from '../../model/global';
+import {Global,AppSetting} from '../../model/global'
+import { LogService } from '../../services/log.service';
+import {xrxScanV2GetInterfaceVersion} from '../../../assets/Xrx/XRXScanV2';
+import {xrxJobMgmtGetInterfaceVersion} from '../../../assets/Xrx/XRXJobManagement';
 import {AppModule} from '../../app.module';
-
 
 @Component({
   selector: 'app-scan-screen',
@@ -66,7 +68,8 @@ export class ScanScreenComponent {
     private modalService : ModalService,
     private scanOptionService : ScanOptionsService,
     private scanService :ScanService,
-    private appComponent : AppComponent
+    private appComponent : AppComponent,
+    private  logger: LogService,
     
     ) {
 
@@ -96,7 +99,7 @@ export class ScanScreenComponent {
       } */
 
       
-
+  
       this.createForm();
 
       this.getDefaultValues();
@@ -149,35 +152,35 @@ export class ScanScreenComponent {
         return this.noteConvertorForm.controls;
     }
 
-    scanDocument(event:any){
-          debugger;
+    // scanDocument(event:any){
+    //       debugger;
           
-          this.showLoader = true;
-          this.showLoader = true;
-          this.file = event.target.files[0];
-          this.file = event.target.files[0];
-          const fileContents=this.file;
-          var blob:any;
-          blob =new blob([fileContents],{type:'text/plain'});
-          saveAs(blob,'xerox_file').subscribe((res:any)=>{
+    //       this.showLoader = true;
+    //       this.showLoader = true;
+    //       this.file = event.target.files[0];
+    //       this.file = event.target.files[0];
+    //       const fileContents=this.file;
+    //       var blob:any;
+    //       blob =new blob([fileContents],{type:'text/plain'});
+    //       saveAs(blob,'xerox_file').subscribe((res:any)=>{
           
-          const formData = new FormData();
+    //       const formData = new FormData();
          
-          formData.append('xerox_file',event.target.files[0]);
+    //       formData.append('xerox_file',event.target.files[0]);
           
-            this.showLoader = false;
+    //         this.showLoader = false;
           
-            if(res.status === 200){
+    //         if(res.status === 200){
           
-              this.openSuccessPopup();
-            }
-          //   }
-          },err=>{
-            this.showLoader = false;
-          });
+    //           this.openSuccessPopup();
+    //         }
+    //       //   }
+    //       },err=>{
+    //         this.showLoader = false;
+    //       });
           
         
-    }
+    // }
    
     resetForm(){
       this.noteConvertorForm.patchValue({
@@ -242,6 +245,89 @@ export class ScanScreenComponent {
     exit(): void {
       // TODO: Implement exit function
     }
+// scan functionalities 
 
+scan() {
+  debugger;
+  this.logger.logMsg('ctrl.scan ...', 'information');
+   this.mainDeviceconfig();
+};
+
+ mainDeviceconfig() {
+  this.logger.logMsg('mainDeviceconfig()...', 'information');
+  const regex = /^[^\\\/\:\*\?\"\<\>\|]+$/;
+  if (regex.test(this.scanOptionService.fileName)) {
+    this.logger.logMsg('mainDeviceconfig() -> if (regex.test(scanOptionsService.fileName))', 'information');
+    xrxDeviceConfigGetInterfaceVersion(AppSetting.url, this.deviceCallbackSuccess, this.deviceCallBackFailure, null, true);
+  } else {
+    this.logger.logMsg('mainDeviceconfig() ELSE FOR if (regex.test(scanOptionsService.fileName))', 'information');
+    //const text = strings['SDE_CHARACTERS_CANNOT_BE'].replace('{0}', '\\ / : * ? " < > |');
+    //errorHandlerService.showErrorAlert(text, '', null, null);
+  }
+}
+
+deviceCallbackSuccess() {
+  this.getScanStatus();
+}
+
+ deviceCallBackFailure(respText, newresp) {
+  this.logger.logMsg('DeviceCallBack_Failure -> respText:' + respText + ' newresp:' + newresp, 'error');
+  //errorHandlerService.XBB_DEVICE_EIP_DEVICE_CONFIG_DISABLED();
+}
+
+getScanStatus() {
+  this.logger.logMsg('getScanStatus()...', 'information');
+  xrxScanV2GetInterfaceVersion(AppSetting.url, 
+    this.callback_success, 
+    this.callback_failure, 
+    null, true);
+  
+}
+callback_success(reqText, respText) {
+  this.logger.logMsg('getScanStatus() -> callback_success', 'information');
+  this.getjobmamt();
+}
+callback_failure(respText, newresp) {
+  this.logger.logMsg('callback_failure -> respText:' + respText + ' newresp:' + newresp, 'error');
+  //errorHandlerService.DEVICE_EIP_SCANV2_SERVICES_DISABLED();
+}
+
+ getjobmamt() {
+  this.logger.logMsg('getjobmanagementInterfaceVersion()...', 'information');
+  xrxJobMgmtGetInterfaceVersion(AppSetting.url, this.Jobcallback_success, this.Jobcallback_failure, null, true);
+}
+
+Jobcallback_success(reqText, respText) {
+  this.logger.logMsg('Jobcallback_success()...', 'information');
+  this.CheckTemplate();
+}
+Jobcallback_failure(reqText, respText) {
+  this.logger.logMsg('Jobcallback_failure -> reqText:' + reqText + ' respText:' + respText, 'error');
+  //errorHandlerService.DEVICE_EIP_SCANV2_SERVICES_DISABLED();
+}
+
+CheckTemplate() {
+  xrxTemplateGetInterfaceVersion(AppSetting.url, this.Templatecallback_success, this.Templatecallback_failure, null, true);
+}
+
+Templatecallback_success() {
+
+  this.logger.logMsg('Templatecallback_success()...', 'information');
+
+  var values = this.scanOptionService.getValues();
+
+  this.logger.logMsg('Templatecallback_success() values:' + values, 'information');
+
+  '##############################################################################'
+  '####################              SCAN       #################################'
+  '##############################################################################'
+
+  this.scanService.scan(values);
+}
+
+ Templatecallback_failure(respText, newresp) {
+  this.logger.logMsg('Templatecallback_failure -> respText:' + respText + ' newresp:' + newresp, 'error');
+  //errorHandlerService.DEVICE_EIP_SCANV2_SERVICES_DISABLED();
+}
     
 }
