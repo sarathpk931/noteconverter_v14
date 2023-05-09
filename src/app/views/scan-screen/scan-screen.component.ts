@@ -19,6 +19,8 @@ import {Global,AppSetting} from '../../model/global'
 import { LogService } from '../../services/log.service';
 import {xrxScanV2GetInterfaceVersion} from '../../../assets/Xrx/XRXScanV2';
 import {xrxJobMgmtGetInterfaceVersion} from '../../../assets/Xrx/XRXJobManagement';
+import {xrxTemplateGetInterfaceVersion} from '../../../assets/Xrx/XRXTemplate';
+import {xrxDeviceConfigGetInterfaceVersion} from '../../../assets/Xrx/XRXDeviceConfig';
 import {AppModule} from '../../app.module';
 
 @Component({
@@ -57,10 +59,8 @@ export class ScanScreenComponent {
   selectedSize : FileFormat;
   selectedSizeOptions : FileFormatOption;
   submitted = false;
-
   generation = AppModule.Generation;
   model = AppModule.model;
-
   constructor(
     private dialog: MatDialog,
     private formBuilder: FormBuilder,
@@ -71,18 +71,16 @@ export class ScanScreenComponent {
     private appComponent : AppComponent,
     private  logger: LogService,
     
-    ) {
-
-    }
+    ) {}
 
     ngOnInit(){
       console.log(this.generation);
       console.log("model :" + this.model);
 
-      /* this.activatedRoute.queryParams.subscribe(params => {
+      this.activatedRoute.queryParams.subscribe(params => {
       const paramsJsonStr = JSON.stringify(params, null, 2);
       console.log(`scanScreen -> paramsJsonStr: ${paramsJsonStr}`);
-      }); */
+      });
 
       // If we have an email in session, attempt to validate fields (to enable scan button)
       // if (Global.Email) 
@@ -248,7 +246,6 @@ export class ScanScreenComponent {
 // scan functionalities 
 
 scan() {
-  debugger;
   this.logger.logMsg('ctrl.scan ...', 'information');
    this.mainDeviceconfig();
 };
