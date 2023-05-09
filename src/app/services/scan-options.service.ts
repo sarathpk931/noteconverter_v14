@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { LogService } from './log.service';
-import { FileFormat,FileFormatOption,ScanFeatureOption,ScanFeature} from '../model/common';
+import { FileFormat,FileFormatOption,ScanFeatureOption,ScanFeature} from '../model/global';
 
 @Injectable({
   providedIn: 'root'

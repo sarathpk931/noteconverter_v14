@@ -11,11 +11,11 @@ import { PrivacyPolicyComponent} from '../privacy-policy/privacy-policy.componen
 import { PopupCompComponent} from '../popup-comp/popup-comp.component';
 import { ModalService} from '../../services/modal.service';
 import { ScanOptionsService} from '../../services/scan-options.service';
-import { FileFormat, FileFormatOption} from '../../model/common';
+import { FileFormat, FileFormatOption} from '../../model/global';
 import { ScanService } from '../../services/scan.service';
 import { ErrorHandlerService } from '../../services/error-handler.service';
 import { AppComponent } from '../../app.component';
-import {Common} from '../../model/common'
+import {Global} from '../../model/global'
 
 
 @Component({
@@ -69,7 +69,7 @@ export class ScanScreenComponent {
     ngOnInit(){
 
       
-      this.scanOptionService.email =Common.global_email;
+      this.scanOptionService.email =global.global_email;
 
       this.activatedRoute.queryParams.subscribe(params => {
       const paramsJsonStr = JSON.stringify(params, null, 2);
@@ -77,7 +77,7 @@ export class ScanScreenComponent {
       });
 
       // If we have an email in session, attempt to validate fields (to enable scan button)
-      if (Common.global_email) 
+      if (Global.Email) 
       {
         this.validateAllFields();
       }

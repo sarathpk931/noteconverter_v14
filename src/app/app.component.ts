@@ -8,7 +8,7 @@ import {xrxSessionGetSessionInfo,xrxSessionGetSessionInfoRequest,xrxSessionParse
 import {xrxGetElementValue} from '../assets/Xrx/XRXXmlHandler';
 import {xrxCallWebservice,xrxCallAjax} from '../assets/Xrx/XRXWebservices';
 import { LogService } from '../app/services/log.service';
-import {Common} from '../app/model/common';
+import {AppSetting, Global} from './model/global';
 import { RadioControlValueAccessor } from '@angular/forms';
 
 
@@ -30,30 +30,18 @@ export class AppComponent implements OnInit {
     
     private  logger: LogService,
     private http: HttpClient,
-    private router : Router
+    private router : Router,
+    
     ) 
-    {}
+    { }
 
   
   ngOnInit(){
-
-    this.Strings();
-    this.Device('http://localhost',5000,true).then((result)=>{
-      Common.global_Generation=result.generation.toString();
-      Common.global_isEighthGen=result.isEighthGen;
-      Common.global_IsThirdGenBrowser=result.IsThirdGenBrowser;
-
-    });
-    this.Session('http://127.0.0.1',5000,true,'').then((value)=>{
-      Common.global_email=value;
-    });
     this.router.navigate(['scanScreen']);
-    
-    
   }
 
 
-  Strings = async () => {
+ Strings = async () => {
     var regex = /(\w+)\-?/g;
     const locale = regex.exec(window.navigator.language || window.navigator.language)[1] || 'en';
     //const locale = navigator.language;
@@ -62,7 +50,9 @@ export class AppComponent implements OnInit {
     console.log('locale',data.strings)
     localStorage.setItem('locale',data.strings);
     return data.strings;
-  };
+  }
+}
+  /*
   
   Device(url: string, timeout: number , async: boolean): Promise<any> {
     return new Promise((resolve, reject) => {
@@ -147,10 +137,7 @@ export class AppComponent implements OnInit {
         async,
         ldap
       );
-    });
-  }
-
-
-  }
+    }); */
+  
 
 

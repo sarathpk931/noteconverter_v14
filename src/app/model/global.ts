@@ -42,13 +42,22 @@ export interface ScanFeature {
     options: ScanFeatureOption[];
 }
   
-export class Common {
+export class Global {
 
-    public static global_email:string;
-    public static global_Generation:string;
-    public static global_IsThirdGenBrowser:string;
-    public static global_isVersaLink:string;
-    public static global_isAltaLink:string;
-    public static global_isEighthGen:string;
-    public static global_Model:string
+    public static Email:string;
+    public static Generation:string;
+    public static isThirdGenBrowser:string;
+    public static isVersaLink:string;
+    public static isAltaLink:string;
+    public static isEighthGen:string;
+    public static Model:string
+}
+
+export class AppSetting {
+
+    public static  url:'http://localhost';
+    public static timout:5000;
+    public static async:true;
+    public static ldap:'';
+   
 }

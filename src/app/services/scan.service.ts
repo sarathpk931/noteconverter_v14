@@ -16,6 +16,7 @@ import {xrxScanV2InitiateScanJobWithTemplate,xrxScanV2ParseInitiateScanJobWithTe
 import {xrxJobMgmtGetJobDetails,xrxJobMgmtParseGetJobDetails,xrxJobMgmtParseJobStateReasons} from '../../assets/Xrx/XRXJobManagement';
 import {xrxParseJobStateReasons} from '../../assets/Xrx/XRX_EIPWSHelpers';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -31,7 +32,8 @@ export class ScanService {
     private logService: LogService,
     private jobService: JobService,
     private errorHandlerService: ErrorHandlerService,
-    private appComponent:AppComponent
+    private appComponent:AppComponent,
+     
   ) {}
 
   private printerUrl = 'http://127.0.0.1';

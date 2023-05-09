@@ -4,7 +4,7 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog'
 
 import { ScanOptionsService} from '../../services/scan-options.service';
 import { ModalService} from '../../services/modal.service';
-import {FileFormat, FileFormatOption} from '../../model/common';
+import {FileFormat, FileFormatOption} from '../../model/global';
 //import { EventEmitter } from 'stream';
 
 @Component({
