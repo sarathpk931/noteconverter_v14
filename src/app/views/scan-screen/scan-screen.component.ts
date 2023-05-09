@@ -3,6 +3,7 @@
 import { Component } from '@angular/core';
 import {MatDialog,MatDialogRef} from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators,ReactiveFormsModule,AbstractControl } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import {Blob} from 'blob';
 import { saveAs } from 'file-saver';
 import {FeaturePopoverComponent} from '../feature-popover/feature-popover.component';
@@ -57,16 +58,23 @@ export class ScanScreenComponent {
   constructor(
     private dialog: MatDialog,
     private formBuilder: FormBuilder,
+    private activatedRoute: ActivatedRoute,
     private modalService : ModalService,
     private scanOptionService : ScanOptionsService,
     private scanService :ScanService,
     private appComponent : AppComponent
+    
     ) {}
 
     ngOnInit(){
 
       
       this.scanOptionService.email =Common.global_email;
+
+      this.activatedRoute.queryParams.subscribe(params => {
+      const paramsJsonStr = JSON.stringify(params, null, 2);
+      console.log(`scanScreen -> paramsJsonStr: ${paramsJsonStr}`);
+      });
 
       // If we have an email in session, attempt to validate fields (to enable scan button)
       if (Common.global_email) 
@@ -81,6 +89,8 @@ export class ScanScreenComponent {
         scrollContainer.scrollTop = 0;
       }, 250, { leading: true }));
       } */
+
+      
 
       this.createForm();
 
@@ -215,4 +225,18 @@ export class ScanScreenComponent {
     validateAllFields(): void {
       // TODO: Implement validateAllFields function
     }
+
+    refreshCredits(): void {
+      // TODO: Implement refreshCredits function
+    }
+
+    clearValidation(): void {
+      // TODO: Implement clearValidation function
+    }
+
+    exit(): void {
+      // TODO: Implement exit function
+    }
+
+    
 }
