@@ -74,10 +74,10 @@ export class ScanScreenComponent {
     ) {}
 
     ngOnInit(){
-      console.log(this.generation);
-      console.log("model :" + this.model);
-     // alert("Ng Oninit Generation :" +this.generation);
-     // alert("Ng Oninit model :"+ this.model);
+      //console.log(this.generation);
+      //console.log("model :" + this.model);
+      alert("Ng Oninit Generation :" +this.generation);
+      alert("Ng Oninit model :"+ this.model);
 
       // this.activatedRoute.queryParams.subscribe(params => {
       // const paramsJsonStr = JSON.stringify(params, null, 2);
@@ -249,12 +249,12 @@ export class ScanScreenComponent {
 
 scan() {
   this.logger.logMsg('ctrl.scan ...', 'information');
-  alert("Scan click ");
+  //alert("Scan click ");
    this.mainDeviceconfig();
 };
 
  mainDeviceconfig() {
-  alert("Inside main device config ");
+  //alert("Inside main device config ");
   this.logger.logMsg('mainDeviceconfig()...', 'information');
   const regex = /^[^\\\/\:\*\?\"\<\>\|]+$/;
   if (regex.test(this.scanOptionService.fileName)) {
@@ -270,7 +270,7 @@ scan() {
 }
 
 deviceCallbackSuccess() {
-  alert("Inside deviceCallbackSuccess ");
+  //alert("Inside deviceCallbackSuccess ");
   this.getScanStatus();
 }
 
@@ -282,11 +282,11 @@ deviceCallbackSuccess() {
 
 getScanStatus() {
   alert("Inside getScanStatus ");
-  this.logger.logMsg('getScanStatus()...', 'information');
-  xrxScanV2GetInterfaceVersion(AppSetting.url, 
-    this.callback_success, 
-    this.callback_failure, 
-    null, true);
+  // this.logger.logMsg('getScanStatus()...', 'information');
+  // xrxScanV2GetInterfaceVersion(AppSetting.url, 
+  //   this.callback_success, 
+  //   this.callback_failure, 
+  //   null, true);
   
 }
 callback_success(reqText, respText) {
