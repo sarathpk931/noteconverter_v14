@@ -76,11 +76,13 @@ export class ScanScreenComponent {
     ngOnInit(){
       console.log(this.generation);
       console.log("model :" + this.model);
+     // alert("Ng Oninit Generation :" +this.generation);
+     // alert("Ng Oninit model :"+ this.model);
 
-      this.activatedRoute.queryParams.subscribe(params => {
-      const paramsJsonStr = JSON.stringify(params, null, 2);
-      console.log(`scanScreen -> paramsJsonStr: ${paramsJsonStr}`);
-      });
+      // this.activatedRoute.queryParams.subscribe(params => {
+      // const paramsJsonStr = JSON.stringify(params, null, 2);
+      // console.log(`scanScreen -> paramsJsonStr: ${paramsJsonStr}`);
+      // });
 
       // If we have an email in session, attempt to validate fields (to enable scan button)
       // if (Global.Email) 
@@ -247,16 +249,20 @@ export class ScanScreenComponent {
 
 scan() {
   this.logger.logMsg('ctrl.scan ...', 'information');
+  alert("Scan click ");
    this.mainDeviceconfig();
 };
 
  mainDeviceconfig() {
+  alert("Inside main device config ");
   this.logger.logMsg('mainDeviceconfig()...', 'information');
   const regex = /^[^\\\/\:\*\?\"\<\>\|]+$/;
   if (regex.test(this.scanOptionService.fileName)) {
+    alert("Inside regex test ");
     this.logger.logMsg('mainDeviceconfig() -> if (regex.test(scanOptionsService.fileName))', 'information');
     xrxDeviceConfigGetInterfaceVersion(AppSetting.url, this.deviceCallbackSuccess, this.deviceCallBackFailure, null, true);
   } else {
+    alert("Inside regex test else case ");
     this.logger.logMsg('mainDeviceconfig() ELSE FOR if (regex.test(scanOptionsService.fileName))', 'information');
     //const text = strings['SDE_CHARACTERS_CANNOT_BE'].replace('{0}', '\\ / : * ? " < > |');
     //errorHandlerService.showErrorAlert(text, '', null, null);
@@ -264,15 +270,18 @@ scan() {
 }
 
 deviceCallbackSuccess() {
+  alert("Inside deviceCallbackSuccess ");
   this.getScanStatus();
 }
 
  deviceCallBackFailure(respText, newresp) {
+  alert("Inside deviceCallBackFailure "+respText);
   this.logger.logMsg('DeviceCallBack_Failure -> respText:' + respText + ' newresp:' + newresp, 'error');
   //errorHandlerService.XBB_DEVICE_EIP_DEVICE_CONFIG_DISABLED();
 }
 
 getScanStatus() {
+  alert("Inside getScanStatus ");
   this.logger.logMsg('getScanStatus()...', 'information');
   xrxScanV2GetInterfaceVersion(AppSetting.url, 
     this.callback_success, 
@@ -281,34 +290,40 @@ getScanStatus() {
   
 }
 callback_success(reqText, respText) {
+  alert("Inside getScanStatus -> callback_success");
   this.logger.logMsg('getScanStatus() -> callback_success', 'information');
   this.getjobmamt();
 }
 callback_failure(respText, newresp) {
+  alert("Inside getScanStatus -> callback_failure");
   this.logger.logMsg('callback_failure -> respText:' + respText + ' newresp:' + newresp, 'error');
   //errorHandlerService.DEVICE_EIP_SCANV2_SERVICES_DISABLED();
 }
 
  getjobmamt() {
+  alert("Inside getScanStatus -> callback_failure -> getjobmamt");
   this.logger.logMsg('getjobmanagementInterfaceVersion()...', 'information');
   xrxJobMgmtGetInterfaceVersion(AppSetting.url, this.Jobcallback_success, this.Jobcallback_failure, null, true);
 }
 
 Jobcallback_success(reqText, respText) {
+  alert("Inside getScanStatus -> callback_failure -> getjobmamt-> Jobcallback_success");
   this.logger.logMsg('Jobcallback_success()...', 'information');
   this.CheckTemplate();
 }
 Jobcallback_failure(reqText, respText) {
+  alert("Inside getScanStatus -> callback_failure -> getjobmamt-> Jobcallback_failure");
   this.logger.logMsg('Jobcallback_failure -> reqText:' + reqText + ' respText:' + respText, 'error');
   //errorHandlerService.DEVICE_EIP_SCANV2_SERVICES_DISABLED();
 }
 
 CheckTemplate() {
+  alert("Inside getScanStatus ->  Jobcallback_success->CheckTemplate");
   xrxTemplateGetInterfaceVersion(AppSetting.url, this.Templatecallback_success, this.Templatecallback_failure, null, true);
 }
 
 Templatecallback_success() {
-
+  alert("Inside Jobcallback_success->CheckTemplate->Templatecallback_success");
   this.logger.logMsg('Templatecallback_success()...', 'information');
 
   var values = this.scanOptionService.getValues();
@@ -323,6 +338,7 @@ Templatecallback_success() {
 }
 
  Templatecallback_failure(respText, newresp) {
+  alert("Inside Jobcallback_success->CheckTemplate->Templatecallback_failure");
   this.logger.logMsg('Templatecallback_failure -> respText:' + respText + ' newresp:' + newresp, 'error');
   //errorHandlerService.DEVICE_EIP_SCANV2_SERVICES_DISABLED();
 }

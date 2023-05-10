@@ -147,6 +147,7 @@ export async function Session(url: string,timeout:number,async:boolean, ldap: st
       }
     };
     function errorCallback (result: any) {
+      alert("inside error");
       result={
         email:""
       };
@@ -163,9 +164,10 @@ export async function Session(url: string,timeout:number,async:boolean, ldap: st
   });}
 
   export async function Device(url: string, timeout: number , async: boolean): Promise<any> {
+    alert("device");
     return new Promise((resolve, reject) => {
     function successCallback (envelope: any, response: any)  {
-   debugger;
+      alert("inside success");
      const doc = xrxStringToDom(response);
      const info = doc.querySelector("devcfg\\:Information, Information");
      const parser = new DOMParser();
