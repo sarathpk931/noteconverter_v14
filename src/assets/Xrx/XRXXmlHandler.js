@@ -25,6 +25,7 @@
  * @return {object} Dom structure representing text given
  */
 export function xrxStringToDom(thedoc) {
+    //alert("inside xrxStringToDom");
     return (new DOMParser().parseFromString(thedoc, "text/xml"));
 }
 
@@ -65,11 +66,14 @@ export function xrx_getXmlDocumentNS(ns, name) {
  * @return {string}     unqualified name of node
  */
 export function xrxGetElementName(node) {
+    //alert("xrxGetElementName :"+ node);
     var name = "";
     try {
         var names = (node.nodeName).split(":");
-        name = names[names.length - 1];
-    } catch (e) {}
+        name = names[names.length - 1];//alert(name);
+    } catch (e) {
+        alert("catch :"+ e);
+    }
     return name;
 }
 
@@ -82,6 +86,7 @@ export function xrxGetElementName(node) {
  * @return {array}  an array of nodes with given name or null
  */
 export function xrxFindElements(xmldoc, name) {
+    alert("xrxFindElements");
     var result = null;
     var pos = 0;
     if (name == xrxGetElementName(xmldoc)) {
@@ -161,6 +166,7 @@ export function xrxFindFirstElement(xmldoc, name) {
  * @return {object}     first node found with given name or null
  */
 export function xrxGetTheElement(root, name) {
+    //alert("xrxGetTheElement");
     var list = xrxFindElements(root, name);
     return (((list != null) && (list.length > 0)) ? list[0] : null);
 }
@@ -211,6 +217,7 @@ export function xrxFindElement(root, elements) {
  *                  string or null if node not found
  */
 export function xrxGetElementValue(root, name) {
+    //alert("xrxGetElementValue :"+root+", Name :"+name);
     return xrxGetValue(xrxGetTheElement(root, name));
 }
 
@@ -236,6 +243,7 @@ export function xrxGetFirstElementValue(root, name) {
  *                  or null if tag is not there
  */
 export function xrxGetValue(el) {
+    //alert("xrxGetValue :"+ el);
     if (el != null)
         if (el.hasChildNodes()) {
             var node = el.firstChild;

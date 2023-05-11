@@ -177,7 +177,7 @@ export class ScanTemplateService {
     this.generalSection = _.clone(typeof(this._generalSection));
     this.scanSection = _.clone(typeof(this._scanSection));
     this.sections = [this.scanSection, this.generalSection, this.destSection, this.docSection];
-  
+  debugger;
     var params = this.activatedRoute.queryParamMap.subscribe((params) => {
       console.log(params);
     });

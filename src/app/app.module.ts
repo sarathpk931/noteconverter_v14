@@ -90,11 +90,11 @@ import * as _ from 'lodash';
     useFactory:()=> Device,
     multi:true,
   },
-  {
-    provide :APP_INITIALIZER,
-    useFactory: ()=> Session,
-    multi:true,
-  },
+  // {
+  //   provide :APP_INITIALIZER,
+  //   useFactory: ()=> Session,
+  //   multi:true,
+  // },
   
     StorageService,
     LogService,
@@ -116,22 +116,21 @@ export class AppModule {
  }
 
 export async function Session(url: string,timeout:number,async:boolean, ldap: string): Promise<any> {
+  alert("inside session");
   return new Promise((resolve, reject) => {
-    function successCallback (envelope: string, response: string) {
-      debugger;
+    function successCallbackSession (envelope: string, response: string) {
+      alert("inside session success");
       //var data = xrxSessionGetSessionInfoRequest(response);
-      var data =xrxSessionParseGetSessionInfo(response);
+      var data =xrxSessionParseGetSessionInfo(response);alert("data in session :"+ data);
       const parser = new DOMParser();
       const xmlDoc = parser.parseFromString(data.firstChild, 'text/xml');
       
-      
+      alert("Xml Doc :"+ xmlDoc);
       var userEmail = "";
       if (data !== null) {
         //var userName = xrxGetElementValue(xmlDoc, "username");
-        const userName = data.firstChild.getElementsByTagName('qualifiedUsername')[0].firstChild.textContent;
-        localStorage.setItem('User Name',userName.toString());
-        var password = data.firstChild.getElementsByTagName('qualifiedUsername')[0].lastChild.textContent;
-        localStorage.setItem('Password',password.toString());
+        const userName = data.firstChild.getElementsByTagName('qualifiedUsername')[0].firstChild.textContent;alert("Username :"+ userName);
+        var password = data.firstChild.getElementsByTagName('qualifiedUsername')[0].lastChild.textContent;alert("password :"+ password);
         if (userName !== null && userName.toLowerCase() !== 'guest')
           userEmail = xrxGetElementValue(data, "from");
 
@@ -140,14 +139,10 @@ export async function Session(url: string,timeout:number,async:boolean, ldap: st
           email:userEmail
         };
         resolve(result.email.toString());
-        Global.Email=result.email.toString();
-        if (Global.Email==""){
-          Global.Email='test@gmail.com';
-        }
       }
     };
-    function errorCallback (result: any) {
-      alert("inside error");
+    function errorCallbackSession (result: any) {
+      alert("inside session error");
       result={
         email:""
       };
@@ -155,8 +150,8 @@ export async function Session(url: string,timeout:number,async:boolean, ldap: st
     };
     xrxSessionGetSessionInfo(
       url,
-      successCallback,
-      errorCallback,
+      successCallbackSession,
+      errorCallbackSession,
       timeout,
       async,
       ldap
@@ -164,10 +159,9 @@ export async function Session(url: string,timeout:number,async:boolean, ldap: st
   });}
 
   export async function Device(url: string, timeout: number , async: boolean): Promise<any> {
-    alert("device");
     return new Promise((resolve, reject) => {
     function successCallback (envelope: any, response: any)  {
-      alert("inside success");
+      
      const doc = xrxStringToDom(response);
      const info = doc.querySelector("devcfg\\:Information, Information");
      const parser = new DOMParser();
@@ -188,14 +182,6 @@ export async function Session(url: string,timeout:number,async:boolean, ldap: st
         isEighthGen: generation < 9.0,
         model: model
         };
-        /* localStorage.setItem('Generation',result.generation.toString());
-        localStorage.setItem('IsThirdGenBrowser',result.isThirdGenBrowser.toString());
-        localStorage.setItem('isVersaLink',result.isVersalink.toString());
-        localStorage.setItem('isAltaLink',result.isAltalink.toString());
-        localStorage.setItem('isEighthGen',result.isEighthGen.toString());
-        localStorage.setItem('Model',result.model.toString()); */
-
-        Global.Generation=result.generation.toString();
         
         resolve(result);
       };

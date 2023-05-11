@@ -60,8 +60,8 @@ export function xrxDeviceConfigGetInterfaceVersion( url, callback_success, callb
 {
     if((url == null) || (url == ""))
         url = "http://127.0.0.1";
-    var sendUrl = url + XRX_DEVICECONFIG_PATH;
-    var sendReq = xrxDeviceConfigGetInterfaceVersionRequest();
+    var sendUrl = url + XRX_DEVICECONFIG_PATH;//alert("Send Url :"+sendUrl);
+    var sendReq = xrxDeviceConfigGetInterfaceVersionRequest();//alert("Send Req :"+sendUrl);
 	return xrxCallWebservice( sendUrl, sendReq, callback_success, callback_failure, timeout, null, null, null, async );
 }
 

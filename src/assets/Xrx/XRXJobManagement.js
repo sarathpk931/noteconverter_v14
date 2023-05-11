@@ -25,6 +25,8 @@ var XRX_JOBMGMT_NAMESPACE = 'xmlns="http://xml.namespaces.xerox.com/enterprise/J
 
 var XRX_JOBMGMT_PATH = '/webservices/JobManagement/1';
 
+import {XRX_SOAPSTART,XRX_SOAPEND,xrxCreateTag,xrxCallWebservice} from './XRXWebservices';
+
 /****************************  FUNCTIONS  *******************************/
 
 

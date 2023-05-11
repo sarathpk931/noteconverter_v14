@@ -21,6 +21,8 @@ var XRX_TEMPLATE_NAMESPACE = 'xmlns="http://www.xerox.com/webservices/office/tem
 
 var XRX_TEMPLATE_PATH = '/webservices/office/template_management/1';
 
+import {XRX_SOAP11_SOAPSTART,xrxCreateTag,XRX_SOAPEND,xrxCallWebservice} from './XRXWebservices';
+
 /****************************  FUNCTIONS  *******************************/
 
 //  Template Interface Version

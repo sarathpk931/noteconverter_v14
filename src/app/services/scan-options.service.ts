@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { LogService } from './log.service';
-import { FileFormat,FileFormatOption,ScanFeatureOption,ScanFeature} from '../model/global';
+import { FileFormat,FileFormatOption,ScanFeatureOption,ScanFeature,selectedNote} from '../model/global';
 
 @Injectable({
   providedIn: 'root'
@@ -129,7 +129,7 @@ export class ScanOptionsService {
   ],
 },    
   ];
-
+  
   public selectedFileFormat : BehaviorSubject<FileFormatOption> = new BehaviorSubject(null);
   selectedFileFormatC = this.selectedFileFormat.asObservable();
   public selectedType : BehaviorSubject<FileFormatOption> = new BehaviorSubject(null);
@@ -228,14 +228,14 @@ export class ScanOptionsService {
       return null;
     }
 
-    getValues() {
-      const featuresList = this.scanFeatures;
+    getValues(selectedNote : selectedNote) {
+      //const featuresList = this.scanFeatures;
   
       // const langStr = featuresList[0].selectedOption.value;
       // logService.logMsg('scanOptionsService => getValues => langStr:' + langStr, 'information');
-  
-      const sidedStr = featuresList[0].options[0].value;    //selectedOption
-      const originalSizeStr = featuresList[0].options[0].value; //SelectedOption
+      debugger;
+      const sidedStr = selectedNote.type.value;//featuresList[0].options[0].value;    //selectedOption
+      const originalSizeStr = selectedNote.size.value;//featuresList[0].options[0].value; //SelectedOption
   
       const values: any = {};
   
@@ -274,8 +274,8 @@ export class ScanOptionsService {
           break;
       }
   
-      values.fileFormat = this.fileFormat[0].options;
-      values.archivalFormat = this.fileFormat[0].name;
+      values.fileFormat = selectedNote.fileFormat.value;//this.fileFormat[0].options;
+      values.archivalFormat = true;//this.fileFormat[1].subFeatures[0].value;
       values.colorMode = 'AUTO';
       values.combineFiles = true;
       // values.language = langStr;
@@ -287,7 +287,7 @@ export class ScanOptionsService {
       // values.fileName = this.fileName;
       // To fix bug where the popover config menus do not appear (only dim the screen) when selecting non-latin-char-based languages.
       values.fileName = window.btoa((encodeURIComponent(this.fileName)));
-      values.email = this.email;
+      values.email = selectedNote.email;//this.email;
       return values;
     }
 

@@ -27,6 +27,14 @@ export interface FileFeatureSubFeatureOption {
     isDefault?: boolean;
 }
 
+export interface selectedNote{
+    fileFormat : FileFormatOption,
+    size       : FileFormatOption,
+    type       : FileFormatOption,
+    email      : string,
+    fileName   : string
+}
+
 export interface ScanFeatureOption {
     value: string;
     title: string;

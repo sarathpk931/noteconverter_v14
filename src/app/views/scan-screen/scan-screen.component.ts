@@ -15,7 +15,7 @@ import { FileFormat, FileFormatOption} from '../../model/global';
 import { ScanService } from '../../services/scan.service';
 import { ErrorHandlerService } from '../../services/error-handler.service';
 import { AppComponent } from '../../app.component';
-import {Global,AppSetting} from '../../model/global'
+import {selectedNote,AppSetting} from '../../model/global'
 import { LogService } from '../../services/log.service';
 import {xrxScanV2GetInterfaceVersion} from '../../../assets/Xrx/XRXScanV2';
 import {xrxJobMgmtGetInterfaceVersion} from '../../../assets/Xrx/XRXJobManagement';
@@ -61,6 +61,8 @@ export class ScanScreenComponent {
   submitted = false;
   generation = AppModule.Generation;
   model = AppModule.model;
+  selectedNote : selectedNote;
+
   constructor(
     private dialog: MatDialog,
     private formBuilder: FormBuilder,
@@ -76,8 +78,8 @@ export class ScanScreenComponent {
     ngOnInit(){
       //console.log(this.generation);
       //console.log("model :" + this.model);
-      alert("Ng Oninit Generation :" +this.generation);
-      alert("Ng Oninit model :"+ this.model);
+      //alert("Ng Oninit Generation :" +this.generation);
+      //alert("Ng Oninit model :"+ this.model);
 
       // this.activatedRoute.queryParams.subscribe(params => {
       // const paramsJsonStr = JSON.stringify(params, null, 2);
@@ -152,36 +154,7 @@ export class ScanScreenComponent {
         return this.noteConvertorForm.controls;
     }
 
-    // scanDocument(event:any){
-    //       debugger;
-          
-    //       this.showLoader = true;
-    //       this.showLoader = true;
-    //       this.file = event.target.files[0];
-    //       this.file = event.target.files[0];
-    //       const fileContents=this.file;
-    //       var blob:any;
-    //       blob =new blob([fileContents],{type:'text/plain'});
-    //       saveAs(blob,'xerox_file').subscribe((res:any)=>{
-          
-    //       const formData = new FormData();
-         
-    //       formData.append('xerox_file',event.target.files[0]);
-          
-    //         this.showLoader = false;
-          
-    //         if(res.status === 200){
-          
-    //           this.openSuccessPopup();
-    //         }
-    //       //   }
-    //       },err=>{
-    //         this.showLoader = false;
-    //       });
-          
-        
-    // }
-   
+      
     resetForm(){
       this.noteConvertorForm.patchValue({
         email:'',
@@ -257,13 +230,14 @@ scan() {
   //alert("Inside main device config ");
   this.logger.logMsg('mainDeviceconfig()...', 'information');
   const regex = /^[^\\\/\:\*\?\"\<\>\|]+$/;
-  if (regex.test(this.scanOptionService.fileName)) {
-    alert("Inside regex test ");
-    this.logger.logMsg('mainDeviceconfig() -> if (regex.test(scanOptionsService.fileName))', 'information');
-    xrxDeviceConfigGetInterfaceVersion(AppSetting.url, this.deviceCallbackSuccess, this.deviceCallBackFailure, null, true);
+  let fileName : string = this.noteConvertorForm.controls["fileName"].value
+  if (regex.test(fileName)) {
+    //alert("Inside regex test ");
+    this.logger.logMsg('mainDeviceconfig() -> if (regex.test(fileName))', 'information');
+    xrxDeviceConfigGetInterfaceVersion(AppSetting.url, this.deviceCallbackSuccess.bind(this), this.deviceCallBackFailure.bind(this), null, true);
   } else {
-    alert("Inside regex test else case ");
-    this.logger.logMsg('mainDeviceconfig() ELSE FOR if (regex.test(scanOptionsService.fileName))', 'information');
+    //alert("Inside regex test else case ");
+    this.logger.logMsg('mainDeviceconfig() ELSE FOR if (regex.test(fileName))', 'information');
     //const text = strings['SDE_CHARACTERS_CANNOT_BE'].replace('{0}', '\\ / : * ? " < > |');
     //errorHandlerService.showErrorAlert(text, '', null, null);
   }
@@ -281,52 +255,60 @@ deviceCallbackSuccess() {
 }
 
 getScanStatus() {
-  alert("Inside getScanStatus ");
-  // this.logger.logMsg('getScanStatus()...', 'information');
-  // xrxScanV2GetInterfaceVersion(AppSetting.url, 
-  //   this.callback_success, 
-  //   this.callback_failure, 
-  //   null, true);
+  //alert("Inside getScanStatus ");
+  this.logger.logMsg('getScanStatus()...', 'information');
+  xrxScanV2GetInterfaceVersion(AppSetting.url, 
+    this.callback_success.bind(this), 
+    this.callback_failure.bind(this), 
+    null, true);
   
 }
 callback_success(reqText, respText) {
-  alert("Inside getScanStatus -> callback_success");
+  //alert("Inside getScanStatus -> callback_success");
   this.logger.logMsg('getScanStatus() -> callback_success', 'information');
   this.getjobmamt();
 }
 callback_failure(respText, newresp) {
-  alert("Inside getScanStatus -> callback_failure");
+  //alert("Inside getScanStatus -> callback_failure");
   this.logger.logMsg('callback_failure -> respText:' + respText + ' newresp:' + newresp, 'error');
   //errorHandlerService.DEVICE_EIP_SCANV2_SERVICES_DISABLED();
 }
 
  getjobmamt() {
-  alert("Inside getScanStatus -> callback_failure -> getjobmamt");
+  //alert("Inside getScanStatus -> callback_success -> getjobmamt");
   this.logger.logMsg('getjobmanagementInterfaceVersion()...', 'information');
-  xrxJobMgmtGetInterfaceVersion(AppSetting.url, this.Jobcallback_success, this.Jobcallback_failure, null, true);
+  xrxJobMgmtGetInterfaceVersion(AppSetting.url, this.Jobcallback_success.bind(this), this.Jobcallback_failure.bind(this), null, true);
 }
 
 Jobcallback_success(reqText, respText) {
-  alert("Inside getScanStatus -> callback_failure -> getjobmamt-> Jobcallback_success");
+  //alert("Inside getScanStatus -> callback_success -> getjobmamt-> Jobcallback_success");
   this.logger.logMsg('Jobcallback_success()...', 'information');
   this.CheckTemplate();
 }
 Jobcallback_failure(reqText, respText) {
-  alert("Inside getScanStatus -> callback_failure -> getjobmamt-> Jobcallback_failure");
+  //alert("Inside getScanStatus -> callback_failure -> getjobmamt-> Jobcallback_failure");
   this.logger.logMsg('Jobcallback_failure -> reqText:' + reqText + ' respText:' + respText, 'error');
   //errorHandlerService.DEVICE_EIP_SCANV2_SERVICES_DISABLED();
 }
 
 CheckTemplate() {
-  alert("Inside getScanStatus ->  Jobcallback_success->CheckTemplate");
-  xrxTemplateGetInterfaceVersion(AppSetting.url, this.Templatecallback_success, this.Templatecallback_failure, null, true);
+  //alert("Inside getScanStatus ->  Jobcallback_success->CheckTemplate");
+  xrxTemplateGetInterfaceVersion(AppSetting.url, this.Templatecallback_success.bind(this), this.Templatecallback_failure.bind(this), null, true);
 }
 
 Templatecallback_success() {
-  alert("Inside Jobcallback_success->CheckTemplate->Templatecallback_success");
+  //alert("Inside Jobcallback_success->CheckTemplate->Templatecallback_success");
   this.logger.logMsg('Templatecallback_success()...', 'information');
-
-  var values = this.scanOptionService.getValues();
+  debugger;
+  this.selectedNote={
+    fileFormat : this.selectedFileFormatOptions,
+    size : this.selectedSizeOptions,
+    type : this.selectedTypeOptions,
+    fileName : this.noteConvertorForm.controls["fileName"].value,
+    email :  this.noteConvertorForm.controls["email"].value
+  }
+   
+  var values = this.scanOptionService.getValues(this.selectedNote);
 
   this.logger.logMsg('Templatecallback_success() values:' + values, 'information');
 
