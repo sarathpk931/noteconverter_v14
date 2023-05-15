@@ -23,6 +23,7 @@ import {xrxTemplateGetInterfaceVersion} from '../../../assets/Xrx/XRXTemplate';
 import {xrxDeviceConfigGetInterfaceVersion} from '../../../assets/Xrx/XRXDeviceConfig';
 import {AppModule} from '../../app.module';
 
+
 @Component({
   selector: 'app-scan-screen',
   templateUrl: './scan-screen.component.html',
@@ -222,21 +223,17 @@ export class ScanScreenComponent {
 
 scan() {
   this.logger.logMsg('ctrl.scan ...', 'information');
-  //alert("Scan click ");
    this.mainDeviceconfig();
 };
 
  mainDeviceconfig() {
-  //alert("Inside main device config ");
   this.logger.logMsg('mainDeviceconfig()...', 'information');
   const regex = /^[^\\\/\:\*\?\"\<\>\|]+$/;
   let fileName : string = this.noteConvertorForm.controls["fileName"].value
   if (regex.test(fileName)) {
-    //alert("Inside regex test ");
     this.logger.logMsg('mainDeviceconfig() -> if (regex.test(fileName))', 'information');
     xrxDeviceConfigGetInterfaceVersion(AppSetting.url, this.deviceCallbackSuccess.bind(this), this.deviceCallBackFailure.bind(this), null, true);
   } else {
-    //alert("Inside regex test else case ");
     this.logger.logMsg('mainDeviceconfig() ELSE FOR if (regex.test(fileName))', 'information');
     //const text = strings['SDE_CHARACTERS_CANNOT_BE'].replace('{0}', '\\ / : * ? " < > |');
     //errorHandlerService.showErrorAlert(text, '', null, null);
@@ -244,18 +241,16 @@ scan() {
 }
 
 deviceCallbackSuccess() {
-  //alert("Inside deviceCallbackSuccess ");
+  this.logger.logMsg('DeviceCallBack_Success -> respText:', 'success');
   this.getScanStatus();
 }
 
  deviceCallBackFailure(respText, newresp) {
-  alert("Inside deviceCallBackFailure "+respText);
   this.logger.logMsg('DeviceCallBack_Failure -> respText:' + respText + ' newresp:' + newresp, 'error');
   //errorHandlerService.XBB_DEVICE_EIP_DEVICE_CONFIG_DISABLED();
 }
 
 getScanStatus() {
-  //alert("Inside getScanStatus ");
   this.logger.logMsg('getScanStatus()...', 'information');
   xrxScanV2GetInterfaceVersion(AppSetting.url, 
     this.callback_success.bind(this), 
@@ -264,42 +259,34 @@ getScanStatus() {
   
 }
 callback_success(reqText, respText) {
-  //alert("Inside getScanStatus -> callback_success");
   this.logger.logMsg('getScanStatus() -> callback_success', 'information');
   this.getjobmamt();
 }
 callback_failure(respText, newresp) {
-  //alert("Inside getScanStatus -> callback_failure");
   this.logger.logMsg('callback_failure -> respText:' + respText + ' newresp:' + newresp, 'error');
   //errorHandlerService.DEVICE_EIP_SCANV2_SERVICES_DISABLED();
 }
 
  getjobmamt() {
-  //alert("Inside getScanStatus -> callback_success -> getjobmamt");
   this.logger.logMsg('getjobmanagementInterfaceVersion()...', 'information');
   xrxJobMgmtGetInterfaceVersion(AppSetting.url, this.Jobcallback_success.bind(this), this.Jobcallback_failure.bind(this), null, true);
 }
 
 Jobcallback_success(reqText, respText) {
-  //alert("Inside getScanStatus -> callback_success -> getjobmamt-> Jobcallback_success");
   this.logger.logMsg('Jobcallback_success()...', 'information');
   this.CheckTemplate();
 }
 Jobcallback_failure(reqText, respText) {
-  //alert("Inside getScanStatus -> callback_failure -> getjobmamt-> Jobcallback_failure");
   this.logger.logMsg('Jobcallback_failure -> reqText:' + reqText + ' respText:' + respText, 'error');
   //errorHandlerService.DEVICE_EIP_SCANV2_SERVICES_DISABLED();
 }
 
 CheckTemplate() {
-  //alert("Inside getScanStatus ->  Jobcallback_success->CheckTemplate");
   xrxTemplateGetInterfaceVersion(AppSetting.url, this.Templatecallback_success.bind(this), this.Templatecallback_failure.bind(this), null, true);
 }
 
 Templatecallback_success() {
-  //alert("Inside Jobcallback_success->CheckTemplate->Templatecallback_success");
   this.logger.logMsg('Templatecallback_success()...', 'information');
-  debugger;
   this.selectedNote={
     fileFormat : this.selectedFileFormatOptions,
     size : this.selectedSizeOptions,
@@ -320,7 +307,6 @@ Templatecallback_success() {
 }
 
  Templatecallback_failure(respText, newresp) {
-  alert("Inside Jobcallback_success->CheckTemplate->Templatecallback_failure");
   this.logger.logMsg('Templatecallback_failure -> respText:' + respText + ' newresp:' + newresp, 'error');
   //errorHandlerService.DEVICE_EIP_SCANV2_SERVICES_DISABLED();
 }

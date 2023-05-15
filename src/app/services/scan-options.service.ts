@@ -231,9 +231,8 @@ export class ScanOptionsService {
     getValues(selectedNote : selectedNote) {
       //const featuresList = this.scanFeatures;
   
-      // const langStr = featuresList[0].selectedOption.value;
-      // logService.logMsg('scanOptionsService => getValues => langStr:' + langStr, 'information');
-      debugger;
+       //const langStr = featuresList[0].selectedOption.value;// to do
+       //this.logService.logMsg('scanOptionsService => getValues => langStr:' + langStr, 'information');
       const sidedStr = selectedNote.type.value;//featuresList[0].options[0].value;    //selectedOption
       const originalSizeStr = selectedNote.size.value;//featuresList[0].options[0].value; //SelectedOption
   
@@ -275,7 +274,7 @@ export class ScanOptionsService {
       }
   
       values.fileFormat = selectedNote.fileFormat.value;//this.fileFormat[0].options;
-      values.archivalFormat = true;//this.fileFormat[1].subFeatures[0].value;
+      values.archivalFormat = true;//this.fileFormat[1].subFeatures[0].value;  //to do
       values.colorMode = 'AUTO';
       values.combineFiles = true;
       // values.language = langStr;

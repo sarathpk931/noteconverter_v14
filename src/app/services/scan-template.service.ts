@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import * as _ from 'lodash';
 import {_scanSection,_generalSection,_destSec,_docSec} from '../../app/model/scantemplate.model';
+import {environment} from '../../environments/environment'
 
 
 
@@ -78,7 +79,7 @@ export class ScanTemplateService {
     }
   };
 
-  private _scanSection = {
+  private _scanSection : _scanSection = {
     name: '[service xrx_svc_scan]',
     details: {
       AutoContrast: { type: 'boolean', value: 'FALSE' },
@@ -98,9 +99,9 @@ export class ScanTemplateService {
       DocumentImageMode: { type: 'enum_imagemode', value: 'MIXED' },
       BlankPageRemoval: { type: 'enum_blankpageremoval', value: 'INCLUDE_ALL_PAGES' }
     }
-  };
+  }
 
-  private _generalSection = {
+  private _generalSection : _generalSection= {
     name: '[service xrx_svc_general]',
     details: {
       DCSDefinitionUsed: { type: 'enum_DCS', value: 'DCS_GENERIC' },
@@ -113,8 +114,7 @@ export class ScanTemplateService {
       ConfirmationMethod: { type: 'enum_confmethod', value: 'NONE' }
     }
   };
-
-  public _destSec = {
+  private _destSec : _destSec= {
     name: '[service xrx_svc_file]',
     details: {
       RepositoryAlias: { type: 'string', value: 'AG_SCAN' },
@@ -129,8 +129,7 @@ export class ScanTemplateService {
       UserNetworkFilingLoginID: { type: 'string', value: '' }
     }
   };
-
-  public _docSec = {
+  private _docSec : _docSec= {
     name: '[doc_object xrx_document]',
     details: {
       DocumentFormat: { type: 'enum_docformat', value: 'PDF' },
@@ -144,6 +143,8 @@ export class ScanTemplateService {
     }
   };
 
+ 
+
   public docSection;
   public destSection;
   public generalSection;
@@ -151,6 +152,7 @@ export class ScanTemplateService {
   public sections;
 
   public name;
+  env = environment;
 
   constructor(
     private readonly location: Location,
@@ -160,27 +162,28 @@ export class ScanTemplateService {
     private activatedRoute: ActivatedRoute
   ) { 
     
-
+ 
   }
 
    validateAgainstArray(v: any, arr: any[]): any {
     return arr.find(d => d === v);
   }
+  
 
    scanTemplate(featureValues) {
     var scriptLocation = "/api/v1/jobs/scan";
     var repoName = location.host;
-  
+          
     // Add properties from the section templates
-    this.docSection = _.clone(typeof(this._docSec));
-    this.destSection = _.clone(typeof(this._destSec));
-    this.generalSection = _.clone(typeof(this._generalSection));
-    this.scanSection = _.clone(typeof(this._scanSection));
+    this.docSection = _.clone(this._docSec);
+    this.destSection = _.clone(this._destSec);
+    this.generalSection = _.clone(this._generalSection);
+    this.scanSection = _.clone(this._scanSection);
     this.sections = [this.scanSection, this.generalSection, this.destSection, this.docSection];
-  debugger;
-    var params = this.activatedRoute.queryParamMap.subscribe((params) => {
-      console.log(params);
-    });
+ 
+    // var params = this.activatedRoute.queryParamMap.subscribe((params) => {
+    //   console.log(params);
+    // });
   
     // Assign properties from incoming options
   
@@ -191,7 +194,7 @@ export class ScanTemplateService {
   
     this.destSection.details.XrxHTTPScriptLocation.value = returnUrl;
   
-    repoName = this.apiService.apiHost();
+    repoName = this.env.wncAddress;//this.apiService.apiHost(); //to do
   
     this.destSection.details.DocumentPath.value = '/';
     this.destSection.details.RepositoryName.value = repoName;
@@ -213,8 +216,8 @@ export class ScanTemplateService {
     // Template name
     this.name = "Xerox_WNC" + new Date().getTime() + ".xst";
     this.generalSection.details.JobTemplateName.value = this.name;
-  
-    
+
+    return this.sections;
   }
 
   toString(): string {

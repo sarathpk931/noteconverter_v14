@@ -56,6 +56,7 @@ import { ParseDeviceConfigPipe } from './filters/parse-device-config.pipe';
 import { ModalService } from './services/modal.service';
 import { ScanScreenComponent } from './views/scan-screen/scan-screen.component';
 import {ScanService} from './services/scan.service';
+import {ScanTemplateService} from './services/scan-template.service';
 
 import { xrxDeviceConfigGetDeviceInformation } from '../assets/Xrx/XRXDeviceConfig';
 import {xrxStringToDom} from '../assets/Xrx/XRXXmlHandler';
@@ -106,7 +107,7 @@ import * as _ from 'lodash';
     ApiService,
     ConfigurationService,
     ScanService,
-    
+    ScanTemplateService
   ],
   bootstrap: [AppComponent]
 })

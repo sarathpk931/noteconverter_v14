@@ -124,14 +124,14 @@ export class ScanService {
         this.logService.logMsg('service.scan -> service.isScanning : Please wait!!!!', 'information');
         throw this.appComponent.Strings['SDE_PLEASE_WAIT_UNTIL'];
       }
-  
+
       this.jobid = this.jobService.generateNewJobID();
   
       this.logService.logMsg('scanService => scan => jobID:' + this.jobid, 'information');
-  
+
       model.jobid = this.jobid;
   
-      const template = new this.scanTemplateService.scanTemplate(model);
+      const template = this.scanTemplateService.scanTemplate(model);
   
       this.modalService.showProgressAlert(this.appComponent.Strings['SDE_SCANNING1'],'');
   
@@ -156,14 +156,14 @@ export class ScanService {
       const template = 'exampleTemplate'; // Replace with actual template object
       const templateName=''; //templateName
       const callId = 'exampleCallId'; // Replace with actual call ID
-      const successCallback = (callId: any, response: any) => {
+      function successCallback (callId: any, response: any) {
         
         this.logService.logMsg(`scanService => putTemplate => callId:${callId} response:${response}`, 'information');
         this.finishPutTemplate(callId, response,printerUrl,template,3000);
         const result={};
         resolve (result);
       };
-      const errorCallback = (result: any) => {
+      function errorCallback  (result: any)  {
         this.modalService.closeAllModals();
         this.errorHandlerService.APP_UNAVAILABLE_AT_THIS_TIME();
         reject(result);
@@ -172,8 +172,8 @@ export class ScanService {
           printerUrl,
           template,
           templateName,
-          successCallback.toString(),
-          errorCallback.toString(),
+          successCallback,
+          errorCallback,
           5000
         );
       });
@@ -186,7 +186,7 @@ export class ScanService {
         const xmlDoc = xrxStringToDom(response);
         this.logService.logMsg(`finishPutTemplate(callId,response) -> xmlDoc: ${xmlDoc}`, 'information');
         template.checkSum = xrxGetElementValue(xmlDoc, 'TemplateChecksum');
-        const successCallback = (envelope: any, response: any) => {
+        function successCallback  (envelope: any, response: any)  {
           this.logService.logMsg(`function finish(callId, response) -> callId: ${callId} response: ${response}`, 'information');
           template.jobId = xrxScanV2ParseInitiateScanJobWithTemplate(response);
 
@@ -199,7 +199,7 @@ export class ScanService {
           
           this.beginCheckLoop(template.jobId);
         };
-        const errorCallback = (env: any,message :any) => {
+        function errorCallback  (env: any,message :any)  {
           this.logService.logMsg(`function fail(env, message) {  -> env: ${env} message: ${message}`, 'information');
 
           this.callbacks.handleFinishPutTemplateError();
@@ -211,8 +211,8 @@ export class ScanService {
         template.name,
         false,
         null,
-        successCallback.toString(),
-        errorCallback.toString()
+        successCallback,
+        errorCallback
         );
       });
   }
@@ -234,7 +234,7 @@ export class ScanService {
       this.sessionUrl,
       'WorkflowScanning',
       this.jobid,
-      this.checkLoop.toString(),
+      this.checkLoop,
       this.callbacks.handleBeginCheckFailure.toString(),
       5000
     );
@@ -367,14 +367,16 @@ export class ScanService {
     // We can delete the template by checksum if we have it.
     if (this.template.checkSum) {
 
-      const success=(message:any)=>{}
-
-      const failure=(message:any)=>{}
+      
       xrxTemplateDeleteTemplate(this.printerUrl, this.template.name, this.template.checkSum, 
-         success.toString(),
-         failure.toString()
+         this.success,
+         this.failure
         );
     }
   }
+
+  success(message:any){}
+
+  failure(message:any){}
 }
 
