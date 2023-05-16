@@ -21,7 +21,7 @@ export class LogService {
   }
 
   public logMsg(message: string, logType?: string): void {
-debugger;
+
     const config = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json; charset=utf-8',

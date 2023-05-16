@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders,HttpErrorResponse } from '@angular/common/http';
+import {throwError} from 'rxjs';
+import {catchError} from 'rxjs/operators';
 import { ApiService } from './api.service';
 import { ConfigurationService } from './configuration.service';
 import { LogService } from './log.service';
+import {environment} from '../../environments/environment'
 
 @Injectable({
   providedIn: 'root'
@@ -12,10 +15,15 @@ import { LogService } from './log.service';
 
 export class JobService {
 
+  env = environment;
+
+
   constructor(private http: HttpClient, private apiService: ApiService,
     private configurationService: ConfigurationService, private logService: LogService) { }
 
     registerJob(featureValues: any) {
+
+      try{
 
       const config = { headers: new HttpHeaders({ "Content-Type": "text/json; charset=utf-8" }) };
   
@@ -43,8 +51,8 @@ export class JobService {
       const request = {
         job: job
       };
-  
-      return this.http.post(this.apiService.apiUrl("/api/v1/job"), request, config).toPromise()
+  debugger; //this.apiService.apiUrl
+      return this.http.post(this.env+("/api/v1/job"), request, config).toPromise()
         .then((result: any) => {
           this.logService.logMsg('jobService -> registerJob -> success -> result.data:' + result.data, 'information');
           return result.data;
@@ -61,6 +69,15 @@ export class JobService {
            // $rootScope.$broadcast("globalAppMessage", "unauthorized");
           }
         });
+      }
+      catch(ExceptionMessage)
+
+      {
+        this.logService.logMsg(ExceptionMessage);
+        return  null;
+      }
+
+    
     }
 
     generateNewJobID():string {

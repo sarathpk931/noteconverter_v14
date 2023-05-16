@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient,HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { ScanOptionsService } from '../../app/services/scan-options.service';
@@ -135,18 +135,20 @@ export class ScanService {
   
       this.modalService.showProgressAlert(this.appComponent.Strings['SDE_SCANNING1'],'');
   
-      return this.jobService.registerJob(model).then(function(result){ //.toPromise()
+      //return this.jobService.registerJob(model).then(function(result){ //.toPromise()
         
+          debugger;
           const tStr = template.toString();
           this.logService.logMsg('scanService => scan => template:' + tStr, 'information');
           this.isScanning = true;
           this.isComplete = false;
           this.completeScanPromise = new Promise((resolve, reject) => {});
           this.logService.logMsg('service.scan -> calling putTemplate()', 'information');
+          debugger;
           this.putTemplate();
 
         return  this.completeScanPromise;
-      });
+      //});
     };
   
     putTemplate(): Promise<any> {

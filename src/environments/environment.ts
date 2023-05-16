@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   apiUrl:'http://127.0.0.1',
-  wncAddress : 'https://wnc-api-dev.services.xerox.com'
+  wncAddress : 'https://xrxapps-wnc-use-test-dev.azurewebsites.net'
 };
 /*
  * For easier debugging in development mode, you can import the following file
