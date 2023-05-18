@@ -15,7 +15,8 @@ import {xrxStringToDom,xrxGetElementValue} from '../../assets/Xrx/XRXXmlHandler'
 import {xrxScanV2InitiateScanJobWithTemplate,xrxScanV2ParseInitiateScanJobWithTemplate} from '../../assets/Xrx/XRXScanV2';
 import {xrxJobMgmtGetJobDetails,xrxJobMgmtParseGetJobDetails,xrxJobMgmtParseJobStateReasons} from '../../assets/Xrx/XRXJobManagement';
 import {xrxParseJobStateReasons} from '../../assets/Xrx/XRX_EIPWSHelpers';
-
+import {environment} from '../../environments/environment'
+import {scanTemplate} from '../../app/model/scantemplate.model';
 
 @Injectable({
   providedIn: 'root'
@@ -36,8 +37,8 @@ export class ScanService {
      
   ) {}
 
-  private printerUrl = 'http://127.0.0.1';
-  private sessionUrl = 'http://localhost';
+  private printerUrl = 'http://10.117.210.173';//127.0.0.1
+  private sessionUrl = 'http://127.0.0.1';//http://localhost
 
   private startScanTime: Date | null = null;
   private stopScanTime: Date | null = null;
@@ -45,6 +46,9 @@ export class ScanService {
   
   isScanning: boolean = false;
   isComplete: boolean = false;
+
+  env = environment;
+  scanTemplate : scanTemplate;
 
   public callbacks = {
     handleScanException: (message: string) => {
@@ -66,12 +70,16 @@ export class ScanService {
       this.callbacks.completeScan({ error: true, message: 'Error sending template to device' });
     },
     handleBeginCheckFailure: (request: any, response: any) => {
+      //alert("handleBeginCheckFailure :"+response);
+      this.logService.logMsg(response,"Information");
+      this.logService.logMsg(request,"Information");
       this.callbacks.completeScan({ error: true, deviceDetails: response });
     },
     handlePutTemplateFailure: (message: string) => {
       this.callbacks.completeScan({ error: true, deviceDetails: message });
     },
     completeScan: (detail: any) => {
+      //alert("completescan :" + detail);
       this.isScanning = false;
       this.isComplete = true;
       if (detail.error) {
@@ -126,72 +134,81 @@ export class ScanService {
       }
 
       this.jobid = this.jobService.generateNewJobID();
-  
       this.logService.logMsg('scanService => scan => jobID:' + this.jobid, 'information');
 
       model.jobid = this.jobid;
+
+      this.scanTemplate = this.scanTemplateService.scanTemplate(model);
+      //this.modalService.showProgressAlert(this.appComponent.Strings['SDE_SCANNING1'],'');
   
-      const template = this.scanTemplateService.scanTemplate(model);
-  
-      this.modalService.showProgressAlert(this.appComponent.Strings['SDE_SCANNING1'],'');
-  
-      //return this.jobService.registerJob(model).then(function(result){ //.toPromise()
-        
-          debugger;
-          const tStr = template.toString();
+      return this.jobService.registerJob(model).then((result)=>{ //.toPromise()     
+     
+          const tStr = this.scanTemplateService.objToString();
           this.logService.logMsg('scanService => scan => template:' + tStr, 'information');
           this.isScanning = true;
           this.isComplete = false;
+          //function resolve(){alert("inside completescanPromise resolve");}
+          //function reject(){alert("inside completescanPromise reject");}
           this.completeScanPromise = new Promise((resolve, reject) => {});
           this.logService.logMsg('service.scan -> calling putTemplate()', 'information');
-          debugger;
-          this.putTemplate();
+          //alert("before putTemplate");
+          this.putTemplate(tStr);
 
         return  this.completeScanPromise;
-      //});
+      });
     };
   
-    putTemplate(): Promise<any> {
+    putTemplate(tStr): Promise<any> {
       return  new Promise((resolve,reject)=>{
+        //alert('putTemplate()...');
       this.logService.logMsg('putTemplate()...', 'information');
-      const printerUrl = 'path/to/printerUrl';
-      const template = 'exampleTemplate'; // Replace with actual template object
-      const templateName=''; //templateName
-      const callId = 'exampleCallId'; // Replace with actual call ID
-      function successCallback (callId: any, response: any) {
-        
+      const printerUrl =  this.env.apiUrl;//'path/to/printerUrl';
+      //const template =  tStr;// 'exampleTemplate'; // Replace with actual template object
+      const templateName= this.scanTemplate.name; //templateName
+      //const callId = 'exampleCallId'; // Replace with actual call ID
+      function finish (callId: any, response: any) {
+        //alert("putTemplate => successCallback");
+        this.logService.logMsg('putTemplate => successCallback', 'information');
+        //console.log("putTemplate => successCallback"+callId);
         this.logService.logMsg(`scanService => putTemplate => callId:${callId} response:${response}`, 'information');
-        this.finishPutTemplate(callId, response,printerUrl,template,3000);
+        this.finishPutTemplate(callId, response,printerUrl,3000);
         const result={};
         resolve (result);
       };
-      function errorCallback  (result: any)  {
+      function fail  (result: any)  {
+        //alert("error in puttemplate");
+        //alert(result);
+        this.logService.logMsg("PutTemplate Error" + result);
         this.modalService.closeAllModals();
-        this.errorHandlerService.APP_UNAVAILABLE_AT_THIS_TIME();
+        //this.errorHandlerService.APP_UNAVAILABLE_AT_THIS_TIME();
         reject(result);
       };
         xrxTemplatePutTemplate(
           printerUrl,
-          template,
           templateName,
-          successCallback,
-          errorCallback,
+          tStr,
+          finish.bind(this),
+          fail.bind(this),
           5000
         );
       });
     }
   
    
-    finishPutTemplate(callId: any, response: string, printerUrl: string, template: any, timeoutInMinutes: number):Promise<any>{
+    finishPutTemplate(callId: any, response: string, printerUrl: string,  timeoutInMinutes: number):Promise<any>{
+     //alert("finishPutTemplate");
       return new Promise((resolve,reject)=>{
         this.logService.logMsg(`finishPutTemplate(callId,response) -> callId: ${callId} response: ${response}`, 'information');
         const xmlDoc = xrxStringToDom(response);
         this.logService.logMsg(`finishPutTemplate(callId,response) -> xmlDoc: ${xmlDoc}`, 'information');
-        template.checkSum = xrxGetElementValue(xmlDoc, 'TemplateChecksum');
+        this.scanTemplate.checkSum = xrxGetElementValue(xmlDoc, 'TemplateChecksum');
         function successCallback  (envelope: any, response: any)  {
+          //debugger;
           this.logService.logMsg(`function finish(callId, response) -> callId: ${callId} response: ${response}`, 'information');
-          template.jobId = xrxScanV2ParseInitiateScanJobWithTemplate(response);
-
+          let responseJobId : string = xrxScanV2ParseInitiateScanJobWithTemplate(response);
+          this.logService.logMsg("response job Id : "+ responseJobId,"Information");
+          this.scanTemplate.jobId = responseJobId;
+          this.logService.logMsg("response scan template job Id : "+ this.scanTemplate.jobId,"Information");
         // Let everyone know the job has been submitted.
         //$rootScope.$broadcast('scanJobSubmitted', { jobId: template.jobId, template: template });
         // Begin the check loop.
@@ -199,22 +216,23 @@ export class ScanService {
           const stopScanTime = new Date();
           stopScanTime.setMinutes(stopScanTime.getMinutes() + timeoutInMinutes);
           
-          this.beginCheckLoop(template.jobId);
+          this.beginCheckLoop(this.scanTemplate.jobId);
         };
         function errorCallback  (env: any,message :any)  {
+          debugger;
           this.logService.logMsg(`function fail(env, message) {  -> env: ${env} message: ${message}`, 'information');
 
           this.callbacks.handleFinishPutTemplateError();
-          // errorHandlerService.CLOUD_APP_GENERAL_ERROR(); to be implemented
+           this.errorHandlerService.CLOUD_APP_GENERAL_ERROR(); //to be implemented
 
         };
         xrxScanV2InitiateScanJobWithTemplate(
         printerUrl,
-        template.name,
+        this.scanTemplate.name,
         false,
         null,
-        successCallback,
-        errorCallback
+        successCallback.bind(this),
+        errorCallback.bind(this)
         );
       });
   }
@@ -230,35 +248,46 @@ export class ScanService {
   }
 
   beginCheckLoop(jobid:string): void {
+    //alert("beginCheckLoop job id :"+ jobid);
+    //alert('isComplete :'+ this.isComplete);
     if (this.isComplete) { return; }
-    this.logService.logMsg('beginCheckLoop()...', 'information');
+    //alert("Session Url "+this.sessionUrl);
+    this.logService.logMsg('beginCheckLoop()...', 'information'); ///
     xrxJobMgmtGetJobDetails(
       this.sessionUrl,
       'WorkflowScanning',
-      this.jobid,
-      this.checkLoop,
-      this.callbacks.handleBeginCheckFailure.toString(),
-      5000
+      jobid,
+      this.checkLoop.bind(this),
+      this.callbacks.handleBeginCheckFailure.bind(this),
+      5000,
+      true
     );
   }
 
   checkLoop(request: any, response: any) {
+    //debugger;
+    //alert("checkLoop");
+    debugger;
     this.logService.logMsg('checkLoop(request, response) -> request:' + request + ' response:' + response, 'information');
     // Any job state?
   let jobStateReason = '';
   const info = xrxJobMgmtParseGetJobDetails(response);
+  const serializer = new XMLSerializer();
+  const serializedstring =serializer.serializeToString(response);
+  this.logService.logMsg("xrxJobMgmtParseGetJobDetails library reponse serialized" + serializedstring,"Information");
   const jobState = xrxGetElementValue(info, 'JobState');
+  this.logService.logMsg("inside checkLoop => jobState : "+jobState)
   const dummy = xrxJobMgmtParseJobStateReasons(response);
-
+  this.logService.logMsg("xrxJobMgmtParseJobStateReasons response" + dummy,"Information");
   this.logService.logMsg('checkLoop(request, response) -> jobState:' + jobState + ' dummy:' + dummy, 'information');
-  console.log(jobState + ' ' + dummy);
+  //console.log(jobState + ' ' + dummy);
 
   if (jobState === null || jobState === 'Completed') {
     this.logService.logMsg('if (jobState === null || jobState === Completed)', 'information');
 
     jobStateReason = xrxParseJobStateReasons(response);
-
-    this.logService.logMsg('jobStateReason:' + jobStateReason, 'information');
+    this.logService.logMsg('xrxParseJobStateReasons response:' + response, 'information');
+    this.logService.logMsg('jobStateReason response:' + jobStateReason, 'information');
   }
 
 
@@ -270,11 +299,11 @@ export class ScanService {
   }); */
 
   // Update the status of the template.
-  this.template.status = {
+  this.scanTemplate.status = {
     lastJobState: jobState,
     lastJobStateReason: jobStateReason
   };
-
+  this.logService.logMsg("scan template status :" + this.scanTemplate.status.lastJobState+", JobstaeReason : "+this.scanTemplate.status.lastJobStateReason, "Information");
   // Checking if the job should be flagged as timeout
   if (this.checkScanTimeout()) {
     this.logService.logMsg('if (checkScanTimeout()) { ', 'information');

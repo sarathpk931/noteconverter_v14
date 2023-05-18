@@ -26,6 +26,7 @@ var XRX_SCANV2_NAMESPACE = 'xmlns="http://www.xerox.com/webservices/scanservice/
 var XRX_SCANV2_PATH = '/webservices/ScanService/2';
 
 import {XRX_SOAPSTART,XRX_SOAPEND,xrxCreateTag,xrxCallWebservice} from './XRXWebservices';
+import {xrxFindElement, xrxStringToDom,xrxGetValue  } from './XRXXmlHandler';
 /****************************  FUNCTIONS  *******************************/
 
 

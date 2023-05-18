@@ -205,7 +205,6 @@ export class ScanOptionsService {
     }
     //set selected value from pop up
     getSelectedOption( from : string){
-      debugger;
       if(from == this.const_fileFormat)
       {
         return this.selectedFileFormat;

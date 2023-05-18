@@ -25,8 +25,8 @@ var XRX_JOBMGMT_NAMESPACE = 'xmlns="http://xml.namespaces.xerox.com/enterprise/J
 
 var XRX_JOBMGMT_PATH = '/webservices/JobManagement/1';
 
-import {XRX_SOAPSTART,XRX_SOAPEND,xrxCreateTag,xrxCallWebservice} from './XRXWebservices';
-
+import {XRX_SOAPSTART,XRX_SOAPEND,xrxCreateTag,xrxCallWebservice,XRX_XML_TYPE_NONE} from './XRXWebservices';
+import {xrxGetElementValue,xrxStringToDom,xrxFindElement,xrxGetValue} from './XRXXmlHandler';
 /****************************  FUNCTIONS  *******************************/
 
 
@@ -405,9 +405,10 @@ export function xrxJobMgmtParseListQueueString( response )
 */
 export function xrxJobMgmtGetJobDetails( url, jobType, jobId, callback_success, callback_failure, timeout, async ) 
 {
+	//alert("inside xrxJobMgmtGetJobDetails url "+ url);
     if((url == null) || (url == ""))
         url = "http://127.0.0.1";
-	var sendUrl = url + XRX_JOBMGMT_PATH;
+	var sendUrl = url + XRX_JOBMGMT_PATH;//alert("xrxJobMgmtGetJobDetails "+sendUrl);
 	var sendReq = xrxJobMgmtGetJobDetailsRequest( jobType, 'JobId', jobId );
 	return xrxCallWebservice( sendUrl, sendReq, callback_success, callback_failure, timeout, null, null, null, async );
 }
@@ -444,6 +445,7 @@ export function xrxGetJobDetails( url, jobType, jobIdType, jobId, callback_succe
 */
 export function xrxJobMgmtGetJobDetailsRequest( jobType, jobIdType, jobId )
 {
+	//alert("inside xrxJobMgmtGetJobDetailsRequest : "+jobType+" ; "+jobIdType +" ; "+  jobId);
     var resq = XRX_SOAPSTART 
 			+ xrxCreateTag( 'GetJobDetailsRequest', XRX_JOBMGMT_NAMESPACE,
 			    xrxCreateTag( 'JobData', XRX_XML_TYPE_NONE, 
@@ -451,6 +453,7 @@ export function xrxJobMgmtGetJobDetailsRequest( jobType, jobIdType, jobId )
 			        + xrxCreateTag( 'JobIdentifierString', XRX_XML_TYPE_NONE, jobId ) ) 
 			    + xrxCreateTag( 'JobType', XRX_XML_TYPE_NONE, jobType ) ) 
 			+ XRX_SOAPEND;
+			//alert(resq);
     return resq;
 }
 

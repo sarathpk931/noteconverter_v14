@@ -143,6 +143,7 @@ export var XRX_XML_TYPE_BOOLEAN = 'xsi:type="xsd:boolean"';
 */
 export function xrxCallWebservice( url, envelope, callback_success, callback_failure, timeout, headers, username, password, async )
 {
+	//alert("inside xrxCallWebservice" + url);
 	return xrxCallAjax( url, envelope, "POST", ((headers != undefined)?headers:null), callback_success, callback_failure, timeout, username, password, async );
 }
 
@@ -178,7 +179,7 @@ export function xrxCallAjax( url, envelope, type, headers, callback_success, cal
 	
 	// Storage for Failure Callback Function Address
 	var xrxAjaxFailureCallback = null;
-
+	//alert("xrxCallAjax " + url);
 	if(async == undefined)
 	    async = true;
 
@@ -200,7 +201,7 @@ export function xrxCallAjax( url, envelope, type, headers, callback_success, cal
 	}
 	catch(exc)
 	{
-		alert("Error :"+exc);
+		//alert("Error :"+exc);
         var errString = "";
         var uaString = navigator.userAgent;
         if(!async && (uaString != undefined) && (uaString != null) && ((uaString = uaString.toLowerCase()).indexOf( "galio" ) >= 0))
@@ -260,7 +261,7 @@ export function xrxCallAjax( url, envelope, type, headers, callback_success, cal
 	    xrxXmlhttp.send( xrxEnvelope );
 	} else
 	{
-		alert("async else:");
+		//alert("async else:");
 	    try
 	    {
 	        xrxXmlhttp.send( xrxEnvelope );
@@ -268,10 +269,10 @@ export function xrxCallAjax( url, envelope, type, headers, callback_success, cal
 	    }
 	    catch( e )
 	    {
-			alert("Error "+e.message);
+			//alert("Error "+e.message);
 	        return "FAILURE: comm_error " + (((e != null) && (e.message != null))? e.message : "Exception" );
 	    }
-		alert("http status :"+ xrxXmlhttp.status);
+		//alert("http status :"+ xrxXmlhttp.status);
         return ((xrxXmlhttp.status == 200) ? "" : "FAILURE: " + xrxXmlhttp.status + " - ") + xrxXmlhttp.responseText;
     }
     return "";

@@ -37,7 +37,8 @@ export class LogService {
       DeviceID: deviceID
     };
 
-    this.http.post('http://localhost:5155/api/log', argParms, config).subscribe();
+    this.http.post('http://10.117.210.157:5155/api/log', argParms, config).subscribe();
+    //http://10.117.207.162
   }
 
   // log(error: Error): void {

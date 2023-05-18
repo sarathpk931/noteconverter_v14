@@ -86,7 +86,8 @@ import * as _ from 'lodash';
     FormsModule,
     ReactiveFormsModule,
   ],
-  providers: [{
+  providers: [
+    {
     provide :APP_INITIALIZER,
     useFactory:()=> Device,
     multi:true,
@@ -114,24 +115,27 @@ import * as _ from 'lodash';
 export class AppModule {
   public static Generation:string;
   public static model : string;
+  public static deviceId:string;
  }
 
 export async function Session(url: string,timeout:number,async:boolean, ldap: string): Promise<any> {
-  alert("inside session");
+  //alert("inside session");
   return new Promise((resolve, reject) => {
     function successCallbackSession (envelope: string, response: string) {
-      alert("inside session success");
+      //alert("inside session success");
       //var data = xrxSessionGetSessionInfoRequest(response);
-      var data =xrxSessionParseGetSessionInfo(response);alert("data in session :"+ data);
+      var data =xrxSessionParseGetSessionInfo(response);//alert("data in session :"+ data);
       const parser = new DOMParser();
       const xmlDoc = parser.parseFromString(data.firstChild, 'text/xml');
       
-      alert("Xml Doc :"+ xmlDoc);
+      //alert("Xml Doc :"+ xmlDoc);
       var userEmail = "";
       if (data !== null) {
         //var userName = xrxGetElementValue(xmlDoc, "username");
-        const userName = data.firstChild.getElementsByTagName('qualifiedUsername')[0].firstChild.textContent;alert("Username :"+ userName);
-        var password = data.firstChild.getElementsByTagName('qualifiedUsername')[0].lastChild.textContent;alert("password :"+ password);
+        const userName = data.firstChild.getElementsByTagName('qualifiedUsername')[0].firstChild.textContent;//alert("Username :"+ userName);
+        var password = data.firstChild.getElementsByTagName('qualifiedUsername')[0].lastChild.textContent;//alert("password :"+ password);
+        debugger;
+        //this.logService.logMsg("Session => username : "+userName + ", password : "+password);
         if (userName !== null && userName.toLowerCase() !== 'guest')
           userEmail = xrxGetElementValue(data, "from");
 
@@ -139,11 +143,12 @@ export async function Session(url: string,timeout:number,async:boolean, ldap: st
           
           email:userEmail
         };
+        //this.logService.logMsg("Session => email : "+userEmail);
         resolve(result.email.toString());
       }
     };
     function errorCallbackSession (result: any) {
-      alert("inside session error");
+      //alert("inside session error");
       result={
         email:""
       };
@@ -166,12 +171,15 @@ export async function Session(url: string,timeout:number,async:boolean, ldap: st
      const doc = xrxStringToDom(response);
      const info = doc.querySelector("devcfg\\:Information, Information");
      const parser = new DOMParser();
+     debugger;
     const xmlDoc = parser.parseFromString(info.firstChild.data, 'text/xml');
     const generation = Number(xmlDoc.getElementsByTagName('generation')[0].textContent);
     AppModule.Generation = generation.toString();
 
      const model = xmlDoc.getElementsByTagName('model')[0].textContent;
      AppModule.model = model.toString();
+     const deviceId = xmlDoc.getElementsByTagName('serial')[0].textContent;
+     AppModule.deviceId = deviceId.toString();
      const isVersalink = _.includes(model.toLowerCase(), 'versalink') || _.includes(model.toLowerCase(), 'primelink');
      const isAltalink = _.includes(model.toLowerCase(), 'altalink');
      const isThirdGenBrowser = _.includes(navigator.userAgent.toLowerCase(), "x3g_");
@@ -197,3 +205,4 @@ export async function Session(url: string,timeout:number,async:boolean, ldap: st
         );
       })
   };
+  

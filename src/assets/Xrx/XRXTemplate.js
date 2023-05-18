@@ -21,7 +21,7 @@ var XRX_TEMPLATE_NAMESPACE = 'xmlns="http://www.xerox.com/webservices/office/tem
 
 var XRX_TEMPLATE_PATH = '/webservices/office/template_management/1';
 
-import {XRX_SOAP11_SOAPSTART,xrxCreateTag,XRX_SOAPEND,xrxCallWebservice} from './XRXWebservices';
+import {XRX_SOAP11_SOAPSTART,xrxCreateTag,XRX_SOAPEND,xrxCallWebservice,XRX_XML_TYPE_NONE} from './XRXWebservices';
 
 /****************************  FUNCTIONS  *******************************/
 
@@ -224,7 +224,7 @@ export function xrxTemplatePutTemplate( url, templateName, template, callback_su
     if((url == null) || (url == ""))
         url = "http://127.0.0.1";
 	var sendUrl = url + XRX_TEMPLATE_PATH;
-	var sendReq = xrxTemplatePutTemplateRequest( templateName, template, credentials );
+	var sendReq = xrxTemplatePutTemplateRequest( templateName, template, credentials );//alert("sendReq"+sendUrl);
     xrxCallWebservice( sendUrl, sendReq, callback_success, callback_failure, timeout );
 } 
 

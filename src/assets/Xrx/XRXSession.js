@@ -203,10 +203,10 @@ export function xrxSessionParseSessionPayload( response )
 */
 export function xrxSessionParseGetSessionInfo( response )
 {
-	var data = xrxSessionParseSessionPayload( xrxStringToDom( response ) );alert("result of xrxSessionParseSessionPayload :"+data);
+	var data = xrxSessionParseSessionPayload( xrxStringToDom( response ) );//alert("result of xrxSessionParseSessionPayload :"+data);
 	if(data != null) 
 	    data = xrxStringToDom( data );
-		alert("after :"+data);
+		//alert("after :"+data);
 	return data;
 }
 

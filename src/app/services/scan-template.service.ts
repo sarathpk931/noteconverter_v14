@@ -5,7 +5,7 @@ import { LogService } from './log.service';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import * as _ from 'lodash';
-import {_scanSection,_generalSection,_destSec,_docSec} from '../../app/model/scantemplate.model';
+import {_scanSection,_generalSection,_destSec,_docSec,TemplateType,TemplateTypes,scanTemplate} from '../../app/model/scantemplate.model';
 import {environment} from '../../environments/environment'
 
 
@@ -17,67 +17,128 @@ export class ScanTemplateService {
 
   private readonly XRX_SCAN_TEMPLATE_RETURN = '\n\n\r';
 
-  public readonly templateTypes = {
+  // public readonly templateTypes = {
 
-    'boolean': {
-      values: ['TRUE', 'FALSE']
+  //   'boolean': {
+  //     values: ['TRUE', 'FALSE']
+  //   },
+  //   'enum_autoexposure': {
+  //     supportsSimpleValidation: true,
+  //     values: ['ON', 'OFF']
+  //   },
+  //   'enum_originalsubtype': {
+  //     supportsSimpleValidation: true,
+  //     values: ['PRINTED_ORIGINAL']
+  //   },
+  //   'integer': {
+  //     validate: (v: any) => {
+  //       const pattern = /^[0-9]*$/;
+  //       return v.toString().match(pattern);
+  //     },
+  //     values: ['NUMBER (integer)']
+  //   },
+  //   'string': {
+  //     format: (v: any) => {
+  //       return "\"" + v + "\"";
+  //     }
+  //   },
+  //   'enum_resolution': { //XBB-167 requires  200 dpi, 300 dpi, 400 dpi, 600 dpi 
+  //     supportsSimpleValidation: true,
+  //     values: ['RES_72X72', 'RES_150X150', 'RES_100X100', 'RES_200X200', 'RES_300X300', 'RES_400X400', 'RES_600X600']
+  //   },
+  //   'enum_colormode': {
+  //     supportsSimpleValidation: true,
+  //     values: ['AUTO', 'BLACK_AND_WHITE', 'GRAYSCALE', 'FULL_COLOR']
+  //   },
+  //   'enum_docformat': {
+  //     supportsSimpleValidation: true,
+  //     values: ['XSM_TIFF_V6', 'TIFF_V6', 'JFIF_JPEG', 'PDF', 'PDF/A-1b', 'XPS']
+  //   },
+  //   'enum_inputorientation': {
+  //     supportsSimpleValidation: true,
+  //     values: ['PORTRAIT', 'LANDSCAPE']
+  //   },
+  //   'enum_searchabletext': {
+  //     supportsSimpleValidation: true,
+  //     values: ['IMAGE_ONLY', 'SEARCHABLE_IMAGE']
+  //   },
+  //   'enum_imagemode': {
+  //     supportsSimpleValidation: true,
+  //     values: ['MIXED', 'PHOTO', 'TEXT', 'MAP', 'NEWSPAPER_AND_MAGAZINE']
+  //   },
+  //   'enum_sided': {
+  //     supportsSimpleValidation: true,
+  //     values: ['ONE_SIDED', 'TWO_SIDED', 'SECOND_SIDE_ROTATION']
+  //   },
+  //   'enum_mediasize': {
+  //     supportsSimpleValidation: true,
+  //     values: ['AUTO', 'NA_5.5x7LEF', 'NA_5.5x7SEF', 'NA_5.5x8.5LEF', 'NA_5.5x8.5SEF', 'NA_8.5x11LEF',
+  //       'NA_8.5x11SEF', 'NA_8.5x13SEF', 'NA_8.5x14SEF', 'NA_11x17SEF',
+  //       'ISO_A5LEF', 'ISO_A5SEF', 'ISO_A4LEF', 'ISO_A4SEF', 'ISO_A3SEF',
+  //       'JIS_B4SEF', 'JIS_B5LEF', 'JIS_B5SEF']
+  //   }
+  // };
+
+   private templateTypes: TemplateTypes = {
+     'boolean': {
+     values: ['TRUE', 'FALSE']
     },
-    'enum_autoexposure': {
-      supportsSimpleValidation: true,
-      values: ['ON', 'OFF']
-    },
-    'enum_originalsubtype': {
-      supportsSimpleValidation: true,
-      values: ['PRINTED_ORIGINAL']
-    },
-    'integer': {
-      validate: (v: any) => {
-        const pattern = /^[0-9]*$/;
-        return v.toString().match(pattern);
-      },
-      values: ['NUMBER (integer)']
-    },
-    'string': {
+   'enum_autoexposure': {
+    supportSimpleValidation : true,
+     values: ['ON', 'OFF']
+     },
+     'enum_originalsubtype': {
+      supportSimpleValidation : true,
+     values: ['PRINTED_ORIGINAL']
+     },
+     'integer': {
+      validate : (v: any) => {
+     const pattern = /^[0-9]*$/;
+     return v.toString().match(pattern) !== null;
+     },
+     values: ['NUMBER (integer)']
+     },
+     'string': {
       format: (v: any) => {
-        return "\"" + v + "\"";
-      }
-    },
-    'enum_resolution': { //XBB-167 requires  200 dpi, 300 dpi, 400 dpi, 600 dpi 
-      supportsSimpleValidation: true,
-      values: ['RES_72X72', 'RES_150X150', 'RES_100X100', 'RES_200X200', 'RES_300X300', 'RES_400X400', 'RES_600X600']
-    },
-    'enum_colormode': {
-      supportsSimpleValidation: true,
-      values: ['AUTO', 'BLACK_AND_WHITE', 'GRAYSCALE', 'FULL_COLOR']
-    },
-    'enum_docformat': {
-      supportsSimpleValidation: true,
-      values: ['XSM_TIFF_V6', 'TIFF_V6', 'JFIF_JPEG', 'PDF', 'PDF/A-1b', 'XPS']
-    },
-    'enum_inputorientation': {
-      supportsSimpleValidation: true,
-      values: ['PORTRAIT', 'LANDSCAPE']
-    },
-    'enum_searchabletext': {
-      supportsSimpleValidation: true,
-      values: ['IMAGE_ONLY', 'SEARCHABLE_IMAGE']
+     return `"${v}"`;
+     }
+     },
+     'enum_resolution': { // XBB-167 requires 200 dpi, 300 dpi, 400 dpi, 600 dpi 
+      supportSimpleValidation : true,
+     values: ['RES_72X72', 'RES_150X150', 'RES_100X100', 'RES_200X200', 'RES_300X300', 'RES_400X400', 'RES_600X600']
+     },
+     'enum_colormode': {
+      supportSimpleValidation: true,
+     values: ['AUTO', 'BLACK_AND_WHITE', 'GRAYSCALE', 'FULL_COLOR']
+     },
+     'enum_docformat': {
+      supportSimpleValidation: true,
+     values: ['XSM_TIFF_V6', 'TIFF_V6', 'JFIF_JPEG', 'PDF', 'PDF/A-1b', 'XPS']
+     },
+     'enum_inputorientation': {
+      supportSimpleValidation: true,
+     values: ['PORTRAIT', 'LANDSCAPE']
+     },
+     'enum_searchabletext': {
+      supportSimpleValidation: true,
+     values: ['IMAGE_ONLY', 'SEARCHABLE_IMAGE']
     },
     'enum_imagemode': {
-      supportsSimpleValidation: true,
-      values: ['MIXED', 'PHOTO', 'TEXT', 'MAP', 'NEWSPAPER_AND_MAGAZINE']
-    },
-    'enum_sided': {
-      supportsSimpleValidation: true,
-      values: ['ONE_SIDED', 'TWO_SIDED', 'SECOND_SIDE_ROTATION']
-    },
-    'enum_mediasize': {
-      supportsSimpleValidation: true,
-      values: ['AUTO', 'NA_5.5x7LEF', 'NA_5.5x7SEF', 'NA_5.5x8.5LEF', 'NA_5.5x8.5SEF', 'NA_8.5x11LEF',
-        'NA_8.5x11SEF', 'NA_8.5x13SEF', 'NA_8.5x14SEF', 'NA_11x17SEF',
-        'ISO_A5LEF', 'ISO_A5SEF', 'ISO_A4LEF', 'ISO_A4SEF', 'ISO_A3SEF',
-        'JIS_B4SEF', 'JIS_B5LEF', 'JIS_B5SEF']
+      supportSimpleValidation: true,
+     values: ['MIXED', 'PHOTO', 'TEXT', 'MAP', 'NEWSPAPER_AND_MAGAZINE']
+     },
+     'enum_sided': {
+      supportSimpleValidation: true,
+     values: ['ONE_SIDED', 'TWO_SIDED', 'SECOND_SIDE_ROTATION']
+     },
+     'enum_mediasize': {
+      supportSimpleValidation: true,
+     values: ['AUTO', 'NA_5.5x7LEF', 'NA_5.5x7SEF', 'NA_5.5x8.5LEF', 'NA_5.5x8.5SEF', 'NA_8.5x11LEF',
+     'NA_8.5x11SEF', 'NA_8.5x13SEF', 'NA_8.5x14SEF', 'NA_11x17SEF',
+     'ISO_A5LEF', 'ISO_A5SEF', 'ISO_A4LEF', 'ISO_A4SEF', 'ISO_A3SEF',
+      'JIS_B4SEF', 'JIS_B5LEF', 'JIS_B5SEF']
+     }
     }
-  };
 
   private _scanSection : _scanSection = {
     name: '[service xrx_svc_scan]',
@@ -119,7 +180,7 @@ export class ScanTemplateService {
     details: {
       RepositoryAlias: { type: 'string', value: 'AG_SCAN' },
       FilingProtocol: { type: 'enum_filingprotocol', value: 'XRXHTTP' },
-      RepositoryVolume: { type: 'string', value: '//server/share' },
+      RepositoryVolume: { type: 'string', value: '' },//server/share
       RepositoryName: { type: 'string', value: 'DocLib' },
       DocumentPath: { type: 'string', value: '/Scan' },
       ServerValidationReq: { type: 'boolean', value: 'FALSE' },
@@ -150,6 +211,7 @@ export class ScanTemplateService {
   public generalSection;
   public scanSection;
   public sections;
+  public scanTemplateModel : scanTemplate ;
 
   public name;
   env = environment;
@@ -159,9 +221,17 @@ export class ScanTemplateService {
     private readonly apiService: ApiService,
     private readonly logService: LogService,
     private http: HttpClient,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
   ) { 
     
+    this.scanTemplateModel = {
+      docSec : this._docSec,
+      destSec : this._destSec,
+      generalSec : this._generalSection,
+      scanSec : this.scanSection,
+      name : '',
+      sections : this.sections
+    }
  
   }
 
@@ -188,7 +258,7 @@ export class ScanTemplateService {
     // Assign properties from incoming options
   
     // Destination
-    this.logService.logMsg('scanTemplate => featureValues.jobid:' + featureValues.jobid, 'information');
+    //this.logService.logMsg('scanTemplate => featureValues.jobid:' + featureValues.jobid, 'information');
   
     var returnUrl = this.apiService.getPrefix() + scriptLocation + '?' + 'jobId=' + featureValues.jobid;
   
@@ -214,13 +284,19 @@ export class ScanTemplateService {
     this.docSection.details.DocumentObjectName.value = featureValues.fileName;
   
     // Template name
-    this.name = "Xerox_WNC" + new Date().getTime() + ".xst";
-    this.generalSection.details.JobTemplateName.value = this.name;
 
-    return this.sections;
+    this.scanTemplateModel.name = "Xerox_WNC" + new Date().getTime() + ".xst";
+    this.scanTemplateModel.destSec =  this.destSection;
+    this.scanTemplateModel.docSec = this.docSection;
+    this.scanTemplateModel.scanSec = this.scanSection;
+    this.scanTemplateModel.generalSec = this.generalSection;
+    this.scanTemplateModel.sections = this.sections;
+    this.scanTemplateModel.generalSec.details.JobTemplateName.value = this.scanTemplateModel.name;
+
+    return this.scanTemplateModel;
   }
 
-  toString(): string {
+  objToString(): string {
     const _sectionStrings: string[] = [];
 
     for (let index = 0; index < this.sections.length; index++) {
@@ -249,22 +325,22 @@ export class ScanTemplateService {
   let sectionString = '{' + this.XRX_SCAN_TEMPLATE_RETURN;
 
   // Get the values of the template.
-  Object.keys(details).forEach(function (detail) {
+  Object.keys(details).forEach((detail)=> {
     const typeName = details[detail].type;
     let typeValue = details[detail].value;
 
     // Get the formatting function.
-    const fun = this.templateTypes[typeName];
-
+    const fun = this.getValueForKey(typeName);
+   
     // Can we validate?
     if (fun) {
 
       // Do we have a validation function? If not we might be able to use the simple validation function.
-      const validateFunction = fun.validate ||
-        ((fun.supportsSimpleValidation && fun.supportsSimpleValidation == true) ? this.validateAgainstArray : null);
+      const validateFunction = fun?.validate ||
+        ((fun?.supportSimpleValidation && fun.supportSimpleValidation == true) ? this.validateAgainstArray : null);
 
       if (validateFunction && !validateFunction(typeValue, fun.values))
-        throw new this.ScanTemplateFormatException(typeValue, detail, this.templateTypes[typeName].values);
+        throw this.scanTemplateFormatException(typeValue, detail, this.templateTypes[typeName].values);
     }
 
     // Reformat if necessary.
@@ -285,7 +361,13 @@ export class ScanTemplateService {
 
   //return JSON.stringify(details);
 }
-  
+  getValueForKey = (key : string): TemplateType =>{
+    const type = this.templateTypes[key];
+    if(type){
+      return type;
+    }
+    return undefined;
+  }
 
 scanTemplateFormatException(value: any, propName: string, acceptableValues: Array<any>): string {
   return "The scan template is invalid. The property: " + propName +

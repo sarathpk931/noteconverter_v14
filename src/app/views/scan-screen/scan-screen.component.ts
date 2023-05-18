@@ -222,36 +222,36 @@ export class ScanScreenComponent {
 // scan functionalities 
 
 scan() {
-  this.logger.logMsg('ctrl.scan ...', 'information');
+  //this.logger.logMsg('ctrl.scan ...', 'information');
    this.mainDeviceconfig();
 };
 
  mainDeviceconfig() {
-  this.logger.logMsg('mainDeviceconfig()...', 'information');
+  //this.logger.logMsg('mainDeviceconfig()...', 'information');
   const regex = /^[^\\\/\:\*\?\"\<\>\|]+$/;
   let fileName : string = this.noteConvertorForm.controls["fileName"].value
   if (regex.test(fileName)) {
-    this.logger.logMsg('mainDeviceconfig() -> if (regex.test(fileName))', 'information');
+    //this.logger.logMsg('mainDeviceconfig() -> if (regex.test(fileName))', 'information');
     xrxDeviceConfigGetInterfaceVersion(AppSetting.url, this.deviceCallbackSuccess.bind(this), this.deviceCallBackFailure.bind(this), null, true);
   } else {
-    this.logger.logMsg('mainDeviceconfig() ELSE FOR if (regex.test(fileName))', 'information');
+    //this.logger.logMsg('mainDeviceconfig() ELSE FOR if (regex.test(fileName))', 'information');
     //const text = strings['SDE_CHARACTERS_CANNOT_BE'].replace('{0}', '\\ / : * ? " < > |');
     //errorHandlerService.showErrorAlert(text, '', null, null);
   }
 }
 
 deviceCallbackSuccess() {
-  this.logger.logMsg('DeviceCallBack_Success -> respText:', 'success');
+  //this.logger.logMsg('DeviceCallBack_Success -> respText:', 'success');
   this.getScanStatus();
 }
 
  deviceCallBackFailure(respText, newresp) {
-  this.logger.logMsg('DeviceCallBack_Failure -> respText:' + respText + ' newresp:' + newresp, 'error');
+  //this.logger.logMsg('DeviceCallBack_Failure -> respText:' + respText + ' newresp:' + newresp, 'error');
   //errorHandlerService.XBB_DEVICE_EIP_DEVICE_CONFIG_DISABLED();
 }
 
 getScanStatus() {
-  this.logger.logMsg('getScanStatus()...', 'information');
+  //this.logger.logMsg('getScanStatus()...', 'information');
   xrxScanV2GetInterfaceVersion(AppSetting.url, 
     this.callback_success.bind(this), 
     this.callback_failure.bind(this), 
@@ -259,25 +259,25 @@ getScanStatus() {
   
 }
 callback_success(reqText, respText) {
-  this.logger.logMsg('getScanStatus() -> callback_success', 'information');
+  //this.logger.logMsg('getScanStatus() -> callback_success', 'information');
   this.getjobmamt();
 }
 callback_failure(respText, newresp) {
-  this.logger.logMsg('callback_failure -> respText:' + respText + ' newresp:' + newresp, 'error');
+  //this.logger.logMsg('callback_failure -> respText:' + respText + ' newresp:' + newresp, 'error');
   //errorHandlerService.DEVICE_EIP_SCANV2_SERVICES_DISABLED();
 }
 
  getjobmamt() {
-  this.logger.logMsg('getjobmanagementInterfaceVersion()...', 'information');
+  //this.logger.logMsg('getjobmanagementInterfaceVersion()...', 'information');
   xrxJobMgmtGetInterfaceVersion(AppSetting.url, this.Jobcallback_success.bind(this), this.Jobcallback_failure.bind(this), null, true);
 }
 
 Jobcallback_success(reqText, respText) {
-  this.logger.logMsg('Jobcallback_success()...', 'information');
+  //this.logger.logMsg('Jobcallback_success()...', 'information');
   this.CheckTemplate();
 }
 Jobcallback_failure(reqText, respText) {
-  this.logger.logMsg('Jobcallback_failure -> reqText:' + reqText + ' respText:' + respText, 'error');
+  //this.logger.logMsg('Jobcallback_failure -> reqText:' + reqText + ' respText:' + respText, 'error');
   //errorHandlerService.DEVICE_EIP_SCANV2_SERVICES_DISABLED();
 }
 
@@ -286,7 +286,8 @@ CheckTemplate() {
 }
 
 Templatecallback_success() {
-  this.logger.logMsg('Templatecallback_success()...', 'information');
+  //alert("template call back success");
+  //this.logger.logMsg('Templatecallback_success()...', 'information');
   this.selectedNote={
     fileFormat : this.selectedFileFormatOptions,
     size : this.selectedSizeOptions,
@@ -297,17 +298,17 @@ Templatecallback_success() {
    
   var values = this.scanOptionService.getValues(this.selectedNote);
 
-  this.logger.logMsg('Templatecallback_success() values:' + values, 'information');
+  //this.logger.logMsg('Templatecallback_success() values:' + values, 'information');
 
-  '##############################################################################'
-  '####################              SCAN       #################################'
-  '##############################################################################'
+  // '##############################################################################'
+  // '####################              SCAN       #################################'
+  // '##############################################################################'
 
   this.scanService.scan(values);
 }
 
  Templatecallback_failure(respText, newresp) {
-  this.logger.logMsg('Templatecallback_failure -> respText:' + respText + ' newresp:' + newresp, 'error');
+  //this.logger.logMsg('Templatecallback_failure -> respText:' + respText + ' newresp:' + newresp, 'error');
   //errorHandlerService.DEVICE_EIP_SCANV2_SERVICES_DISABLED();
 }
     

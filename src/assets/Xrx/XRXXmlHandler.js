@@ -86,7 +86,6 @@ export function xrxGetElementName(node) {
  * @return {array}  an array of nodes with given name or null
  */
 export function xrxFindElements(xmldoc, name) {
-    alert("xrxFindElements");
     var result = null;
     var pos = 0;
     if (name == xrxGetElementName(xmldoc)) {

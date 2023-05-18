@@ -5,7 +5,8 @@ import {catchError} from 'rxjs/operators';
 import { ApiService } from './api.service';
 import { ConfigurationService } from './configuration.service';
 import { LogService } from './log.service';
-import {environment} from '../../environments/environment'
+import {environment} from '../../environments/environment';
+import {AppModule} from '../../app/app.module';
 
 @Injectable({
   providedIn: 'root'
@@ -29,7 +30,7 @@ export class JobService {
   
       const parsedFilename = featureValues.fileName + '.pdf';
   
-      var  LocalizedLanguage:'en'; //to be defined and injected based on browser language ,assigned default 'en'for local testing
+      var  LocalizedLanguage:'en-US'; //to be defined and injected based on browser language ,assigned default 'en'for local testing
 
       const job = {
         jobId: featureValues.jobid,
@@ -37,13 +38,13 @@ export class JobService {
         timeZoneOffsetMinutes: new Date().getTimezoneOffset(),
         filename: parsedFilename,
         localizedLanguage: LocalizedLanguage, // Need to define this variable
-        appId: this.configurationService.getSetting('appId'),
-        deviceId: this.configurationService.getSetting('deviceId'),
+        appId: this.env.appId, //this.configurationService.getSetting('appId'),
+        deviceId: AppModule.deviceId,//this.configurationService.getSetting('deviceId'),
         orientation: featureValues.orientation,
         format: featureValues.fileFormat.toUpperCase(),
         archivalFormat:''
       };
-  
+      this.logService.logMsg("Device Id : "+ job.deviceId.toString(),"Information");
       if (featureValues.fileFormat === "pdf") {
         job.archivalFormat = (featureValues.archivalFormat ? 'PDF/A-1b' : 'PDF');
       }
@@ -51,11 +52,11 @@ export class JobService {
       const request = {
         job: job
       };
-  debugger; //this.apiService.apiUrl
-      return this.http.post(this.env+("/api/v1/job"), request, config).toPromise()
+ //this.apiService.apiUrl
+      return this.http.post(this.env.wncAddress+("/api/v1/job"), request, config).toPromise()
         .then((result: any) => {
-          this.logService.logMsg('jobService -> registerJob -> success -> result.data:' + result.data, 'information');
-          return result.data;
+          this.logService.logMsg('jobService -> registerJob -> success -> result.data:' + result, 'information');
+          return result;//.data
         })
         .catch((error: any) => {
           this.logService.logMsg('jobService -> registerJob -> ERROR...', 'error');

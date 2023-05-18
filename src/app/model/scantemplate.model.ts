@@ -63,5 +63,33 @@
           UserData: { type: string, value: string }
         }
       }
+
+      export interface scanTemplate {
+        docSec : _docSec,
+        destSec : _destSec,
+        generalSec : _generalSection,
+        scanSec : _scanSection,
+        name : string,
+        sections : [_scanSection, _generalSection, _destSec, _docSec],
+        checkSum? : string,
+        jobId? : string,
+        status? : status
+      }
+
+      export interface status{
+        lastJobState : string,
+        lastJobStateReason : string
+      }
+      
+      export interface TemplateType {
+        supportSimpleValidation? : boolean;
+        values? : string [];
+        validate? : (v) => void;
+        format? :(v) => void;
+      }
+
+      export interface TemplateTypes {
+        [key: string]: TemplateType;
+      }
       
       
