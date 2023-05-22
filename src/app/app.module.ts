@@ -65,6 +65,7 @@ import {xrxGetElementValue} from '../assets/Xrx/XRXXmlHandler';
 import {xrxCallWebservice,xrxCallAjax} from '../assets/Xrx/XRXWebservices';
 import { Global,AppSetting } from './model/global';
 import * as _ from 'lodash';
+import { EditableFileNameDirective } from './Directives/editable-file-name.directive';
 
 @NgModule({
   declarations: [
@@ -75,7 +76,8 @@ import * as _ from 'lodash';
     ScanScreenComponent,
     FeaturePopoverComponent,
     XasStringDirective,
-    GeneralAlertComponent
+    GeneralAlertComponent,
+    EditableFileNameDirective
   ],
   imports: [
     BrowserModule,
@@ -87,11 +89,11 @@ import * as _ from 'lodash';
     ReactiveFormsModule,
   ],
   providers: [
-    {
-    provide :APP_INITIALIZER,
-    useFactory:()=> Device,
-    multi:true,
-  },
+  //   {
+  //   provide :APP_INITIALIZER,
+  //   useFactory:()=> Device,
+  //   multi:true,
+  // },
   // {
   //   provide :APP_INITIALIZER,
   //   useFactory: ()=> Session,

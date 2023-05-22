@@ -1,6 +1,6 @@
 //scan-screen.component.ts
 
-import { Component } from '@angular/core';
+import { Component,ViewChild,ElementRef } from '@angular/core';
 import {MatDialog,MatDialogRef} from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators,ReactiveFormsModule,AbstractControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -20,19 +20,18 @@ import {xrxJobMgmtGetInterfaceVersion} from '../../../assets/Xrx/XRXJobManagemen
 import {xrxTemplateGetInterfaceVersion} from '../../../assets/Xrx/XRXTemplate';
 import {xrxDeviceConfigGetInterfaceVersion} from '../../../assets/Xrx/XRXDeviceConfig';
 import {AppModule} from '../../app.module';
+import { EditableFileNameDirective } from  '../../Directives/editable-file-name.directive';
 
 
 @Component({
   selector: 'app-scan-screen',
   templateUrl: './scan-screen.component.html',
-  styleUrls: ['./scan-screen.component.scss']
+  styleUrls: ['./scan-screen.component.scss'],
+  
 })
 export class ScanScreenComponent {
 
-  file={
-    name:'File Name',
-    type:'Type'
-  }; 
+  @ViewChild('fileNameSpan', { static: true }) fileNameSpan: ElementRef;
   showPrivacySetting=false;
   showLoader=false;
   validationStatus: boolean = false;
@@ -61,6 +60,9 @@ export class ScanScreenComponent {
   generation = AppModule.Generation;
   model = AppModule.model;
   selectedNote : selectedNote;
+
+  fileName: string = '';
+  defaultFilename : string ='@Xerox Scan';
 
   constructor(
     private dialog: MatDialog,
@@ -96,11 +98,13 @@ export class ScanScreenComponent {
       this.createForm();
 
       this.getDefaultValues();
+      this.fileName = this.getDefaultFileName();
       
       //observables to show selected values
       this.scanOptionService.selectedFileFormatC.subscribe(object =>{
         if(object){
-          this.selectedFileFormatOptions = object;
+          this.selectedFileFormatOptions = object;        
+          this.updateFileName();
         }
       })
 
@@ -115,7 +119,44 @@ export class ScanScreenComponent {
           this.selectedSizeOptions = size;
         }
       })
+
+
+      // this.noteConvertorForm.get('fileName').valueChanges.subscribe((value: string) => { 
+      //   // const currentDate = new Date(); 
+      //   // const formattedDate = currentDate.toLocaleDateString('en-US'); 
+      //   // const formattedTime = currentDate.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }); 
+        
+      //   // Update the fileName control value 
+      //   const newValue = `@${this.fileName}`+'[Date & Time].'+this.selectedFileFormatOptions.value;
+      //   this.noteConvertorForm.get('fileName').setValue(newValue, { emitEvent: false }); 
+      // });
     }
+
+    ngAfterViewInit() {
+      const fileName = this.fileNameSpan.nativeElement.textContent;
+      console.log('File name:', fileName);
+      // You can perform further processing with the fileName value here
+    }
+    getDefaultFileName(): string {
+      //const now = new Date();
+      //const dateAndTime = now.toLocaleString('en-US', { hour12: false, timeZone: 'UTC' }).replace(/[/:\s]/g, '');
+      return `@${this.fileName}`+'[Date & Time].'+this.selectedFileFormatOptions.value;//${dateAndTime}
+    }
+    updateFileName() {
+      const atIndex = this.fileName.indexOf('.');
+      const fileName = this.fileName.slice(0,atIndex).trim();
+      this.fileName = fileName+'.';
+      this.fileName += this.selectedFileFormatOptions.value;
+    }
+
+    onFileNameClick() {
+      // // Trim the default value to show only "@ Xerox Scan"     
+       this.fileName = '@ Xerox Scan'
+    }
+    onFileNameBlur(){
+      this.fileName += ' [Date & Time].'+this.selectedFileFormatOptions.value;
+    }
+
     getDefaultValues(){
       this.selectedFileFormat = this.scanOptionService.getFileFormat(this.anyFileFormat);
       this.selectedFileFormatOptions = this.selectedFileFormat.options.find(item => item.isDefault === true);
@@ -129,7 +170,7 @@ export class ScanScreenComponent {
       this.noteConvertorForm = this.formBuilder.group({
         email:['',[Validators.required,Validators.email]],
         confirmEmail:['',[Validators.required,Validators.email]],
-        fileName : ['']
+       // fileName : [this.fileName]
       },
       { validators: this.emailMatchValidator },
      );
@@ -150,8 +191,9 @@ export class ScanScreenComponent {
       this.noteConvertorForm.patchValue({
         email:'',
         confirmEmail:'',
-        fileName : ''
+        //fileName : ''
       });
+      this.fileNameSpan.nativeElement.textContent = this.defaultFilename;
       this.getDefaultValues();
     }
     
@@ -219,7 +261,8 @@ scan() {
  mainDeviceconfig() {
   //this.logger.logMsg('mainDeviceconfig()...', 'information');
   const regex = /^[^\\\/\:\*\?\"\<\>\|]+$/;
-  let fileName : string = this.noteConvertorForm.controls["fileName"].value
+  let fileName : string = this.fileNameSpan.nativeElement.textContent; //this.noteConvertorForm.controls["fileName"].value
+  //alert(fileName);
   if (regex.test(fileName)) {
     //this.logger.logMsg('mainDeviceconfig() -> if (regex.test(fileName))', 'information');
     xrxDeviceConfigGetInterfaceVersion(AppSetting.url, this.deviceCallbackSuccess.bind(this), this.deviceCallBackFailure.bind(this), null, true);
