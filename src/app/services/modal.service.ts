@@ -45,6 +45,10 @@ export class ModalService {
    }
 
   public openLargeModal(component : any):void{
+    if(this.dialog.openDialogs.length> 0){
+      //a modal is already open , do not open a new one
+      return null;
+    }
     const dialogRef = this.dialog.open(component, {
       //maxWidth: '400vw',
       //maxHeight: '600vh',
@@ -61,7 +65,11 @@ export class ModalService {
   }
 
   public openModal(component : any){
-        
+    
+    if(this.dialog.openDialogs.length> 0){
+      //a modal is already open , do not open a new one
+      return null;
+    }
     const modalRef : MatDialogRef<any>  = this.dialog.open(component, {
       
     })

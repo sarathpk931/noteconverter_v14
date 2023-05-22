@@ -4,8 +4,6 @@ import { Component } from '@angular/core';
 import {MatDialog,MatDialogRef} from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators,ReactiveFormsModule,AbstractControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import {Blob} from 'blob';
-import { saveAs } from 'file-saver';
 import {FeaturePopoverComponent} from '../feature-popover/feature-popover.component';
 import { PrivacyPolicyComponent} from '../privacy-policy/privacy-policy.component';
 import { PopupCompComponent} from '../popup-comp/popup-comp.component';
@@ -77,15 +75,7 @@ export class ScanScreenComponent {
     ) {}
 
     ngOnInit(){
-      //console.log(this.generation);
-      //console.log("model :" + this.model);
-      //alert("Ng Oninit Generation :" +this.generation);
-      //alert("Ng Oninit model :"+ this.model);
 
-      // this.activatedRoute.queryParams.subscribe(params => {
-      // const paramsJsonStr = JSON.stringify(params, null, 2);
-      // console.log(`scanScreen -> paramsJsonStr: ${paramsJsonStr}`);
-      // });
 
       // If we have an email in session, attempt to validate fields (to enable scan button)
       // if (Global.Email) 
