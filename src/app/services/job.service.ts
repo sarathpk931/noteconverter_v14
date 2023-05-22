@@ -59,7 +59,8 @@ export class JobService {
           return result;//.data
         })
         .catch((error: any) => {
-          this.logService.logMsg('jobService -> registerJob -> ERROR...', 'error');
+          debugger;
+          this.logService.logMsg('jobService -> registerJob -> ERROR...' + error, 'error');
   
           if (error != null && error.data != null && error.data.ExceptionMessage != null) {
             this.logService.logMsg('jobService -> registerJob -> ERROR:' + error.data.ExceptionMessage, 'error');
@@ -74,6 +75,7 @@ export class JobService {
       catch(ExceptionMessage)
 
       {
+        //debugger;
         this.logService.logMsg(ExceptionMessage);
         return  null;
       }

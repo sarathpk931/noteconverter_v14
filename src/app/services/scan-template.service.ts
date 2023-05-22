@@ -179,7 +179,7 @@ export class ScanTemplateService {
     name: '[service xrx_svc_file]',
     details: {
       RepositoryAlias: { type: 'string', value: 'AG_SCAN' },
-      FilingProtocol: { type: 'enum_filingprotocol', value: 'XRXHTTP' },
+      FilingProtocol: { type: 'enum_filingprotocol', value: 'XRXHTTPS' },
       RepositoryVolume: { type: 'string', value: '' },//server/share
       RepositoryName: { type: 'string', value: 'DocLib' },
       DocumentPath: { type: 'string', value: '/Scan' },
@@ -264,7 +264,7 @@ export class ScanTemplateService {
   
     this.destSection.details.XrxHTTPScriptLocation.value = returnUrl;
   
-    repoName = this.env.wncAddress;//this.apiService.apiHost(); //to do
+    repoName = this.env.repoAddress;//this.apiService.apiHost(); //to do
   
     this.destSection.details.DocumentPath.value = '/';
     this.destSection.details.RepositoryName.value = repoName;

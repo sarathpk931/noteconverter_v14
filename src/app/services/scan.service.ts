@@ -71,6 +71,7 @@ export class ScanService {
     },
     handleBeginCheckFailure: (request: any, response: any) => {
       //alert("handleBeginCheckFailure :"+response);
+      //debugger;
       this.logService.logMsg(response,"Information");
       this.logService.logMsg(request,"Information");
       this.callbacks.completeScan({ error: true, deviceDetails: response });
@@ -80,6 +81,7 @@ export class ScanService {
     },
     completeScan: (detail: any) => {
       //alert("completescan :" + detail);
+      //debugger;
       this.isScanning = false;
       this.isComplete = true;
       if (detail.error) {
@@ -127,7 +129,6 @@ export class ScanService {
 
     public scan(model): Promise<void> {
       this.logService.logMsg('service.scan', 'information');
-  
       if (this.isScanning) {
         this.logService.logMsg('service.scan -> service.isScanning : Please wait!!!!', 'information');
         throw this.appComponent.Strings['SDE_PLEASE_WAIT_UNTIL'];
@@ -137,7 +138,7 @@ export class ScanService {
       this.logService.logMsg('scanService => scan => jobID:' + this.jobid, 'information');
 
       model.jobid = this.jobid;
-
+      this.logService.logMsg("Model :"+ model);
       this.scanTemplate = this.scanTemplateService.scanTemplate(model);
       //this.modalService.showProgressAlert(this.appComponent.Strings['SDE_SCANNING1'],'');
   
@@ -160,12 +161,9 @@ export class ScanService {
   
     putTemplate(tStr): Promise<any> {
       return  new Promise((resolve,reject)=>{
-        //alert('putTemplate()...');
       this.logService.logMsg('putTemplate()...', 'information');
       const printerUrl =  this.env.apiUrl;//'path/to/printerUrl';
-      //const template =  tStr;// 'exampleTemplate'; // Replace with actual template object
       const templateName= this.scanTemplate.name; //templateName
-      //const callId = 'exampleCallId'; // Replace with actual call ID
       function finish (callId: any, response: any) {
         //alert("putTemplate => successCallback");
         this.logService.logMsg('putTemplate => successCallback', 'information');
@@ -176,11 +174,9 @@ export class ScanService {
         resolve (result);
       };
       function fail  (result: any)  {
-        //alert("error in puttemplate");
-        //alert(result);
         this.logService.logMsg("PutTemplate Error" + result);
         this.modalService.closeAllModals();
-        //this.errorHandlerService.APP_UNAVAILABLE_AT_THIS_TIME();
+        this.errorHandlerService.APP_UNAVAILABLE_AT_THIS_TIME();
         reject(result);
       };
         xrxTemplatePutTemplate(
@@ -196,14 +192,12 @@ export class ScanService {
   
    
     finishPutTemplate(callId: any, response: string, printerUrl: string,  timeoutInMinutes: number):Promise<any>{
-     //alert("finishPutTemplate");
       return new Promise((resolve,reject)=>{
         this.logService.logMsg(`finishPutTemplate(callId,response) -> callId: ${callId} response: ${response}`, 'information');
         const xmlDoc = xrxStringToDom(response);
         this.logService.logMsg(`finishPutTemplate(callId,response) -> xmlDoc: ${xmlDoc}`, 'information');
         this.scanTemplate.checkSum = xrxGetElementValue(xmlDoc, 'TemplateChecksum');
         function successCallback  (envelope: any, response: any)  {
-          //debugger;
           this.logService.logMsg(`function finish(callId, response) -> callId: ${callId} response: ${response}`, 'information');
           let responseJobId : string = xrxScanV2ParseInitiateScanJobWithTemplate(response);
           this.logService.logMsg("response job Id : "+ responseJobId,"Information");
@@ -219,11 +213,10 @@ export class ScanService {
           this.beginCheckLoop(this.scanTemplate.jobId);
         };
         function errorCallback  (env: any,message :any)  {
-          debugger;
           this.logService.logMsg(`function fail(env, message) {  -> env: ${env} message: ${message}`, 'information');
 
           this.callbacks.handleFinishPutTemplateError();
-           this.errorHandlerService.CLOUD_APP_GENERAL_ERROR(); //to be implemented
+           this.errorHandlerService.CLOUD_APP_GENERAL_ERROR(); 
 
         };
         xrxScanV2InitiateScanJobWithTemplate(
@@ -248,11 +241,8 @@ export class ScanService {
   }
 
   beginCheckLoop(jobid:string): void {
-    //alert("beginCheckLoop job id :"+ jobid);
-    //alert('isComplete :'+ this.isComplete);
     if (this.isComplete) { return; }
-    //alert("Session Url "+this.sessionUrl);
-    this.logService.logMsg('beginCheckLoop()...', 'information'); ///
+    this.logService.logMsg('beginCheckLoop()...', 'information'); 
     xrxJobMgmtGetJobDetails(
       this.sessionUrl,
       'WorkflowScanning',
@@ -265,22 +255,18 @@ export class ScanService {
   }
 
   checkLoop(request: any, response: any) {
-    //debugger;
-    //alert("checkLoop");
-    debugger;
+
     this.logService.logMsg('checkLoop(request, response) -> request:' + request + ' response:' + response, 'information');
     // Any job state?
   let jobStateReason = '';
   const info = xrxJobMgmtParseGetJobDetails(response);
-  const serializer = new XMLSerializer();
-  const serializedstring =serializer.serializeToString(response);
-  this.logService.logMsg("xrxJobMgmtParseGetJobDetails library reponse serialized" + serializedstring,"Information");
+  //const serializer = new XMLSerializer();
+  //const serializedstring =serializer.serializeToString(response);
+  //this.logService.logMsg("xrxJobMgmtParseGetJobDetails library reponse serialized" + serializedstring,"Information");
   const jobState = xrxGetElementValue(info, 'JobState');
-  this.logService.logMsg("inside checkLoop => jobState : "+jobState)
+  //this.logService.logMsg("inside checkLoop => jobState : "+jobState)
   const dummy = xrxJobMgmtParseJobStateReasons(response);
-  this.logService.logMsg("xrxJobMgmtParseJobStateReasons response" + dummy,"Information");
   this.logService.logMsg('checkLoop(request, response) -> jobState:' + jobState + ' dummy:' + dummy, 'information');
-  //console.log(jobState + ' ' + dummy);
 
   if (jobState === null || jobState === 'Completed') {
     this.logService.logMsg('if (jobState === null || jobState === Completed)', 'information');
@@ -303,7 +289,7 @@ export class ScanService {
     lastJobState: jobState,
     lastJobStateReason: jobStateReason
   };
-  this.logService.logMsg("scan template status :" + this.scanTemplate.status.lastJobState+", JobstaeReason : "+this.scanTemplate.status.lastJobStateReason, "Information");
+  //this.logService.logMsg("scan template status :" + this.scanTemplate.status.lastJobState+", JobstaeReason : "+this.scanTemplate.status.lastJobStateReason, "Information");
   // Checking if the job should be flagged as timeout
   if (this.checkScanTimeout()) {
     this.logService.logMsg('if (checkScanTimeout()) { ', 'information');
