@@ -23,6 +23,9 @@ import {AppModule} from '../../app.module';
 import { EditableFileNameDirective } from  '../../Directives/editable-file-name.directive';
 import {TranslatePipe} from '../../filters/translate.pipe';
 
+import {BasicAlertComponent} from '../basic-alert/basic-alert.component';
+import { ProgressAlertComponent } from '../progress-alert/progress-alert.component';
+
 
 @Component({
   selector: 'app-scan-screen',
@@ -99,13 +102,13 @@ export class ScanScreenComponent {
       this.createForm();
 
       this.getDefaultValues();
-      this.fileName = this.getDefaultFileName();
+      //this.fileName = this.getDefaultFileName();
       
       //observables to show selected values
       this.scanOptionService.selectedFileFormatC.subscribe(object =>{
         if(object){
           this.selectedFileFormatOptions = object;        
-          this.updateFileName();
+          //this.updateFileName();
         }
       })
 
@@ -124,7 +127,7 @@ export class ScanScreenComponent {
     }
 
     ngAfterViewInit() {
-     this.fileName = this.fileNameSpan.nativeElement.textContent;
+     //this.fileName = this.fileNameSpan.nativeElement.textContent;
       //console.log('File name:', fileName);
       // You can perform further processing with the fileName value here
     }
@@ -161,7 +164,7 @@ export class ScanScreenComponent {
       this.noteConvertorForm = this.formBuilder.group({
         email:['',[Validators.required,Validators.email]],
         confirmEmail:['',[Validators.required,Validators.email]],
-        fileName : [this.fileName]//''
+        fileName : ['']//this.fileName
       },
       { validators: this.emailMatchValidator },
      );
@@ -184,7 +187,7 @@ export class ScanScreenComponent {
         confirmEmail:'',
         //fileName : ''
       });
-      this.fileNameSpan.nativeElement.textContent = this.defaultFilename;
+      //this.fileNameSpan.nativeElement.textContent = this.defaultFilename;
       this.getDefaultValues();
     }
     
@@ -246,13 +249,14 @@ export class ScanScreenComponent {
 
 scan() {
   //this.logger.logMsg('ctrl.scan ...', 'information');
-   this.mainDeviceconfig();
+  this.modalService.openModal(BasicAlertComponent,'','');
+   //this.mainDeviceconfig();
 };
 
  mainDeviceconfig() {
   //this.logger.logMsg('mainDeviceconfig()...', 'information');
   const regex = /^[^\\\/\:\*\?\"\<\>\|]+$/;
-  this.fileName = this.fileNameSpan.nativeElement.textContent ; //this.noteConvertorForm.controls["fileName"].value
+  this.fileName =  this.noteConvertorForm.controls["fileName"].value; //this.fileNameSpan.nativeElement.textContent
   //alert(fileName);
   if (regex.test(this.fileName)) {
     //this.logger.logMsg('mainDeviceconfig() -> if (regex.test(fileName))', 'information');
@@ -316,7 +320,7 @@ Templatecallback_success() {
     fileFormat : this.selectedFileFormatOptions,
     size : this.selectedSizeOptions,
     type : this.selectedTypeOptions,
-    fileName : this.fileNameSpan.nativeElement.textContent,//this.noteConvertorForm.controls["fileName"].value
+    fileName : this.noteConvertorForm.controls["fileName"].value,//this.fileNameSpan.nativeElement.textContent
     email :  this.noteConvertorForm.controls["email"].value
   }
 
