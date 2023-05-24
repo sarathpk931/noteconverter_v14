@@ -17,7 +17,8 @@ import {xrxJobMgmtGetJobDetails,xrxJobMgmtParseGetJobDetails,xrxJobMgmtParseJobS
 import {xrxParseJobStateReasons} from '../../assets/Xrx/XRX_EIPWSHelpers';
 import {environment} from '../../environments/environment';
 import {scanTemplate} from '../../app/model/scantemplate.model';
-import {BasicAlertComponent} from '../views/basic-alert/basic-alert.component'
+import {BasicAlertComponent} from '../views/basic-alert/basic-alert.component';
+import {ProgressAlertComponent} from '../views/progress-alert/progress-alert.component';
 
 @Injectable({
   providedIn: 'root'
@@ -113,6 +114,7 @@ export class ScanService {
 
 
     public scan(model): Promise<void> {
+      debugger;
       this.logService.logMsg('service.scan', 'information');
       if (this.isScanning) {
         this.logService.logMsg('service.scan -> service.isScanning : Please wait!!!!', 'information');
@@ -126,23 +128,24 @@ export class ScanService {
       this.logService.logMsg("Model :"+ model);
       this.scanTemplate = this.scanTemplateService.scanTemplate(model);
       console.log(this.scanTemplate);
-      this.modalService.showProgressAlert(this.appComponent.Strings['SDE_SCANNING1'],'');
+      //this.modalService.showProgressAlert(this.appComponent.Strings['SDE_SCANNING1'],'');
+      this.modalService.openModal(BasicAlertComponent,this.appComponent.Strings['SDE_SCANNING1'],'');
   
-      return this.jobService.registerJob(model).then((result)=>{ //.toPromise()     
+      // return this.jobService.registerJob(model).then((result)=>{ //.toPromise()     
      
-          const tStr = this.scanTemplateService.objToString();
-          this.logService.logMsg('scanService => scan => template:' + tStr, 'information');
-          this.isScanning = true;
-          this.isComplete = false;
-          //function resolve(){alert("inside completescanPromise resolve");}
-          //function reject(){alert("inside completescanPromise reject");}
-          this.completeScanPromise = new Promise((resolve, reject) => {});
-          this.logService.logMsg('service.scan -> calling putTemplate()', 'information');
-          //alert("before putTemplate");
-          this.putTemplate(tStr);
+      //     const tStr = this.scanTemplateService.objToString();
+      //     this.logService.logMsg('scanService => scan => template:' + tStr, 'information');
+      //     this.isScanning = true;
+      //     this.isComplete = false;
+      //     //function resolve(){alert("inside completescanPromise resolve");}
+      //     //function reject(){alert("inside completescanPromise reject");}
+      //     this.completeScanPromise = new Promise((resolve, reject) => {});
+      //     this.logService.logMsg('service.scan -> calling putTemplate()', 'information');
+      //     //alert("before putTemplate");
+      //     this.putTemplate(tStr);
 
-        return  this.completeScanPromise;
-      });
+         return  this.completeScanPromise;
+      // });
     };
   
     putTemplate(tStr): Promise<any> {
