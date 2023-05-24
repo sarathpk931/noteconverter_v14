@@ -63,7 +63,7 @@ export class ScanScreenComponent {
   selectedNote : selectedNote;
 
   fileName: string = '';
-  defaultFilename : string ='@Xerox Scan';
+  defaultFilename : string ='Xerox Scan';
 
   constructor(
     private dialog: MatDialog,
@@ -328,7 +328,7 @@ Templatecallback_success() {
   // '####################              SCAN       #################################'
   // '##############################################################################'
 
-  //this.scanService.scan(values);
+  this.scanService.scan(values);
 }
 
  Templatecallback_failure(respText, newresp) {

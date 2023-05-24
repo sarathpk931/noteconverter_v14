@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+
+import { ModalService} from '../../services/modal.service';
 
 @Component({
   selector: 'app-progress-alert',
@@ -7,4 +10,13 @@ import { Component } from '@angular/core';
 })
 export class ProgressAlertComponent {
 
+  constructor(
+    private modalService : ModalService,
+    public mtModalRef : MatDialogRef<any>
+  )
+  {}
+
+  ngOnInit(){
+    //alert("tttt");
+  }
 }

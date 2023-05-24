@@ -70,8 +70,8 @@ export class ModalService {
       //a modal is already open , do not open a new one
       return null;
     }
-    alert("Title :"+ title);
-    alert("Message :"+ message);
+    //alert("Title :"+ title);
+    //alert("Message :"+ message);
     const modalRef : MatDialogRef<any>  = this.dialog.open(component, {
       data :{'title': title,'message':message}
 
