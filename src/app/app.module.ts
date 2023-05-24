@@ -90,11 +90,11 @@ import { EditableFileNameDirective } from './Directives/editable-file-name.direc
     ReactiveFormsModule,
   ],
   providers: [
-    {
-    provide :APP_INITIALIZER,
-    useFactory:()=> Device,
-    multi:true,
-  },
+  //   {
+  //   provide :APP_INITIALIZER,
+  //   useFactory:()=> Device,
+  //   multi:true,
+  // },
   // {
   //   provide :APP_INITIALIZER,
   //   useFactory: ()=> Session,
