@@ -64,17 +64,21 @@ export class ModalService {
     this.fromData.next(data);
   }
 
-  public openModal(component : any){
+  public openModal(component : any,title:string,message : string){
     
     if(this.dialog.openDialogs.length> 0){
       //a modal is already open , do not open a new one
       return null;
     }
+    alert("Title :"+ title);
+    alert("Message :"+ message);
     const modalRef : MatDialogRef<any>  = this.dialog.open(component, {
-      
+      data :{'title': title,'message':message}
+
     })
     return modalRef;
   }
+  
 
   public showAlert(string: any)
   {

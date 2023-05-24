@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { StorageService } from '../services/storage.service';
-
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +10,7 @@ export class LogService {
 
   private storageProvider: Storage;
   //private readonly filename = 'app-errors.log';
+  env = environment;
 
 
   constructor(
@@ -37,7 +38,7 @@ export class LogService {
       DeviceID: deviceID
     };
 
-    this.http.post('http://10.117.206.202:5155/api/log', argParms, config).subscribe();
+    this.http.post(this.env.deviceUrl+':5155/api/log', argParms, config).subscribe();
     //http://10.117.207.162
   }
 

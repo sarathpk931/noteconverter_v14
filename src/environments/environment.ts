@@ -8,7 +8,9 @@ export const environment = {
   wncAddress : 'https://wncservice-test.services.xerox.com', //'https://xrxapps-wnc-use-test-dev.azurewebsites.net'
   repoAddress : 'wncservice-test.services.xerox.com',
   appId : '3c51882b-c8da-44d2-b41b-b98828e6485d',
-  privacyPolicyUrl : 'https://appgallery.services.xerox.com/api/apps/template-privacy-policy'
+  privacyPolicyUrl : 'https://appgallery.services.xerox.com/api/apps/template-privacy-policy',
+  deviceUrl : 'http://10.117.207.45',
+  wncAppAddress :'https://wnc-web-test.services.xerox.com'
 };
 /*
  * For easier debugging in development mode, you can import the following file

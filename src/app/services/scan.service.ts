@@ -15,8 +15,9 @@ import {xrxStringToDom,xrxGetElementValue} from '../../assets/Xrx/XRXXmlHandler'
 import {xrxScanV2InitiateScanJobWithTemplate,xrxScanV2ParseInitiateScanJobWithTemplate} from '../../assets/Xrx/XRXScanV2';
 import {xrxJobMgmtGetJobDetails,xrxJobMgmtParseGetJobDetails,xrxJobMgmtParseJobStateReasons} from '../../assets/Xrx/XRXJobManagement';
 import {xrxParseJobStateReasons} from '../../assets/Xrx/XRX_EIPWSHelpers';
-import {environment} from '../../environments/environment'
+import {environment} from '../../environments/environment';
 import {scanTemplate} from '../../app/model/scantemplate.model';
+import {BasicAlertComponent} from '../views/basic-alert/basic-alert.component'
 
 @Injectable({
   providedIn: 'root'
@@ -37,9 +38,6 @@ export class ScanService {
      
   ) {}
 
-  private printerUrl = 'http://10.117.210.173';//127.0.0.1
-  private sessionUrl = 'http://127.0.0.1';//http://localhost
-
   private startScanTime: Date | null = null;
   private stopScanTime: Date | null = null;
   private timeoutInMinutes = 1;
@@ -49,6 +47,9 @@ export class ScanService {
 
   env = environment;
   scanTemplate : scanTemplate;
+
+  private printerUrl = this.env.deviceUrl;//127.0.0.1
+  private sessionUrl = 'http://127.0.0.1';//http://localhost
 
   public callbacks = {
     handleScanException: (message: string) => {
@@ -109,23 +110,7 @@ export class ScanService {
       .pipe(catchError((error) => throwError(error)));
   }
 
-  /* public scan(model: any): Observable<any> {
-    this.logService.logMsg('service.scan', 'information');
-    if (this.isScanning) {
-      this.logService.logMsg('service.scan -> service.isScanning : Please wait!!!!', 'information');
-      throw this.appComponent.Strings['SDE_PLEASE_WAIT_UNTIL'];
-    }
-    this.jobid = this.appComponent.generateNewJobID();
-    this.logService.logMsg(`scanService => scan => jobID: ${this.jobid}`, 'information');
-    model.jobid = this.jobid;
-    this.template = new this.scanTemplate(model);
-    this.modalService.showProgressAlert(this.strings.SDE_SCANNING1);
-    return this.http.post('job/register', model).pipe(
-      catchError((error) => throwError(error)),
-      catchError((error) => {
-        this.modalService.closeAll
-      }
-    }, */
+
 
     public scan(model): Promise<void> {
       this.logService.logMsg('service.scan', 'information');
@@ -140,7 +125,8 @@ export class ScanService {
       model.jobid = this.jobid;
       this.logService.logMsg("Model :"+ model);
       this.scanTemplate = this.scanTemplateService.scanTemplate(model);
-      //this.modalService.showProgressAlert(this.appComponent.Strings['SDE_SCANNING1'],'');
+      console.log(this.scanTemplate);
+      this.modalService.showProgressAlert(this.appComponent.Strings['SDE_SCANNING1'],'');
   
       return this.jobService.registerJob(model).then((result)=>{ //.toPromise()     
      
@@ -164,6 +150,7 @@ export class ScanService {
       this.logService.logMsg('putTemplate()...', 'information');
       const printerUrl =  this.env.apiUrl;//'path/to/printerUrl';
       const templateName= this.scanTemplate.name; //templateName
+      //alert("putTemplate :"+this.scanTemplate.name);
       function finish (callId: any, response: any) {
         //alert("putTemplate => successCallback");
         this.logService.logMsg('putTemplate => successCallback', 'information');
@@ -306,7 +293,7 @@ export class ScanService {
 
     const title = 'SDE_DOCUMENT_SUCCESSFULLY_SCANNED'; //strings to be replaced from app resources in Web Solution file
     const msg = 'SDE_WILL_RECEIVE_EMAIL2'.replace('{0}', 'Xerox Note Converter');
-    //this.modalService.showSimpleAlert(title, msg);
+    this.modalService.openModal(BasicAlertComponent,title,msg);//title, msg
 
     this.logService.logMsg('if (jobState === Completed && jobStateReason == JobCompletedSuccessfully) { ', 'information');
     //$rootScope.$broadcast('jobProgress', 'JOB_COMPLETED_SUCCESSFULLY'); to be implemented
@@ -382,10 +369,10 @@ export class ScanService {
 
   deleteScanTemplate():void {
     // We can delete the template by checksum if we have it.
-    if (this.template.checkSum) {
+    if (this.scanTemplate.checkSum) {
 
       
-      xrxTemplateDeleteTemplate(this.printerUrl, this.template.name, this.template.checkSum, 
+      xrxTemplateDeleteTemplate(this.printerUrl, this.scanTemplate.name, this.scanTemplate.checkSum, 
          this.success,
          this.failure
         );

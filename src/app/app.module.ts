@@ -24,10 +24,10 @@ import { PrivacyPolicyComponent } from './views/privacy-policy/privacy-policy.co
 import { ProgressAlertComponent } from './views/progress-alert/progress-alert.component';
 import { FeaturePopoverComponent } from './views/feature-popover/feature-popover.component';
 /* 
-import { AlertBannerComponent } from './views/alert-banner/alert-banner.component';
+import { AlertBannerComponent } from './views/alert-banner/alert-banner.component';*/
 import { BasicAlertComponent } from './views/basic-alert/basic-alert.component';
 
-import { FileFormatModalComponent } from './views/file-format-modal/file-format-modal.component';*/
+/*import { FileFormatModalComponent } from './views/file-format-modal/file-format-modal.component';*/
 import { GeneralAlertComponent } from './views/general-alert/general-alert.component';
 /*import { KeypadComponent } from './views/keypad/keypad.component';
 
@@ -77,7 +77,8 @@ import { EditableFileNameDirective } from './Directives/editable-file-name.direc
     FeaturePopoverComponent,
     XasStringDirective,
     GeneralAlertComponent,
-    EditableFileNameDirective
+    EditableFileNameDirective,
+    BasicAlertComponent,
   ],
   imports: [
     BrowserModule,
@@ -89,11 +90,11 @@ import { EditableFileNameDirective } from './Directives/editable-file-name.direc
     ReactiveFormsModule,
   ],
   providers: [
-  //   {
-  //   provide :APP_INITIALIZER,
-  //   useFactory:()=> Device,
-  //   multi:true,
-  // },
+    {
+    provide :APP_INITIALIZER,
+    useFactory:()=> Device,
+    multi:true,
+  },
   // {
   //   provide :APP_INITIALIZER,
   //   useFactory: ()=> Session,
@@ -110,7 +111,8 @@ import { EditableFileNameDirective } from './Directives/editable-file-name.direc
     ApiService,
     ConfigurationService,
     ScanService,
-    ScanTemplateService
+    ScanTemplateService,
+    TranslatePipe
   ],
   bootstrap: [AppComponent]
 })

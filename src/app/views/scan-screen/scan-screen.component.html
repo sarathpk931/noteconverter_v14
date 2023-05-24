@@ -4,7 +4,7 @@
     <div class="node-convertor  form_updated">
       <div class="section-1">
         <h1 class="text-center">Xerox® Note Converter        
-           <button class="btn scan-btn" (click)="scan()" [ngClass]="!noteConvertorForm?.valid ? 'disabled' : ''">            
+           <button class="btn scan-btn xrx-scan" (click)="scan()" [ngClass]="!noteConvertorForm?.valid ? 'disabled' : ''">            
             Scan
           </button>
         </h1>
@@ -23,12 +23,12 @@
             <div class="col-sm-10 col-xs-7">
               <div class="">	
                 <div class="">	
-                   <!-- <input type="text" id="txtFileName" class="form-control" placeholder="File Name" formControlName = "fileName" [(ngModel)]="fileName" (click)="onFileNameClick()" />	 -->
+                   <input type="text" id="txtFileName" class="form-control" placeholder="File Name" formControlName = "fileName" />	<!--[(ngModel)]="fileName" (click)="onFileNameClick()" -->
                    <!-- <input type="text" id="txtFileName" class="form-control" [placeholder]="getDefaultFileName()" formControlName="fileName" [(ngModel)]="fileName" 
                    (click)="onFileNameClick()" (blur)="onFileNameBlur()" /> -->
-                   <span id="txtFileName" class="form-control" placeholder="File Name" #fileNameSpan appEditableFileName>
+                   <!-- <span id="txtFileName" class="form-control" placeholder="File Name" #fileNameSpan appEditableFileName>
                     @ Xerox Scan
-                  </span>
+                  </span> -->
                   </div>	
               </div>
             </div>
@@ -82,7 +82,7 @@
                       </div>    
                       </td>
                       <td>
-                        <span class="text-left" xasString="{{selectedSize.title}}"></span> 	
+                        <span class="text-left" >{{selectedSize.title}}</span> 	<!--xasString=""-->
                       </td>
                       </tr>
                 </table>

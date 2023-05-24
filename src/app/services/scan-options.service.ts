@@ -282,9 +282,16 @@ export class ScanOptionsService {
       values.quality = '128';
       values.resolution = 'RES_300X300';
       values.searchableText = 'SEARCHABLE_IMAGE';
-      // values.fileName = this.fileName;
+       // = this.fileName;
       // To fix bug where the popover config menus do not appear (only dim the screen) when selecting non-latin-char-based languages.
-      values.fileName = window.btoa((encodeURIComponent(this.fileName)));
+      if(selectedNote.fileName != this.fileName)
+      {
+        values.fileName = window.btoa((encodeURIComponent(selectedNote.fileName)));
+      }
+      else{
+        values.fileName = window.btoa((encodeURIComponent(this.fileName)));
+      }
+      
       values.email = selectedNote.email;//this.email;
       return values;
     }
