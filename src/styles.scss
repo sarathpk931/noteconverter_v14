@@ -6,7 +6,7 @@
     display: block;
     left: 0;
     right: 0;
-    top: 0;
+    top: 10px;
     bottom: 0;
     margin: auto;
     background-color: transparent;
@@ -39,7 +39,7 @@
 .image_updated
 {
     margin-right:10px;
-    width:50px;
+    width:40px;
 }
 .text-end
 {
@@ -51,7 +51,8 @@
 }
 .error_updated
 {
-    color:red;
+    color:#fff;
+    font-size: 13px;
 }
 .privacy_updated
 {
@@ -96,8 +97,10 @@ clear:both;
 .popover .xrx-close
 {
     width: auto !important;
-    background: #ddd;
+    background: none !important;
     color:#000;
+    box-shadow: none !important;
+    border: 0px !important;
 }
 .action-list li:hover
 {
@@ -119,7 +122,6 @@ clear:both;
 {
     opacity: 0 !important;
 }
-@media (max-width: 768px) {
 .custom-container
 {
     max-width: 100% !important; 
@@ -130,7 +132,46 @@ clear:both;
 {
     margin: 0px !important;
     border-radius: 0px !important;
+    border:0px !important;
 }
+html
+{
+    background: #dddddd !important;
+}
+.focus_textbox:focus
+{
+    background: #fff !important;
+    color:#000 !important;
+}
+.custom-container .content .form-control
+{
+    padding:7px !important;
+    font-size: 15px !important;
+}
+.section-2 ul li
+{
+    font-size: 14px !important;
+    font-weight: normal !important;
+}
+button.btn
+{
+    margin: 0px !important;
+}
+.section-1 h1
+{
+    font-size: 24px;
+    margin-bottom: 15px !important;
+}
+.section-2 .btn{
+    padding: 6px 15px !important;
+}
+@media (max-width: 1024px) {
+    .section-1 h1
+    {
+        font-size: 18px;
+        margin-bottom: 20px !important;
+    }
+
 }
 .button_click
 {
@@ -142,7 +183,7 @@ clear:both;
     width:100%;
     height:100px;
     top:0px;  
-    z-index: 9999;
+    z-index: 1;
 }
 .button_click .button_event_2
 {
@@ -150,8 +191,22 @@ clear:both;
     width:100%;
     height:100px;
     top:0px;  
-    z-index: 9999;
+    z-index: 1;
 }
+button.btn.btn-medium
+{
+    font-size: 12px !important;
+    height: 45px;
+}
+.popover
+{
+    --bs-popover-bg:#d8d8d8 !important;
+}
+button.btn.btn-image .image-container .image
+{
+    height: 30px !important;
+}
+
 .cdk-global-scrollblock
 {
     overflow-y: auto !important;
