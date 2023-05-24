@@ -32,7 +32,7 @@ import {TranslatePipe} from '../../filters/translate.pipe';
 })
 export class ScanScreenComponent {
 
-  //@ViewChild('fileNameSpan', { static: true }) fileNameSpan: ElementRef;
+  @ViewChild('fileNameSpan', { static: true }) fileNameSpan: ElementRef;
   showPrivacySetting=false;
   showLoader=false;
   validationStatus: boolean = false;
@@ -124,7 +124,7 @@ export class ScanScreenComponent {
     }
 
     ngAfterViewInit() {
-     //const fileName = this.fileNameSpan.nativeElement.textContent;
+     this.fileName = this.fileNameSpan.nativeElement.textContent;
       //console.log('File name:', fileName);
       // You can perform further processing with the fileName value here
     }
@@ -161,7 +161,7 @@ export class ScanScreenComponent {
       this.noteConvertorForm = this.formBuilder.group({
         email:['',[Validators.required,Validators.email]],
         confirmEmail:['',[Validators.required,Validators.email]],
-        fileName : ['']//this.fileName
+        fileName : [this.fileName]//''
       },
       { validators: this.emailMatchValidator },
      );
@@ -182,9 +182,9 @@ export class ScanScreenComponent {
       this.noteConvertorForm.patchValue({
         email:'',
         confirmEmail:'',
-        fileName : ''
+        //fileName : ''
       });
-      //this.fileNameSpan.nativeElement.textContent = this.defaultFilename;
+      this.fileNameSpan.nativeElement.textContent = this.defaultFilename;
       this.getDefaultValues();
     }
     
@@ -252,9 +252,9 @@ scan() {
  mainDeviceconfig() {
   //this.logger.logMsg('mainDeviceconfig()...', 'information');
   const regex = /^[^\\\/\:\*\?\"\<\>\|]+$/;
-  let fileName : string = this.noteConvertorForm.controls["fileName"].value; //this.fileNameSpan.nativeElement.textContent
+  this.fileName = this.fileNameSpan.nativeElement.textContent ; //this.noteConvertorForm.controls["fileName"].value
   //alert(fileName);
-  if (regex.test(fileName)) {
+  if (regex.test(this.fileName)) {
     //this.logger.logMsg('mainDeviceconfig() -> if (regex.test(fileName))', 'information');
     xrxDeviceConfigGetInterfaceVersion(AppSetting.url, this.deviceCallbackSuccess.bind(this), this.deviceCallBackFailure.bind(this), null, true);
   } else {
@@ -316,10 +316,10 @@ Templatecallback_success() {
     fileFormat : this.selectedFileFormatOptions,
     size : this.selectedSizeOptions,
     type : this.selectedTypeOptions,
-    fileName : this.noteConvertorForm.controls["fileName"].value,//this.fileNameSpan.nativeElement.textContent
+    fileName : this.fileNameSpan.nativeElement.textContent,//this.noteConvertorForm.controls["fileName"].value
     email :  this.noteConvertorForm.controls["email"].value
   }
-   
+
   var values = this.scanOptionService.getValues(this.selectedNote);
 
   //this.logger.logMsg('Templatecallback_success() values:' + values, 'information');
@@ -328,7 +328,7 @@ Templatecallback_success() {
   // '####################              SCAN       #################################'
   // '##############################################################################'
 
-  this.scanService.scan(values);
+  //this.scanService.scan(values);
 }
 
  Templatecallback_failure(respText, newresp) {
