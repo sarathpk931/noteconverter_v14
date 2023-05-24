@@ -40,7 +40,7 @@ export class AppComponent implements OnInit {
   
   ngOnInit(){
     //alert("Before strings");
-    this.Strings();
+   // this.Strings();
     //alert("after strings");
     this.router.navigate(['scanScreen']);
     //this.Device(AppSetting.url,5000,true);
