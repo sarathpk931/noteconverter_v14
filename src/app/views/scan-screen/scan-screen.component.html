@@ -11,24 +11,24 @@
         <div class="note"></div>
         <div class="form">
           <div class="form-group">
-            <input type="email" formControlName="email" class="form-control" name="" placeholder="Enter email to receive text file"/>
+            <input type="email" formControlName="email" class="form-control focus_textbox" name="" placeholder="Enter email to receive text file"/>
           </div>
-          <p *ngIf="f['email'].hasError('email') && f['email'].touched"  class="error_updated">Please enter a valid email address.</p>
+          <p *ngIf="f['email'].hasError('email') && f['email'].touched"  class="error_updated"><i class="fa fa-exclamation-triangle"></i>&nbsp; Please enter a valid email address.</p>
           <div class="form-group">
-            <input type="email" formControlName="confirmEmail" class="form-control" name="" placeholder="Confirmation Email"/>
+            <input type="email" formControlName="confirmEmail" class="form-control focus_textbox" name="" placeholder="Confirmation Email"/>
           </div>
-           <p *ngIf="f['confirmEmail'].hasError('email') && f['confirmEmail'].touched"  class="error_updated">Please enter a valid email address.</p>
-           <p *ngIf="noteConvertorForm.hasError('emailsMatch') && f['confirmEmail'].touched"  class="error_updated">Email addresses do not match.</p>
+           <p *ngIf="f['confirmEmail'].hasError('email') && f['confirmEmail'].touched"  class="error_updated"><i class="fa fa-exclamation-triangle"></i>&nbsp; Please enter a valid email address.</p>
+           <p *ngIf="noteConvertorForm.hasError('emailsMatch') && f['confirmEmail'].touched"  class="error_updated"><i class="fa fa-exclamation-triangle"></i>&nbsp; Email addresses do not match.</p>
           <div class="row">
             <div class="col-sm-10 col-xs-7">
               <div class="">	
                 <div class="">	
-                   <!--<input type="text" id="txtFileName" class="form-control" placeholder="File Name" formControlName = "fileName" />-->	<!--[(ngModel)]="fileName" (click)="onFileNameClick()" -->
+                   <input type="text" id="txtFileName" class="form-control focus_textbox" placeholder="File Name" formControlName = "fileName" />	<!--[(ngModel)]="fileName" (click)="onFileNameClick()" -->
                    <!-- <input type="text" id="txtFileName" class="form-control" [placeholder]="getDefaultFileName()" formControlName="fileName" [(ngModel)]="fileName" 
                    (click)="onFileNameClick()" (blur)="onFileNameBlur()" /> -->
-                    <span id="txtFileName" class="form-control" placeholder="File Name" #fileNameSpan appEditableFileName>
-                    Xerox Scan
-                  </span> <!---->
+                    <!-- <span id="txtFileName" class="form-control" placeholder="File Name" #fileNameSpan appEditableFileName>
+                    @ Xerox Scan
+                  </span>  -->
                   </div>	
               </div>
             </div>
