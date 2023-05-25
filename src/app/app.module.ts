@@ -23,8 +23,8 @@ import {ConfigurationService} from '../app/services/configuration.service';
 import { PrivacyPolicyComponent } from './views/privacy-policy/privacy-policy.component';
 import { ProgressAlertComponent } from './views/progress-alert/progress-alert.component';
 import { FeaturePopoverComponent } from './views/feature-popover/feature-popover.component';
-/* 
-import { AlertBannerComponent } from './views/alert-banner/alert-banner.component';*/
+
+import { AlertBannerComponent } from './views/alert-banner/alert-banner.component';
 import { BasicAlertComponent } from './views/basic-alert/basic-alert.component';
 
 /*import { FileFormatModalComponent } from './views/file-format-modal/file-format-modal.component';*/
@@ -79,6 +79,7 @@ import { EditableFileNameDirective } from './Directives/editable-file-name.direc
     GeneralAlertComponent,
     EditableFileNameDirective,
     BasicAlertComponent,
+    AlertBannerComponent,
   ],
   imports: [
     BrowserModule,

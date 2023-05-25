@@ -23,8 +23,7 @@ import {AppModule} from '../../app.module';
 import { EditableFileNameDirective } from  '../../Directives/editable-file-name.directive';
 import {TranslatePipe} from '../../filters/translate.pipe';
 
-import {BasicAlertComponent} from '../basic-alert/basic-alert.component';
-import { ProgressAlertComponent } from '../progress-alert/progress-alert.component';
+import { AlertBannerComponent } from '../alert-banner/alert-banner.component';
 
 
 @Component({
@@ -185,7 +184,7 @@ export class ScanScreenComponent {
       this.noteConvertorForm.patchValue({
         email:'',
         confirmEmail:'',
-        //fileName : ''
+        fileName : ''
       });
       //this.fileNameSpan.nativeElement.textContent = this.defaultFilename;
       this.getDefaultValues();
@@ -200,17 +199,15 @@ export class ScanScreenComponent {
     }
 
     showPrivacyStatement(){
-      //this.dialog.open(PrivacyPolicyComponent);
-      const modalRef = this.modalService.openLargeModal(PrivacyPolicyComponent);
-      //modalRef.content.closeBtnName = 'Close';
-      //this.bsModalRef = this.modalService.show(PrivacyPolicyComponent);
+      this.modalService.openLargeModal(PrivacyPolicyComponent);
+      //this.modalService.openModalWithTitle(AlertBannerComponent,'is scanning','');
     }
 
     openFileFormat(){
       this.modalService.setData({
         from : this.const_fileFormat
       });
-      const modalRef = this.modalService.openModal(FeaturePopoverComponent,'','');
+      this.modalService.openModal(FeaturePopoverComponent);//alert("fffff");
       //modalRef.content.closeBtnName = 'Close';
     }
 
@@ -218,7 +215,7 @@ export class ScanScreenComponent {
       this.modalService.setData({
         from : this.const_type
       });
-      const modalRef = this.modalService.openModal(FeaturePopoverComponent,'','');
+      this.modalService.openModal(FeaturePopoverComponent);//alert("scaa");
       //modalRef.content.closeBtnName = 'Close';
     }
 
@@ -226,7 +223,7 @@ export class ScanScreenComponent {
       this.modalService.setData({
         from : this.const_size
       });
-      const modalRef = this.modalService.openModal(FeaturePopoverComponent,'','');
+       this.modalService.openModal(FeaturePopoverComponent);//alert("ssss");
       //modalRef.content.closeBtnName = 'Close';
     }
 
@@ -249,8 +246,9 @@ export class ScanScreenComponent {
 
 scan() {
   //this.logger.logMsg('ctrl.scan ...', 'information');
-  this.modalService.openModal(BasicAlertComponent,'','');
-   //this.mainDeviceconfig();
+ // this.modalService.openModalWithTitle(ProgressAlertComponent,"is scanning",'');
+  
+   this.mainDeviceconfig();
 };
 
  mainDeviceconfig() {

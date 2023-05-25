@@ -3,13 +3,12 @@ import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dial
 import { ModalService} from '../../services/modal.service';
 import {DialogData} from '../../model/global';
 
-
 @Component({
-  selector: 'app-progress-alert',
-  templateUrl: './progress-alert.component.html',
-  styleUrls: ['./progress-alert.component.scss']
+  selector: 'app-alert-banner',
+  templateUrl: './alert-banner.component.html',
+  styleUrls: ['./alert-banner.component.scss']
 })
-export class ProgressAlertComponent {
+export class AlertBannerComponent {
 
   constructor(
     private modalService : ModalService,
@@ -18,7 +17,7 @@ export class ProgressAlertComponent {
   )
   {}
 
-  ngOnInit(){
-   
+  closeModal():void{
+    this.modalService.closeModal(this.mtModalRef);
   }
 }

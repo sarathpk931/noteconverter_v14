@@ -69,3 +69,20 @@ export class AppSetting {
     public static ldap:'';
    
 }
+
+export interface DialogData {
+    title: string;
+    message: string;
+  }
+
+  export interface DialogDataObject  {
+    title: string,
+    additionalInfo: string,
+    additionalInfo2:string,
+    button1Callback:any,
+    button2Callback:any,
+    button1Glyph?:string,
+    button2Glyph?:string,
+    button1Text? : string,
+    button2Text? : string
+  };

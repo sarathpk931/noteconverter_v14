@@ -28,12 +28,13 @@ export class FeaturePopoverComponent implements OnInit {
               {}
 
     ngOnInit(){
+      //alert("inside feature");
       this.modalService.currentValue.subscribe((data) =>{
         this.from = data;
       });
-      
-      this.fileFormat = this.scanOptionsService.getFileFormat(this.from);
-      this.fileFormatOption = this.fileFormat.options;
+     // alert("after subscribe");
+      this.fileFormat = this.scanOptionsService.getFileFormat(this.from);//alert(this.fileFormat.title);
+      this.fileFormatOption = this.fileFormat.options;//alert(this.fileFormatOption[0].title);
     }
 
     selectOption(option : any){

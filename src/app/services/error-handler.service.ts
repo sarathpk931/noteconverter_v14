@@ -3,6 +3,7 @@ import { ModalService } from './modal.service';
 import { AppComponent } from '../../app/app.component';
 import { MatDialog } from '@angular/material/dialog';
 import { GeneralAlertComponent } from '../views/general-alert/general-alert.component';
+import { AlertBannerComponent } from '../views/alert-banner/alert-banner.component';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,7 @@ export class ErrorHandlerService {
       localizedString = errorSDEName;
     }
     
-    //this.modalService.showAlert(localizedString);
+    this.modalService.showAlert(AlertBannerComponent,'', localizedString);
   }
 
   showErrorAlert(
@@ -34,7 +35,7 @@ export class ErrorHandlerService {
       button1Callback:button1Callback,
       button2Callback:button2Callback
     };
-    this.modalService.openComponentModal('generalAlert', data);
+    this.modalService.openComponentModal(GeneralAlertComponent, data);
   }
 
   // FMEA Methods
@@ -155,7 +156,7 @@ export class ErrorHandlerService {
       additionalInfo2: emailAddress,
       button1Callback: callback
     };
-    return this.modalService.openComponentModal('generalAlert', data);
+    return this.modalService.openComponentModal(GeneralAlertComponent, data);
   }
   
   PASSWORD_RESET(callback?: () => void) {
@@ -164,7 +165,7 @@ export class ErrorHandlerService {
       additionalInfo: 'SDE_IF_DO_NOT8',
       button1Callback: callback
     };
-    return this.modalService.openComponentModal('generalAlert', data);
+    return this.modalService.openComponentModal(GeneralAlertComponent, data);
   }
 
   CONFIRM_LOGOUT(confirmCallback?: () => void,cancelCallback?: () => void) {
@@ -177,7 +178,7 @@ export class ErrorHandlerService {
       button1Glyph : 'xrx-close',
       button2Glyph : 'xrx-exit',
     };
-    return this.modalService.openComponentModal('generalAlert', data);
+    return this.modalService.openComponentModal(GeneralAlertComponent, data);
   }
 
   // End of FMEA Methods

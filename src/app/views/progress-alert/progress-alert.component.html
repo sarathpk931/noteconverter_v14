@@ -2,11 +2,10 @@
     <div class="alert-container">
         <div class="alert-content">
             <div class="progress-spinner"></div>
-            <h3 ng-if="$ctrl.resolve.title" class="alert-title" xas-string="">is scanning</h3> <!--{{$ctrl.resolve.title}} {{$ctrl.resolve.title}}-->
-            <p ng-if="$ctrl.resolve.body">
-                <span class="alert-additional-info" xas-string=""></span><!--{{$ctrl.resolve.body}} {{$ctrl.resolve.body}}-->
+            <h3 *ngIf="data.title" class="alert-title" xas-string="">{{data.title}}</h3> 
+            <p *ngIf="data.message">
+                <span class="alert-additional-info" xas-string="">{{data.message}}</span>
             </p>
         </div>
     </div>
-</div> 
-<!--<div>Test</div>-->
+</div>

@@ -10,7 +10,7 @@ import { ProgressAlertComponent} from '../views/progress-alert/progress-alert.co
 //import { BsModalRef,BsModalService} from 'ngx-bootstrap/modal';
 //import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {AppComponent} from '../app.component';
-import { BehaviorSubject} from 'rxjs';
+import { BehaviorSubject, timer} from 'rxjs';
 
 
 @Injectable({
@@ -45,14 +45,9 @@ export class ModalService {
    }
 
   public openLargeModal(component : any):void{
-    if(this.dialog.openDialogs.length> 0){
-      //a modal is already open , do not open a new one
-      return null;
-    }
-    const dialogRef = this.dialog.open(component, {
-      //maxWidth: '400vw',
-      //maxHeight: '600vh',
-      //panelClass: 'mat-dialog-large',
+
+  const dialogRef =
+     this.dialog.open(component, {
       width : 'auto',
       height : 'auto',
       data:{closeBtnName:'Close'},
@@ -60,39 +55,69 @@ export class ModalService {
     });
   }
 
+  public openModalWithoutClose(component : any,title: string,message : string)
+  {
+    return this.dialog.open(component, {
+      data :{'title': title,'message':message}
+    });
+
+  }
+
   setData(data:any){
     this.fromData.next(data);
   }
 
-  public openModal(component : any,title:string,message : string){
-    
-    if(this.dialog.openDialogs.length> 0){
-      //a modal is already open , do not open a new one
-      return null;
-    }
-    //alert("Title :"+ title);
-    //alert("Message :"+ message);
-    const modalRef : MatDialogRef<any>  = this.dialog.open(component, {
-      data :{'title': title,'message':message}
-
-    })
-    return modalRef;
+  public openModal(component : any){
+    //alert(this.dialog.openDialogs.length);
+    this.dialog.closeAll();
+   
+    return  this.dialog.open(component, {
+     });
+    //  modalRef.afterClosed().subscribe((ref) => {
+    //   alert("close");
+    //    ref = null;
+    // })
+    // return modalRef;
   }
   
+  public openModalWithTitle(component : any,title: string,message : string){
 
-  public showAlert(string: any)
+    this.dialog.closeAll();
+
+    return  this.dialog.open(component, {
+      data :{'title': title,'message':message}
+    });
+
+  }
+
+
+  public showAlert(component : any,title: string,message : string)
   {
       //dependency in error handler service Ln:20, function to be written
+      //this.dialog.closeAll();
+
+     this.dialog.open(component, {
+      data :{'title': title,'message':message}
+    });
+
+    timer(3000).subscribe(()=>{
+      this.dialog.closeAll();
+    })
   }
 
   public closeAllModals()
   {
     //dependency in error handler service Ln:29, function to be written
+    this.dialog.closeAll();
   }
 
   public openComponentModal(component: any,data:any)
   {
     //dependency in error handler service Ln:29, function to be written
+    this.dialog.closeAll();
+    this.dialog.open(component, {
+      data : data
+    });
   }
 
 }

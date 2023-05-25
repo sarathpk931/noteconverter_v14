@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import { Component,Inject } from '@angular/core';
+import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { ModalService} from '../../services/modal.service';
+import {DialogDataObject} from '../../model/global';
 
 @Component({
   selector: 'app-general-alert',
@@ -7,4 +10,49 @@ import { Component } from '@angular/core';
 })
 export class GeneralAlertComponent {
 
+  button1Classes : string;
+  button2Classes : string;
+
+  constructor(
+    private modalService : ModalService,
+    public mtModalRef : MatDialogRef<any>,
+    @Inject(MAT_DIALOG_DATA) public data : DialogDataObject
+  )
+  {}
+
+  ngOnInit(){
+    if(this.data.button1Glyph){
+        this.button1Classes = 'btn btn-medium btn-glyph-label btn-secondary-alert ' + this.data.button1Glyph;
+    }
+    else{
+      this.button1Classes = 'btn btn-medium btn-glyph-label btn-secondary-alert xrx-close';
+    }
+
+    if(this.data.button2Glyph){
+      this.button2Classes = 'btn btn-medium btn-glyph-label btn-secondary-alert ' + this.data.button2Glyph;
+    }
+    else{
+      this.button2Classes = 'btn btn-medium btn-glyph-label btn-secondary-alert xrx-cancel';
+    }
+  }
+
+  button1(){
+    if(this.data.button1Callback != null){
+      this.data.button1Callback();
+    }
+
+    this.closeModal();
+  }
+
+  button2(){
+    if(this.data.button2Callback != null){
+      this.data.button2Callback();
+    }
+
+    this.closeModal();
+  }
+
+  closeModal():void{
+    this.modalService.closeModal(this.mtModalRef);
+  }
 }

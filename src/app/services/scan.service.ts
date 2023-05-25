@@ -129,23 +129,22 @@ export class ScanService {
       this.scanTemplate = this.scanTemplateService.scanTemplate(model);
       console.log(this.scanTemplate);
       //this.modalService.showProgressAlert(this.appComponent.Strings['SDE_SCANNING1'],'');
-      this.modalService.openModal(BasicAlertComponent,this.appComponent.Strings['SDE_SCANNING1'],'');
+      this.modalService.openModalWithTitle(ProgressAlertComponent,'is Scanning','');
   
-      // return this.jobService.registerJob(model).then((result)=>{ //.toPromise()     
+      return this.jobService.registerJob(model).then((result)=>{ //.toPromise()     
      
-      //     const tStr = this.scanTemplateService.objToString();
-      //     this.logService.logMsg('scanService => scan => template:' + tStr, 'information');
-      //     this.isScanning = true;
-      //     this.isComplete = false;
-      //     //function resolve(){alert("inside completescanPromise resolve");}
-      //     //function reject(){alert("inside completescanPromise reject");}
-      //     this.completeScanPromise = new Promise((resolve, reject) => {});
-      //     this.logService.logMsg('service.scan -> calling putTemplate()', 'information');
-      //     //alert("before putTemplate");
-      //     this.putTemplate(tStr);
+          const tStr = this.scanTemplateService.objToString();
+          this.logService.logMsg('scanService => scan => template:' + tStr, 'information');
+          this.isScanning = true;
+          this.isComplete = false;
+          //function resolve(){alert("inside completescanPromise resolve");}
+          //function reject(){alert("inside completescanPromise reject");}
+          this.completeScanPromise = new Promise((resolve, reject) => {});
+          this.logService.logMsg('service.scan -> calling putTemplate()', 'information');
+          this.putTemplate(tStr);
 
          return  this.completeScanPromise;
-      // });
+      });
     };
   
     putTemplate(tStr): Promise<any> {
@@ -296,7 +295,7 @@ export class ScanService {
 
     const title = 'SDE_DOCUMENT_SUCCESSFULLY_SCANNED'; //strings to be replaced from app resources in Web Solution file
     const msg = 'SDE_WILL_RECEIVE_EMAIL2'.replace('{0}', 'Xerox Note Converter');
-    this.modalService.openModal(BasicAlertComponent,title,msg);//title, msg
+    this.modalService.openModalWithTitle(BasicAlertComponent,title,msg);//title, msg
 
     this.logService.logMsg('if (jobState === Completed && jobStateReason == JobCompletedSuccessfully) { ', 'information');
     //$rootScope.$broadcast('jobProgress', 'JOB_COMPLETED_SUCCESSFULLY'); to be implemented

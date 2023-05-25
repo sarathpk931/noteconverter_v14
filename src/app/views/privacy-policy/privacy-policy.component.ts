@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { MatDialogRef } from '@angular/material/dialog';
 import { ModalService} from '../../services/modal.service';
 import { environment } from '../../../environments/environment'
+import { ProgressAlertComponent } from '../progress-alert/progress-alert.component';
 
 
 @Component({
@@ -21,16 +22,13 @@ export class PrivacyPolicyComponent implements OnInit {
   constructor(private http: HttpClient,private modalService : ModalService,public modalRef : MatDialogRef<any>){}
 
   ngOnInit(): void {
-    const progress = this.modalService.showProgressAlert('Alert','');
+    const progress =  this.modalService.openModalWithoutClose(ProgressAlertComponent,'','') //this.modalService.showProgressAlert('Alert','');
     const url = this.env.privacyPolicyUrl;
-    this.http
-      .get(url, {responseType:'text'
-      })
+    this.http.get(url, {responseType:'text'})
       .subscribe({
-        next:(response) => {
+          next:(response) => {
           this.privacyPolicy = (response as string);
-          console.log(this.privacyPolicy);
-          
+          progress.close();
         },
         error:(error) => {
           this.showVersion = 'v1.0'; //this.strings.VERSION
