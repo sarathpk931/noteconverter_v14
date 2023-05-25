@@ -22,8 +22,11 @@
               "path": "./webpack.custom.js"
               
            },
+           "allowedCommonJsDependencies":[
+              "lodash"
+           ],
            "indexTransform": "./index-html-transform.js",
-            "outputPath": "dist\\noteconverter_v14",
+            "outputPath": "dist/noteconverter_v14",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
