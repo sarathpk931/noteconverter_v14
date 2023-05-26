@@ -57,6 +57,7 @@ import { ModalService } from './services/modal.service';
 import { ScanScreenComponent } from './views/scan-screen/scan-screen.component';
 import {ScanService} from './services/scan.service';
 import {ScanTemplateService} from './services/scan-template.service';
+import {ResourcestringService } from './services/resourcestring.service';
 
 import { xrxDeviceConfigGetDeviceInformation } from '../assets/Xrx/XRXDeviceConfig';
 import {xrxStringToDom} from '../assets/Xrx/XRXXmlHandler';
@@ -113,6 +114,7 @@ import { EditableFileNameDirective } from './Directives/editable-file-name.direc
     ConfigurationService,
     ScanService,
     ScanTemplateService,
+    ResourcestringService,
     TranslatePipe
   ],
   bootstrap: [AppComponent]

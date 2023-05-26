@@ -8,7 +8,8 @@ import {xrxSessionGetSessionInfo,xrxSessionGetSessionInfoRequest,xrxSessionParse
 import {xrxGetElementValue} from '../assets/Xrx/XRXXmlHandler';
 import {xrxCallWebservice,xrxCallAjax} from '../assets/Xrx/XRXWebservices';
 import { LogService } from '../app/services/log.service';
-import {AppSetting, Global} from './model/global';
+import {ResourcestringService} from '../app/services/resourcestring.service';
+import {AppSetting, resourceString} from './model/global';
 import { RadioControlValueAccessor } from '@angular/forms';
 import {environment} from  '../environments/environment'
 
@@ -33,45 +34,66 @@ export class AppComponent implements OnInit {
     private  logger: LogService,
     private http: HttpClient,
     private router : Router,
-    
+    private resourceStringService : ResourcestringService
     ) 
     { }
 
   
-  ngOnInit(){
-    //alert("Before strings");
-   // this.Strings();
-    //alert("after strings");
-    this.router.navigate(['scanScreen']);
-    //this.Device(AppSetting.url,5000,true);
-  }
+    ngOnInit() { 
+      this.routeScanScreen(); 
+    } 
+    async routeScanScreen() 
+    { 
+      try { 
+        const strings = await this.Strings(); 
+        this.router.navigate(['scanScreen']); 
+      } 
+      catch (error) 
+      { 
+        
+      } 
+    } 
+    
+    Strings = async () => { 
+      try { 
+          var regex = /(\w+)\-?/g; 
+          const locale = regex.exec(window.navigator.language || window.navigator.language)[1] || 'en-US'; 
+          const result: any = await this.http.get(this.env.wncAppAddress + `/api/strings?lang=${encodeURIComponent(locale)}`).toPromise(); 
+          this.resourceStringService.objStrings = result.strings; 
+          return result.strings; 
+        } 
+          catch (error) { 
+           
+          } 
+        };
 
-
- Strings = async () => {
-  //alert("inside strings");
-    var regex = /(\w+)\-?/g;
-    const locale = regex.exec(window.navigator.language || window.navigator.language)[1] || 'en-US';
+   
     //const locale = navigator.language;
-    let data : any;
+    
+    // data =  {
 
-    const response = this.http.get(this.env.wncAppAddress+ `/api/strings?lang=${encodeURIComponent(locale)}`).toPromise()
-    .then((result: any) =>{ 
-      //alert("inside success strings");
-       data = result;
-      //localStorage.setItem('locale',data.strings);
-      alert("string : "+ data.strings["ONE_SIDED"]);
-    })
+    //    SDE_REQUIRED_FIELD1:"This is a required field.",
+      
+    //    SDE_FMTSTRFMTSTR_XEROX_CORPORATION2:"©{0}XeroxC orporation.Allbrights reserved.",
+    //    SDE_11_X_173:"11x17",
+    //    ONE_SIDED: "1-Sided",
+    //    SDE_1SIDED : "1-Sided",
+    //    SDE_2SIDED_SCANNING: "2-Sided Scanning",
+    // }
+    //debugger;
+    
+    //this.resourceStringService.processApiResponse(data);
     //debugger;
     //  const data =  await response.json();
    // const response = await fetch(`api/strings?lang=${encodeURIComponent(locale)}`);
     //const data = await response.json();
-    if(data != null)
-    {
-      return data.strings;
-    }
-    else {
-      return null;
-    }
+    // if(data != null)
+    // {
+    //   return data.strings;
+    // }
+    // else {
+    //   return null;
+    // }
     
      //console.log('locale',data.strings)
      //localStorage.setItem('locale',data.strings);
@@ -79,7 +101,7 @@ export class AppComponent implements OnInit {
   }
 
   
-}
+
   
   
   

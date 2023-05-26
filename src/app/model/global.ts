@@ -86,3 +86,9 @@ export interface DialogData {
     button1Text? : string,
     button2Text? : string
   };
+
+  export interface resourceString{
+    
+        [key:string]:string;
+    
+  }

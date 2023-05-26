@@ -150,13 +150,10 @@ export class ScanService {
     putTemplate(tStr): Promise<any> {
       return  new Promise((resolve,reject)=>{
       this.logService.logMsg('putTemplate()...', 'information');
-      const printerUrl =  this.env.apiUrl;//'path/to/printerUrl';
+      const printerUrl =  this.env.apiUrl;
       const templateName= this.scanTemplate.name; //templateName
-      //alert("putTemplate :"+this.scanTemplate.name);
       function finish (callId: any, response: any) {
-        //alert("putTemplate => successCallback");
         this.logService.logMsg('putTemplate => successCallback', 'information');
-        //console.log("putTemplate => successCallback"+callId);
         this.logService.logMsg(`scanService => putTemplate => callId:${callId} response:${response}`, 'information');
         this.finishPutTemplate(callId, response,printerUrl,3000);
         const result={};

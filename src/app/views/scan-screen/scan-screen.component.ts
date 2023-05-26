@@ -9,7 +9,7 @@ import { PrivacyPolicyComponent} from '../privacy-policy/privacy-policy.componen
 import { PopupCompComponent} from '../popup-comp/popup-comp.component';
 import { ModalService} from '../../services/modal.service';
 import { ScanOptionsService} from '../../services/scan-options.service';
-import { FileFormat, FileFormatOption} from '../../model/global';
+import { FileFormat, FileFormatOption,resourceString} from '../../model/global';
 import { ScanService } from '../../services/scan.service';
 import { ErrorHandlerService } from '../../services/error-handler.service';
 import { AppComponent } from '../../app.component';
@@ -22,6 +22,8 @@ import {xrxDeviceConfigGetInterfaceVersion} from '../../../assets/Xrx/XRXDeviceC
 import {AppModule} from '../../app.module';
 import { EditableFileNameDirective } from  '../../Directives/editable-file-name.directive';
 import {TranslatePipe} from '../../filters/translate.pipe';
+
+import { ResourcestringService} from '../../services/resourcestring.service';
 
 import { AlertBannerComponent } from '../alert-banner/alert-banner.component';
 
@@ -66,6 +68,7 @@ export class ScanScreenComponent {
 
   fileName: string = '';
   defaultFilename : string ='Xerox Scan';
+  resourceString : resourceString[];
 
   constructor(
     private dialog: MatDialog,
@@ -76,6 +79,7 @@ export class ScanScreenComponent {
     private scanService :ScanService,
     private appComponent : AppComponent,
     private  logger: LogService,
+    private resourceStringService : ResourcestringService,
     private translatePipe : TranslatePipe
     ) {}
 
@@ -95,8 +99,8 @@ export class ScanScreenComponent {
         scrollContainer.scrollTop = 0;
       }, 250, { leading: true }));
       } */
-
-      
+      this.resourceString = this.resourceStringService.getObjStrings();
+      //console.log(this.resourceString);
   
       this.createForm();
 
@@ -123,6 +127,7 @@ export class ScanScreenComponent {
         }
       })
 
+      //alert(this.resourceString[this.selectedType.title]);
     }
 
     ngAfterViewInit() {
