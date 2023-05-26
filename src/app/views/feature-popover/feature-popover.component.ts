@@ -1,10 +1,10 @@
 import { Component, OnInit, Output,EventEmitter } from '@angular/core';
-//import { BsModalRef } from 'ngx-bootstrap/modal';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog'
 
 import { ScanOptionsService} from '../../services/scan-options.service';
 import { ModalService} from '../../services/modal.service';
-import {FileFormat, FileFormatOption} from '../../model/global';
+import { ResourcestringService} from '../../services/resourcestring.service';
+import {FileFormat, FileFormatOption,resourceString} from '../../model/global';
 //import { EventEmitter } from 'stream';
 
 @Component({
@@ -17,24 +17,27 @@ export class FeaturePopoverComponent implements OnInit {
     fileFormat : FileFormat;
     fileFormatOption : FileFormatOption[];
     from : string;
+    resourceString : resourceString[];
     @Output() objectSelected = new EventEmitter<any>();
         
 
     constructor(
                 private scanOptionsService : ScanOptionsService, 
                 private modalService : ModalService,
+                private resourceStringService : ResourcestringService,
                 public mtModalRef : MatDialogRef<any>
               )
               {}
 
     ngOnInit(){
-      //alert("inside feature");
+
+      this.resourceString = this.resourceStringService.getObjStrings();
+
       this.modalService.currentValue.subscribe((data) =>{
         this.from = data;
       });
-     // alert("after subscribe");
-      this.fileFormat = this.scanOptionsService.getFileFormat(this.from);//alert(this.fileFormat.title);
-      this.fileFormatOption = this.fileFormat.options;//alert(this.fileFormatOption[0].title);
+      this.fileFormat = this.scanOptionsService.getFileFormat(this.from);
+      this.fileFormatOption = this.fileFormat.options;
     }
 
     selectOption(option : any){

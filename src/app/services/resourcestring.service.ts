@@ -13,21 +13,13 @@ export class ResourcestringService {
 
   processApiResponse(response: resourceString): void {
     const strings = response;
-
     for(const key in strings){
-
       if(strings.hasOwnProperty(key)){
-
         const value = strings[key];
-
-        const objString = {
-
-          
+        const objString = {       
             [key]:value
         }
-
         this.objStrings.push(objString);
-
       }
     }
   }

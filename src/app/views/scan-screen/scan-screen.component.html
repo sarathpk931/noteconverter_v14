@@ -82,7 +82,7 @@
                       </div>    
                       </td>
                       <td>
-                        <span class="text-left" >{{selectedSize.title}}</span> 	<!--xasString=""-->
+                        <span class="text-left" >{{this.resourceString[selectedSize.title]}}</span> 	<!--xasString=""-->
                       </td>
                       </tr>
                 </table>
@@ -91,7 +91,8 @@
               </div>	
                    
               <div class="col-lg-6 col-xs-6 text-end content_updated"> 	
-                <span class="text-right" >{{selectedSizeOptions.title}}</span>  <!---->	
+                <span class="text-right"  *ngIf="this.resourceString[selectedSizeOptions.title] != null" >{{this.resourceString[selectedSizeOptions.title]}}</span>  <!---->	
+                <span class="text-right"  *ngIf="this.resourceString[selectedSizeOptions.title] == null" >{{ selectedSizeOptions.title}}</span> 
               </div>         	
             </div>            	
             </li>          

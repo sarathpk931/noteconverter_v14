@@ -66,38 +66,6 @@ export class AppComponent implements OnInit {
            
           } 
         };
-
-   
-    //const locale = navigator.language;
-    
-    // data =  {
-
-    //    SDE_REQUIRED_FIELD1:"This is a required field.",
-      
-    //    SDE_FMTSTRFMTSTR_XEROX_CORPORATION2:"©{0}XeroxC orporation.Allbrights reserved.",
-    //    SDE_11_X_173:"11x17",
-    //    ONE_SIDED: "1-Sided",
-    //    SDE_1SIDED : "1-Sided",
-    //    SDE_2SIDED_SCANNING: "2-Sided Scanning",
-    // }
-    //debugger;
-    
-    //this.resourceStringService.processApiResponse(data);
-    //debugger;
-    //  const data =  await response.json();
-   // const response = await fetch(`api/strings?lang=${encodeURIComponent(locale)}`);
-    //const data = await response.json();
-    // if(data != null)
-    // {
-    //   return data.strings;
-    // }
-    // else {
-    //   return null;
-    // }
-    
-     //console.log('locale',data.strings)
-     //localStorage.setItem('locale',data.strings);
-    // return data.strings;
   }
 
   
