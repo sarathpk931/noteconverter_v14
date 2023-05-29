@@ -1,7 +1,8 @@
 import { HttpClientModule } from '@angular/common/http';
-import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule,ErrorHandler } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {Router} from '@angular/router';
+import { ApplicationinsightsAngularpluginErrorService } from '@microsoft/applicationinsights-angularplugin-js';
 
 import { MatDialogModule,MatDialogRef } from '@angular/material/dialog';
 import { BrowserModule } from '@angular/platform-browser';
@@ -92,11 +93,15 @@ import { EditableFileNameDirective } from './Directives/editable-file-name.direc
     ReactiveFormsModule,
   ],
   providers: [
-  //   {
-  //   provide :APP_INITIALIZER,
-  //   useFactory:()=> Device,
-  //   multi:true,
-  // },
+    {
+    provide :APP_INITIALIZER,
+    useFactory:()=> Device,
+    multi:true,
+  },
+  {
+  provide: ErrorHandler,
+  useClass: ApplicationinsightsAngularpluginErrorService,
+  },
   // {
   //   provide :APP_INITIALIZER,
   //   useFactory: ()=> Session,
@@ -117,6 +122,7 @@ import { EditableFileNameDirective } from './Directives/editable-file-name.direc
     ResourcestringService,
     TranslatePipe
   ],
+  
   bootstrap: [AppComponent]
 })
 export class AppModule {

@@ -55,15 +55,17 @@ export class JobService {
  //this.apiService.apiUrl
       return this.http.post(this.env.wncAddress+("/api/v1/job"), request, config).toPromise()
         .then((result: any) => {
-          this.logService.logMsg('jobService -> registerJob -> success -> result.data:' + result, 'information');
+          //this.logService.logMsg('jobService -> registerJob -> success -> result.data:' + result, 'information');
+          this.logService.trackTrace('jobService -> registerJob -> success -> result.data:' + result);
           return result;//.data
         })
         .catch((error: any) => {
-          debugger;
-          this.logService.logMsg('jobService -> registerJob -> ERROR...' + error, 'error');
-  
+          //debugger;
+          //this.logService.logMsg('jobService -> registerJob -> ERROR...' + error, 'error');
+          this.logService.trackTrace('jobService -> registerJob -> ERROR...');
           if (error != null && error.data != null && error.data.ExceptionMessage != null) {
-            this.logService.logMsg('jobService -> registerJob -> ERROR:' + error.data.ExceptionMessage, 'error');
+            //this.logService.logMsg('jobService -> registerJob -> ERROR:' + error.data.ExceptionMessage, 'error');
+            this.logService.trackTrace('jobService -> registerJob -> ERROR:' + error.data.ExceptionMessage);
           }
   
           if (error && error.status == 401) {
@@ -76,7 +78,8 @@ export class JobService {
 
       {
         //debugger;
-        this.logService.logMsg(ExceptionMessage);
+        //this.logService.logMsg(ExceptionMessage);
+        this.logService.trackException(ExceptionMessage);
         return  null;
       }
 

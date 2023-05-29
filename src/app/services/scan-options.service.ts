@@ -175,7 +175,7 @@ export class ScanOptionsService {
   }
 
     getFileFormat(feature : any): FileFormat {
-  
+  //alert('from :'+feature.from);
       if(feature.from == this.const_fileFormat)
       {
         return this.fileFormat[0];
@@ -186,6 +186,7 @@ export class ScanOptionsService {
       else if (feature.from == this.const_size){
         return this.scanFeatures[1];
       }
+      //alert('end :'+this.fileFormat[0]);
      return this.fileFormat[0];
     }
 

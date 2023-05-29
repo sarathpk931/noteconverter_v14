@@ -259,7 +259,7 @@ export class ScanTemplateService {
   
     // Destination
     //this.logService.logMsg('scanTemplate => featureValues.jobid:' + featureValues.jobid, 'information');
-  
+  this.logService.trackTrace('scanTemplate => featureValues.jobid:' + featureValues.jobid);
     var returnUrl = this.apiService.getPrefix() + scriptLocation + '?' + 'jobId=' + featureValues.jobid;
   
     this.destSection.details.XrxHTTPScriptLocation.value = returnUrl;

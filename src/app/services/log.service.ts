@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { StorageService } from '../services/storage.service';
 import {environment} from '../../environments/environment';
+import { AngularPlugin } from '@microsoft/applicationinsights-angularplugin-js';
+import { ApplicationInsights, Exception } from '@microsoft/applicationinsights-web';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -11,15 +14,55 @@ export class LogService {
   private storageProvider: Storage;
   //private readonly filename = 'app-errors.log';
   env = environment;
+  private angularPlugin = new AngularPlugin();
 
+
+  private appInsights = new ApplicationInsights({
+    config: {
+        instrumentationKey: this.env.instrumentationKey,
+        //extensions: [this.angularPlugin],
+        enableAutoRouteTracking: true
+        // extensionConfig: {
+        //     [this.angularPlugin.identifier]: {
+        //         router: this.router,
+        //         //errorServices: [new ErrorHandler()],
+        //     },
+        // },
+    },
+}); 
 
   constructor(
     private http: HttpClient,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private router: Router
     ) {
     this.storageProvider = this.storageService.getLocalStorage(true);
-    
+    this.appInsights.loadAppInsights();
+     
+    //const angularPlugin = new AngularPlugin();
+    //this.appInsights.addTelemetryInitializer(angularPlugin);
+    this.appInsights.trackPageView();
   }
+
+// expose methods that can be used in components and services
+trackEvent(name: string): void {
+  this.appInsights.trackEvent({ name });
+}
+
+trackTrace(message: string): void {
+  this.appInsights.trackTrace({ message });
+}
+
+trackException(exception : Exception){
+  this.appInsights.trackException(exception);
+}
+
+
+    
+  
+  
+  
+  
 
   public logMsg(message: string, logType?: string): void {
 
