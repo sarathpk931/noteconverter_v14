@@ -68,6 +68,7 @@ import {xrxCallWebservice,xrxCallAjax} from '../assets/Xrx/XRXWebservices';
 import { Global,AppSetting } from './model/global';
 import * as _ from 'lodash';
 import { EditableFileNameDirective } from './Directives/editable-file-name.directive';
+import { NgScrollableDirective } from './Directives/ng-scrollable.directive';
 
 @NgModule({
   declarations: [
@@ -82,6 +83,7 @@ import { EditableFileNameDirective } from './Directives/editable-file-name.direc
     EditableFileNameDirective,
     BasicAlertComponent,
     AlertBannerComponent,
+    NgScrollableDirective,
   ],
   imports: [
     BrowserModule,
