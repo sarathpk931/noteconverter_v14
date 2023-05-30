@@ -60,6 +60,7 @@ export class AppComponent implements OnInit {
           const locale = regex.exec(window.navigator.language || window.navigator.language)[1] || 'en-US'; 
           const result: any = await this.http.get(this.env.wncAppAddress + `/api/strings?lang=${encodeURIComponent(locale)}`).toPromise(); 
           this.resourceStringService.objStrings = result.strings; 
+          console.log(this.resourceStringService.objStrings );
           return result.strings; 
         } 
           catch (error) { 

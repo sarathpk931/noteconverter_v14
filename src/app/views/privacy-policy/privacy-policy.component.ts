@@ -1,9 +1,11 @@
-import { Component,OnInit,Renderer2,ElementRef, EventEmitter,Input,Output } from '@angular/core';
+import { Component,OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MatDialogRef } from '@angular/material/dialog';
 import { ModalService} from '../../services/modal.service';
 import { environment } from '../../../environments/environment'
 import { ProgressAlertComponent } from '../progress-alert/progress-alert.component';
+import { ResourcestringService} from '../../services/resourcestring.service';
+import { resourceString} from '../../model/global';
 
 
 @Component({
@@ -16,10 +18,15 @@ export class PrivacyPolicyComponent implements OnInit {
   privacyPolicy : string = '';
   showVersion: string = '';
   env = environment;
-
+  resourceString : resourceString[];
  
 
-  constructor(private http: HttpClient,private modalService : ModalService,public modalRef : MatDialogRef<any>){}
+  constructor(
+    private http: HttpClient,
+    private modalService : ModalService,
+    public modalRef : MatDialogRef<any>,
+    private resourceStringService : ResourcestringService,
+    ){}
 
   ngOnInit(): void {
     const progress =  this.modalService.openModalWithoutClose(ProgressAlertComponent,'','') //this.modalService.showProgressAlert('Alert','');
@@ -28,6 +35,7 @@ export class PrivacyPolicyComponent implements OnInit {
       .subscribe({
           next:(response) => {
           this.privacyPolicy = (response as string);
+          //this.showVersion = this.resourceString["VERSION"];
           progress.close();
         },
         error:(error) => {
