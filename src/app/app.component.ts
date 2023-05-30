@@ -9,8 +9,6 @@ import {xrxGetElementValue} from '../assets/Xrx/XRXXmlHandler';
 import {xrxCallWebservice,xrxCallAjax} from '../assets/Xrx/XRXWebservices';
 import { LogService } from '../app/services/log.service';
 import {ResourcestringService} from '../app/services/resourcestring.service';
-import {AppSetting, resourceString} from './model/global';
-import { RadioControlValueAccessor } from '@angular/forms';
 import {environment} from  '../environments/environment'
 
 
@@ -36,7 +34,9 @@ export class AppComponent implements OnInit {
     private router : Router,
     private resourceStringService : ResourcestringService
     ) 
-    { }
+    { 
+     //this.resourceStringService.loadResources()
+    }
 
   
     ngOnInit() { 
@@ -45,7 +45,7 @@ export class AppComponent implements OnInit {
     async routeScanScreen() 
     { 
       try { 
-        const strings = await this.Strings(); 
+        const strings = await this.resourceStringService.loadResources(); 
         this.router.navigate(['scanScreen']); 
       } 
       catch (error) 
@@ -54,19 +54,7 @@ export class AppComponent implements OnInit {
       } 
     } 
     
-    Strings = async () => { 
-      try { 
-          var regex = /(\w+)\-?/g; 
-          const locale = regex.exec(window.navigator.language || window.navigator.language)[1] || 'en-US'; 
-          const result: any = await this.http.get(this.env.wncAppAddress + `/api/strings?lang=${encodeURIComponent(locale)}`).toPromise(); 
-          this.resourceStringService.objStrings = result.strings; 
-          console.log(this.resourceStringService.objStrings );
-          return result.strings; 
-        } 
-          catch (error) { 
-           
-          } 
-        };
+   
   }
 
   
