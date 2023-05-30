@@ -17,7 +17,7 @@
     "moduleResolution": "node",
     "importHelpers": true,
     "target": "es5",
-    "module": "CommonJS",
+    //"module": "",
     "lib": [
       "DOM"
     ]
