@@ -165,7 +165,7 @@ export class ScanService {
       const templateName= this.scanTemplate.name; //templateName
       function finish (callId: any, response: any) {
         //this.logService.logMsg('putTemplate => successCallback', 'information');
-        this.trackTrace('putTemplate => successCallback');
+        this.logService.trackTrace('putTemplate => successCallback');
         //this.logService.logMsg(`scanService => putTemplate => callId:${callId} response:${response}`, 'information');
         this.logService.trackTrace(`scanService => putTemplate => callId:${callId} response:${response}`);
         this.finishPutTemplate(callId, response,printerUrl,3000);
@@ -270,17 +270,17 @@ export class ScanService {
   //const serializer = new XMLSerializer();
   //const serializedstring =serializer.serializeToString(response);
   //this.logService.logMsg("xrxJobMgmtParseGetJobDetails library reponse serialized" + serializedstring,"Information");
-  const jobState = xrxGetElementValue(info, 'JobState');
+  const jobState = xrxGetElementValue(info, 'JobState');alert(jobState);
   //this.logService.logMsg("inside checkLoop => jobState : "+jobState)
   const dummy = xrxJobMgmtParseJobStateReasons(response);
   //this.logService.logMsg('checkLoop(request, response) -> jobState:' + jobState + ' dummy:' + dummy, 'information');
     this.logService.trackTrace('checkLoop(request, response) -> jobState:' + jobState + ' dummy:' + dummy);
   if (jobState === null || jobState === 'Completed') {
-    this.logService.logMsg('if (jobState === null || jobState === Completed)', 'information');
-
+    //this.logService.logMsg('if (jobState === null || jobState === Completed)', 'information');
+    this.logService.trackTrace('if (jobState === null || jobState === Completed)');
     jobStateReason = xrxParseJobStateReasons(response);
-    this.logService.logMsg('xrxParseJobStateReasons response:' + response, 'information');
-    this.logService.logMsg('jobStateReason response:' + jobStateReason, 'information');
+    //this.logService.logMsg('xrxParseJobStateReasons response:' + response, 'information');
+    //this.logService.logMsg('jobStateReason response:' + jobStateReason, 'information');
   }
 
 

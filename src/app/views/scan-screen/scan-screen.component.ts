@@ -101,7 +101,7 @@ export class ScanScreenComponent {
       }, 250, { leading: true }));
       } */
       this.resourceString = this.resourceStringService.getObjStrings();
-      //this.logger.trackTrace("Test application insights");
+      this.logger.trackTrace("Test application insights");
       //console.log(this.resourceString);
   
       this.createForm();
@@ -128,7 +128,7 @@ export class ScanScreenComponent {
           this.selectedSizeOptions = size;
         }
       })
-
+      this.logger.trackTrace("end of ng oninit");
       //alert(this.resourceString[this.selectedType.title]);
     }
 
@@ -158,15 +158,18 @@ export class ScanScreenComponent {
     }
 
     getDefaultValues(){
+      this.logger.trackTrace("Get deafault values start");
       this.selectedFileFormat = this.scanOptionService.getFileFormat(this.anyFileFormat);
       this.selectedFileFormatOptions = this.selectedFileFormat.options.find(item => item.isDefault === true);
       this.selectedType = this.scanOptionService.getFileFormat(this.anyType);
       this.selectedTypeOptions = this.selectedType.options.find(item => item.isDefault === true);
       this.selectedSize = this.scanOptionService.getFileFormat(this.anySize);
       this.selectedSizeOptions = this.selectedSize.options.find(item => item.isDefault === true);
+      this.logger.trackTrace("Get default values end");
     }
 
     createForm(){
+      this.logger.trackTrace("Create Form");
       this.noteConvertorForm = this.formBuilder.group({
         email:['',[Validators.required,Validators.email]],
         confirmEmail:['',[Validators.required,Validators.email]],
@@ -188,6 +191,7 @@ export class ScanScreenComponent {
 
       
     resetForm(){
+      this.logger.trackTrace("Reset Form");
       this.noteConvertorForm.patchValue({
         email:'',
         confirmEmail:'',
@@ -206,11 +210,13 @@ export class ScanScreenComponent {
     }
 
     showPrivacyStatement(){
+      this.logger.trackTrace("Privacy Statement");
       this.modalService.openLargeModal(PrivacyPolicyComponent);
       //this.modalService.openModalWithTitle(AlertBannerComponent,'is scanning','');
     }
 
     openFileFormat(){
+      this.logger.trackTrace("Open File Format");
       this.modalService.setData({
         from : this.const_fileFormat
       });
@@ -219,6 +225,7 @@ export class ScanScreenComponent {
     }
 
     openScan(){
+      this.logger.trackTrace("Open Scan");
       this.modalService.setData({
         from : this.const_type
       });
@@ -227,6 +234,7 @@ export class ScanScreenComponent {
     }
 
     openSize(){
+      this.logger.trackTrace("Open Size");
       this.modalService.setData({
         from : this.const_size
       });
@@ -234,27 +242,13 @@ export class ScanScreenComponent {
       //modalRef.content.closeBtnName = 'Close';
     }
 
-    validateAllFields(): void {
-      // TODO: Implement validateAllFields function
-    }
-
-    refreshCredits(): void {
-      // TODO: Implement refreshCredits function
-    }
-
-    clearValidation(): void {
-      // TODO: Implement clearValidation function
-    }
-
-    exit(): void {
-      // TODO: Implement exit function
-    }
+    
 // scan functionalities 
 
 scan() {
   //this.logger.logMsg('ctrl.scan ...', 'information');
   this.logger.trackTrace("ctrl.scan ...");
-  this.modalService.openModalWithTitle(ProgressAlertComponent,this.resourceString['SDE_SCANNING1'],'');
+  //this.modalService.openModalWithTitle(ProgressAlertComponent,this.resourceString['SDE_SCANNING1'],'');
   
    this.mainDeviceconfig();
 };
