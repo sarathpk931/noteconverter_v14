@@ -9,6 +9,9 @@
  * @param jobProcessing     job processing tag string
  * @return string PrintJobTicket tag in escaped form
  */
+
+import {xrxJobMgmtParseJobStateReasons} from './XRXJobManagement';
+
 export function xrxPrintJobTicket(jobDescription, jobProcessing) {
     var ticketStr = '<?xml version=\"1.0\" encoding=\"utf-8\"?>' +
 		xrxCreateTag('PrintJobTicket', 'xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns=\"http://schemas.xerox.com/enterprise/eipjobmodel/1\"', jobDescription + jobProcessing);

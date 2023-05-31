@@ -1,10 +1,10 @@
  <div class="alert-popup alert-background alert-opacity alert_bg" role="alertdialog" aria-labelledby="myAlertPopupDialogTitle" tabindex="-1" style="display: block;">
     <div class="alert-container">
         <div class="alert-content">
-            <h3  class="alert-title job_completed" ><span xasString="{{data.title}}"></span> </h3><!--ng-if="$ctrl.resolve.title"  xas-string="{{$ctrl.resolve.title}}"  {{$ctrl.resolve.title}}-->
+            <h3  class="alert-title job_completed" >{{data.title}} </h3><!--ng-if="$ctrl.resolve.title"  xas-string="{{$ctrl.resolve.title}}"  {{$ctrl.resolve.title}}-->
             
             <p class="mbtm20"><!--ng-if="$ctrl.resolve.body"-->
-              <span class="alert-additional-info" xasString="{{data.message}}"></span> <!--xas-string="{{$ctrl.resolve.body}}" {{$ctrl.resolve.body}}-->
+              <span class="alert-additional-info" {{data.message}}></span> <!--xas-string="{{$ctrl.resolve.body}}" {{$ctrl.resolve.body}}-->
             </p>
             <div class="alert-button-container">
                 <button type="button" class="btn btn-medium glyph-button btn-secondary-alert xrx-close" (click)="closeModal()" xasString="SDE_CLOSE"> </button><!-- ng-click="$ctrl.close()"  xas-string="{{$ctrl.resolve.buttonText}}"  {{$ctrl.resolve.buttonText}}-->

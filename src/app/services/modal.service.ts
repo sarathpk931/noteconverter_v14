@@ -51,7 +51,8 @@ export class ModalService {
       width : 'auto',
       height : 'auto',
       data:{closeBtnName:'Close'},
-      hasBackdrop : false
+      hasBackdrop : false,
+      disableClose:true
     });
   }
 
