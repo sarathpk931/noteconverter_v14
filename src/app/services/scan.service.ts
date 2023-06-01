@@ -276,9 +276,8 @@ export class ScanService {
         if (jobState === 'Completed' && jobStateReason === 'JobCompletedSuccessfully') {
           this.modalService.closeAllModals();
       
-          const title =  this.resourceString['SDE_DOCUMENT_SUCCESSFULLY_SCANNED'] ; //alert(title);
-          const msg = this.resourceString['SDE_WILL_RECEIVE_EMAIL2'].replace('{0}', 'Xerox Note Converter');
-          //alert(msg);
+          const title = 'SDE_DOCUMENT_SUCCESSFULLY_SCANNED'; 
+          const msg = 'SDE_WILL_RECEIVE_EMAIL2';
           this.modalService.openModalWithTitle(BasicAlertComponent,title,msg);
       
           this.logService.trackTrace('if (jobState === Completed && jobStateReason == JobCompletedSuccessfully) { ');
