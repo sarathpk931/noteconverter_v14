@@ -1,14 +1,6 @@
 import { Injectable } from '@angular/core';
 import {MatDialog,MatDialogRef} from '@angular/material/dialog';
-/*import { ImagePreviewerComponent } from '../views/image-previewer/image-previewer.component';
-import { LogoutConfirmationComponent } from '../views/logout-confirmation/logout-confirmation.component';
-import { FeaturePopoverComponent } from '../views/feature-popover/feature-popover.component';
-import { ProgressBannerComponent } from '../views/progress-banner/progress-banner.component';
-import { AlertBannerComponent } from '../views/alert-banner/alert-banner.component';
-import { BasicAlertComponent } from '../views/basic-alert/basic-alert.component';*/
 import { ProgressAlertComponent} from '../views/progress-alert/progress-alert.component'; 
-//import { BsModalRef,BsModalService} from 'ngx-bootstrap/modal';
-//import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {AppComponent} from '../app.component';
 import { BehaviorSubject, timer} from 'rxjs';
 
@@ -27,7 +19,6 @@ export class ModalService {
 
   constructor(
     public dialog : MatDialog,
-    //private modalService : BsModalService,
     public  app : AppComponent    
     ) { }
 
@@ -39,7 +30,9 @@ export class ModalService {
   }
 
   closeModal(modalRef :MatDialogRef<any>){
+    //alert("close modal begin");
     if(modalRef){
+      //alert("close modal inside")
       modalRef.close();
     }
    }
@@ -69,11 +62,10 @@ export class ModalService {
   }
 
   public openModal(component : any){
-    //alert(this.dialog.openDialogs.length);
+    //alert('before close :'+this.dialog.openDialogs.length);
     this.dialog.closeAll();
-   
-    return  this.dialog.open(component, {
-     });
+    //alert('after close :'+this.dialog.openDialogs.length);
+    return this.dialog.open(component);
     //  modalRef.afterClosed().subscribe((ref) => {
     //   alert("close");
     //    ref = null;

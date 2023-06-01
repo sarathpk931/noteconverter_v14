@@ -1,11 +1,10 @@
 import { Component, OnInit, Output,EventEmitter } from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog'
+import {  MatDialogRef } from '@angular/material/dialog'
 
 import { ScanOptionsService} from '../../services/scan-options.service';
 import { ModalService} from '../../services/modal.service';
 import { ResourcestringService} from '../../services/resourcestring.service';
 import {FileFormat, FileFormatOption,resourceString} from '../../model/global';
-//import { EventEmitter } from 'stream';
 
 @Component({
   selector: 'app-feature-popover',
@@ -30,14 +29,16 @@ export class FeaturePopoverComponent implements OnInit {
               {}
 
     ngOnInit(){
-
+    //alert("feature pop over");
       this.resourceString = this.resourceStringService.getObjStrings();
 
       this.modalService.currentValue.subscribe((data) =>{
         this.from = data;
+        //alert(this.from);
       });
       this.fileFormat = this.scanOptionsService.getFileFormat(this.from);
       this.fileFormatOption = this.fileFormat.options;
+      //alert(this.fileFormat.title);
     }
 
     selectOption(option : any){

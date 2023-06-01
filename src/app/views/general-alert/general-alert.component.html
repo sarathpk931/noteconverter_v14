@@ -12,9 +12,9 @@
 
 
             <div class="alert-button-container">
-                <button type="button" class="{{button1Classes}}" xas-string="" (click)="button1();" tabindex="-1"></button><!--{{$ctrl.button1Classes}} {{$ctrl.button1Text}} -->
+                <button type="button" class="{{button1Classes}}" xasString="{{this.button1Text}}" (click)="button1();" tabindex="-1"></button><!--{{$ctrl.button1Classes}} {{$ctrl.button1Text}} -->
                 <button type="button" class="{{button2Classes}}" 
-                        *ngIf="data.button2Callback != null" xas-string="" (click)="button2()" tabindex="-1"></button>
+                        *ngIf="data.button2Callback != null" xasString="{{this.button2Text}}" (click)="button2()" tabindex="-1"></button>
             </div><!--{{$ctrl.button2Classes}} {{$ctrl.button2Text}} -->
 
         </div>

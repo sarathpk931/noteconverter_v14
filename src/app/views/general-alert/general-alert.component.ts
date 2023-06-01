@@ -1,7 +1,8 @@
 import { Component,Inject } from '@angular/core';
 import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ModalService} from '../../services/modal.service';
-import {DialogDataObject} from '../../model/global';
+import {DialogDataObject,resourceString} from '../../model/global';
+import { ResourcestringService} from '../../services/resourcestring.service';
 
 @Component({
   selector: 'app-general-alert',
@@ -12,15 +13,24 @@ export class GeneralAlertComponent {
 
   button1Classes : string;
   button2Classes : string;
+  button1Text : string;
+  button2Text : string;
+  resourceString : resourceString[];
 
   constructor(
     private modalService : ModalService,
     public mtModalRef : MatDialogRef<any>,
-    @Inject(MAT_DIALOG_DATA) public data : DialogDataObject
+    @Inject(MAT_DIALOG_DATA) public data : DialogDataObject,
+    private resourceStringService : ResourcestringService,
   )
   {}
 
   ngOnInit(){
+    this.resourceString = this.resourceStringService.getObjStrings();
+    this.button1Text = this.data.button1Text ? this.data.button1Text : 'SDE_CLOSE';
+    this.button2Text = this.data.button2Text ? this.data.button2Text : 'SDE_CANCEL';
+    this.button1Text = this.resourceString[this.data.button1Text];
+    this.button2Text = this.resourceString[this.data.button2Text];
     if(this.data.button1Glyph){
         this.button1Classes = 'btn btn-medium btn-glyph-label btn-secondary-alert ' + this.data.button1Glyph;
     }

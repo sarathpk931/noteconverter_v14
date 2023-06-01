@@ -180,7 +180,7 @@ export class ScanTemplateService {
     details: {
       RepositoryAlias: { type: 'string', value: 'AG_SCAN' },
       FilingProtocol: { type: 'enum_filingprotocol', value: 'XRXHTTPS' },
-      RepositoryVolume: { type: 'string', value: '' },//server/share
+      RepositoryVolume: { type: 'string', value: '' },
       RepositoryName: { type: 'string', value: 'DocLib' },
       DocumentPath: { type: 'string', value: '/Scan' },
       ServerValidationReq: { type: 'boolean', value: 'FALSE' },
@@ -251,14 +251,10 @@ export class ScanTemplateService {
     this.scanSection = _.clone(this._scanSection);
     this.sections = [this.scanSection, this.generalSection, this.destSection, this.docSection];
  
-    // var params = this.activatedRoute.queryParamMap.subscribe((params) => {
-    //   console.log(params);
-    // });
-  
+   
     // Assign properties from incoming options
   
     // Destination
-    //this.logService.logMsg('scanTemplate => featureValues.jobid:' + featureValues.jobid, 'information');
   this.logService.trackTrace('scanTemplate => featureValues.jobid:' + featureValues.jobid);
     var returnUrl = this.apiService.getPrefix() + scriptLocation + '?' + 'jobId=' + featureValues.jobid;
   

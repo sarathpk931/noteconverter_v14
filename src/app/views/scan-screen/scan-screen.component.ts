@@ -25,7 +25,6 @@ import {TranslatePipe} from '../../filters/translate.pipe';
 
 import { ResourcestringService} from '../../services/resourcestring.service';
 
-import { ProgressAlertComponent } from '../progress-alert/progress-alert.component';
 
 
 @Component({
@@ -101,7 +100,7 @@ export class ScanScreenComponent {
       }, 250, { leading: true }));
       } */
       this.resourceString = this.resourceStringService.getObjStrings();
-      this.logger.trackTrace("Test application insights");
+      //this.logger.trackTrace("Test application insights");
       //console.log(this.resourceString);
   
       this.createForm();
@@ -128,7 +127,7 @@ export class ScanScreenComponent {
           this.selectedSizeOptions = size;
         }
       })
-      this.logger.trackTrace("end of ng oninit");
+      //this.logger.trackTrace("end of ng oninit");
       //alert(this.resourceString[this.selectedType.title]);
     }
 
@@ -216,6 +215,7 @@ export class ScanScreenComponent {
     }
 
     openFileFormat(){
+      //alert("FileFOrmat");
       this.logger.trackTrace("Open File Format");
       this.modalService.setData({
         from : this.const_fileFormat
@@ -254,7 +254,6 @@ scan() {
 };
 
  mainDeviceconfig() {
-  //this.logger.logMsg('mainDeviceconfig()...', 'information');
   this.logger.trackTrace("mainDeviceconfig()...");
   const regex = /^[^\\\/\:\*\?\"\<\>\|]+$/;
   this.fileName =  this.noteConvertorForm.controls["fileName"].value; //this.fileNameSpan.nativeElement.textContent
@@ -272,13 +271,11 @@ scan() {
 }
 
 deviceCallbackSuccess() {
-  //this.logger.logMsg('DeviceCallBack_Success -> respText:', 'success');
   this.logger.trackTrace("DeviceCallBack_Success -> respText:");
   this.getScanStatus();
 }
 
  deviceCallBackFailure(respText, newresp) {
-  //this.logger.logMsg('DeviceCallBack_Failure -> respText:' + respText + ' newresp:' + newresp, 'error');
   this.logger.trackTrace("DeviceCallBack_Failure -> respText:' + respText + ' newresp:' + newresp");
   //this.errorHandlerService.XBB_DEVICE_EIP_DEVICE_CONFIG_DISABLED();
 }

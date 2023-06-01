@@ -178,6 +178,7 @@ export class ScanOptionsService {
   //alert('from :'+feature.from);
       if(feature.from == this.const_fileFormat)
       {
+        //alert(this.fileFormat[0]);
         return this.fileFormat[0];
       }
       else if (feature.from == this.const_type){
