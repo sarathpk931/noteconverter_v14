@@ -64,13 +64,13 @@ export class ModalService {
   public openModal(component : any){
     //alert('before close :'+this.dialog.openDialogs.length);
     this.dialog.closeAll();
-    //alert('after close :'+this.dialog.openDialogs.length);
-    return this.dialog.open(component);
-    //  modalRef.afterClosed().subscribe((ref) => {
-    //   alert("close");
-    //    ref = null;
-    // })
-    // return modalRef;
+    this.dialog.openDialogs.pop();
+    let dialogRef = this.dialog.open(component);
+    
+    dialogRef.afterClosed().subscribe(result => {
+      //console.log(`Dialog result: ${result}`);
+    });
+    return dialogRef;
   }
   
   public openModalWithTitle(component : any,title: string,message : string){

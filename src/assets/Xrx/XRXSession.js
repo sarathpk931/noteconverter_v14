@@ -179,7 +179,7 @@ export function xrxSessionGetSessionInfoRequest(LDAP)
 	// create request
 		request = XRX_SESSION_SOAPSTART + xrxCreateTag( 'GetSessionInformationRequest', XRX_SESSION_NAMESPACE, ldapAttributeNameList) + XRX_SOAPEND;
 		// return request
-		alert("Request :"+ request);
+		//alert("Request :"+ request);
 		return request;
 }
 

@@ -100,6 +100,11 @@ import { NgScrollableDirective } from './Directives/ng-scrollable.directive';
     useFactory:()=> Device,
     multi:true,
   },
+  // {
+  //   provide :APP_INITIALIZER,
+  //   useFactory:()=> Session,
+  //   multi:true,
+  // },
   {
   provide: ErrorHandler,
   useClass: ApplicationinsightsAngularpluginErrorService,
@@ -137,7 +142,7 @@ export async function Session(url: string,timeout:number,async:boolean, ldap: st
   //alert("inside session");
   return new Promise((resolve, reject) => {
     function successCallbackSession (envelope: string, response: string) {
-      //alert("inside session success");
+     // alert("inside session success");
       //var data = xrxSessionGetSessionInfoRequest(response);
       var data =xrxSessionParseGetSessionInfo(response);//alert("data in session :"+ data);
       const parser = new DOMParser();
@@ -149,8 +154,8 @@ export async function Session(url: string,timeout:number,async:boolean, ldap: st
         //var userName = xrxGetElementValue(xmlDoc, "username");
         const userName = data.firstChild.getElementsByTagName('qualifiedUsername')[0].firstChild.textContent;//alert("Username :"+ userName);
         var password = data.firstChild.getElementsByTagName('qualifiedUsername')[0].lastChild.textContent;//alert("password :"+ password);
-        debugger;
-        //this.logService.logMsg("Session => username : "+userName + ", password : "+password);
+        //debugger;
+        //this.logService.trackTrace("Session => username : "+userName + ", password : "+password);
         if (userName !== null && userName.toLowerCase() !== 'guest')
           userEmail = xrxGetElementValue(data, "from");
 
@@ -158,6 +163,7 @@ export async function Session(url: string,timeout:number,async:boolean, ldap: st
           
           email:userEmail
         };
+        //(userEmail);
         //this.logService.logMsg("Session => email : "+userEmail);
         resolve(result.email.toString());
       }

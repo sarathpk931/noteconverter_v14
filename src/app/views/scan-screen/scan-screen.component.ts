@@ -256,8 +256,9 @@ scan() {
  mainDeviceconfig() {
   this.logger.trackTrace("mainDeviceconfig()...");
   const regex = /^[^\\\/\:\*\?\"\<\>\|]+$/;
-  this.fileName =  this.noteConvertorForm.controls["fileName"].value; //this.fileNameSpan.nativeElement.textContent
-  //alert(fileName);
+
+  this.fileName =  this.noteConvertorForm.controls["fileName"].value == '' ? this.defaultFilename : this.noteConvertorForm.controls["fileName"].value; //this.fileNameSpan.nativeElement.textContent
+  //alert(this.fileName);
   if (regex.test(this.fileName)) {
     //this.logger.logMsg('mainDeviceconfig() -> if (regex.test(fileName))', 'information');
     this.logger.trackTrace("mainDeviceconfig() -> if (regex.test(fileName))");
@@ -328,7 +329,7 @@ Templatecallback_success() {
     fileFormat : this.selectedFileFormatOptions,
     size : this.selectedSizeOptions,
     type : this.selectedTypeOptions,
-    fileName : this.noteConvertorForm.controls["fileName"].value,//this.fileNameSpan.nativeElement.textContent
+    fileName : this.noteConvertorForm.controls["fileName"].value == '' ? this.defaultFilename : this.noteConvertorForm.controls["fileName"].value,//this.fileNameSpan.nativeElement.textContent
     email :  this.noteConvertorForm.controls["email"].value
   }
 
