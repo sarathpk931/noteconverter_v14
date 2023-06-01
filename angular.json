@@ -36,7 +36,8 @@
               "src/favicon.ico",
               "src/assets/images/XeroxNoteConverter.png",
               "src/assets",
-              "src/_redirects"
+              "src/_redirects",
+              "src/web.config"
             ],
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
