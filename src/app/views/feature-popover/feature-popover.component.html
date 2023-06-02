@@ -3,7 +3,7 @@
         <button type="button" class="btn btn-medium btn-glyph xrx-close" (click)="closeModal()"></button>
     </div>
     <div class="contents"> 
-        <div class="popover-scroll-content">
+        <div class="popover-scroll-content"  ngScrollable='{"watchHeight": true}'>
             <ul class="action-list button-group">
                 <li *ngFor="let option of fileFormatOption">
                     <button class="btn btn-medium btn-image" (click)="selectOption(option)">
