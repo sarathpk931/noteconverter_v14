@@ -19,6 +19,6 @@ export class ProgressAlertComponent {
   {}
 
   ngOnInit(){
-   
+   alert("Progress alert :"+ this.data.title);
   }
 }

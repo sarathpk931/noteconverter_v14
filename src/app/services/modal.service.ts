@@ -76,7 +76,7 @@ export class ModalService {
   public openModalWithTitle(component : any,title: string,message : string){
 
     this.dialog.closeAll();
-
+    this.dialog.openDialogs.pop();
     return  this.dialog.open(component, {
       data :{'title': title,'message':message}
     });

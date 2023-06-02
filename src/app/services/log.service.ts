@@ -20,14 +20,7 @@ export class LogService {
   private appInsights = new ApplicationInsights({
     config: {
         instrumentationKey: this.env.instrumentationKey,
-        //extensions: [this.angularPlugin],
         enableAutoRouteTracking: true
-        // extensionConfig: {
-        //     [this.angularPlugin.identifier]: {
-        //         router: this.router,
-        //         //errorServices: [new ErrorHandler()],
-        //     },
-        // },
     },
 }); 
 
