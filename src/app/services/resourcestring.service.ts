@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { resourceString } from '../model/global';
+import { resourceString,Strings } from '../model/global';
 import {environment} from  '../../environments/environment'
 
 @Injectable({
@@ -11,6 +11,7 @@ export class ResourcestringService {
   objStrings : resourceString[] = [];
   private objString : resourceString = {};
   env = environment;
+  strings:Strings;
 
   constructor(    private http: HttpClient,) { }
 
@@ -19,12 +20,16 @@ loadResources = async () => {
         var regex = /(\w+)\-?/g; 
         const locale = regex.exec(window.navigator.language || window.navigator.language)[1] || 'en-US'; 
         const result: any = await this.http.get(this.env.wncAppAddress + `/api/strings?lang=${encodeURIComponent(locale)}`).toPromise(); 
-        this.objStrings = result.strings; 
-        console.log(this.objStrings );
-        return result.strings; 
+        this.objStrings = result.strings;
+        this.strings =result.strings;
+        
+       // console.log('Strings repsonse '+ this.strings);
+        //return result.strings;
+        return this.strings;
       } 
         catch (error) { 
-         
+          console.error(error);
+          throw error
         } 
       };
 

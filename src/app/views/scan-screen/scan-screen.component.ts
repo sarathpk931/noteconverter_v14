@@ -1,6 +1,6 @@
 //scan-screen.component.ts
 
-import { Component,ViewChild,ElementRef } from '@angular/core';
+import { Component,ViewChild,ElementRef, OnInit } from '@angular/core';
 import {MatDialog,MatDialogRef} from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators,ReactiveFormsModule,AbstractControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -9,7 +9,7 @@ import { PrivacyPolicyComponent} from '../privacy-policy/privacy-policy.componen
 import { PopupCompComponent} from '../popup-comp/popup-comp.component';
 import { ModalService} from '../../services/modal.service';
 import { ScanOptionsService} from '../../services/scan-options.service';
-import { FileFormat, FileFormatOption,resourceString} from '../../model/global';
+import { FileFormat, FileFormatOption,resourceString,Strings} from '../../model/global';
 import { ScanService } from '../../services/scan.service';
 import { ErrorHandlerService } from '../../services/error-handler.service';
 import { AppComponent } from '../../app.component';
@@ -33,7 +33,7 @@ import { ResourcestringService} from '../../services/resourcestring.service';
   styleUrls: ['./scan-screen.component.scss'],
   
 })
-export class ScanScreenComponent {
+export class ScanScreenComponent implements OnInit{
 
   @ViewChild('fileNameSpan', { static: true }) fileNameSpan: ElementRef;
   showPrivacySetting=false;
@@ -42,7 +42,6 @@ export class ScanScreenComponent {
   isCreditsEnabled: boolean = false;
   maxPagesPerJobStyle: string = 'text-align:left !important;';
   emailHasError: boolean = false;
-  
   noteConvertorForm:  FormGroup;
 
    const_fileFormat : string = "fileFormat";
@@ -64,10 +63,12 @@ export class ScanScreenComponent {
   generation = AppModule.Generation;
   model = AppModule.model;
   selectedNote : selectedNote;
+  resource_Strings:Strings;
 
   fileName: string = '';
   defaultFilename : string ='Xerox Scan';
   resourceString : resourceString[];
+  testfilename: string='';
 
   constructor(
     private dialog: MatDialog,
@@ -81,7 +82,10 @@ export class ScanScreenComponent {
     private resourceStringService : ResourcestringService,
     private translatePipe : TranslatePipe,
     private errorHandlerService : ErrorHandlerService
-    ) {}
+    ) {
+      
+
+    }
 
     ngOnInit(){
 
@@ -99,6 +103,14 @@ export class ScanScreenComponent {
         scrollContainer.scrollTop = 0;
       }, 250, { leading: true }));
       } */
+      this.resourceStringService.loadResources().then(response=>{
+        this.fileName=response.SDE_XEROX_SCAN.toString()+'[Date & Time].';
+        
+
+      }).catch(error=>{
+        console.log(' catach error');
+      });
+      
       this.resourceString = this.resourceStringService.getObjStrings();
       //this.logger.trackTrace("Test application insights");
       //console.log(this.resourceString);

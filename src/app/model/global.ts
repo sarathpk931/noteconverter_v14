@@ -88,7 +88,53 @@ export interface DialogData {
   };
 
   export interface resourceString{
-    
         [key:string]:string;
-    
   }
+
+  export interface Strings{
+    strings: Strings
+}
+  
+  export interface Strings {
+    SDE_REQUIRED_FIELD1: string
+    SDE_FMTSTRFMTSTR_XEROX_CORPORATION2: string
+    SDE_11_X_173: string
+    SDE_XEROX_SCAN: string
+    SDE_WILL_RECEIVE_EMAIL2: string
+    SDE_CHARACTERS_CANNOT_BE: string
+    SDE_TO_USE_APP: string
+    SDE_OK: string
+    SDE_ORIGINAL_SIZE: string
+    SDE_SCAN: string
+    SDE_WRITTEN_NOTE_CONVERSION7: string
+    SDE_WRITTEN_NOTE_CONVERSION6: string
+    SDE_WRITTEN_NOTE_CONVERSION5: string
+    SDE_WRITTEN_NOTE_CONVERSION4: string
+    SDE_WRITTEN_NOTE_CONVERSION8: string
+    SDE_ENTER_FILE_NAME1: string
+    SDE_PLEASE_TRY_AGAIN1: string
+    SDE_EMAIL_NOT_VALID: string
+    SDE_FMTSTR_DATE_TIMEFMTSTR: string
+    SDE_CHECK_DEVICES_NETWORK: string
+    SDE_2SIDED_SCANNING: string
+    SDE_FILE_NAME: string
+    SDE_INPUT_SCAN_SIZE: string
+    TWO_SIDED: string
+    SDE_1SIDED: string
+    SDE_2SIDED: string
+    SDE_JOB_CANCELED1: string
+    SDE_IF_PROBLEM_PERSISTS3: string
+    SDE_SCANNING1: string
+    SDE_CLOSE: string
+    SDE_ENTER_EMAIL_RECEIVE1: string
+    SDE_RESET: string
+    SDE_SCAN_EXTENSION_SCAN1: string
+    SDE_CANCEL: string
+    ONE_SIDED: string
+    SDE_PRIVACY_STATEMENT: string
+    SDE_2SIDED_ROTATE_SIDE: string
+    SDE_AUTO_DETECT: string
+    SDE_DOCUMENT_SUCCESSFULLY_SCANNED: string
+    SDE_CONTACT_DEVICE_ADMINISTRATOR: string
+  }
+  
