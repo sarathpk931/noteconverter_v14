@@ -3,21 +3,21 @@
     <form [formGroup]="noteConvertorForm">
     <div class="node-convertor  form_updated">
       <div class="section-1">
-        <h1 class="text-center"><span xasString=SDE_WRITTEN_NOTE_CONVERSION4></span>       
+        <h1 class="text-center"><span>{{this.xeroxTitle}}</span>  <!--xasString=SDE_WRITTEN_NOTE_CONVERSION4-->     
            <button class="btn scan-btn xrx-scan" (click)="scan()" > <!--[ngClass]="!noteConvertorForm?.valid ? 'disabled' : ''"-->           
-           <span xasString=SDE_SCAN></span>
+           <span >{{this.scanTitle}}</span><!--xasString=SDE_SCAN-->
           </button>
         </h1>
         <div class="note"></div>
         <div class="form">
           <div class="form-group">
-            <input type="email" formControlName="email" class="form-control focus_textbox" name="" placeholder="Enter email to receive text file"/>
+            <input type="email" formControlName="email" class="form-control focus_textbox" name="" placeholder="{{this.emailPlaceHolder}}"/>
           </div>
-          <p *ngIf="f['email'].hasError('email') && f['email'].touched"  class="error_updated"><i class="fa fa-exclamation-triangle"></i>&nbsp;<span xasString="SDE_EMAIL_NOT_VALID"></span>   </p>
+          <p *ngIf="f['email'].hasError('email') && f['email'].touched"  class="error_updated"><i class="fa fa-exclamation-triangle"></i>&nbsp;{{this.emailValidation1}}</p> <!--<span xasString="SDE_EMAIL_NOT_VALID"></span> -->
           <div class="form-group">
             <input type="email" formControlName="confirmEmail" class="form-control focus_textbox" name="" placeholder="Confirmation Email"/>
           </div>
-           <p *ngIf="f['confirmEmail'].hasError('email') && f['confirmEmail'].touched"  class="error_updated"><i class="fa fa-exclamation-triangle"></i>&nbsp; <span xasString="SDE_EMAIL_NOT_VALID"></span></p>
+           <p *ngIf="f['confirmEmail'].hasError('email') && f['confirmEmail'].touched"  class="error_updated"><i class="fa fa-exclamation-triangle"></i>&nbsp; {{this.emailValidation1}}</p>
            <p *ngIf="noteConvertorForm.hasError('emailsMatch') && f['confirmEmail'].touched"  class="error_updated"><i class="fa fa-exclamation-triangle"></i>&nbsp; Email addresses do not match.</p>
           <div class="row">
             <div class="col-sm-10 col-xs-7">
@@ -101,10 +101,10 @@
         <div class="reset-privacy">
           <div class="row">
             <div class="col-lg-6 col-xs-6">
-              <button class="btn" (click)="resetForm()" xasString="SDE_RESET"></button>
+              <button class="btn" (click)="resetForm()">{{this.resetTitle}}</button><!--xasString="SDE_RESET"-->
             </div>
             <div class="col-lg-6 col-xs-6 ">	
-              <button class="btn" (click)="showPrivacyStatement();" xasString="SDE_PRIVACY_STATEMENT" ></button>	<!---->
+              <button class="btn" (click)="showPrivacyStatement();"  >{{this.privacyStatementTitle}}</button>	<!--xasString="SDE_PRIVACY_STATEMENT"-->
             </div>
           </div>
         </div>

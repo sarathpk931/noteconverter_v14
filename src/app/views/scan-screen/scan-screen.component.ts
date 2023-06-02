@@ -64,6 +64,12 @@ export class ScanScreenComponent implements OnInit{
   model = AppModule.model;
   selectedNote : selectedNote;
   resource_Strings:Strings;
+  emailPlaceHolder : string;
+  xeroxTitle : string;
+  scanTitle : string;
+  resetTitle : string;
+  privacyStatementTitle : string;
+  emailValidation1 : string;
 
   fileName: string = '';
   defaultFilename : string ='Xerox Scan';
@@ -104,16 +110,18 @@ export class ScanScreenComponent implements OnInit{
       }, 250, { leading: true }));
       } */
       this.resourceStringService.loadResources().then(response=>{
-        this.fileName=response.SDE_XEROX_SCAN.toString()+'[Date & Time].';
-        
-
+        this.fileName=response.SDE_XEROX_SCAN.toString()+' [Date & Time].';
+        this.emailPlaceHolder = response.SDE_ENTER_EMAIL_RECEIVE1;
+        this.xeroxTitle = response.SDE_WRITTEN_NOTE_CONVERSION4;
+        this.scanTitle = response.SDE_SCAN;
+        this.resetTitle = response.SDE_RESET;
+        this.privacyStatementTitle = response.SDE_PRIVACY_STATEMENT;
+        this.emailValidation1 = response.SDE_EMAIL_NOT_VALID;
       }).catch(error=>{
-        console.log(' catach error');
+        console.log(' catch error');
       });
       
       this.resourceString = this.resourceStringService.getObjStrings();
-      //this.logger.trackTrace("Test application insights");
-      //console.log(this.resourceString);
   
       this.createForm();
 
@@ -139,8 +147,7 @@ export class ScanScreenComponent implements OnInit{
           this.selectedSizeOptions = size;
         }
       })
-      //this.logger.trackTrace("end of ng oninit");
-      //alert(this.resourceString[this.selectedType.title]);
+
     }
 
     ngAfterViewInit() {
@@ -169,18 +176,15 @@ export class ScanScreenComponent implements OnInit{
     }
 
     getDefaultValues(){
-      this.logger.trackTrace("Get deafault values start");
       this.selectedFileFormat = this.scanOptionService.getFileFormat(this.anyFileFormat);
       this.selectedFileFormatOptions = this.selectedFileFormat.options.find(item => item.isDefault === true);
       this.selectedType = this.scanOptionService.getFileFormat(this.anyType);
       this.selectedTypeOptions = this.selectedType.options.find(item => item.isDefault === true);
       this.selectedSize = this.scanOptionService.getFileFormat(this.anySize);
       this.selectedSizeOptions = this.selectedSize.options.find(item => item.isDefault === true);
-      this.logger.trackTrace("Get default values end");
     }
 
     createForm(){
-      this.logger.trackTrace("Create Form");
       this.noteConvertorForm = this.formBuilder.group({
         email:['',[Validators.required,Validators.email]],
         confirmEmail:['',[Validators.required,Validators.email]],
