@@ -66,6 +66,12 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
+              "aot":true,
+              "optimization":true,
+              "sourceMap":false,
+              "namedChunks":false,
+              "vendorChunk":false,
+              "buildOptimizer":true,
               "outputHashing": "none"
             },
             "development": {
