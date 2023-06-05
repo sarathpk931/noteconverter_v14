@@ -18,9 +18,7 @@
           "builder": "@angular-builders/custom-webpack:browser",
           "options": {
             "customWebpackConfig": {
-
               "path": "./webpack.custom.js"
-              
            },
            "allowedCommonJsDependencies":[
               "lodash"
@@ -35,7 +33,7 @@
             "assets": [
               "src/favicon.ico",
               "src/assets/images/XeroxNoteConverter.png",
-              "src/assets",
+              "src/assets/",
               "src/_redirects",
               "src/web.config"
             ],
@@ -45,8 +43,8 @@
               "src/styles.scss"
             ],
             "scripts": [
+              
             ]
-            
           },
           "configurations": {
             "production": {
@@ -71,11 +69,11 @@
               "outputHashing": "none"
             },
             "development": {
-              "buildOptimizer": false,
-              "optimization": false,
+              "buildOptimizer": true,
+              "optimization": true,
               "vendorChunk": true,
               "extractLicenses": false,
-              "sourceMap": false,
+              "sourceMap": true,
               "namedChunks": true
             }
           },
@@ -107,8 +105,7 @@
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
             "assets": [
-              "src/favicon.ico",
-              "src/assets"
+             
             ],
             "styles": [
               "src/styles.scss"
