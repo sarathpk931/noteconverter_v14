@@ -14,7 +14,7 @@
                         </div>
                          <!-- Option text -->
                          <div class="text-container">
-                            <span class="left-text" *ngIf="this.resourceString[option.title] != null" xasString="{{ option.title}}"> &nbsp;&nbsp;</span>
+                            <span class="left-text" *ngIf="this.resourceString[option.title] != null" > &nbsp;&nbsp;{{this.resourceString[option.title]}}</span>
                             <span class="left-text" *ngIf="this.resourceString[option.title] == null" >{{ option.title}} &nbsp;&nbsp;</span>
                         </div>
                          <!-- Option glyph -->
