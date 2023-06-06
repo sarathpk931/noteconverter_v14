@@ -120,6 +120,7 @@ export class ScanScreenComponent implements OnInit{
       }).catch(error=>{
         console.log(' catch error');
       });
+      this.logger.trackTrace("Test application insight");
       
       this.resourceString = this.resourceStringService.getObjStrings();
   
@@ -206,7 +207,7 @@ export class ScanScreenComponent implements OnInit{
 
       
     resetForm(){
-      this.logger.trackTrace("Reset Form");
+      //this.logger.trackTrace("Reset Form");
       this.noteConvertorForm.patchValue({
         email:'',
         confirmEmail:'',
@@ -225,14 +226,14 @@ export class ScanScreenComponent implements OnInit{
     }
 
     showPrivacyStatement(){
-      this.logger.trackTrace("Privacy Statement");
+      //this.logger.trackTrace("Privacy Statement");
       this.modalService.openLargeModal(PrivacyPolicyComponent);
       //this.modalService.openModalWithTitle(AlertBannerComponent,'is scanning','');
     }
 
     openFileFormat(){
       //alert("FileFOrmat");
-      this.logger.trackTrace("Open File Format");
+      //this.logger.trackTrace("Open File Format");
       this.modalService.setData({
         from : this.const_fileFormat
       });
@@ -241,7 +242,7 @@ export class ScanScreenComponent implements OnInit{
     }
 
     openScan(){
-      this.logger.trackTrace("Open Scan");
+      //this.logger.trackTrace("Open Scan");
       this.modalService.setData({
         from : this.const_type
       });
@@ -250,7 +251,7 @@ export class ScanScreenComponent implements OnInit{
     }
 
     openSize(){
-      this.logger.trackTrace("Open Size");
+      //this.logger.trackTrace("Open Size");
       this.modalService.setData({
         from : this.const_size
       });

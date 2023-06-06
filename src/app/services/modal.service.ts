@@ -10,7 +10,6 @@ import { BehaviorSubject, timer} from 'rxjs';
 })
 export class ModalService {
 
-  public toggleProgressBanner: any;
   deviceInformation:any;
   
 

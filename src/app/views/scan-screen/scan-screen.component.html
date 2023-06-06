@@ -5,7 +5,7 @@
     <div class="node-convertor  form_updated">
       <div class="section-1">
         <h1 class="text-center"><span>{{this.xeroxTitle}}</span>  <!--xasString=SDE_WRITTEN_NOTE_CONVERSION4-->     
-           <button class="btn scan-btn xrx-scan" (click)="scan()" > <!--[ngClass]="!noteConvertorForm?.valid ? 'disabled' : ''"-->           
+           <button class="btn scan-btn xrx-scan" (click)="scan()" [ngClass]="!noteConvertorForm?.valid ? 'disabled' : ''"> <!---->           
            <span >{{this.scanTitle}}</span><!--xasString=SDE_SCAN-->
           </button>
         </h1>
