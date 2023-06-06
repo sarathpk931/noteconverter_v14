@@ -43,10 +43,12 @@ trackEvent(name: string): void {
 }
 
 trackTrace(message: string): void {
+  //alert(message);
   this.appInsights.trackTrace({ message });
 }
 
 trackException(exception : Exception){
+  //alert(exception)
   this.appInsights.trackException(exception);
 }
 
