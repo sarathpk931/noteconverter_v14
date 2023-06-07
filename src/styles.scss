@@ -8,6 +8,12 @@
 @import 'assets/Content/Styles/buttons.scss';
 @import 'assets/Content/Styles/site.scss';
 
+@supports (-webkit-touch-callout: none) {
+    &::placeholder{
+    background-color: #dddddd; /* Safari background color */
+    color: #000000; /* Safari text color */
+    }
+  }
 
 // css start 
 .custom-container{
