@@ -1,13 +1,13 @@
 // css start
 
 .safari-textbox {
-    -webkit-appearance: textfield;
+    @include appearance(textfield);
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
   }
-
   
+
 .custom-container{
     max-width: 830px;
     padding: 0 15px;
@@ -199,4 +199,11 @@
   
   .example-full-width {
     width: 100%;
+  }
+
+  @mixin appearance($value) {
+    -webkit-appearance: $value;
+    -moz-appearance: $value;
+    -ms-appearance: $value;
+    appearance: $value;
   }
