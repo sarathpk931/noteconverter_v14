@@ -1,15 +1,28 @@
-<div class="custom-container">
-  <div class="content">
-    <form [formGroup]="noteConvertorForm">
+
+    <form [formGroup]="noteConvertorForm" class="scanScreen mainForm">
       <div ngScrollable='{"autoHeight": true, "watchHeight": true}'>
         <div class="node-convertor  form_updated">
-          <div class="section-1">
-            <h1 class="text-center">
-              <span>{{this.xeroxTitle}}</span>
-              <button class="btn scan-btn xrx-scan" (click)="scan()" [ngClass]="!noteConvertorForm?.valid ? 'disabled' : ''">
-                <span>{{this.scanTitle}}</span>
-              </button>
-            </h1>
+
+          <div class="header themed" action-bar>
+
+            <div class="header-right">
+                <!-- XBB-422 Look for undefined, null, or length < 1 -->
+                <button type="button" class="btn btn-medium btn-glyph-label xrx-scan" (click)="scan()" [ngClass]="!noteConvertorForm?.valid ? 'disabled' : ''"> 
+                  <span>{{this.scanTitle}}</span>
+                </button>
+            </div>
+      
+            <div class="header-middle text-large">
+                <div class="header-title-container text-large">
+                    <div class="header-title text-large">
+                      <span>{{this.xeroxTitle}}</span>
+                    </div>
+                </div>
+            </div>
+      
+        </div>
+          <div class="section-1 header themed">
+            
             <!-- <div class="note"></div> -->
             <div class="form">
               <div class="form-group">
@@ -113,8 +126,7 @@
         </div>
       </div>
     </form>
-  </div>
-</div>
+
 <div class="loader" *ngIf="showLoader">
   <img src="../assets/Images/loader.gif" alt="loader" />
 </div>

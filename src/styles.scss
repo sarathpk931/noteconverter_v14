@@ -53,22 +53,23 @@
         }
         .form{
             input,.file-type,.file-name{
+                
                 background-color: #a40d85;
                 color: #fff;
                 font-size: 20px;
                 padding: 13px 15px;
                 box-shadow: 1px 1px 3px 0px #2f2f2f;
                 height: auto;
-                &::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+                &::placeholder {
                     color: #fff;
-                    opacity: 1; /* Firefox */
+                    opacity: 1;
                   }
                   
-                  &:-ms-input-placeholder { /* Internet Explorer 10-11 */
+                  &:-ms-input-placeholder { 
                     color: #fff;
                   }
                   
-                  &::-ms-input-placeholder { /* Microsoft Edge */
+                  &::-ms-input-placeholder { 
                     color: #fff;
                   }
             }
@@ -192,3 +193,12 @@ button.btn.btn-medium
     font-size: 12px !important;
     height: 45px;
 }
+
+.image_updated
+{
+    margin-right:10px;
+    width:40px;
+}
+
+
+  
