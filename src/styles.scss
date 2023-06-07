@@ -1,23 +1,3 @@
-/* .cdk-overlay-pane{
-    width: 400px;
-    max-width: 100% !important;
-    position: absolute !important;
-    display: block;
-    left: 0;
-    right: 0;
-    top: 10px;
-    bottom: 0;
-    margin: auto;
-    background-color: transparent;
-} */
-/* .cdk-dialog-container{
-    background-color: transparent;
-    box-shadow: none;    
-}
- */
-/* .cdk-overlay-backdrop.custom-backdrop-color{
-    background-color: rgb(0 0 0 / 80%);
-} */
 
 @import 'assets/Content/Styles/text.scss';
 @import 'assets/Content/Styles/colors.scss';
@@ -28,36 +8,6 @@
 @import 'assets/Content/Styles/buttons.scss';
 @import 'assets/Content/Styles/site.scss';
 
-/* scan-screen {
-
-    .has-warning {
-        .xrx-alert,
-        .help-block {
-            color: #bc1620;
-        }
-
-        &.themed {
-            .xrx-alert,
-            .help-block {
-                color: #ffffff;
-            }
-        }
-    }
-
-    .scanScreen .editable-field-label {
-        color: #fff !important;
-    }
-
-    .reset-margin {
-        margin-top: 4px !important;
-        margin-bottom: 4px;
-
-        @media (min-width: 1024px) {
-            margin-top: 11.75px !important;
-            margin-bottom: 13.5px;
-        }
-    }
-} */
 
 // css start 
 .custom-container{
