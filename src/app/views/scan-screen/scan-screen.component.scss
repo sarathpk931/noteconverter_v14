@@ -1,4 +1,13 @@
-// css start 
+// css start
+
+.safari-textbox {
+    -webkit-appearance: textfield;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  
 .custom-container{
     max-width: 830px;
     padding: 0 15px;
