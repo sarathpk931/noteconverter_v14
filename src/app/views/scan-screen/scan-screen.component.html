@@ -1,8 +1,10 @@
-<div class="custom-container">
-  <div class="content">
-    <form [formGroup]="noteConvertorForm">
-      <div  ngScrollable='{"autoHeight": true, "watchHeight": true}'>
-    <div class="node-convertor  form_updated">
+<div class="loading-spinner" id="spinnerIcon" style="display:none"></div>
+
+<!-- <div class="custom-container">
+  <div class="content"> -->
+    <form [formGroup]="noteConvertorForm" class="scanScreen mainForm">
+      <div ngScrollable='{"autoHeight": true, "watchHeight": true}'>
+    <div class="header themed" action-bar>
       <div class="section-1">
         <h1 class="text-center"><span>{{this.xeroxTitle}}</span>  <!--xasString=SDE_WRITTEN_NOTE_CONVERSION4-->     
            <button class="btn scan-btn xrx-scan" (click)="scan()" [ngClass]="!noteConvertorForm?.valid ? 'disabled' : ''"> <!---->           
@@ -119,8 +121,8 @@
     </div>
   </div>
     </form>
-  </div>
-</div>
+<!--   </div>
+</div> -->
 
 <div class="loader" *ngIf="showLoader">
     <img src="../assets/Images/loader.gif" alt="loader"/>
