@@ -9,11 +9,17 @@
 @import 'assets/Content/Styles/site.scss';
 
 @supports (-webkit-touch-callout: none) {
+    .form{
+    input,.file-type,.file-name{
+        background-color: #a40d85;
+                color: #fff;
     &::placeholder{
     background-color: #dddddd; /* Safari background color */
     color: #000000; /* Safari text color */
     }
+    }
   }
+}
 
 // css start 
 .custom-container{
