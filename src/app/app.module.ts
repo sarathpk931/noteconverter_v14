@@ -136,15 +136,16 @@ export class AppModule {
   public static Generation:string;
   public static model : string;
   public static deviceId:string;
+  public static isThirdGenBrowser : boolean;
+  public static isVersalink : boolean;
+  public static isAltalink : boolean;
  }
 
 export async function Session(url: string,timeout:number,async:boolean, ldap: string): Promise<any> {
-  //alert("inside session");
   return new Promise((resolve, reject) => {
     function successCallbackSession (envelope: string, response: string) {
-     // alert("inside session success");
       //var data = xrxSessionGetSessionInfoRequest(response);
-      var data =xrxSessionParseGetSessionInfo(response);//alert("data in session :"+ data);
+      var data =xrxSessionParseGetSessionInfo(response);
       const parser = new DOMParser();
       const xmlDoc = parser.parseFromString(data.firstChild, 'text/xml');
       
@@ -192,7 +193,6 @@ export async function Session(url: string,timeout:number,async:boolean, ldap: st
      const doc = xrxStringToDom(response);
      const info = doc.querySelector("devcfg\\:Information, Information");
      const parser = new DOMParser();
-     debugger;
     const xmlDoc = parser.parseFromString(info.firstChild.data, 'text/xml');
     const generation = Number(xmlDoc.getElementsByTagName('generation')[0].textContent);
     AppModule.Generation = generation.toString();
@@ -204,6 +204,9 @@ export async function Session(url: string,timeout:number,async:boolean, ldap: st
      const isVersalink = _.includes(model.toLowerCase(), 'versalink') || _.includes(model.toLowerCase(), 'primelink');
      const isAltalink = _.includes(model.toLowerCase(), 'altalink');
      const isThirdGenBrowser = _.includes(navigator.userAgent.toLowerCase(), "x3g_");
+     AppModule.isThirdGenBrowser = isThirdGenBrowser;
+     AppModule.isVersalink = isVersalink;
+     AppModule.isAltalink = isAltalink;
      const result = {
         isThirdGenBrowser: isThirdGenBrowser,
         generation: generation,

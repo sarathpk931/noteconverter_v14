@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
-import { HttpClient,HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';//,HttpErrorResponse
 import { Observable, throwError ,Subject} from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { ScanOptionsService } from '../../app/services/scan-options.service';
 import { JobService } from './job.service';
-import { AppComponent } from '../../app/app.component';
+//import { AppComponent } from '../../app/app.component';
 import { ModalService } from '../../app/services/modal.service';
 import { LogService } from './log.service';
 import { ErrorHandlerService } from '../../app/services/error-handler.service';
 import { ScanTemplateService } from '../../app/services/scan-template.service';
 import {xrxTemplatePutTemplate,xrxTemplateDeleteTemplate}  from  '../../assets/Xrx/XRXTemplate';
-import { tap } from 'lodash';
+//import { tap } from 'lodash';
 import {xrxStringToDom,xrxGetElementValue} from '../../assets/Xrx/XRXXmlHandler';
 import {xrxScanV2InitiateScanJobWithTemplate,xrxScanV2ParseInitiateScanJobWithTemplate} from '../../assets/Xrx/XRXScanV2';
 import {xrxJobMgmtGetJobDetails,xrxJobMgmtParseGetJobDetails,xrxJobMgmtParseJobStateReasons} from '../../assets/Xrx/XRXJobManagement';
@@ -18,9 +18,10 @@ import {xrxParseJobStateReasons} from '../../assets/Xrx/XRX_EIPWSHelpers';
 import {environment} from '../../environments/environment';
 import {scanTemplate} from '../../app/model/scantemplate.model';
 import {BasicAlertComponent} from '../views/basic-alert/basic-alert.component';
-import {ProgressAlertComponent} from '../views/progress-alert/progress-alert.component';
+//import {ProgressAlertComponent} from '../views/progress-alert/progress-alert.component';
 import { resourceString} from '../model/global';
 import { ResourcestringService} from '../services/resourcestring.service';
+import {AppModule} from '../../app/app.module';
 
 @Injectable({
   providedIn: 'root'
@@ -33,6 +34,7 @@ export class ScanService {
   
   isScanning: boolean = false;
   isComplete: boolean = false;
+  progress : any;
 
   env = environment;
   scanTemplate : scanTemplate;
@@ -44,6 +46,9 @@ export class ScanService {
 
   private jobStateSubject  = new Subject<any>();
   jobStateSubjectSuccess = this.jobStateSubject.asObservable();
+
+  isVersaLink : boolean = AppModule.isVersalink;
+  isAltaLink : boolean = AppModule.isAltalink;
   
   constructor(
     
@@ -96,8 +101,10 @@ export class ScanService {
       this.isComplete = true;
       if (detail.error) {
         this.completeScanPromise.reject(detail);
+        this.progress.close();
       } else {
         this.completeScanPromise.resolve(detail);
+        this.progress.close();
       }
     }
   };
@@ -124,7 +131,7 @@ export class ScanService {
     public scan(model): Promise<void> {
       this.logService.trackTrace('service.scan');
       if (this.isScanning) {
-        this.logService.trackTrace('service.scan -> service.isScanning : Please wait!!!!');
+        this.logService.trackTrace('service.scan -> isScanning : Please wait!!!!');
         throw this.resourceString['SDE_PLEASE_WAIT_UNTIL'];
       }
 
@@ -134,7 +141,8 @@ export class ScanService {
       model.jobid = this.jobid;
       this.scanTemplate = this.scanTemplateService.scanTemplate(model);
       console.log(this.scanTemplate);
-      this.modalService.openModalWithTitle(ProgressAlertComponent,this.resourceString['SDE_SCANNING1'],'');
+      //this.modalService.openModalWithTitle(ProgressAlertComponent,this.resourceString['SDE_SCANNING1'],'');
+      this.progress = this.modalService.showProgressAlert(this.resourceString['SDE_SCANNING1'],'');
   
       return this.jobService.registerJob(model).then((result)=>{ //.toPromise()     
      
@@ -272,6 +280,9 @@ export class ScanService {
           this.errorHandlerService.DEVICE_EIP_INTERNAL_ERROR_TIMEOUT();
           return;
         }
+        if(this.isVersaLink){
+          this.broadcastJobState('jobProgress', 'Exit');
+        }
       
         if (jobState === 'Completed' && jobStateReason === 'JobCompletedSuccessfully') {
           this.modalService.closeAllModals();
@@ -295,18 +306,18 @@ export class ScanService {
           return;
         }
       
-        if (jobState === 'Completed' && jobStateReason === 'None') {
-          // do nothing
-        } else if (jobState === 'Completed' && jobStateReason && jobStateReason != 'JobCompletedSuccessfully') {
-          this.logService.trackTrace('if (jobState === Completed && jobStateReason && jobStateReason != JobCompletedSuccessfully) {');
-          this.broadcastJobState('jobProgress', 'Completed',jobStateReason);
-          this.modalService.closeAllModals();
-          this.errorHandlerService.APP_UNAVAILABLE_AT_THIS_TIME();
-          return;
-        } else {
-          this.logService.trackTrace('jobProgress:' + jobState);
-          this.broadcastJobState('jobProgress', jobState,jobStateReason);
-        }
+        // if (jobState === 'Completed' && jobStateReason === 'None') {
+        //   // do nothing
+        // } else if (jobState === 'Completed' && jobStateReason && jobStateReason != 'JobCompletedSuccessfully') {
+        //   this.logService.trackTrace('if (jobState === Completed && jobStateReason && jobStateReason != JobCompletedSuccessfully) {');
+        //   this.broadcastJobState('jobProgress', 'Completed',jobStateReason);
+        //   this.modalService.closeAllModals();
+        //   this.errorHandlerService.APP_UNAVAILABLE_AT_THIS_TIME();
+        //   return;
+        // } else {
+        //   this.logService.trackTrace('jobProgress:' + jobState);
+        //   this.broadcastJobState('jobProgress', jobState,jobStateReason);
+        // }
       
         if (jobState === 'Completed' && jobStateReason == 'JobCompletedSuccessfully') {
           setTimeout(()=>{
@@ -343,7 +354,7 @@ export class ScanService {
           else if (jobState === 'ProcessingStopped' && (jobStateReason === 'NextOriginalWait' || jobStateReason === '')) {
             this.logService.trackTrace('else if ProcessingStopped NextOriginalWait');
             setTimeout(()=>{
-              this.deleteScanTemplate();
+              this.beginCheckLoop(jobid);
             },2000
             );
           }
@@ -407,7 +418,6 @@ export class ScanService {
     // We can delete the template by checksum if we have it.
     if (this.scanTemplate.checkSum) {
 
-      
       xrxTemplateDeleteTemplate(this.printerUrl, this.scanTemplate.name, this.scanTemplate.checkSum, 
          this.success,
          this.failure
@@ -415,8 +425,10 @@ export class ScanService {
     }
   }
 
-  success(message:any){}
+  success(message:any){
+  }
 
-  failure(message:any){}
+  failure(message:any){
+  }
 }
 
