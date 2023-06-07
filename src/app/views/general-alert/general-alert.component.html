@@ -1,0 +1,23 @@
+<!-- Copyright © 2019 Xerox Corporation. All Rights Reserved. -->
+
+<div class="alert">
+
+    <div class="alert-container">
+
+        <div class="alert-content">
+
+            <h3 class="alert-title" xasString="{{data.title}}"></h3>
+            <div class="alert-additional-info" xasString="{{data.additionalInfo}}"></div>
+            <div *ngIf="data.additionalInfo2" class="alert-additional-info" xasString="{{data.additionalInfo2}}">/div>
+
+
+            <div class="alert-button-container">
+                <button type="button" class="{{button1Classes}}" xasString="{{this.button1Text}}" (click)="button1();" tabindex="-1"></button><!--{{$ctrl.button1Classes}} {{$ctrl.button1Text}} -->
+                <button type="button" class="{{button2Classes}}" 
+                        *ngIf="data.button2Callback != null" xasString="{{this.button2Text}}" (click)="button2()" tabindex="-1"></button>
+            </div><!--{{$ctrl.button2Classes}} {{$ctrl.button2Text}} -->
+
+        </div>
+
+    </div>
+</div>
