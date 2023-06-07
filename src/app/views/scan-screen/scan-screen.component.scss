@@ -43,6 +43,10 @@
         .form{
             input,.file-type,.file-name{
                 -webkit-user-select: all !important;
+                -khtml-user-select: text;
+	            -moz-user-select: text;
+	            -ms-user-select: text;
+	            user-select: text;
                 background-color: #a40d85;
                 color: #fff;
                 font-size: 20px;
