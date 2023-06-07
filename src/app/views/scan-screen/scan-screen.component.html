@@ -42,21 +42,21 @@
               </p>
               <div class="row">
                 <div class="col-sm-10 col-xs-7">
-                  <div class="">
+                  
                     <div class="">
                       <input type="text" id="txtFileName" class="form-control focus_textbox" [placeholder]="fileName" formControlName="fileName" />
                     </div>
-                  </div>
+                  
                 </div>
-                <div class="col-sm-2 col-xs-5" [style.flex]="'1'">
-                  <div class="">
+                <div class="col-sm-2 col-xs-5">
+                  
                     <div class="">
                       <button type="button" (click)="openFileFormat();" class="btn btn-medium">
                         <!---->
                         {{selectedFileFormatOptions.title}}
                       </button>
                     </div>
-                  </div>
+                  
                 </div>
               </div>
             </div>
@@ -115,10 +115,10 @@
                 </div>
               </li>
             </ul>
-            <div class="reset-privacy">
-              <div class="row">
+            <div class="grid-row footer">
+              <div class="grid-row">
                 <div class="col-lg-6 col-xs-6">
-                  <button class="btn" (click)="resetForm()">{{this.resetTitle}}</button>
+                  <button class="btn btn-medium" (click)="resetForm()">{{this.resetTitle}}</button>
                   <!--xasString="SDE_RESET"-->
                 </div>
                 <div class="col-lg-6 col-xs-6 ">
