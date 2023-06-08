@@ -207,12 +207,12 @@ button.btn.btn-medium
   }
   
   .definediv input {
-    flex: 1;
+    float: left;
     margin-right: 10px;
   }
 
   .definediv button {
-    flex-shrink: 0; /* Prevent button from shrinking in Safari */
+    float: left; /* Prevent button from shrinking in Safari */
   }
   
   

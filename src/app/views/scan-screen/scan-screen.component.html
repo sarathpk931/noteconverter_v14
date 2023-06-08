@@ -48,11 +48,26 @@
                     <i class="fa fa-exclamation-triangle"></i>&nbsp; Email addresses do not match.
                   </p>
                   
-                  <div class="definediv">
-                    <input type="text" id="txtFileName" class="form-control focus_textbox" [placeholder]="fileName" formControlName = "fileName" />	<!--[(ngModel)]="fileName" (click)="onFileNameClick()" -->
+                   <!-- <div class="definediv">
+                    <input type="text" id="txtFileName" class="form-control focus_textbox" [placeholder]="fileName" formControlName = "fileName" />	
                     <button type="button" (click)="openFileFormat();" class="btn btn-medium">
                       {{selectedFileFormatOptions.title}}
                     </button>
+                  </div>  -->
+                
+                  <div class="definediv">
+                    <table>
+                      <tr>
+                        <td>
+                          <input type="text" id="txtFileName" class="form-control focus_textbox" [placeholder]="fileName" formControlName="fileName" />
+                        </td>
+                        <td>
+                          <button type="button" (click)="openFileFormat();" class="btn btn-medium">
+                            {{selectedFileFormatOptions.title}}
+                          </button>
+                        </td>
+                      </tr>
+                    </table>
                   </div>
                   
                 </div>
@@ -64,6 +79,7 @@
               <div class="separator"></div>
 
               <div class="section-2">
+
                 <ul>
                   <li>
                     <div class="row button_click">
