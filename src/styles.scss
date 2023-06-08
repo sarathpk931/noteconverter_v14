@@ -202,6 +202,7 @@ button.btn.btn-medium
 
 .definediv {
     display: flex;
+    justify-content: space-between;
     align-items: center;
     overflow: visible !important; /* Override the parent's overflow property */
   }
@@ -212,9 +213,14 @@ button.btn.btn-medium
   }
 
   .definediv button {
-    float: left; /* Prevent button from shrinking in Safari */
+    float: right; /* Prevent button from shrinking in Safari */
   }
   
+  .row-container {
+    display: flex;
+    gap: 10px; /* Adjust the gap as needed */
+  }
+ 
   
   
   

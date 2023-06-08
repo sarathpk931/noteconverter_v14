@@ -56,13 +56,13 @@
                   </div>  -->
                 
                   <div class="definediv">
-                    <table>
+                    <table class="row-container">
                       <tr>
                         <td>
                           <input type="text" id="txtFileName" class="form-control focus_textbox" [placeholder]="fileName" formControlName="fileName" />
                         </td>
                         <td>
-                          <button type="button" (click)="openFileFormat();" class="btn btn-medium">
+                          <button type="button" (click)="openFileFormat();" class="btn btn-xlarge">
                             {{selectedFileFormatOptions.title}}
                           </button>
                         </td>
@@ -77,10 +77,11 @@
               </div>
 
               <div class="separator"></div>
+                <!--Scan Features  -->
 
-              <div class="section-2">
-
-                <ul>
+              <div class="grid-row option-content">
+                <div class="section-2">
+                <ul class="action-list">
                   <li>
                     <div class="row button_click">
                       <div class="button_event_1" (click)="openScan();"></div>
@@ -88,18 +89,18 @@
                         <table>
                           <tr>
                             <td>
-                              <div class="d-inline-block image_updated">
-                                <img class="img-fluid" src="assets/Content/Images/{{selectedType.icon}}">
+                              <div class="image-container rounded">
+                                <img class="image" src="assets/Content/Images/{{selectedType.icon}}">
                               </div>
                             </td>
                             <td>
-                              <span class="text-left" xasString={{this.selectedType.title}}></span>
+                              <span class="left-text" xasString={{this.selectedType.title}}></span>
                             </td>
                           </tr>
                         </table>
                       </div>
                       <div class="col-lg-6 col-xs-6 text-end content_updated">
-                        <span class="text-right" xasString={{selectedTypeOptions.title}}></span>
+                        <span class="right-text" xasString={{selectedTypeOptions.title}}></span>
                         <!---->
                       </div>
                     </div>
@@ -130,20 +131,25 @@
                     </div>
                   </li>
                 </ul>
+                </div>
                 <div class="grid-row footer">
                   <div class="grid-row">
-                    <div class="column-10-29 column-offset-10-2 column-5-g-30 column-offset-5-c-1">
-                      <button class="btn" (click)="resetForm()">{{this.resetTitle}}</button>
-                      <!--xasString="SDE_RESET"-->
-                    </div>
-                    <div class="column-10-29 column-offset-10-1 column-5-g-30 column-offset-5-g-1">
-                      <button class="btn" (click)="showPrivacyStatement();">{{this.privacyStatementTitle}}</button>
-                      <!--xasString="SDE_PRIVACY_STATEMENT"-->
+                    <div class="definediv">
+                      <table>
+                        <tr>
+                          <td>
+                            <button class="btn btn-medium" (click)="resetForm()">{{this.resetTitle}}</button>
+                          </td>
+                          <td>
+                            <button class="btn btn-primary btn-medium" (click)="showPrivacyStatement();">{{this.privacyStatementTitle}}</button>
+                          </td>
+                        </tr>
+                      </table>
                     </div>
                   </div>
                 </div>
               </div>
-            <!-- </div>  -->
+            
           </div>
       
     </form>
