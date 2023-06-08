@@ -46,27 +46,20 @@
                 <i class="fa fa-exclamation-triangle"></i>&nbsp; Email addresses do not match.
               </p>
 
-              <div class="row align-items-center">
-
-                <div class="col-sm-10 col-xs-7">
-                  
-                  <div class="input-group">
-                    <input type="text" id="txtFileName" class="form-control focus_textbox" [placeholder]="fileName" formControlName="fileName" style="padding-left: 20px;" />
-                    <span id="_glyph" class="xrx-paperclip" style="line-height:100%; position: absolute; left: 15px; top: 50%; transform: translateY(-50%);"></span>
-                  </div>
-                  
-                </div>
-
-                <div class="col-sm-2 col-xs-5">
-                  
+              <div class="form-group">
+                <div class="row align-items-center">
+                  <div class="col-10">
                     <div class="input-group">
-                      <button type="button" (click)="openFileFormat();" class="btn btn-xlarge" style="margin-left: 10px;">
-                        {{selectedFileFormatOptions.title}}
-                      </button>
+                      <input type="text" id="txtFileName" class="form-control focus_textbox" [placeholder]="fileName" formControlName="fileName" style="padding-left: 20px;" />
+                      <span id="_glyph" class="xrx-paperclip" style="line-height: 100%; position: absolute; left: 15px; top: 50%; transform: translateY(-50%);"></span>
                     </div>
-                  
+                  </div>
+                  <div class="col-2">
+                    <button type="button" (click)="openFileFormat();" class="btn btn-xlarge" style="margin-left: 10px;">
+                      {{selectedFileFormatOptions.title}}
+                    </button>
+                  </div>
                 </div>
-
               </div>
 
             </div>
