@@ -200,19 +200,18 @@ button.btn.btn-medium
     width:40px;
 }
 
-.input-group {
-    position: relative;
+.definediv {
     display: flex;
     align-items: center;
+    overflow: visible !important; /* Override the parent's overflow property */
   }
   
-  .input-group .form-control {
+  .definediv input {
     flex: 1;
+    margin-right: 10px;
   }
-  
-  .input-group .input-group-addon {
-    margin-left: 5px;
-  }
+
+
   
   
   
