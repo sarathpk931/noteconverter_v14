@@ -211,7 +211,9 @@ button.btn.btn-medium
     margin-right: 10px;
   }
 
-
+  .definediv button {
+    flex-shrink: 0; /* Prevent button from shrinking in Safari */
+  }
   
   
   
