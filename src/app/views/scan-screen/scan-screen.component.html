@@ -1,46 +1,53 @@
 
     <form [formGroup]="noteConvertorForm" class="scanScreen mainForm">
-      <div ngScrollable='{"autoHeight": true, "watchHeight": true}'>
-        <div class="node-convertor  form_updated">
+      <!-- <div ngScrollable='{"autoHeight": true, "watchHeight": true}'> -->
+        
 
           <div class="header themed" action-bar>
+           
+              <div class="header-right">
+                  <button type="button" class="btn btn-medium btn-glyph-label xrx-scan" (click)="scan()" [ngClass]="!noteConvertorForm?.valid ? 'disabled' : ''"> 
+                    <span>{{this.scanTitle}}</span>
+                  </button>
+              </div>
+        
+              <div class="header-middle text-large">
+                  <div class="header-title-container text-large">
+                      <div class="header-title text-large">
+                        <span>{{this.xeroxTitle}}</span>
+                      </div>
+                  </div>
+              </div>
+      
+          </div>
 
-            <div class="header-right">
-                <!-- XBB-422 Look for undefined, null, or length < 1 -->
-                <button type="button" class="btn btn-medium btn-glyph-label xrx-scan" (click)="scan()" [ngClass]="!noteConvertorForm?.valid ? 'disabled' : ''"> 
-                  <span>{{this.scanTitle}}</span>
-                </button>
-            </div>
-      
-            <div class="header-middle text-large">
-                <div class="header-title-container text-large">
-                    <div class="header-title text-large">
-                      <span>{{this.xeroxTitle}}</span>
-                    </div>
-                </div>
-            </div>
-      
-        </div>
+      <div class="scroll-container node-convertor form_updated" style="position:relative;overflow:hidden;" ngScrollable='{"autoHeight": true, "watchHeight": true}'>    
           <div class="section-1 header themed">
             
-            <!-- <div class="note"></div> -->
             <div class="form">
+
               <div class="form-group">
                 <input type="email" formControlName="email" class="form-control focus_textbox" name="" placeholder="{{this.emailPlaceHolder}}" />
               </div>
-              <p *ngIf="f['email'].hasError('email') && f['email'].touched" class="error_updated">
-                <i class="fa fa-exclamation-triangle"></i>&nbsp;{{this.emailValidation1}}
-              </p>
+
+                <p *ngIf="f['email'].hasError('email') && f['email'].touched" class="error_updated" style="text-align: left;">
+                  <i class="fa fa-exclamation-triangle"></i>&nbsp;{{this.emailValidation1}}
+                </p>
+
               <div class="form-group">
                 <input type="email" formControlName="confirmEmail" class="form-control focus_textbox" name="" placeholder="Confirmation Email" />
               </div>
-              <p *ngIf="f['confirmEmail'].hasError('email') && f['confirmEmail'].touched" class="error_updated">
+
+              <p *ngIf="f['confirmEmail'].hasError('email') && f['confirmEmail'].touched" class="error_updated" style="text-align: left;">
                 <i class="fa fa-exclamation-triangle"></i>&nbsp; {{this.emailValidation1}}
               </p>
-              <p *ngIf="noteConvertorForm.hasError('emailsMatch') && f['confirmEmail'].touched" class="error_updated">
+
+              <p *ngIf="noteConvertorForm.hasError('emailsMatch') && f['confirmEmail'].touched" class="error_updated" style="text-align: left;">
                 <i class="fa fa-exclamation-triangle"></i>&nbsp; Email addresses do not match.
               </p>
+
               <div class="row">
+
                 <div class="col-sm-10 col-xs-7">
                   
                     <div class="">
@@ -48,18 +55,21 @@
                     </div>
                   
                 </div>
+
                 <div class="col-sm-2 col-xs-5">
                   
                     <div class="">
                       <button type="button" (click)="openFileFormat();" class="btn btn-medium">
-                        <!---->
                         {{selectedFileFormatOptions.title}}
                       </button>
                     </div>
                   
                 </div>
+
               </div>
+
             </div>
+
           </div>
 
           <div class="separator"></div>
@@ -117,19 +127,19 @@
             </ul>
             <div class="grid-row footer">
               <div class="grid-row">
-                <div class="col-lg-6 col-xs-6">
-                  <button class="btn btn-medium" (click)="resetForm()">{{this.resetTitle}}</button>
+                <div class="column-10-29 column-offset-10-2 column-5-g-30 column-offset-5-c-1">
+                  <button class="btn" (click)="resetForm()">{{this.resetTitle}}</button>
                   <!--xasString="SDE_RESET"-->
                 </div>
-                <div class="col-lg-6 col-xs-6 ">
+                <div class="column-10-29 column-offset-10-1 column-5-g-30 column-offset-5-g-1">
                   <button class="btn" (click)="showPrivacyStatement();">{{this.privacyStatementTitle}}</button>
                   <!--xasString="SDE_PRIVACY_STATEMENT"-->
                 </div>
               </div>
             </div>
           </div>
-        </div>
       </div>
+      
     </form>
 
 <div class="loader" *ngIf="showLoader">
