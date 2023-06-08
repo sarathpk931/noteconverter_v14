@@ -75,8 +75,8 @@ html, body, div, span, h1, h2, h3, h4, h5, h6, p, blockquote, dl, dt, dd, ol, ul
 // device height minus header height
 .scroll-container {
     height: 396px;
-    background: gray 0 0 repeat;//@gray-texture
-    background-color: gray;//@gray
+    background: lightgray 0 0 repeat;//@gray-texture
+    background-color: lightgray;//@gray
 
     @media(min-width:1024px) {
         height: 522px;
