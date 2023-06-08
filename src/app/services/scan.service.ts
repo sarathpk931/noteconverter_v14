@@ -49,6 +49,12 @@ export class ScanService {
 
   isVersaLink : boolean = AppModule.isVersalink;
   isAltaLink : boolean = AppModule.isAltalink;
+
+  private template: any;
+  private completeScanPromise: any = null;
+  private jobid: any = null;
+  promiseResolve : any;
+  promiseReject : any;
   
   constructor(
     
@@ -100,18 +106,16 @@ export class ScanService {
       this.isScanning = false;
       this.isComplete = true;
       if (detail.error) {
-        this.completeScanPromise.reject(detail);
+        this.promiseReject(detail);
         this.progress.close();
       } else {
-        this.completeScanPromise.resolve(detail);
+        this.promiseResolve(detail);
         this.progress.close();
       }
     }
   };
 
-  private template: any;
-  private completeScanPromise: any = null;
-  private jobid: any = null;
+
 
   public isExistingEmail(email: string): Observable<any> {
     const config = {
@@ -151,8 +155,16 @@ export class ScanService {
           this.isScanning = true;
           this.isComplete = false;
           this.completeScanPromise = new Promise((resolve, reject) => {
+          this.promiseResolve = resolve;
+          this.promiseReject = reject;
+
             this.logService.trackTrace('service.scan -> calling putTemplate()');
-            this.putTemplate(tStr);
+            this.putTemplate(tStr).then(data => {
+              this.promiseResolve(data);
+            })
+            .catch(error => {
+              this.promiseReject(error);
+            })
           });
           
           
