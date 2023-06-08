@@ -49,6 +49,17 @@ button {
       }
     }
 
+    &.btn-xlarge {
+      //@include text-large;
+      height: 58px;
+      min-width: 200px;
+
+      @media(min-width:1024px) {
+        height: 58px;
+        min-width: 200px;
+      }
+    }
+
     &.btn-large {
       //@include text-large;
       height: 78px;
