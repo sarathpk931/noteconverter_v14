@@ -200,5 +200,24 @@ button.btn.btn-medium
     width:40px;
 }
 
+.input-group {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  
+  .input-group .form-control {
+    flex: 1;
+  }
+  
+  .input-group .input-group-addon {
+    margin-left: 5px;
+  }
+  
+  
+  
+  
+  
+  
 
   
