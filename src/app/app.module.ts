@@ -43,7 +43,7 @@ import {XasStringDirective} from '../app/Directives/xas-string.directive';
 
 //pipes
 
-import { ParseSnmpPipe } from './filters/parse-snmp.pipe';
+/*import { ParseSnmpPipe } from './filters/parse-snmp.pipe';
 import { OrderObjectByPipe } from './filters/order-object-by.pipe';
 import { ErrorPipe } from './filters/error.pipe';
 import { ParseDeviceCapabilitiesPipe } from './filters/parse-device-capabilities.pipe';
@@ -52,8 +52,8 @@ import { IsUserDeviceAdminPipe } from './filters/is-user-device-admin.pipe';
 import { ConvertProtocolPipe } from './filters/convert-protocol.pipe';
 import { PasswordMaskPipe } from './filters/password-mask.pipe';
 import { StringFormatPipe } from './filters/string-format.pipe';
+import { ParseDeviceConfigPipe } from './filters/parse-device-config.pipe';*/
 import { TranslatePipe } from './filters/translate.pipe';
-import { ParseDeviceConfigPipe } from './filters/parse-device-config.pipe';
 import { ModalService } from './services/modal.service';
 import { ScanScreenComponent } from './views/scan-screen/scan-screen.component';
 import {ScanService} from './services/scan.service';
@@ -62,10 +62,10 @@ import {ResourcestringService } from './services/resourcestring.service';
 
 import { xrxDeviceConfigGetDeviceInformation } from '../assets/Xrx/XRXDeviceConfig';
 import {xrxStringToDom} from '../assets/Xrx/XRXXmlHandler';
-import {xrxSessionGetSessionInfo,xrxSessionGetSessionInfoRequest,xrxSessionParseGetSessionInfo}  from  '../assets/Xrx/XRXSession';
+import {xrxSessionGetSessionInfo,xrxSessionParseGetSessionInfo}  from  '../assets/Xrx/XRXSession';//xrxSessionGetSessionInfoRequest,
 import {xrxGetElementValue} from '../assets/Xrx/XRXXmlHandler';
-import {xrxCallWebservice,xrxCallAjax} from '../assets/Xrx/XRXWebservices';
-import { Global,AppSetting } from './model/global';
+// import {xrxCallWebservice,xrxCallAjax} from '../assets/Xrx/XRXWebservices';
+// import { Global,AppSetting } from './model/global';
 import * as _ from 'lodash';
 import { EditableFileNameDirective } from './Directives/editable-file-name.directive';
 import { NgScrollableDirective } from './Directives/ng-scrollable.directive';
@@ -95,12 +95,11 @@ import { NgScrollableDirective } from './Directives/ng-scrollable.directive';
     ReactiveFormsModule,
   ],
   providers: [
-    /* {
-    provide :APP_INITIALIZER,
-    useFactory:()=> Device,
-    multi:true,
-  }, */
-
+  //   {
+  //   provide :APP_INITIALIZER,
+  //   useFactory:()=> Device,
+  //   multi:true,
+  // },
   // {
   //   provide :APP_INITIALIZER,
   //   useFactory:()=> Session,
@@ -109,13 +108,7 @@ import { NgScrollableDirective } from './Directives/ng-scrollable.directive';
   {
   provide: ErrorHandler,
   useClass: ApplicationinsightsAngularpluginErrorService,
-  },
-  // {
-  //   provide :APP_INITIALIZER,
-  //   useFactory: ()=> Session,
-  //   multi:true,
-  // },
-  
+  },  
     StorageService,
     LogService,
     ModalService,
@@ -134,18 +127,19 @@ import { NgScrollableDirective } from './Directives/ng-scrollable.directive';
   bootstrap: [AppComponent]
 })
 export class AppModule {
-  public static Generation:string;
+  public static Generation:any;
   public static model : string;
   public static deviceId:string;
+  public static isThirdGenBrowser : boolean;
+  public static isVersalink : boolean;
+  public static isAltalink : boolean;
  }
 
-/* export async function Session(url: string,timeout:number,async:boolean, ldap: string): Promise<any> {
-  //alert("inside session");
+export async function Session(url: string,timeout:number,async:boolean, ldap: string): Promise<any> {
   return new Promise((resolve, reject) => {
     function successCallbackSession (envelope: string, response: string) {
-     // alert("inside session success");
       //var data = xrxSessionGetSessionInfoRequest(response);
-      var data =xrxSessionParseGetSessionInfo(response);//alert("data in session :"+ data);
+      var data =xrxSessionParseGetSessionInfo(response);
       const parser = new DOMParser();
       const xmlDoc = parser.parseFromString(data.firstChild, 'text/xml');
       
@@ -193,10 +187,9 @@ export class AppModule {
      const doc = xrxStringToDom(response);
      const info = doc.querySelector("devcfg\\:Information, Information");
      const parser = new DOMParser();
-     debugger;
     const xmlDoc = parser.parseFromString(info.firstChild.data, 'text/xml');
     const generation = Number(xmlDoc.getElementsByTagName('generation')[0].textContent);
-    AppModule.Generation = generation.toString();
+    AppModule.Generation = generation;
 
      const model = xmlDoc.getElementsByTagName('model')[0].textContent;
      AppModule.model = model.toString();
@@ -205,6 +198,9 @@ export class AppModule {
      const isVersalink = _.includes(model.toLowerCase(), 'versalink') || _.includes(model.toLowerCase(), 'primelink');
      const isAltalink = _.includes(model.toLowerCase(), 'altalink');
      const isThirdGenBrowser = _.includes(navigator.userAgent.toLowerCase(), "x3g_");
+     AppModule.isThirdGenBrowser = isThirdGenBrowser;
+     AppModule.isVersalink = isVersalink;
+     AppModule.isAltalink = isAltalink;
      const result = {
         isThirdGenBrowser: isThirdGenBrowser,
         generation: generation,
@@ -226,5 +222,5 @@ export class AppModule {
         async
         );
       })
-  }; */
+  };
   

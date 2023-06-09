@@ -1,20 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+//import { HttpClient } from '@angular/common/http';
 import {Router} from '@angular/router';
 
-import { xrxDeviceConfigGetDeviceInformation } from '../assets/Xrx/XRXDeviceConfig';
-import {xrxStringToDom} from '../assets/Xrx/XRXXmlHandler';
-import {xrxSessionGetSessionInfo,xrxSessionGetSessionInfoRequest,xrxSessionParseGetSessionInfo}  from  '../assets/Xrx/XRXSession';
-import {xrxGetElementValue} from '../assets/Xrx/XRXXmlHandler';
-import {xrxCallWebservice,xrxCallAjax} from '../assets/Xrx/XRXWebservices';
-import { LogService } from '../app/services/log.service';
+// import { xrxDeviceConfigGetDeviceInformation } from '../assets/Xrx/XRXDeviceConfig';
+// import {xrxStringToDom} from '../assets/Xrx/XRXXmlHandler';
+// import {xrxSessionGetSessionInfo,xrxSessionGetSessionInfoRequest,xrxSessionParseGetSessionInfo}  from  '../assets/Xrx/XRXSession';
+// import {xrxGetElementValue} from '../assets/Xrx/XRXXmlHandler';
+// import {xrxCallWebservice,xrxCallAjax} from '../assets/Xrx/XRXWebservices';
+//import { LogService } from '../app/services/log.service';
 import {ResourcestringService} from '../app/services/resourcestring.service';
-import {environment} from  '../environments/environment'
+//import {environment} from  '../environments/environment'
 
 
 declare const _: any;
 
-let Deviceconfigxmlresponse:string;
+//let Deviceconfigxmlresponse:string;
 
 
 @Component({
@@ -24,13 +24,13 @@ let Deviceconfigxmlresponse:string;
 })
 export class AppComponent implements OnInit {
 
-  title: "Note Converter App";
-  env = environment;
+  //title: "Note Converter App";
+  //env = environment;
 
   constructor(
     
-    private  logger: LogService,
-    private http: HttpClient,
+    // private  logger: LogService,
+    // private http: HttpClient,
     private router : Router,
     private resourceStringService : ResourcestringService
     ) 
@@ -45,7 +45,7 @@ export class AppComponent implements OnInit {
     async routeScanScreen() 
     { 
       try { 
-        //const strings = await this.resourceStringService.loadResources(); 
+        const strings = await this.resourceStringService.loadResources(); 
         this.router.navigate(['scanScreen']); 
       } 
       catch (error) 
@@ -56,11 +56,6 @@ export class AppComponent implements OnInit {
     
    
   }
-
-  
-
-  
-  
   
 /*
   Session(url: string,timeout:number,async:boolean, ldap: string): Promise<any> {
