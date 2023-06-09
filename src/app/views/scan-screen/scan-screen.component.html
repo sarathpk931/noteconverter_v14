@@ -31,27 +31,25 @@
         <p *ngIf="noteConvertorForm.hasError('emailsMatch') && f['confirmEmail'].touched" class="error_updated" style="text-align: left;">
           <i class="fa fa-exclamation-triangle"></i>&nbsp; Email addresses do not match.
         </p>
-        <div class="row">
-          <div class="col-sm-10 col-xs-7">
-            <div class="">
-              <div class="">
+        <div class="definediv">
+          <table class="row-container">
+            <tr>
+              <td>
                 <input type="text" id="txtFileName" class="form-control focus_textbox" [placeholder]="fileName" formControlName="fileName" />
-              </div>
-            </div>
-          </div>
-          <div class="col-sm-2 col-xs-5">
-            <div class="">
-              <div (click)="openFileFormat();" class="file-type form-control">
-                <!---->
-                {{selectedFileFormatOptions.title}}
-              </div>
-            </div>
-          </div>
+              </td>
+              <td>
+                <button type="button" (click)="openFileFormat();" class="btn btn-xlarge">
+                  {{selectedFileFormatOptions.title}}
+                </button>
+              </td>
+            </tr>
+          </table>
         </div>
       </div>
-      </div>
     </div>
-    <div class="separator"></div>
+  </div>
+  <div class="separator"></div>
+
     <!--Scan Features  -->
     <div class="grid-row option-content">
       <div class="section-2">
@@ -119,7 +117,7 @@
         </div>
       </div>
     </div>
-    <!-- Reset button-->
+   
 
 </form>
 <div class="loader" *ngIf="showLoader">
