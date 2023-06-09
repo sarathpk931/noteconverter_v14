@@ -217,7 +217,8 @@ button.btn.btn-medium
   }
   
   .row-container {
-    display: flex;
+    width: 100%;
+    display: table;
     gap: 10px; /* Adjust the gap as needed */
   }
  
