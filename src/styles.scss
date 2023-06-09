@@ -378,16 +378,17 @@ button.btn.btn-Scanmedium
     
     width: 100% !important;
     margin: 0px !important;
-    
+    height: 523px !important;
     
   }
   .privacy_updated .privacy-policy-content
   {
    
    overflow: auto;
-   height: 517px;
+   height: 440px;
     padding: 2%;
     text-wrap: initial;
+    word-wrap: break-word;
   }
   .privacy-policy-content, pre
   {
