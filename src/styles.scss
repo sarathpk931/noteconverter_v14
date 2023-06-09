@@ -424,27 +424,27 @@ button.btn.btn-Scanmedium
   {
     margin: 0px 7px;
   }
-  @media (max-width: 800px)
+  @media (max-width: 1024px)
   {
 ::-webkit-scrollbar {
     width: 20px;
 }
   }
-  @media (max-width: 500px)
+  @media (max-width: 1200px)
   {
     .privacy_updated
     {
       
       width: 100% !important;
       margin: 0px !important;
-      height: 423px !important;
+      height: 403px !important;
       
     }
     .privacy_updated .privacy-policy-content
     {
      
      overflow: auto;
-     height: 340px;
+     height: 320px;
       padding: 2%;
       text-wrap: initial;
       word-wrap: break-word;
