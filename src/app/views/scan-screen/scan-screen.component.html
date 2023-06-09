@@ -55,51 +55,38 @@
       <div class="section-2">
         <ul class="action-list">
           <li>
-            <div class="row button_click">
-              <div class="button_event_1" (click)="openScan();"></div>
-              <div class="col-lg-6 col-xs-6">
-                <table>
-                  <tr>
-                    <td>
-                      <div class="image-container rounded">
-                        <img class="image" src="assets/Content/Images/{{selectedType.icon}}">
-                      </div>
-                    </td>
-                    <td>
-                      <span class="left-text" xasString={{this.selectedType.title}}></span>
-                    </td>
-                  </tr>
-                </table>
+            
+              <div class="row button_click">
+                <button  class="btn btn-medium btn-image" (click)="openScan();" tabindex="-1">
+                <div class="image-container rounded">
+                    <img class="image" src="assets/Content/Images/{{this.selectedType.icon}}">
+                </div>
+
+                <div class="text-container">
+                  <span class="left-text" xasString={{this.selectedType.title}}></span>
+                
+                  <span class="right-text" xasString={{this.selectedTypeOptions.title}}></span>
+                </div>
+                </button>
               </div>
-              <div class="col-lg-6 col-xs-6 text-end content_updated">
-                <span class="right-text" xasString={{selectedTypeOptions.title}}></span>
-                <!---->
-              </div>
-            </div>
+            
           </li>
+          
           <li>
             <div class="row button_click">
-              <div class="button_event_2" (click)="openSize();"></div>
-              <div class="col-lg-6 col-xs-6 ">
-                <table>
-                  <tr>
-                    <td>
-                      <div class="d-inline-block image_updated">
-                        <img class="img-fluid" src="assets/Content/Images/{{selectedSize.icon}}">
-                      </div>
-                    </td>
-                    <td>
-                      <span class="text-left" xasString={{selectedSize.title}}></span>
-                      <!--xasString=""-->
-                    </td>
-                  </tr>
-                </table>
+              <button  class="btn btn-medium btn-image" (click)="openSize();" tabindex="-1">
+                <div class="image-container rounded">
+                    <img class="image" src="assets/Content/Images/{{this.selectedSize.icon}}">
+                </div>
+  
+                <div class="text-container">
+                  <span class="left-text" xasString={{this.selectedSize.title}}></span>
+                
+                  <span class="right-text" *ngIf="this.resourceString[selectedSizeOptions.title] != null">{{this.resourceString[selectedSizeOptions.title]}}</span>
+          
+                  <span class="right-text" *ngIf="this.resourceString[selectedSizeOptions.title] == null">{{ this.selectedSizeOptions.title}}</span>
               </div>
-              <div class="col-lg-6 col-xs-6 text-end content_updated">
-                <span class="text-right" *ngIf="this.resourceString[selectedSizeOptions.title] != null">{{this.resourceString[selectedSizeOptions.title]}}</span>
-                <!---->
-                <span class="text-right" *ngIf="this.resourceString[selectedSizeOptions.title] == null">{{ selectedSizeOptions.title}}</span>
-              </div>
+            </button> 
             </div>
           </li>
         </ul>
