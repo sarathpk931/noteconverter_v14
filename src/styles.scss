@@ -8,6 +8,29 @@
 @import 'assets/Content/Styles/buttons.scss';
 @import 'assets/Content/Styles/site.scss';
 
+.cdk-dialog-container{
+    background-color: transparent;
+    box-shadow: none;    
+}
+
+.cdk-overlay-pane{
+    width: 400px;
+    max-width: 100% !important;
+    position: absolute !important;
+    display: block;
+    left: 0;
+    right: 0;
+    top: 10px;
+    bottom: 0;
+    margin: auto;
+    background-color: transparent;
+}
+
+.cdk-overlay-backdrop.custom-backdrop-color{
+    background-color: rgb(0 0 0 / 80%);
+}
+
+
 .custom-container{
     max-width: 830px;
     padding: 0 15px;
