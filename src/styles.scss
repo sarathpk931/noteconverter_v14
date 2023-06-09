@@ -305,7 +305,7 @@ button.btn.btn-Scanmedium
    }
    .cdk-overlay-pane
    {
-    max-width: 100% !important;
+    max-width: 90% !important;
    }
    .button_box button.btn.btn-medium
    {
@@ -385,6 +385,7 @@ button.btn.btn-Scanmedium
   {
    
    overflow: auto;
+   height: 517px;
     padding: 2%;
     text-wrap: initial;
   }
@@ -409,4 +410,10 @@ button.btn.btn-Scanmedium
   {
     margin: 5px 10px !important;
     padding:5px 10px !important;
+  }
+  @media (max-width: 800px)
+  {
+::-webkit-scrollbar {
+    width: 20px;
+}
   }
