@@ -22,7 +22,7 @@
           </div>
       
           <!--form group email,confirm-email, file  -->
-          <div class="scroll-container node-convertor form_updated" style="position:relative;overflow:hidden;" ngScrollable='{"autoHeight": true, "watchHeight": true}'>
+          <div class=" node-convertor form_updated" style="position:relative;overflow:hidden;" ngScrollable='{"autoHeight": true, "watchHeight": true}'>
             <!-- <div class="grid-container"> -->
               <div class="section-1 header themed">
                 
@@ -140,18 +140,20 @@
                 <!-- Reset button-->
 
               
-                <div class="section-2">
-                  <div class="grid-row">
-                    <div class="btn-group">
-                      
-                          <button class="btn btn-block" (click)="resetForm()">{{this.resetTitle}}</button>
-                       
-                       
-                          <button class="btn btn-block" (click)="showPrivacyStatement();">{{this.privacyStatementTitle}}</button>
-                       
-                    </div>
-                  </div>
+                
+                <div class="definediv">
+                  <table class="row-container">
+                    <tr>
+                      <td>
+                        <button class="btn btn-flarge" (click)="resetForm()">{{this.resetTitle}}</button>
+                      </td>
+                      <td>
+                        <button class="btn btn-flarge" (click)="showPrivacyStatement();">{{this.privacyStatementTitle}}</button>
+                      </td>
+                    </tr>
+                  </table>
                 </div>
+               
                 
 
                 

@@ -60,6 +60,22 @@ button {
       }
     }
 
+    &.btn-flarge{
+      //@include text-large;
+      width: 100%;
+      height: 58px;
+      min-width: 400px;
+      
+
+      @media(min-width:1024px) {
+        height: 58px;
+        min-width: 400px;
+        .btn-flarge {
+          min-width: auto; /* Override the minimum width for larger screens */
+        }
+      }
+    }
+
     &.btn-large {
       //@include text-large;
       height: 78px;

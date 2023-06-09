@@ -23,7 +23,7 @@
 
 .node-convertor{
     .section-1{
-        padding: 20px;
+        padding: 5px;
         background-color: #a40d85;
         h1{
             color: #fff;
@@ -57,6 +57,7 @@
                 background-color: #a40d85;
                 color: #fff;
                 font-size: 20px;
+                font-weight: bold;
                 padding: 13px 15px;
                 box-shadow: 1px 1px 3px 0px #2f2f2f;
                 height: auto;
@@ -204,6 +205,7 @@ button.btn.btn-medium
     display: flex;
     justify-content: space-between;
     align-items: center;
+    text-align: center;
     overflow: visible !important; /* Override the parent's overflow property */
   }
   
@@ -219,9 +221,15 @@ button.btn.btn-medium
   .row-container {
     width: 100%;
     display: table;
+    justify-content: center; 
     gap: 10px; /* Adjust the gap as needed */
   }
  
+  .button-container {
+    flex: 1;
+    margin: 10px;
+  }
+
   
   
   
