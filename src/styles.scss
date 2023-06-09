@@ -424,6 +424,43 @@ button.btn.btn-Scanmedium
   {
     margin: 0px 7px;
   }
+  .cdk-global-scrollblock
+  {
+    overflow-y: inherit;
+  }
+  .alert_bg
+{
+    position: fixed !important;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: -webkit-fill-available;
+    /* z-index: 2; */
+    background: #000;
+    color: #fff;
+    padding: 15%;
+    opacity: 90%;
+    text-align: center;
+}
+.progress-spinner {
+    position: relative;
+    background-image: url('assets/Content/Images/spin.gif');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 128px;
+    height: 128px;
+    margin-bottom: 10px;
+}
+.job_completed
+{
+    font-size: 18px !important;
+    color: yellow;
+    margin-bottom: 10px;;
+}
+.mbtm20
+{
+    margin-bottom: 20px;
+}
   @media (max-width: 1400px)
   {
 ::-webkit-scrollbar {
