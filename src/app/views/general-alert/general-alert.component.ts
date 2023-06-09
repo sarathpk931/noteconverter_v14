@@ -26,11 +26,12 @@ export class GeneralAlertComponent {
   {}
 
   ngOnInit(){
+    
     this.resourceString = this.resourceStringService.getObjStrings();
     this.button1Text = this.data.button1Text ? this.data.button1Text : 'SDE_CLOSE';
     this.button2Text = this.data.button2Text ? this.data.button2Text : 'SDE_CANCEL';
-    this.button1Text = this.resourceString[this.data.button1Text];
-    this.button2Text = this.resourceString[this.data.button2Text];
+    this.button1Text = this.resourceString[this.button1Text];
+    this.button2Text = this.resourceString[this.button2Text];
     if(this.data.button1Glyph){
         this.button1Classes = 'btn btn-medium btn-glyph-label btn-secondary-alert ' + this.data.button1Glyph;
     }

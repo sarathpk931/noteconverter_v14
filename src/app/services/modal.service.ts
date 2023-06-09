@@ -3,6 +3,7 @@ import {MatDialog,MatDialogRef} from '@angular/material/dialog';
 import { ProgressAlertComponent} from '../views/progress-alert/progress-alert.component'; 
 import {AppComponent} from '../app.component';
 import { BehaviorSubject, timer} from 'rxjs';
+import {AppModule} from '../../app/app.module';
 
 
 @Injectable({
@@ -11,7 +12,7 @@ import { BehaviorSubject, timer} from 'rxjs';
 export class ModalService {
 
   deviceInformation:any;
-  
+  isThirdGenBrowser : boolean = AppModule.isThirdGenBrowser;
 
   private fromData = new BehaviorSubject<string>('');
     currentValue = this.fromData.asObservable();
@@ -21,10 +22,11 @@ export class ModalService {
     public  app : AppComponent    
     ) { }
 
-  showProgressAlert(title: string, body : string):MatDialogRef<ProgressAlertComponent>{
+  showProgressAlert(title: string, message : string):MatDialogRef<ProgressAlertComponent>{
 
-    return this.dialog.open(ProgressAlertComponent,{
-      data : {title,body },
+    return this.dialog.open(ProgressAlertComponent, {
+      data :{'title': title,'message':message}, 
+      panelClass: (!this.isThirdGenBrowser) ? 'allow-outside-interaction' : 'allow-outside-banner-interaction'    
     });
   }
 
@@ -51,7 +53,7 @@ export class ModalService {
   public openModalWithoutClose(component : any,title: string,message : string)
   {
     return this.dialog.open(component, {
-      data :{'title': title,'message':message}
+      data :{'title': title,'message':message},     
     });
 
   }
@@ -77,7 +79,11 @@ export class ModalService {
     this.dialog.closeAll();
     this.dialog.openDialogs.pop();
     return  this.dialog.open(component, {
-      data :{'title': title,'message':message}
+      data :{'title': title,'message':message},
+      maxWidth: '100vw',
+      maxHeight: '100vh',
+      height: '100%',
+      width: '100%'
     });
 
   }

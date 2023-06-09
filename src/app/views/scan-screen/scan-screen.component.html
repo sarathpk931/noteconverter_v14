@@ -2,13 +2,13 @@
   <div class="header themed title_header" action-bar>
     <div class="header-right">
       <button type="button" class="btn btn-medium btn-glyph-label xrx-scan" (click)="scan()" [ngClass]="!noteConvertorForm?.valid ? 'disabled' : ''">
-        <span>{{this.scanTitle}} Scan </span>
+        <span>{{this.scanTitle}} </span>
       </button>
     </div>
     <div class="header-middle text-large">
       <div class="header-title-container text-large">
         <div class="header-title text-large">
-          <span>{{this.xeroxTitle}} Xerox® Note Converter</span>
+          <span>{{this.xeroxTitle}}</span>
         </div>
       </div>
     </div>
@@ -94,10 +94,10 @@
         <div class="definediv">
           <table class="row-container footer_table">
             <td width="50%">
-              <button class="btn btn-footer" (click)="resetForm()">{{this.resetTitle}} Reset </button>
+              <button class="btn btn-footer" (click)="resetForm()">{{this.resetTitle}}  </button>
             </td>
             <td width="50%">
-              <button class="btn btn-footer" (click)="showPrivacyStatement();">{{this.privacyStatementTitle}} Privacy Policy</button>
+              <button class="btn btn-footer" (click)="showPrivacyStatement();">{{this.privacyStatementTitle}} </button>
             </td>
           </table>
           
