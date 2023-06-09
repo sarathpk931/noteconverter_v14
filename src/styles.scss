@@ -130,9 +130,14 @@
     }
 }
 
-.section-1, .section-2, .row
+.section-1, .section-2
 {
     overflow: hidden;
+}
+
+.row{
+
+    overflow: auto;
 }
 
 .form_updated .form-group
