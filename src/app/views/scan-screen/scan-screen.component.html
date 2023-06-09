@@ -1,170 +1,120 @@
-
-    <form [formGroup]="noteConvertorForm" >
-      <!-- <div ngScrollable='{"autoHeight": true, "watchHeight": true}'> -->
-        <!-- Header Title and Scan Button -->
-
-          <div class="header themed" action-bar>
-           
-              <div class="header-right">
-                  <button type="button" class="btn btn-medium btn-glyph-label xrx-scan" (click)="scan()" [ngClass]="!noteConvertorForm?.valid ? 'disabled' : ''"> 
-                    <span>{{this.scanTitle}}</span>
-                  </button>
+<div class="custom-container">
+  <div class="content">
+    <form [formGroup]="noteConvertorForm">
+      <div ngScrollable='{"autoHeight": true, "watchHeight": true}'>
+        <div class="node-convertor  form_updated">
+          <div class="section-1">
+            <h1 class="text-center">
+              <span>{{this.xeroxTitle}}</span>
+              <button class="btn scan-btn xrx-scan" (click)="scan()" [ngClass]="!noteConvertorForm?.valid ? 'disabled' : ''">
+                <span>{{this.scanTitle}}</span>
+              </button>
+            </h1>
+            <!-- <div class="note"></div> -->
+            <div class="form">
+              <div class="form-group">
+                <input type="email" formControlName="email" class="form-control focus_textbox" name="" placeholder="{{this.emailPlaceHolder}}" />
               </div>
-        
-              <div class="header-middle text-large">
-                  <div class="header-title-container text-large">
-                      <div class="header-title text-large">
-                        <span>{{this.xeroxTitle}}</span>
-                      </div>
-                  </div>
+              <p *ngIf="f['email'].hasError('email') && f['email'].touched" class="error_updated">
+                <i class="fa fa-exclamation-triangle"></i>&nbsp;{{this.emailValidation1}}
+              </p>
+              <div class="form-group">
+                <input type="email" formControlName="confirmEmail" class="form-control focus_textbox" name="" placeholder="Confirmation Email" />
               </div>
-      
-          </div>
-      
-          <!--form group email,confirm-email, file  -->
-          <div class=" node-convertor form_updated" style="position:relative;overflow:hidden;" ngScrollable='{"autoHeight": true, "watchHeight": true}'>
-            <!-- <div class="grid-container"> -->
-              <div class="section-1 header themed">
-                
-                <div class="form">
-
-                  <div class="form-group">
-                    <input type="email" formControlName="email" class="form-control focus_textbox" name="" placeholder="{{this.emailPlaceHolder}}" />
+              <p *ngIf="f['confirmEmail'].hasError('email') && f['confirmEmail'].touched" class="error_updated">
+                <i class="fa fa-exclamation-triangle"></i>&nbsp; {{this.emailValidation1}}
+              </p>
+              <p *ngIf="noteConvertorForm.hasError('emailsMatch') && f['confirmEmail'].touched" class="error_updated">
+                <i class="fa fa-exclamation-triangle"></i>&nbsp; Email addresses do not match.
+              </p>
+              <div class="row">
+                <div class="col-sm-10 col-xs-7">
+                  <div class="">
+                    <div class="">
+                      <input type="text" id="txtFileName" class="form-control focus_textbox" [placeholder]="fileName" formControlName="fileName" />
+                    </div>
                   </div>
-
-                    <p *ngIf="f['email'].hasError('email') && f['email'].touched" class="error_updated" style="text-align: left;">
-                      <i class="fa fa-exclamation-triangle"></i>&nbsp;{{this.emailValidation1}}
-                    </p>
-
-                  <div class="form-group">
-                    <input type="email" formControlName="confirmEmail" class="form-control focus_textbox" name="" placeholder="Confirmation Email" />
-                  </div>
-
-                  <p *ngIf="f['confirmEmail'].hasError('email') && f['confirmEmail'].touched" class="error_updated" style="text-align: left;">
-                    <i class="fa fa-exclamation-triangle"></i>&nbsp; {{this.emailValidation1}}
-                  </p>
-
-                  <p *ngIf="noteConvertorForm.hasError('emailsMatch') && f['confirmEmail'].touched" class="error_updated" style="text-align: left;">
-                    <i class="fa fa-exclamation-triangle"></i>&nbsp; Email addresses do not match.
-                  </p>
-                  
-                   <!-- <div class="definediv">
-                    <input type="text" id="txtFileName" class="form-control focus_textbox" [placeholder]="fileName" formControlName = "fileName" />	
-                    <button type="button" (click)="openFileFormat();" class="btn btn-medium">
+                </div>
+                <div class="col-sm-2 col-xs-5">
+                  <div class="">
+                    <div (click)="openFileFormat();" class="file-type form-control">
+                      <!---->
                       {{selectedFileFormatOptions.title}}
-                    </button>
-                  </div>  -->
-                
-                  <div class="definediv">
-                    <table class="row-container">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="section-2">
+            <ul>
+              <li>
+                <div class="row button_click">
+                  <div class="button_event_1" (click)="openScan();"></div>
+                  <div class="col-lg-6 col-xs-6">
+                    <table>
                       <tr>
                         <td>
-                          <input type="text" id="txtFileName" class="form-control focus_textbox" [placeholder]="fileName" formControlName="fileName" />
+                          <div class="d-inline-block image_updated">
+                            <img class="img-fluid" src="assets/Content/Images/{{selectedType.icon}}">
+                          </div>
                         </td>
                         <td>
-                          <button type="button" (click)="openFileFormat();" class="btn btn-xlarge">
-                            {{selectedFileFormatOptions.title}}
-                          </button>
+                          <span class="text-left" xasString={{this.selectedType.title}}></span>
                         </td>
                       </tr>
                     </table>
                   </div>
-                  
+                  <div class="col-lg-6 col-xs-6 text-end content_updated">
+                    <span class="text-right" xasString={{selectedTypeOptions.title}}></span>
+                    <!---->
+                  </div>
                 </div>
-
-                  
-
+              </li>
+              <li>
+                <div class="row button_click">
+                  <div class="button_event_2" (click)="openSize();"></div>
+                  <div class="col-lg-6 col-xs-6 ">
+                    <table>
+                      <tr>
+                        <td>
+                          <div class="d-inline-block image_updated">
+                            <img class="img-fluid" src="assets/Content/Images/{{selectedSize.icon}}">
+                          </div>
+                        </td>
+                        <td>
+                          <span class="text-left" xasString={{selectedSize.title}}></span>
+                          <!--xasString=""-->
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+                  <div class="col-lg-6 col-xs-6 text-end content_updated">
+                    <span class="text-right" *ngIf="this.resourceString[selectedSizeOptions.title] != null">{{this.resourceString[selectedSizeOptions.title]}}</span>
+                    <!---->
+                    <span class="text-right" *ngIf="this.resourceString[selectedSizeOptions.title] == null">{{ selectedSizeOptions.title}}</span>
+                  </div>
+                </div>
+              </li>
+            </ul>
+            <div class="reset-privacy">
+              <div class="row">
+                <div class="col-lg-6 col-xs-6">
+                  <button class="btn" (click)="resetForm()">{{this.resetTitle}}</button>
+                  <!--xasString="SDE_RESET"-->
+                </div>
+                <div class="col-lg-6 col-xs-6 ">
+                  <button class="btn" (click)="showPrivacyStatement();">{{this.privacyStatementTitle}}</button>
+                  <!--xasString="SDE_PRIVACY_STATEMENT"-->
+                </div>
               </div>
-
-              <div class="separator"></div>
-
-                <!--Scan Features  -->
-
-              <div class="grid-row option-content">
-                <div class="section-2">
-                <ul class="action-list">
-                  <li>
-                    <div class="row button_click">
-                      <div class="button_event_1" (click)="openScan();"></div>
-                      <div class="col-lg-6 col-xs-6">
-                        <table>
-                          <tr>
-                            <td>
-                              <div class="image-container rounded">
-                                <img class="image" src="assets/Content/Images/{{selectedType.icon}}">
-                              </div>
-                            </td>
-                            <td>
-                              <span class="left-text" xasString={{this.selectedType.title}}></span>
-                            </td>
-                          </tr>
-                        </table>
-                      </div>
-                      <div class="col-lg-6 col-xs-6 text-end content_updated">
-                        <span class="right-text" xasString={{selectedTypeOptions.title}}></span>
-                        <!---->
-                      </div>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="row button_click">
-                      <div class="button_event_2" (click)="openSize();"></div>
-                      <div class="col-lg-6 col-xs-6 ">
-                        <table>
-                          <tr>
-                            <td>
-                              <div class="d-inline-block image_updated">
-                                <img class="img-fluid" src="assets/Content/Images/{{selectedSize.icon}}">
-                              </div>
-                            </td>
-                            <td>
-                              <span class="text-left" xasString={{selectedSize.title}}></span>
-                              <!--xasString=""-->
-                            </td>
-                          </tr>
-                        </table>
-                      </div>
-                      <div class="col-lg-6 col-xs-6 text-end content_updated">
-                        <span class="text-right" *ngIf="this.resourceString[selectedSizeOptions.title] != null">{{this.resourceString[selectedSizeOptions.title]}}</span>
-                        <!---->
-                        <span class="text-right" *ngIf="this.resourceString[selectedSizeOptions.title] == null">{{ selectedSizeOptions.title}}</span>
-                      </div>
-                    </div>
-                  </li>
-                </ul>
-                </div>
-                
-              </div>
-
-
-                <!-- Reset button-->
-
-              
-                
-                <div class="definediv">
-                  <table class="row-container">
-                    <tr>
-                      <td>
-                        <button class="btn btn-flarge" (click)="resetForm()">{{this.resetTitle}}</button>
-                      </td>
-                      <td>
-                        <button class="btn btn-flarge" (click)="showPrivacyStatement();">{{this.privacyStatementTitle}}</button>
-                      </td>
-                    </tr>
-                  </table>
-                </div>
-               
-                
-
-                
-                
-              
-
-
+            </div>
           </div>
-      
+        </div>
+      </div>
     </form>
-
+  </div>
+</div>
 <div class="loader" *ngIf="showLoader">
   <img src="../assets/Images/loader.gif" alt="loader" />
 </div>
