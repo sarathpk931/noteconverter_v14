@@ -1,14 +1,14 @@
 <form [formGroup]="noteConvertorForm">
-  <div class="header themed" action-bar>
+  <div class="header themed title_header" action-bar>
     <div class="header-right">
       <button type="button" class="btn btn-medium btn-glyph-label xrx-scan" (click)="scan()" [ngClass]="!noteConvertorForm?.valid ? 'disabled' : ''">
-        <span>{{this.scanTitle}}</span>
+        <span>{{this.scanTitle}} Scan </span>
       </button>
     </div>
     <div class="header-middle text-large">
       <div class="header-title-container text-large">
         <div class="header-title text-large">
-          <span>{{this.xeroxTitle}}</span>
+          <span>{{this.xeroxTitle}} Xerox® Note Converter</span>
         </div>
       </div>
     </div>
@@ -20,13 +20,13 @@
           <input type="email" formControlName="email" class="form-control focus_textbox" name="" placeholder="{{this.emailPlaceHolder}}" />
         </div>
         <p *ngIf="f['email'].hasError('email') && f['email'].touched" class="error_updated" style="text-align: left;">
-          <i class="fa fa-exclamation-triangle"></i>&nbsp;{{this.emailValidation1}}
+          <i class="fa fa-exclamation-triangle"></i>&nbsp;aaaaa{{this.emailValidation1}}
         </p>
         <div class="form-group">
           <input type="email" formControlName="confirmEmail" class="form-control focus_textbox" name="" placeholder="Confirmation Email" />
         </div>
         <p *ngIf="f['confirmEmail'].hasError('email') && f['confirmEmail'].touched" class="error_updated" style="text-align: left;">
-          <i class="fa fa-exclamation-triangle"></i>&nbsp; {{this.emailValidation1}}
+          <i class="fa fa-exclamation-triangle"></i>&nbsp; aaaaa{{this.emailValidation1}}
         </p>
         <p *ngIf="noteConvertorForm.hasError('emailsMatch') && f['confirmEmail'].touched" class="error_updated" style="text-align: left;">
           <i class="fa fa-exclamation-triangle"></i>&nbsp; Email addresses do not match.
@@ -34,10 +34,10 @@
         <div class="definediv">
           <table class="row-container">
             <tr>
-              <td>
+              <td width="85%">
                 <input type="text" id="txtFileName" class="form-control focus_textbox" [placeholder]="fileName" formControlName="fileName" />
               </td>
-              <td>
+              <td width="15%">
                 <button type="button" (click)="openFileFormat();" class="btn btn-xlarge">
                   {{selectedFileFormatOptions.title}}
                 </button>
@@ -56,7 +56,7 @@
         <ul class="action-list">
           <li>
             
-              <div class="row button_click">
+              <div class="row button_click button_box">
                 <button  class="btn btn-medium btn-image" (click)="openScan();" tabindex="-1">
                 <div class="image-container rounded">
                     <img class="image" src="assets/Content/Images/{{this.selectedType.icon}}">
@@ -73,7 +73,7 @@
           </li>
           
           <li>
-            <div class="row button_click">
+            <div class="row button_click button_box">
               <button  class="btn btn-medium btn-image" (click)="openSize();" tabindex="-1">
                 <div class="image-container rounded">
                     <img class="image" src="assets/Content/Images/{{this.selectedSize.icon}}">
@@ -90,18 +90,19 @@
             </div>
           </li>
         </ul>
+        
         <div class="definediv">
-          <table class="row-container">
-            <tr>
-              <td>
-                <button class="btn btn-flarge" (click)="resetForm()">{{this.resetTitle}}</button>
-              </td>
-              <td>
-                <button class="btn btn-flarge" (click)="showPrivacyStatement();">{{this.privacyStatementTitle}}</button>
-              </td>
-            </tr>
+          <table class="row-container footer_table">
+            <td width="50%">
+              <button class="btn btn-footer" (click)="resetForm()">{{this.resetTitle}} Reset </button>
+            </td>
+            <td width="50%">
+              <button class="btn btn-footer" (click)="showPrivacyStatement();">{{this.privacyStatementTitle}} Privacy Policy</button>
+            </td>
           </table>
+          
         </div>
+        
       </div>
     </div>
    

@@ -45,7 +45,7 @@ export class AppComponent implements OnInit {
     async routeScanScreen() 
     { 
       try { 
-        const strings = await this.resourceStringService.loadResources(); 
+        //const strings = await this.resourceStringService.loadResources(); 
         this.router.navigate(['scanScreen']); 
       } 
       catch (error) 

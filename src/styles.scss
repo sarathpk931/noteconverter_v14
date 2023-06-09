@@ -239,8 +239,111 @@ button.btn.btn-medium
 
   
   
-  
-  
+   /* Latest CSS */
+
+   .header .header-middle .header-title-container .header-title, .footer .header-middle .header-title-container .header-title
+   {
+    font-size: 25px!important;
+   }
   
 
-  
+   .form_updated .form-control
+   {
+    border: 1px solid #380a2e !important;
+   }
+   .form_updated .form input
+   {
+    padding: 10px 15px !important;
+    box-shadow: 1px 1px 3px #d829b7 !important;
+   }
+   .form_updated button.btn.btn-xlarge
+   {
+    height: 52px !important;
+    margin: 0px !important;
+   }
+   .title_header
+   {
+    height: 65px;
+   }
+   .mat-dialog-container
+   {
+    padding:0px !important;
+   }
+   .cdk-overlay-pane
+   {
+    max-width: 100% !important;
+   }
+   .button_box button.btn.btn-medium
+   {
+    height: auto !important;
+   }
+   .button_box .section-2 .btn
+   {
+    padding:6px 6px !important;
+   }
+   .button_box:hover
+   {
+    background: #e9e9e9;
+   }
+   .button_box button:hover
+   {
+    background: #e9e9e9 !important;
+   }
+   .mat-dialog-container button.btn.btn-medium
+   {
+    height: 53px !important;
+    padding: 1px !important;
+   }
+   .mat-dialog-container button.btn.btn-medium:hover
+   {
+    background: #000;
+    color:#fff;
+   }
+   .mat-dialog-container ul.action-list
+   {
+    padding: 0px !important;
+    margin: 0px !important;
+   }
+   .mat-dialog-container
+   {
+    overflow: inherit !important;
+   }
+   .mat-dialog-container .popup_updated
+   {
+    min-width: 300px;
+   }
+   .mat-dialog-container .popover .contents
+   {
+    clear: both !important;
+   }
+   .mat-dialog-container .header-right
+   {
+    width: 30px !important;
+    
+   }
+   .mat-dialog-container .header-right button.btn
+   {
+    border: none !important;
+   }
+   .sub_re_button
+   {
+    overflow: inherit !important;
+    width: 100% !important;
+   }
+  .btn-footer
+   {
+    width: 100% !important;
+    padding:10px 0px !important;
+   }
+  .footer_table
+  {
+    margin-left: 16px !important;
+  }
+  .privacy_updated
+  {
+    padding:2% !important;
+    width: 100% !important;
+    margin: 0px !important;
+    
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+  }
