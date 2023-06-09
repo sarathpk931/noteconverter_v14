@@ -369,9 +369,17 @@ button.btn.btn-Scanmedium
     width: 100% !important;
     padding:10px 0px !important;
    }
-  .footer_table
+  .footer_table button.btn
   {
-    margin-left: 16px !important;
+    margin:0px !important;
+  }
+  .fleft
+  {
+    float: left;
+  }
+  .fright
+  {
+    float: right;
   }
   .privacy_updated
   {
@@ -412,9 +420,33 @@ button.btn.btn-Scanmedium
     margin: 5px 10px !important;
     padding:5px 10px !important;
   }
+  .footer_div_outer
+  {
+    margin: 0px 7px;
+  }
   @media (max-width: 800px)
   {
 ::-webkit-scrollbar {
     width: 20px;
 }
+  }
+  @media (max-width: 500px)
+  {
+    .privacy_updated
+    {
+      
+      width: 100% !important;
+      margin: 0px !important;
+      height: 423px !important;
+      
+    }
+    .privacy_updated .privacy-policy-content
+    {
+     
+     overflow: auto;
+     height: 340px;
+      padding: 2%;
+      text-wrap: initial;
+      word-wrap: break-word;
+    }
   }
