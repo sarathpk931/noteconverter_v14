@@ -165,7 +165,7 @@
 
 .form_updated .form-group
 {
-    margin:10px 0px;
+    margin:5px 0px;
 }
 
 .custom-container .content .form-control
@@ -282,12 +282,17 @@ button.btn.btn-Scanmedium
    }
    .form_updated .form input
    {
-    padding: 10px 15px !important;
+    padding:7px !important;
     box-shadow: 1px 1px 3px #d829b7 !important;
+    font-size: 15px !important;
+   }
+   .form_updated button.btn
+   {
+    padding: 7px !important;
    }
    .form_updated button.btn.btn-xlarge
    {
-    height: 52px !important;
+    height: 38px !important;
     margin: 0px !important;
    }
    .title_header
@@ -308,7 +313,7 @@ button.btn.btn-Scanmedium
    }
    .button_box .section-2 .btn
    {
-    padding:6px 6px !important;
+    padding:1px !important;
    }
    .button_box:hover
    {
@@ -370,9 +375,38 @@ button.btn.btn-Scanmedium
   }
   .privacy_updated
   {
-    padding:2% !important;
+    
     width: 100% !important;
     margin: 0px !important;
     
+    
+  }
+  .privacy_updated .privacy-policy-content
+  {
+   
+   overflow: auto;
+    padding: 2%;
+    text-wrap: initial;
+  }
+  .privacy-policy-content, pre
+  {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+  }
+  .privacy_updated .header-right
+  {
+    margin: 0px 55px !important;
+  }
+  .privacy_updated .header-right button.btn
+  {
+    border: none !important;
+    box-shadow: none !important;
+  }
+  .privacy_updated::before
+  {
+    top: 0 !important;
+  }
+  .option-content ul.action-list
+  {
+    margin: 5px 10px !important;
+    padding:5px 10px !important;
   }
