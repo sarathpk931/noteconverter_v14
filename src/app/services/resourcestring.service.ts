@@ -23,8 +23,6 @@ loadResources = async () => {
         this.objStrings = result.strings;
         this.strings =result.strings;
         
-       // console.log('Strings repsonse '+ this.strings);
-        //return result.strings;
         return this.strings;
       } 
         catch (error) { 

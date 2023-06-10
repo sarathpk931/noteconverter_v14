@@ -20,13 +20,13 @@
           <input type="email" formControlName="email" class="form-control focus_textbox" name="" placeholder="{{this.emailPlaceHolder}}" />
         </div>
         <p *ngIf="f['email'].hasError('email') && f['email'].touched" class="error_updated" style="text-align: left;">
-          <i class="fa fa-exclamation-triangle"></i>&nbsp;aaaaa{{this.emailValidation1}}
+          <i class="fa fa-exclamation-triangle"></i>&nbsp;{{this.emailValidation1}}
         </p>
         <div class="form-group">
           <input type="email" formControlName="confirmEmail" class="form-control focus_textbox" name="" placeholder="Confirmation Email" />
         </div>
         <p *ngIf="f['confirmEmail'].hasError('email') && f['confirmEmail'].touched" class="error_updated" style="text-align: left;">
-          <i class="fa fa-exclamation-triangle"></i>&nbsp; aaaaa{{this.emailValidation1}}
+          <i class="fa fa-exclamation-triangle"></i>&nbsp; {{this.emailValidation1}}
         </p>
         <p *ngIf="noteConvertorForm.hasError('emailsMatch') && f['confirmEmail'].touched" class="error_updated" style="text-align: left;">
           <i class="fa fa-exclamation-triangle"></i>&nbsp; Email addresses do not match.
@@ -84,7 +84,7 @@
                 
                   <span class="right-text" *ngIf="this.resourceString[selectedSizeOptions.title] != null">{{this.resourceString[selectedSizeOptions.title]}}</span>
           
-                  <span class="right-text" *ngIf="this.resourceString[selectedSizeOptions.title] == null">{{ this.selectedSizeOptions.title}}</span>
+                  <span class="right-text" *ngIf="this.resourceString[selectedSizeOptions.title] == null"> {{ this.selectedSizeOptions.title}}&nbsp;<span *ngIf="this.selectedSizeOptions.glyph" ngClass="{{this.selectedSizeOptions.glyph}}"> </span></span>
               </div>
             </button> 
             </div>
