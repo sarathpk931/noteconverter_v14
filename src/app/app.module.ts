@@ -69,6 +69,7 @@ import {xrxGetElementValue} from '../assets/Xrx/XRXXmlHandler';
 import * as _ from 'lodash';
 import { EditableFileNameDirective } from './Directives/editable-file-name.directive';
 import { NgScrollableDirective } from './Directives/ng-scrollable.directive';
+import { ActionBarDirective } from './Directives/action-bar.directive';
 
 @NgModule({
   declarations: [
@@ -84,6 +85,7 @@ import { NgScrollableDirective } from './Directives/ng-scrollable.directive';
     BasicAlertComponent,
     AlertBannerComponent,
     NgScrollableDirective,
+    ActionBarDirective,
   ],
   imports: [
     BrowserModule,
