@@ -1,5 +1,5 @@
 import { Directive, ElementRef, Input, OnInit, OnDestroy } from '@angular/core';
-//import  {IScroll} from 'iscroll'
+import  {IScroll} from 'iscroll'
 
 @Directive({
   selector: '[ngScrollable]'
@@ -111,8 +111,8 @@ export class NgScrollableDirective  { //implements OnInit, OnDestroy
     }
     element.appendChild(this.shadowDiv);
 
-    //this.scroller = new IScroll(element, {
-    /*   this.scroller = new scroll(element, {
+    this.scroller = new IScroll(element, {
+      //this.scroller = new scroll(element, {
       bounce: this.bounce === 'true',
       disableMouse: this.disableMouse === 'true',
       disablePointer: this.disablePointer === 'true',
@@ -129,7 +129,7 @@ export class NgScrollableDirective  { //implements OnInit, OnDestroy
       tap: this.tap !== 'false',
       useTransform: this.useTransform !== 'false',
       useTransition: this.useTransition === 'true',
-    }); */
+    });
 
     this.scroller.on('scrollStart', () => {
       if (this.scroller.maxScrollY !== 0) {
