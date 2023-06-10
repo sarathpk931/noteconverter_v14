@@ -1,5 +1,6 @@
 import { Directive, ElementRef, Input, OnInit, OnDestroy } from '@angular/core';
-import  {IScroll} from 'iscroll'
+import  {IScroll} from 'iscroll';
+import {AppModule} from '../app.module';
 
 @Directive({
   selector: '[ngScrollable]'
@@ -35,12 +36,9 @@ export class NgScrollableDirective  { //implements OnInit, OnDestroy
 
   ngOnInit(): void {
     const element = this.elementRef.nativeElement as HTMLElement;
-    const device = {
-      isThirdGenBrowser: false, // Replace with your condition
-      generation: 9.0 // Replace with your value
-    };
+    
 
-    if (!device.isThirdGenBrowser && device.generation >= 9.0) {
+    if (!AppModule.isThirdGenBrowser && AppModule.Generation >= 9.0) {
       this.link(element);
     } else {
       if (this.scrollY !== 'false') {
@@ -66,7 +64,7 @@ export class NgScrollableDirective  { //implements OnInit, OnDestroy
           }
         }, 500);
 
-        element.addEventListener('scroll', () => {
+        element.addEventListener('scroll', () => { alert("event scroll");
           const movingHeight = element.firstElementChild?.clientHeight || 0;
           const scrollTop = element.scrollTop;
           const scrollableHeight = element.clientHeight;
@@ -111,8 +109,8 @@ export class NgScrollableDirective  { //implements OnInit, OnDestroy
     }
     element.appendChild(this.shadowDiv);
 
-    this.scroller = new IScroll(element, {
-      //this.scroller = new scroll(element, {
+    //this.scroller = new IScroll(element, {
+      this.scroller = new IScroll(element, {
       bounce: this.bounce === 'true',
       disableMouse: this.disableMouse === 'true',
       disablePointer: this.disablePointer === 'true',
