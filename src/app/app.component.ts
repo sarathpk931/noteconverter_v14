@@ -8,7 +8,7 @@ import {Router} from '@angular/router';
 // import {xrxGetElementValue} from '../assets/Xrx/XRXXmlHandler';
 // import {xrxCallWebservice,xrxCallAjax} from '../assets/Xrx/XRXWebservices';
 //import { LogService } from '../app/services/log.service';
-//import {ResourcestringService} from '../app/services/resourcestring.service';
+import {ResourcestringService} from '../app/services/resourcestring.service';
 //import {environment} from  '../environments/environment'
 
 
@@ -32,7 +32,7 @@ export class AppComponent implements OnInit {
     // private  logger: LogService,
     // private http: HttpClient,
     private router : Router,
-    //private resourceStringService : ResourcestringService
+    private resourceStringService : ResourcestringService
     ) 
     { 
      //this.resourceStringService.loadResources()
@@ -45,7 +45,7 @@ export class AppComponent implements OnInit {
     async routeScanScreen() 
     { 
       try { 
-        //const strings = await this.resourceStringService.loadResources(); 
+        const strings = await this.resourceStringService.loadResources(); 
         this.router.navigate(['scanScreen']); 
       } 
       catch (error) 
