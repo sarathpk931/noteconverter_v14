@@ -2,11 +2,11 @@
 
 import { Component,ViewChild,ElementRef, OnInit } from '@angular/core';
 import {MatDialog,MatDialogRef} from '@angular/material/dialog';
-import { FormBuilder, FormGroup, Validators,ReactiveFormsModule,AbstractControl } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { FormBuilder, FormGroup, Validators,AbstractControl } from '@angular/forms';//ReactiveFormsModule,
+//import { ActivatedRoute } from '@angular/router';
 import {FeaturePopoverComponent} from '../feature-popover/feature-popover.component';
 import { PrivacyPolicyComponent} from '../privacy-policy/privacy-policy.component';
-import { PopupCompComponent} from '../popup-comp/popup-comp.component';
+//import { PopupCompComponent} from '../popup-comp/popup-comp.component';
 import { ModalService} from '../../services/modal.service';
 import { ScanOptionsService} from '../../services/scan-options.service';
 import { FileFormat, FileFormatOption,resourceString,Strings} from '../../model/global';
@@ -20,8 +20,8 @@ import {xrxJobMgmtGetInterfaceVersion} from '../../../assets/Xrx/XRXJobManagemen
 import {xrxTemplateGetInterfaceVersion} from '../../../assets/Xrx/XRXTemplate';
 import {xrxDeviceConfigGetInterfaceVersion} from '../../../assets/Xrx/XRXDeviceConfig';
 import {AppModule} from '../../app.module';
-import { EditableFileNameDirective } from  '../../Directives/editable-file-name.directive';
-import {TranslatePipe} from '../../filters/translate.pipe';
+//import { EditableFileNameDirective } from  '../../Directives/editable-file-name.directive';
+//import {TranslatePipe} from '../../filters/translate.pipe';
 
 import { ResourcestringService} from '../../services/resourcestring.service';
 
@@ -37,11 +37,11 @@ export class ScanScreenComponent implements OnInit{
 
   @ViewChild('fileNameSpan', { static: true }) fileNameSpan: ElementRef;
   showPrivacySetting=false;
-  showLoader=false;
-  validationStatus: boolean = false;
-  isCreditsEnabled: boolean = false;
-  maxPagesPerJobStyle: string = 'text-align:left !important;';
-  emailHasError: boolean = false;
+  //showLoader=false;
+  //validationStatus: boolean = false;
+  //isCreditsEnabled: boolean = false;
+  //maxPagesPerJobStyle: string = 'text-align:left !important;';
+  //emailHasError: boolean = false;
   noteConvertorForm:  FormGroup;
 
    const_fileFormat : string = "fileFormat";
@@ -59,7 +59,7 @@ export class ScanScreenComponent implements OnInit{
   selectedTypeOptions : FileFormatOption;
   selectedSize : FileFormat;
   selectedSizeOptions : FileFormatOption;
-  submitted = false;
+  //submitted = false;
   generation = AppModule.Generation;
   model = AppModule.model;
   selectedNote : selectedNote;
@@ -79,14 +79,14 @@ export class ScanScreenComponent implements OnInit{
   constructor(
     private dialog: MatDialog,
     private formBuilder: FormBuilder,
-    private activatedRoute: ActivatedRoute,
+    //private activatedRoute: ActivatedRoute,
     private modalService : ModalService,
     private scanOptionService : ScanOptionsService,
     private scanService :ScanService,
     private appComponent : AppComponent,
     private  logger: LogService,
     private resourceStringService : ResourcestringService,
-    private translatePipe : TranslatePipe,
+   // private translatePipe : TranslatePipe,
     private errorHandlerService : ErrorHandlerService
     ) {
       
@@ -120,7 +120,7 @@ export class ScanScreenComponent implements OnInit{
       }).catch(error=>{
         console.log(' catch error');
       });
-      this.logger.trackTrace("Test application insight");
+      //this.logger.trackTrace("Test application insight");
       
       this.resourceString = this.resourceStringService.getObjStrings();
   
@@ -156,25 +156,25 @@ export class ScanScreenComponent implements OnInit{
       //console.log('File name:', fileName);
       // You can perform further processing with the fileName value here
     }
-    getDefaultFileName(): string {
-      //const now = new Date();
-      //const dateAndTime = now.toLocaleString('en-US', { hour12: false, timeZone: 'UTC' }).replace(/[/:\s]/g, '');
-      return `@${this.fileName}`+'[Date & Time].'+this.selectedFileFormatOptions.value;//${dateAndTime}
-    }
-    updateFileName() {
-      const atIndex = this.fileName.indexOf('.');
-      const fileName = this.fileName.slice(0,atIndex).trim();
-      this.fileName = fileName+'.';
-      this.fileName += this.selectedFileFormatOptions.value;
-    }
+    // getDefaultFileName(): string {
+    //   //const now = new Date();
+    //   //const dateAndTime = now.toLocaleString('en-US', { hour12: false, timeZone: 'UTC' }).replace(/[/:\s]/g, '');
+    //   return `@${this.fileName}`+'[Date & Time].'+this.selectedFileFormatOptions.value;//${dateAndTime}
+    // }
+    // updateFileName() {
+    //   const atIndex = this.fileName.indexOf('.');
+    //   const fileName = this.fileName.slice(0,atIndex).trim();
+    //   this.fileName = fileName+'.';
+    //   this.fileName += this.selectedFileFormatOptions.value;
+    // }
 
-    onFileNameClick() {
-      // // Trim the default value to show only "@ Xerox Scan"     
-       this.fileName = '@ Xerox Scan'
-    }
-    onFileNameBlur(){
-      this.fileName += ' [Date & Time].'+this.selectedFileFormatOptions.value;
-    }
+    // onFileNameClick() {
+    //   // // Trim the default value to show only "@ Xerox Scan"     
+    //    this.fileName = '@ Xerox Scan'
+    // }
+    // onFileNameBlur(){
+    //   this.fileName += ' [Date & Time].'+this.selectedFileFormatOptions.value;
+    // }
 
     getDefaultValues(){
       this.selectedFileFormat = this.scanOptionService.getFileFormat(this.anyFileFormat);
@@ -217,13 +217,13 @@ export class ScanScreenComponent implements OnInit{
       this.getDefaultValues();
     }
     
-    openSuccessPopup(){
-        this.dialog.open(PopupCompComponent,{
-          width:'550px',
-          height:'250px',
-          backdropClass:'custom-backdrop-color'
-        });
-    }
+    // openSuccessPopup(){
+    //     this.dialog.open(PopupCompComponent,{
+    //       width:'550px',
+    //       height:'250px',
+    //       backdropClass:'custom-backdrop-color'
+    //     });
+    // }
 
     showPrivacyStatement(){
       //this.logger.trackTrace("Privacy Statement");
