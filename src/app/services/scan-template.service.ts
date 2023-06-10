@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { Location } from '@angular/common';
 import { ApiService } from './api.service';
 import { LogService } from './log.service';
-import { HttpClient } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
+//import { HttpClient } from '@angular/common/http';
+//import { ActivatedRoute } from '@angular/router';
 import * as _ from 'lodash';
 import {_scanSection,_generalSection,_destSec,_docSec,TemplateType,TemplateTypes,scanTemplate} from '../../app/model/scantemplate.model';
 import {environment} from '../../environments/environment'
@@ -220,8 +220,8 @@ export class ScanTemplateService {
     private readonly location: Location,
     private readonly apiService: ApiService,
     private readonly logService: LogService,
-    private http: HttpClient,
-    private activatedRoute: ActivatedRoute,
+    //private http: HttpClient,
+    //private activatedRoute: ActivatedRoute,
   ) { 
     
     this.scanTemplateModel = {
