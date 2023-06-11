@@ -9,7 +9,10 @@ import {Router} from '@angular/router';
 // import {xrxCallWebservice,xrxCallAjax} from '../assets/Xrx/XRXWebservices';
 //import { LogService } from '../app/services/log.service';
 import {ResourcestringService} from '../app/services/resourcestring.service';
+import {ModalService} from '../app/services/modal.service';
+//import {ConfigurationService} from '../app/services/configuration.service';
 //import {environment} from  '../environments/environment'
+//import {AppSetting} from '../app/model/global';
 
 
 declare const _: any;
@@ -32,7 +35,9 @@ export class AppComponent implements OnInit {
     // private  logger: LogService,
     // private http: HttpClient,
     private router : Router,
-    private resourceStringService : ResourcestringService
+    private resourceStringService : ResourcestringService,
+    private modalService: ModalService,
+    //private configurationService : ConfigurationService
     ) 
     { 
      //this.resourceStringService.loadResources()
@@ -44,9 +49,12 @@ export class AppComponent implements OnInit {
     } 
     async routeScanScreen() 
     { 
+      this.modalService.showProgressAlert('','');
       try { 
-        const strings = await this.resourceStringService.loadResources(); 
+        //await this.configurationService.Device(AppSetting.url,AppSetting.timout,AppSetting.async);
+        await this.resourceStringService.loadResources(); 
         this.router.navigate(['scanScreen']); 
+        this.modalService.closeAllModals();
       } 
       catch (error) 
       { 

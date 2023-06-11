@@ -20,7 +20,7 @@ import {xrxJobMgmtGetInterfaceVersion} from '../../../assets/Xrx/XRXJobManagemen
 import {xrxTemplateGetInterfaceVersion} from '../../../assets/Xrx/XRXTemplate';
 import {xrxDeviceConfigGetInterfaceVersion} from '../../../assets/Xrx/XRXDeviceConfig';
 import {AppModule} from '../../app.module';
-//import { EditableFileNameDirective } from  '../../Directives/editable-file-name.directive';
+import { EditableFieldDirective } from  '../../Directives/editable-file-name.directive';
 //import {TranslatePipe} from '../../filters/translate.pipe';
 
 import { ResourcestringService} from '../../services/resourcestring.service';
@@ -109,6 +109,7 @@ export class ScanScreenComponent implements OnInit{
         scrollContainer.scrollTop = 0;
       }, 250, { leading: true }));
       } */
+      //alert(this.model);
       this.resourceStringService.loadResources().then(response=>{
         this.fileName=response.SDE_XEROX_SCAN.toString()+' [Date & Time].';
         this.emailPlaceHolder = response.SDE_ENTER_EMAIL_RECEIVE1;

@@ -67,7 +67,7 @@ import {xrxGetElementValue} from '../assets/Xrx/XRXXmlHandler';
 // import {xrxCallWebservice,xrxCallAjax} from '../assets/Xrx/XRXWebservices';
 // import { Global,AppSetting } from './model/global';
 import * as _ from 'lodash';
-import { EditableFileNameDirective } from './Directives/editable-file-name.directive';
+import { EditableFieldDirective } from './Directives/editable-file-name.directive';
 import { NgScrollableDirective } from './Directives/ng-scrollable.directive';
 import { ActionBarDirective } from './Directives/action-bar.directive';
 
@@ -81,7 +81,7 @@ import { ActionBarDirective } from './Directives/action-bar.directive';
     FeaturePopoverComponent,
     XasStringDirective,
     GeneralAlertComponent,
-    EditableFileNameDirective,
+    EditableFieldDirective,
     BasicAlertComponent,
     AlertBannerComponent,
     NgScrollableDirective,
@@ -97,11 +97,11 @@ import { ActionBarDirective } from './Directives/action-bar.directive';
     ReactiveFormsModule,
   ],
   providers: [
-  //   {
-  //   provide :APP_INITIALIZER,
-  //   useFactory:()=> Device,
-  //   multi:true,
-  // },
+    {
+    provide :APP_INITIALIZER,
+    useFactory:()=>  Device,
+    multi:true,
+  },
   // {
   //   provide :APP_INITIALIZER,
   //   useFactory:()=> Session,
