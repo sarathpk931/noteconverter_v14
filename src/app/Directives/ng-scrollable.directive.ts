@@ -1,38 +1,38 @@
 import { Directive, ElementRef,NgModule, Input, OnInit, OnDestroy,NgZone,Optional } from '@angular/core';
-import {ScrollingModule ,CdkScrollable, ScrollDispatcher } from '@angular/cdk/scrolling';
-import { Directionality } from '@angular/cdk/bidi';
-import { merge, Observable } from 'rxjs';
+//import {ScrollingModule ,CdkScrollable, ScrollDispatcher } from '@angular/cdk/scrolling';
+//import { Directionality } from '@angular/cdk/bidi';
+//import { merge, Observable } from 'rxjs';
 import {AppModule} from '../app.module';
 
 @Directive({
   selector: '[ngScrollable]'
 })
 
-export class NgScrollableDirective extends CdkScrollable {
-
-  constructor ( elementRef: ElementRef<HTMLElement>, scrollDispatcher: ScrollDispatcher,ngZone: NgZone,@Optional() dir?: Directionality) {
+//export class NgScrollableDirective extends CdkScrollable {
+  export class NgScrollableDirective  {}
+  /* constructor ( elementRef: ElementRef<HTMLElement>, scrollDispatcher: ScrollDispatcher,ngZone: NgZone,@Optional() dir?: Directionality) {
 
     super(elementRef, scrollDispatcher, ngZone, dir);
-    /* this.scrollingSubscription = this.scrollDispatcher
+    this.scrollingSubscription = this.scrollDispatcher
           .scrolled()
           .subscribe((data: CdkScrollable) => {
             this.onWindowScroll(data);
           });
-     */
+    
 
     
   }
 
   ngAfterViewInit() {
     this.scrollDispatcher.scrollContainers.forEach((key, value ) => {
-      console.log(value.getElementRef['nativeElement']);
+      console.log(value.getElementRef['scroll-container']);
     })
   }
 
   get element(): HTMLElement {
     return this.elementRef.nativeElement;
   }
-
+ */
   /* ngOnDestroy() {
     this.scrollDispatcher.deregister(this);
   } */
@@ -319,4 +319,4 @@ export class NgScrollableDirective extends CdkScrollable {
 
     return (window as any)[expression];
   } */
-}
+
