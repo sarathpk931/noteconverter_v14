@@ -72,7 +72,7 @@ import { NgScrollableDirective } from './Directives/ng-scrollable.directive';
 import { ActionBarDirective } from './Directives/action-bar.directive';
 
 
-import { ScrollingModule } from '@angular/cdk/scrolling';
+import { ScrollingModule,ScrollDispatcher } from '@angular/cdk/scrolling';
 
 @NgModule({
   declarations: [
@@ -127,7 +127,8 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
     ScanService,
     ScanTemplateService,
     ResourcestringService,
-    TranslatePipe
+    TranslatePipe,
+    ScrollDispatcher
   ],
   
   bootstrap: [AppComponent]

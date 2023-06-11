@@ -20,7 +20,7 @@ import {xrxJobMgmtGetInterfaceVersion} from '../../../assets/Xrx/XRXJobManagemen
 import {xrxTemplateGetInterfaceVersion} from '../../../assets/Xrx/XRXTemplate';
 import {xrxDeviceConfigGetInterfaceVersion} from '../../../assets/Xrx/XRXDeviceConfig';
 import {AppModule} from '../../app.module';
-import { ScrollingModule } from '@angular/cdk/scrolling';
+import { ScrollingModule  } from '@angular/cdk/scrolling';
 
 //import { EditableFileNameDirective } from  '../../Directives/editable-file-name.directive';
 //import {TranslatePipe} from '../../filters/translate.pipe';
