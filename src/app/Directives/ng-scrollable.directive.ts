@@ -1,5 +1,5 @@
 import { Directive, ElementRef, Input, OnInit, OnDestroy,NgZone } from '@angular/core';
-import  {IScroll} from 'iscroll';
+//import  {IScroll} from 'iscroll';
 import {AppModule} from '../app.module';
 
 @Directive({
