@@ -513,3 +513,10 @@ button.btn.btn-Scanmedium
       word-wrap: break-word;
     }
   }
+
+  @media not all and (min-resolution:.001dpcm) { /* Safari only */
+    #_glyph {
+      top: 80%;
+      transform: translateY(-50%);
+    }
+  }
