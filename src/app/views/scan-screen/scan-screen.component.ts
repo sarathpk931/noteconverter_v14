@@ -78,6 +78,11 @@ export class ScanScreenComponent implements OnInit{
   resourceString : resourceString[];
   testfilename: string='';
 
+  resFilename :string;
+  fileextension:string;
+  formattedResult:string;
+  resfilenametemp:string;
+
   constructor(
     private dialog: MatDialog,
     private formBuilder: FormBuilder,
@@ -113,7 +118,11 @@ export class ScanScreenComponent implements OnInit{
       } */
       //alert(this.model);
       this.resourceStringService.loadResources().then(response=>{
-        this.fileName=response.SDE_XEROX_SCAN.toString()+' [Date & Time].';
+        this.resFilename=response.SDE_XEROX_SCAN.toString();
+        this.fileextension="docx";
+        this.resfilenametemp=response.SDE_FMTSTR_DATE_TIMEFMTSTR.toString();
+        
+        this.fileName=this.formatfilename(this.resFilename,this.fileextension,this.resfilenametemp);  //' [Date & Time].'
         this.emailPlaceHolder = response.SDE_ENTER_EMAIL_RECEIVE1;
         this.xeroxTitle = response.SDE_WRITTEN_NOTE_CONVERSION4;
         this.scanTitle = response.SDE_SCAN;
@@ -124,6 +133,7 @@ export class ScanScreenComponent implements OnInit{
         console.log(' catch error');
       });
       //this.logger.trackTrace("Test application insight");
+    
       
       this.resourceString = this.resourceStringService.getObjStrings();
   
@@ -131,11 +141,13 @@ export class ScanScreenComponent implements OnInit{
 
       this.getDefaultValues();
       //this.fileName = this.getDefaultFileName();
-      
+      debugger;
       //observables to show selected values
       this.scanOptionService.selectedFileFormatC.subscribe(object =>{
         if(object){
-          this.selectedFileFormatOptions = object;        
+          this.selectedFileFormatOptions = object;
+          const newFileName = this.selectedFileFormatOptions.value.toString();
+          this.fileName=  this.formatfilename(this.resFilename,newFileName,this.resfilenametemp);   
           //this.updateFileName();
         }
       })
@@ -179,6 +191,11 @@ export class ScanScreenComponent implements OnInit{
     //   this.fileName += ' [Date & Time].'+this.selectedFileFormatOptions.value;
     // }
 
+    formatfilename(fileName: string, fileExtension: string,resfilename:string): string{
+      
+      const template = resfilename.replace('{0}', fileName).replace('{1}', fileExtension);
+      return template;
+    }
     getDefaultValues(){
       this.selectedFileFormat = this.scanOptionService.getFileFormat(this.anyFileFormat);
       this.selectedFileFormatOptions = this.selectedFileFormat.options.find(item => item.isDefault === true);
