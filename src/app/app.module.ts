@@ -127,7 +127,8 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
     ScanService,
     ScanTemplateService,
     ResourcestringService,
-    TranslatePipe
+    TranslatePipe,
+    //ScrollDispatcher
   ],
   
   bootstrap: [AppComponent]

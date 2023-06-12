@@ -1,11 +1,57 @@
-import { Directive, ElementRef, Input, OnInit, OnDestroy,NgZone } from '@angular/core';
-//import  {IScroll} from 'iscroll';
+import { Directive, ElementRef,NgModule, Input, OnInit, OnDestroy,NgZone,Optional } from '@angular/core';
+//import {ScrollingModule ,CdkScrollable, ScrollDispatcher } from '@angular/cdk/scrolling';
+//import { Directionality } from '@angular/cdk/bidi';
+//import { merge, Observable } from 'rxjs';
 import {AppModule} from '../app.module';
 
 @Directive({
   selector: '[ngScrollable]'
 })
-export class NgScrollableDirective { //implements OnInit, OnDestroy
+
+//export class NgScrollableDirective extends CdkScrollable {
+  export class NgScrollableDirective  {}
+  /* constructor ( elementRef: ElementRef<HTMLElement>, scrollDispatcher: ScrollDispatcher,ngZone: NgZone,@Optional() dir?: Directionality) {
+
+    super(elementRef, scrollDispatcher, ngZone, dir);
+    this.scrollingSubscription = this.scrollDispatcher
+          .scrolled()
+          .subscribe((data: CdkScrollable) => {
+            this.onWindowScroll(data);
+          });
+    
+
+    
+  }
+
+  ngAfterViewInit() {
+    this.scrollDispatcher.scrollContainers.forEach((key, value ) => {
+      console.log(value.getElementRef['scroll-container']);
+    })
+  }
+
+  get element(): HTMLElement {
+    return this.elementRef.nativeElement;
+  }
+ */
+  /* ngOnDestroy() {
+    this.scrollDispatcher.deregister(this);
+  } */
+
+  /* private onWindowScroll(data: CdkScrollable) {
+    const scrollTop = data.getElementRef().nativeElement.scrollTop || 0;
+    if (this.lastOffset > scrollTop) {
+      // console.log('Show toolbar');
+    } else if (scrollTop < 10) {
+      // console.log('Show toolbar');
+    } else if (scrollTop > 100) {
+      // console.log('Hide toolbar');
+    }
+
+    this.lastOffset = scrollTop;
+  } */
+
+  //*************************************
+//export class NgScrollableDirective { //implements OnInit, OnDestroy
   
  /*  private $scrollEnd: any;
 
@@ -273,4 +319,4 @@ export class NgScrollableDirective { //implements OnInit, OnDestroy
 
     return (window as any)[expression];
   } */
-}
+
