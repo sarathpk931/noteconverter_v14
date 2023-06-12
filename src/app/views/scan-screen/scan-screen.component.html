@@ -13,7 +13,8 @@
       </div>
     </div>
   </div>
-  <div class="scroll-container" style="position:relative;overflow:hidden;" ngScrollable='{"autoHeight": true, "watchHeight": true}'>
+  <cdk-virtual-scroll-viewport class="scroll-container" autosize>
+  <div style="position:relative;overflow:hidden;" ngScrollable='{"autoHeight": true, "watchHeight": true}'>
   <div class="node-convertor form_updated " >
     <div class="section-1 header themed">
       <div class="form">
@@ -36,7 +37,12 @@
           <table class="row-container">
             <tr>
               <td width="85%">
+                
                 <input type="text" id="txtFileName" class="form-control focus_textbox" [placeholder]="fileName" formControlName="fileName" />
+                <!-- <i class="fa fa-paperclip"></i> -->
+                <!-- <span id="_glyph" class="xrx-paperclip" style="line-height:100%"></span> -->
+             
+              
               </td>
               <td width="15%">
                 <button type="button" (click)="openFileFormat();" class="btn btn-xlarge">
@@ -108,6 +114,7 @@
     </div>
    
   </div>
+</cdk-virtual-scroll-viewport>
 </form>
 <!-- <div class="loader" *ngIf="showLoader">
   <img src="../assets/Images/loader.gif" alt="loader" />

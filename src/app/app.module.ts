@@ -71,6 +71,9 @@ import { EditableFieldDirective } from './Directives/editable-file-name.directiv
 import { NgScrollableDirective } from './Directives/ng-scrollable.directive';
 import { ActionBarDirective } from './Directives/action-bar.directive';
 
+
+import { ScrollingModule } from '@angular/cdk/scrolling';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -95,6 +98,7 @@ import { ActionBarDirective } from './Directives/action-bar.directive';
     MatDialogModule,
     FormsModule,
     ReactiveFormsModule,
+    ScrollingModule 
   ],
   providers: [
     {
