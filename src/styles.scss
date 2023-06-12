@@ -514,9 +514,4 @@ button.btn.btn-Scanmedium
     }
   }
 
-  @media not all and (min-resolution:.001dppx) { /* Safari only */
-    #_glyph {
-      top: 82%;
-      transform: translateY(-50%);
-    }
-  }
+ 
