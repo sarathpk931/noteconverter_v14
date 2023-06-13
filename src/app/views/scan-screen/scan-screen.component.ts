@@ -122,8 +122,8 @@ export class ScanScreenComponent implements OnInit{
         this.fileextension="docx";
         this.resfilenametemp=response.SDE_FMTSTR_DATE_TIMEFMTSTR.toString();
         
-        //this.fileName=this.formatfilename(this.resFilename,this.fileextension,this.resfilenametemp);  //' [Date & Time].'
-        this.fileName=response.SDE_XEROX_SCAN.toString()+' [Date & Time].';
+        this.fileName=this.formatfilename(this.resFilename,this.fileextension,this.resfilenametemp);  //' [Date & Time].'
+        // this.fileName=response.SDE_XEROX_SCAN.toString()+' [Date & Time].';
         this.emailPlaceHolder = response.SDE_ENTER_EMAIL_RECEIVE1;
         this.xeroxTitle = response.SDE_WRITTEN_NOTE_CONVERSION4;
         this.scanTitle = response.SDE_SCAN;
@@ -147,8 +147,8 @@ export class ScanScreenComponent implements OnInit{
       this.scanOptionService.selectedFileFormatC.subscribe(object =>{
         if(object){
           this.selectedFileFormatOptions = object;
-          //const newFileName = this.selectedFileFormatOptions.value.toString();
-          //this.fileName=  this.formatfilename(this.resFilename,newFileName,this.resfilenametemp);   
+          const newFileName = this.selectedFileFormatOptions.value.toString();
+          this.fileName=  this.formatfilename(this.resFilename,newFileName,this.resfilenametemp);   
           //this.updateFileName();
         }
       })

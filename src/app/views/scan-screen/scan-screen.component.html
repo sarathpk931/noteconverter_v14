@@ -38,9 +38,9 @@
             <tr>
               <td width="85%">
                 
-                <input type="text" id="txtFileName" class="form-control focus_textbox" [placeholder]="fileName" formControlName="fileName" style="padding-left: 25px;" />
+                <input type="text" id="txtFileName" class="form-control focus_textbox" [placeholder]="fileName" formControlName="fileName" style="padding-left: 25px;"/>
                 <!-- <app-editable-field></app-editable-field> -->
-                <!-- <span id="_glyph" class="xrx-paperclip" style="line-height: 1px; position: absolute; left: 25px; top: 79%; transform: translateY(-50%);"></span> -->
+                <span id="_glyph" class="xrx-paperclip" style="line-height: 1px; position: absolute; left: 25px; top: 79%; transform: translateY(-50%);"></span>
                 <!-- <i class="fa fa-paperclip"></i> -->
                 <!-- <span id="_glyph" class="xrx-paperclip" style="line-height:100%"></span> -->
              
@@ -48,7 +48,7 @@
               </td>
               <td width="15%">
                 <button type="button" (click)="openFileFormat();" class="btn btn-xlarge">
-                  {{selectedFileFormatOptions.title}}
+                  {{this.selectedFileFormatOptions.title}}
                 </button>
               </td>
             </tr>
