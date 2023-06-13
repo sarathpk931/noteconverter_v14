@@ -155,9 +155,9 @@ export async function Session(url: string,timeout:number,async:boolean, ldap: st
       //alert("Xml Doc :"+ xmlDoc);
       var userEmail = "";
       if (data !== null) {
-        //var userName = xrxGetElementValue(xmlDoc, "username");
-        const userName = data.firstChild.getElementsByTagName('qualifiedUsername')[0].firstChild.textContent;//alert("Username :"+ userName);
-        var password = data.firstChild.getElementsByTagName('qualifiedUsername')[0].lastChild.textContent;//alert("password :"+ password);
+        var userName = xrxGetElementValue(xmlDoc, "username");//alert(userName);
+        //const userName = data.firstChild.getElementsByTagName('qualifiedUsername')[0].firstChild.textContent;//alert("Username :"+ userName);
+        //var password = data.firstChild.getElementsByTagName('qualifiedUsername')[0].lastChild.textContent;//alert("password :"+ password);
         //debugger;
         //this.logService.trackTrace("Session => username : "+userName + ", password : "+password);
         if (userName !== null && userName.toLowerCase() !== 'guest')
