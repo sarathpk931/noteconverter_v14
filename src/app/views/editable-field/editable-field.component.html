@@ -1,0 +1,9 @@
+<form [name]="'filename'">
+    <input [type]="fieldType(this.isPassword)" name="flname" [ngClass]="{'editable-field-input': true, 'option-text': true}" [ngModel]="name" [readonly]="!editing" [maxlength]="1000" [attr.xas-placeholder]="placeholder" (keydown)="handleKeyEnter($event)" [spellcheck]="false" [tabindex]="-1">
+    <span id="_glyph" class="xrx-paperclip" style="line-height:100%" *ngIf="!subject"></span>
+    <span id="_subject" class="emailSubject" [attr.xas-string]="subjectlabel ? subjectlabel : 'SDE_SUBJECT3'" *ngIf="subject && !editing && name" style="vertical-align:middle"></span>
+    <span [hidden]="editing || name" class="editable-field-label" [attr.xas-string]="placeholder" style="font-weight: 100;"></span>
+    <span [hidden]="editing || !name" class="editable-field-label">
+        <span [innerText]="displayText(this.isPassword, this.displayFormat, name, ext, strings)"></span>
+    </span>
+  </form>

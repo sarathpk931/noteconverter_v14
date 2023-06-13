@@ -20,7 +20,7 @@ import {xrxJobMgmtGetInterfaceVersion} from '../../../assets/Xrx/XRXJobManagemen
 import {xrxTemplateGetInterfaceVersion} from '../../../assets/Xrx/XRXTemplate';
 import {xrxDeviceConfigGetInterfaceVersion} from '../../../assets/Xrx/XRXDeviceConfig';
 import {AppModule} from '../../app.module';
-//import { EditableFileNameDirective } from  '../../Directives/editable-file-name.directive';
+import { EditableFieldDirective } from  '../../Directives/editable-file-name.directive';
 //import {TranslatePipe} from '../../filters/translate.pipe';
 
 import { ResourcestringService} from '../../services/resourcestring.service';
@@ -109,17 +109,17 @@ export class ScanScreenComponent implements OnInit{
         scrollContainer.scrollTop = 0;
       }, 250, { leading: true }));
       } */
-      this.resourceStringService.loadResources().then(response=>{
-        this.fileName=response.SDE_XEROX_SCAN.toString()+' [Date & Time].';
-        this.emailPlaceHolder = response.SDE_ENTER_EMAIL_RECEIVE1;
-        this.xeroxTitle = response.SDE_WRITTEN_NOTE_CONVERSION4;
-        this.scanTitle = response.SDE_SCAN;
-        this.resetTitle = response.SDE_RESET;
-        this.privacyStatementTitle = response.SDE_PRIVACY_STATEMENT;
-        this.emailValidation1 = response.SDE_EMAIL_NOT_VALID;
-      }).catch(error=>{
-        console.log(' catch error');
-      });
+      // this.resourceStringService.loadResources().then(response=>{
+      //   this.fileName=response.SDE_XEROX_SCAN.toString()+' [Date & Time].';
+      //   this.emailPlaceHolder = response.SDE_ENTER_EMAIL_RECEIVE1;
+      //   this.xeroxTitle = response.SDE_WRITTEN_NOTE_CONVERSION4;
+      //   this.scanTitle = response.SDE_SCAN;
+      //   this.resetTitle = response.SDE_RESET;
+      //   this.privacyStatementTitle = response.SDE_PRIVACY_STATEMENT;
+      //   this.emailValidation1 = response.SDE_EMAIL_NOT_VALID;
+      // }).catch(error=>{
+      //   console.log(' catch error');
+      // });
       //this.logger.trackTrace("Test application insight");
       
       this.resourceString = this.resourceStringService.getObjStrings();
