@@ -24,7 +24,7 @@ import { ScrollingModule  } from '@angular/cdk/scrolling';
 
 import { EditableFieldDirective } from  '../../Directives/editable-file-name.directive';
 //import {TranslatePipe} from '../../filters/translate.pipe';
-import { BasicAlertComponent} from '../../views/basic-alert/basic-alert.component';
+import { ProgressAlertComponent} from '../../views/progress-alert/progress-alert.component';
 
 import { ResourcestringService} from '../../services/resourcestring.service';
 
@@ -289,7 +289,7 @@ scan() {
   this.logger.trackTrace("ctrl.scan ...");
   const title = 'SDE_DOCUMENT_SUCCESSFULLY_SCANNED'; 
   const msg = 'SDE_WILL_RECEIVE_EMAIL2';
-  this.modalService.openModalWithTitle(BasicAlertComponent,title,msg);
+  this.modalService.openModalWithTitle(ProgressAlertComponent,title,msg);
   //this.modalService.openModalWithTitle(ProgressAlertComponent,this.resourceString['SDE_SCANNING1'],'');
   
    //this.mainDeviceconfig();
