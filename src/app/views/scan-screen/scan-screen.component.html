@@ -1,7 +1,7 @@
 <form [formGroup]="noteConvertorForm">
   <div class="header themed title_header" action-bar>
     <div class="header-right">
-      <button type="button" class="btn btn-medium btn-glyph-label xrx-scan" (click)="scan()" [ngClass]="!noteConvertorForm?.valid ? 'disabled' : ''">
+      <button type="button" class="btn btn-medium btn-glyph-label xrx-scan" (click)="scan()" ><!--[ngClass]="!noteConvertorForm?.valid ? 'disabled' : ''"-->
         <span>{{this.scanTitle}}</span>
       </button>
     </div>
@@ -116,6 +116,7 @@
     </div>
    
   </div>
+  
 </cdk-virtual-scroll-viewport>
 </form>
 <!-- <div class="loader" *ngIf="showLoader">
