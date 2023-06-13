@@ -146,8 +146,8 @@ export class ScanScreenComponent implements OnInit{
       this.scanOptionService.selectedFileFormatC.subscribe(object =>{
         if(object){
           this.selectedFileFormatOptions = object;
-          const newFileName = this.selectedFileFormatOptions.value.toString();
-          this.fileName=  this.formatfilename(this.resFilename,newFileName,this.resfilenametemp);   
+          //const newFileName = this.selectedFileFormatOptions.value.toString();
+          //this.fileName=  this.formatfilename(this.resFilename,newFileName,this.resfilenametemp);   
           //this.updateFileName();
         }
       })
