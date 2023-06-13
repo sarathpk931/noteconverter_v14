@@ -72,6 +72,9 @@ import { NgScrollableDirective } from './Directives/ng-scrollable.directive';
 import { ActionBarDirective } from './Directives/action-bar.directive';
 import { EditableFieldComponent } from './views/editable-field/editable-field.component';
 
+
+import { ScrollingModule } from '@angular/cdk/scrolling';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -97,13 +100,14 @@ import { EditableFieldComponent } from './views/editable-field/editable-field.co
     MatDialogModule,
     FormsModule,
     ReactiveFormsModule,
+    ScrollingModule 
   ],
   providers: [
-  //   {
-  //   provide :APP_INITIALIZER,
-  //   useFactory:()=> Device,
-  //   multi:true,
-  // },
+    /* {
+    provide :APP_INITIALIZER,
+    useFactory:()=>  Device,
+    multi:true,
+  }, */
   // {
   //   provide :APP_INITIALIZER,
   //   useFactory:()=> Session,
@@ -125,7 +129,8 @@ import { EditableFieldComponent } from './views/editable-field/editable-field.co
     ScanService,
     ScanTemplateService,
     ResourcestringService,
-    TranslatePipe
+    TranslatePipe,
+    //ScrollDispatcher
   ],
   
   bootstrap: [AppComponent]
