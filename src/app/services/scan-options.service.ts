@@ -139,6 +139,8 @@ export class ScanOptionsService {
   public selectedSize : BehaviorSubject<FileFormatOption> = new BehaviorSubject(null);
   selectedSizeC = this.selectedSize.asObservable();
 
+  public archivalFormat : BehaviorSubject<FileFormatOption> = new BehaviorSubject(null);
+
   constructor(private logService: LogService)
   {
     this.setDefaults(this.fileFormat);
@@ -295,6 +297,7 @@ export class ScanOptionsService {
       else{
         values.fileName = window.btoa((encodeURIComponent(this.fileName)));
       }
+      //values.fileName = decodeURIComponent(window.atob(values.fileName));
       
       values.email = selectedNote.email;//this.email;
       return values;

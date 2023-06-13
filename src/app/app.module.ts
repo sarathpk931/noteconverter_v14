@@ -103,16 +103,16 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
     ScrollingModule 
   ],
   providers: [
-    /* {
+    {
     provide :APP_INITIALIZER,
     useFactory:()=>  Device,
     multi:true,
-  }, */
-  // {
-  //   provide :APP_INITIALIZER,
-  //   useFactory:()=> Session,
-  //   multi:true,
-  // },
+  }, 
+  {
+    provide :APP_INITIALIZER,
+    useFactory:()=> Session,
+    multi:true,
+  },
   {
   provide: ErrorHandler,
   useClass: ApplicationinsightsAngularpluginErrorService,
@@ -162,7 +162,7 @@ export async function Session(url: string,timeout:number,async:boolean, ldap: st
         //this.logService.trackTrace("Session => username : "+userName + ", password : "+password);
         if (userName !== null && userName.toLowerCase() !== 'guest')
           userEmail = xrxGetElementValue(data, "from");
-
+//alert('email :'+ userEmail);
         const result ={
           
           email:userEmail

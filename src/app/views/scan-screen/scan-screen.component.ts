@@ -370,11 +370,11 @@ Templatecallback_success() {
     fileName : this.noteConvertorForm.controls["fileName"].value == '' ? this.defaultFilename : this.noteConvertorForm.controls["fileName"].value,//this.fileNameSpan.nativeElement.textContent
     email :  this.noteConvertorForm.controls["email"].value
   }
-
+  this.logger.trackTrace('Templatecallback_success() file name before:' + this.selectedNote.fileName);
   var values = this.scanOptionService.getValues(this.selectedNote);
 
   //this.logger.logMsg('Templatecallback_success() values:' + values, 'information');
-  this.logger.trackTrace('Templatecallback_success() values:' + values);
+  this.logger.trackTrace('Templatecallback_success() values:' + values.fileName);
 
   // '##############################################################################'
   // '####################              SCAN       #################################'

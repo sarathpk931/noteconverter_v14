@@ -2,6 +2,7 @@ import { Component,Inject } from '@angular/core';
 import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ModalService} from '../../services/modal.service';
 import {DialogData} from '../../model/global';
+import {AppModule} from '../../app.module';
 
 
 @Component({
@@ -10,6 +11,8 @@ import {DialogData} from '../../model/global';
   styleUrls: ['./progress-alert.component.scss']
 })
 export class ProgressAlertComponent {
+  generation = AppModule.Generation;
+  isThirdGenBrowser = AppModule.isThirdGenBrowser;
 
   constructor(
     private modalService : ModalService,
@@ -19,6 +22,7 @@ export class ProgressAlertComponent {
   {}
 
   ngOnInit(){
-   //alert("Progress alert :"+ this.data.title);
+
+   //alert("Progress alert :"+ this.isThirdGenBrowser);
   }
 }

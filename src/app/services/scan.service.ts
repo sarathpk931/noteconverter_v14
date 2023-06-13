@@ -178,6 +178,7 @@ export class ScanService {
       this.logService.trackTrace('putTemplate()...');
       const printerUrl =  this.env.apiUrl;
       const templateName= this.scanTemplate.name; //templateName
+      this.logService.trackTrace("file name in scan Template :"+this.scanTemplate.name)
       function finish (callId: any, response: any) {
         this.logService.trackTrace('putTemplate => successCallback');
         this.logService.trackTrace(`scanService => putTemplate => callId:${callId} response:${response}`);

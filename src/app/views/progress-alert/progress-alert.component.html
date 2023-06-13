@@ -1,4 +1,4 @@
- <div class="alert-popup alert-background alert-opacity alert_bg" role="alertdialog" aria-labelledby="myAlertPopupDialogTitle" tabindex="-1" style="display: block;">
+ <div *ngIf="this.isThirdGenBrowser" class="alert-popup alert-background alert-opacity alert_bg" role="alertdialog" aria-labelledby="myAlertPopupDialogTitle" tabindex="-1" style="display: block;">
     <div class="alert-container">
         <div class="alert-content">
             <div class="progress-spinner"></div>
@@ -7,5 +7,16 @@
                 <span class="alert-additional-info" xas-string="">{{data.message}}</span>
             </p>
         </div>
+    </div>
+</div>
+<div *ngIf="!this.isThirdGenBrowser" class="alert-popup alert-background alert-opacity alert_bg">
+    <div class="alert-container">
+        <div class="alert-content">
+            <img src="../../../assets/Content/Images/spin.gif "> 
+            <h3 *ngIf="data.title" class="alert-title" xas-string="">{{data.title}}</h3> 
+            <p *ngIf="data.message">
+                <span class="alert-additional-info" xas-string="">{{data.message}}</span>
+            </p>
+    </div>
     </div>
 </div>
