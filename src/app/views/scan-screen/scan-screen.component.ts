@@ -24,6 +24,7 @@ import { ScrollingModule  } from '@angular/cdk/scrolling';
 
 import { EditableFieldDirective } from  '../../Directives/editable-file-name.directive';
 //import {TranslatePipe} from '../../filters/translate.pipe';
+import { ProgressAlertComponent} from '../../views/progress-alert/progress-alert.component';
 
 import { ResourcestringService} from '../../services/resourcestring.service';
 
@@ -117,22 +118,22 @@ export class ScanScreenComponent implements OnInit{
       }, 250, { leading: true }));
       } */
       //alert(this.model);
-      this.resourceStringService.loadResources().then(response=>{
-        this.resFilename=response.SDE_XEROX_SCAN.toString();
-        this.fileextension="docx";
-        this.resfilenametemp=response.SDE_FMTSTR_DATE_TIMEFMTSTR.toString();
+      // this.resourceStringService.loadResources().then(response=>{
+      //   this.resFilename=response.SDE_XEROX_SCAN.toString();
+      //   this.fileextension="docx";
+      //   this.resfilenametemp=response.SDE_FMTSTR_DATE_TIMEFMTSTR.toString();
         
-        this.fileName=this.formatfilename(this.resFilename,this.fileextension,this.resfilenametemp);  //' [Date & Time].'
-        // this.fileName=response.SDE_XEROX_SCAN.toString()+' [Date & Time].';
-        this.emailPlaceHolder = response.SDE_ENTER_EMAIL_RECEIVE1;
-        this.xeroxTitle = response.SDE_WRITTEN_NOTE_CONVERSION4;
-        this.scanTitle = response.SDE_SCAN;
-        this.resetTitle = response.SDE_RESET;
-        this.privacyStatementTitle = response.SDE_PRIVACY_STATEMENT;
-        this.emailValidation1 = response.SDE_EMAIL_NOT_VALID;
-      }).catch(error=>{
-        console.log(' catch error');
-      });
+      //   this.fileName=this.formatfilename(this.resFilename,this.fileextension,this.resfilenametemp);  //' [Date & Time].'
+      //   // this.fileName=response.SDE_XEROX_SCAN.toString()+' [Date & Time].';
+      //   this.emailPlaceHolder = response.SDE_ENTER_EMAIL_RECEIVE1;
+      //   this.xeroxTitle = response.SDE_WRITTEN_NOTE_CONVERSION4;
+      //   this.scanTitle = response.SDE_SCAN;
+      //   this.resetTitle = response.SDE_RESET;
+      //   this.privacyStatementTitle = response.SDE_PRIVACY_STATEMENT;
+      //   this.emailValidation1 = response.SDE_EMAIL_NOT_VALID;
+      // }).catch(error=>{
+      //   console.log(' catch error');
+      // });
       //this.logger.trackTrace("Test application insight");
     
       
@@ -286,9 +287,12 @@ export class ScanScreenComponent implements OnInit{
 scan() {
   //this.logger.logMsg('ctrl.scan ...', 'information');
   this.logger.trackTrace("ctrl.scan ...");
+  const title = 'SDE_DOCUMENT_SUCCESSFULLY_SCANNED'; 
+  const msg = 'SDE_WILL_RECEIVE_EMAIL2';
+  this.modalService.openModalWithTitle(ProgressAlertComponent,title,msg);
   //this.modalService.openModalWithTitle(ProgressAlertComponent,this.resourceString['SDE_SCANNING1'],'');
   
-   this.mainDeviceconfig();
+   //this.mainDeviceconfig();
 };
 
  mainDeviceconfig() {
