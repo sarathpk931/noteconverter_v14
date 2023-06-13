@@ -141,7 +141,7 @@ export class ScanScreenComponent implements OnInit{
 
       this.getDefaultValues();
       //this.fileName = this.getDefaultFileName();
-      debugger;
+      
       //observables to show selected values
       this.scanOptionService.selectedFileFormatC.subscribe(object =>{
         if(object){
