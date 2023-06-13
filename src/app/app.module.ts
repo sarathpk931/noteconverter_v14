@@ -103,16 +103,16 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
     ScrollingModule 
   ],
   providers: [
-    {
-    provide :APP_INITIALIZER,
-    useFactory:()=>  Device,
-    multi:true,
-  }, 
-  {
-    provide :APP_INITIALIZER,
-    useFactory:()=> Session,
-    multi:true,
-  },
+  //   {
+  //   provide :APP_INITIALIZER,
+  //   useFactory:()=>  Device,
+  //   multi:true,
+  // }, 
+  // {
+  //   provide :APP_INITIALIZER,
+  //   useFactory:()=> Session,
+  //   multi:true,
+  // },
   {
   provide: ErrorHandler,
   useClass: ApplicationinsightsAngularpluginErrorService,
