@@ -423,6 +423,7 @@ button.btn.btn-Scanmedium
   {
    
    overflow: auto;
+   overflow-x: hidden !important;
    height: 79vh;
     padding: 2%;
     text-wrap: initial;
