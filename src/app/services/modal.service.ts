@@ -26,7 +26,7 @@ export class ModalService {
 
     return this.dialog.open(ProgressAlertComponent, {
       data :{'title': title,'message':message}, 
-      panelClass: (!this.isThirdGenBrowser) ? 'allow-outside-interaction' : 'allow-outside-banner-interaction'    
+      //panelClass: (!this.isThirdGenBrowser) ? 'allow-outside-interaction' : 'allow-outside-banner-interaction'    
     });
   }
 
