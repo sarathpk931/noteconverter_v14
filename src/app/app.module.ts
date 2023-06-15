@@ -124,7 +124,6 @@ export class AppModule {
 export async function Session(url: string,timeout:number,async:boolean, ldap: string): Promise<any> {
   return new Promise((resolve, reject) => {
     function successCallbackSession (envelope: string, response: string) {
-      //var data = xrxSessionGetSessionInfoRequest(response);
       var data =xrxSessionParseGetSessionInfo(response);
       const parser = new DOMParser();
       const xmlDoc = parser.parseFromString(data.firstChild, 'text/xml');
@@ -133,7 +132,6 @@ export async function Session(url: string,timeout:number,async:boolean, ldap: st
       if (data !== null) {
         var userName = xrxGetElementValue(xmlDoc, "username");
         //const userName = data.firstChild.getElementsByTagName('qualifiedUsername')[0].firstChild.textContent;//alert("Username :"+ userName);
-        //var password = data.firstChild.getElementsByTagName('qualifiedUsername')[0].lastChild.textContent;//alert("password :"+ password);
         if (userName !== null && userName.toLowerCase() !== 'guest')
           userEmail = xrxGetElementValue(data, "from");
         const result ={

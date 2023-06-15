@@ -267,7 +267,6 @@ scan() {
   const regex = /^[^\\\/\:\*\?\"\<\>\|]+$/;
 
   this.fileName =  this.noteConvertorForm.controls["fileName"].value == '' ? this.defaultFilename : this.noteConvertorForm.controls["fileName"].value; //this.fileNameSpan.nativeElement.textContent
-
   if (regex.test(this.fileName)) {
     this.logger.trackTrace("mainDeviceconfig() -> if (regex.test(fileName))");
     xrxDeviceConfigGetInterfaceVersion(AppSetting.url, this.deviceCallbackSuccess.bind(this), this.deviceCallBackFailure.bind(this), null, true);
