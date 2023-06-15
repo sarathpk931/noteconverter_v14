@@ -3,10 +3,8 @@
 import { Component,ViewChild,ElementRef, OnInit } from '@angular/core';
 import {MatDialog,MatDialogRef} from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators,AbstractControl } from '@angular/forms';//ReactiveFormsModule,
-//import { ActivatedRoute } from '@angular/router';
 import {FeaturePopoverComponent} from '../feature-popover/feature-popover.component';
 import { PrivacyPolicyComponent} from '../privacy-policy/privacy-policy.component';
-//import { PopupCompComponent} from '../popup-comp/popup-comp.component';
 import { ModalService} from '../../services/modal.service';
 import { ScanOptionsService} from '../../services/scan-options.service';
 import { FileFormat, FileFormatOption,resourceString,Strings} from '../../model/global';
@@ -23,7 +21,6 @@ import {AppModule} from '../../app.module';
 import { ScrollingModule  } from '@angular/cdk/scrolling';
 
 import { EditableFieldDirective } from  '../../Directives/editable-file-name.directive';
-//import {TranslatePipe} from '../../filters/translate.pipe';
 //import { ProgressAlertComponent} from '../../views/progress-alert/progress-alert.component';
 
 import { ResourcestringService} from '../../services/resourcestring.service';
@@ -40,11 +37,6 @@ export class ScanScreenComponent implements OnInit{
 
   @ViewChild('fileNameSpan', { static: true }) fileNameSpan: ElementRef;
   showPrivacySetting=false;
-  //showLoader=false;
-  //validationStatus: boolean = false;
-  //isCreditsEnabled: boolean = false;
-  //maxPagesPerJobStyle: string = 'text-align:left !important;';
-  //emailHasError: boolean = false;
   noteConvertorForm:  FormGroup;
 
    const_fileFormat : string = "fileFormat";
@@ -62,7 +54,6 @@ export class ScanScreenComponent implements OnInit{
   selectedTypeOptions : FileFormatOption;
   selectedSize : FileFormat;
   selectedSizeOptions : FileFormatOption;
-  //submitted = false;
   generation = AppModule.Generation;
   model = AppModule.model;
   selectedNote : selectedNote;
@@ -87,14 +78,12 @@ export class ScanScreenComponent implements OnInit{
   constructor(
     private dialog: MatDialog,
     private formBuilder: FormBuilder,
-    //private activatedRoute: ActivatedRoute,
     private modalService : ModalService,
     private scanOptionService : ScanOptionsService,
     private scanService :ScanService,
     private appComponent : AppComponent,
     private  logger: LogService,
     private resourceStringService : ResourcestringService,
-   // private translatePipe : TranslatePipe,
     private errorHandlerService : ErrorHandlerService
     ) {
       
@@ -103,7 +92,6 @@ export class ScanScreenComponent implements OnInit{
 
     ngOnInit(){
 
-      //alert(this.appComponent.Strings["ONE_SIDED"]);
       // If we have an email in session, attempt to validate fields (to enable scan button)
       // if (Global.Email) 
       // {
@@ -117,7 +105,6 @@ export class ScanScreenComponent implements OnInit{
         scrollContainer.scrollTop = 0;
       }, 250, { leading: true }));
       } */
-      //alert(this.model);
       this.resourceStringService.loadResources().then(response=>{
         this.resFilename=response.SDE_XEROX_SCAN.toString();
         this.fileextension="docx";
@@ -134,7 +121,6 @@ export class ScanScreenComponent implements OnInit{
       }).catch(error=>{
         console.log(' catch error');
       });
-      //this.logger.trackTrace("Test application insight");
     
       
       this.resourceString = this.resourceStringService.getObjStrings();
@@ -167,6 +153,7 @@ export class ScanScreenComponent implements OnInit{
       })
 
     }
+    
 
     ngAfterViewInit() {
      //this.fileName = this.fileNameSpan.nativeElement.textContent;
@@ -229,7 +216,6 @@ export class ScanScreenComponent implements OnInit{
 
       
     resetForm(){
-      //this.logger.trackTrace("Reset Form");
       this.noteConvertorForm.patchValue({
         email:'',
         confirmEmail:'',
@@ -239,57 +225,38 @@ export class ScanScreenComponent implements OnInit{
       this.getDefaultValues();
     }
     
-    // openSuccessPopup(){
-    //     this.dialog.open(PopupCompComponent,{
-    //       width:'550px',
-    //       height:'250px',
-    //       backdropClass:'custom-backdrop-color'
-    //     });
-    // }
 
     showPrivacyStatement(){
-      //this.logger.trackTrace("Privacy Statement");
       this.modalService.openLargeModal(PrivacyPolicyComponent);
-      //this.modalService.openModalWithTitle(AlertBannerComponent,'is scanning','');
     }
 
     openFileFormat(){
-      //alert("FileFOrmat");
-      //this.logger.trackTrace("Open File Format");
       this.modalService.setData({
         from : this.const_fileFormat
       });
-      this.modalService.openModal(FeaturePopoverComponent);//alert("fffff");
+      this.modalService.openModal(FeaturePopoverComponent);
       //modalRef.content.closeBtnName = 'Close';
     }
 
     openScan(){
-      //this.logger.trackTrace("Open Scan");
       this.modalService.setData({
         from : this.const_type
       });
-      this.modalService.openModal(FeaturePopoverComponent);//alert("scaa");
-      //modalRef.content.closeBtnName = 'Close';
+      this.modalService.openModal(FeaturePopoverComponent);
     }
 
     openSize(){
-      //this.logger.trackTrace("Open Size");
       this.modalService.setData({
         from : this.const_size
       });
-       this.modalService.openModal(FeaturePopoverComponent);//alert("ssss");
-      //modalRef.content.closeBtnName = 'Close';
+       this.modalService.openModal(FeaturePopoverComponent);
     }
 
     
 // scan functionalities 
 
 scan() {
-  //this.logger.logMsg('ctrl.scan ...', 'information');
   this.logger.trackTrace("ctrl.scan ...");
- // const title = 'SDE_DOCUMENT_SUCCESSFULLY_SCANNED'; 
-  //const msg = 'SDE_WILL_RECEIVE_EMAIL2';
-  //this.modalService.openModalWithTitle(ProgressAlertComponent,title,msg);
   //this.modalService.openModalWithTitle(ProgressAlertComponent,this.resourceString['SDE_SCANNING1'],'');
   
    this.mainDeviceconfig();
@@ -300,13 +267,11 @@ scan() {
   const regex = /^[^\\\/\:\*\?\"\<\>\|]+$/;
 
   this.fileName =  this.noteConvertorForm.controls["fileName"].value == '' ? this.defaultFilename : this.noteConvertorForm.controls["fileName"].value; //this.fileNameSpan.nativeElement.textContent
-  //alert(this.fileName);
+
   if (regex.test(this.fileName)) {
-    //this.logger.logMsg('mainDeviceconfig() -> if (regex.test(fileName))', 'information');
     this.logger.trackTrace("mainDeviceconfig() -> if (regex.test(fileName))");
     xrxDeviceConfigGetInterfaceVersion(AppSetting.url, this.deviceCallbackSuccess.bind(this), this.deviceCallBackFailure.bind(this), null, true);
   } else {
-    //this.logger.logMsg('mainDeviceconfig() ELSE FOR if (regex.test(fileName))', 'information');
     this.logger.trackTrace("mainDeviceconfig() ELSE FOR if (regex.test(fileName))");
     const text = this.resourceString['SDE_CHARACTERS_CANNOT_BE'].replace('{0}', '\\ / : * ? " < > |');
     this.errorHandlerService.showErrorAlert(text, '', null, null);
@@ -324,7 +289,6 @@ deviceCallbackSuccess() {
 }
 
 getScanStatus() {
-  //this.logger.logMsg('getScanStatus()...', 'information');
   this.logger.trackTrace("getScanStatus()...");
   xrxScanV2GetInterfaceVersion(AppSetting.url, 
     this.callback_success.bind(this), 
@@ -333,29 +297,24 @@ getScanStatus() {
   
 }
 callback_success(reqText, respText) {
-  //this.logger.logMsg('getScanStatus() -> callback_success', 'information');
   this.logger.trackTrace("getScanStatus() -> callback_success");
   this.getjobmamt();
 }
 callback_failure(respText, newresp) {
-  //this.logger.logMsg('callback_failure -> respText:' + respText + ' newresp:' + newresp, 'error');
   this.logger.trackTrace('callback_failure -> respText:' + respText + ' newresp:' + newresp);
   this.errorHandlerService.DEVICE_EIP_SCANV2_SERVICES_DISABLED();
 }
 
  getjobmamt() {
-  //this.logger.logMsg('getjobmanagementInterfaceVersion()...', 'information');
   this.logger.trackTrace('getjobmanagementInterfaceVersion()...');
   xrxJobMgmtGetInterfaceVersion(AppSetting.url, this.Jobcallback_success.bind(this), this.Jobcallback_failure.bind(this), null, true);
 }
 
 Jobcallback_success(reqText, respText) {
-  //this.logger.logMsg('Jobcallback_success()...', 'information');
   this.logger.trackTrace('Jobcallback_success()...');
   this.CheckTemplate();
 }
 Jobcallback_failure(reqText, respText) {
-  //this.logger.logMsg('Jobcallback_failure -> reqText:' + reqText + ' respText:' + respText, 'error');
   this.logger.trackTrace('Jobcallback_failure -> reqText:' + reqText + ' respText:' + respText);
   this.errorHandlerService.DEVICE_EIP_SCANV2_SERVICES_DISABLED();
 }
@@ -365,7 +324,6 @@ CheckTemplate() {
 }
 
 Templatecallback_success() {
-  //this.logger.logMsg('Templatecallback_success()...', 'information');
   this.logger.trackTrace('Templatecallback_success()...');
   this.selectedNote={
     fileFormat : this.selectedFileFormatOptions,
@@ -377,7 +335,6 @@ Templatecallback_success() {
   this.logger.trackTrace('Templatecallback_success() file name before:' + this.selectedNote.fileName);
   var values = this.scanOptionService.getValues(this.selectedNote);
 
-  //this.logger.logMsg('Templatecallback_success() values:' + values, 'information');
   this.logger.trackTrace('Templatecallback_success() values:' + values.fileName);
 
   // '##############################################################################'
@@ -388,7 +345,6 @@ Templatecallback_success() {
 }
 
  Templatecallback_failure(respText, newresp) {
-  //this.logger.logMsg('Templatecallback_failure -> respText:' + respText + ' newresp:' + newresp, 'error');
   this.logger.trackTrace('Templatecallback_failure -> respText:' + respText + ' newresp:' + newresp);
   this.errorHandlerService.DEVICE_EIP_SCANV2_SERVICES_DISABLED();
 }

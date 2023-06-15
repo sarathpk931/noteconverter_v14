@@ -63,7 +63,7 @@ export class ConfigurationService {
   }
 
   clearQueryString() {
-    this.route.queryParams.subscribe({}); //do something with queryParams
+    this.route.queryParams.subscribe({}); 
   }
 
    Device(url: string, timeout: number , async: boolean): Promise<any> {
@@ -86,7 +86,7 @@ export class ConfigurationService {
      const isThirdGenBrowser = _.includes(navigator.userAgent.toLowerCase(), "x3g_");
      AppModule.isThirdGenBrowser = isThirdGenBrowser;
      AppModule.isVersalink = isVersalink;
-     AppModule.isAltalink = isAltalink;//alert(AppModule.isAltalink);
+     AppModule.isAltalink = isAltalink;
      const result = {
         isThirdGenBrowser: isThirdGenBrowser,
         generation: generation,

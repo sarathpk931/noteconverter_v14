@@ -1,7 +1,7 @@
 <form [formGroup]="noteConvertorForm">
   <div class="header themed title_header" action-bar>
     <div class="header-right">
-      <button type="button" class="btn btn-medium btn-glyph-label xrx-scan" (click)="scan()" ><!--[ngClass]="!noteConvertorForm?.valid ? 'disabled' : ''"-->
+      <button type="button" class="btn btn-medium btn-glyph-label xrx-scan" (click)="scan()" [ngClass]="!noteConvertorForm?.valid ? 'disabled' : ''" >
         <span>{{this.scanTitle}}</span>
       </button>
     </div>
@@ -13,8 +13,8 @@
       </div>
     </div>
   </div>
-  <cdk-virtual-scroll-viewport itemSize="10" class="scroll-container" autosize>
-  <div style="position:relative;overflow:hidden;" ngScrollable='{"autoHeight": true, "watchHeight": true}'>
+  <cdk-virtual-scroll-viewport itemSize="100" class="scroll-container" autosize>
+  <div style="position:relative;" ngScrollable='{"autoHeight": true, "watchHeight": true}'><!--overflow-y :auto;-->
   <div class="node-convertor form_updated " >
     <div class="section-1 header themed">
       <div class="form">
@@ -119,6 +119,3 @@
   
 </cdk-virtual-scroll-viewport>
 </form>
-<!-- <div class="loader" *ngIf="showLoader">
-  <img src="../assets/Images/loader.gif" alt="loader" />
-</div> -->

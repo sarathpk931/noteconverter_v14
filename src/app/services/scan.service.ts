@@ -144,11 +144,9 @@ export class ScanService {
 
       model.jobid = this.jobid;
       this.scanTemplate = this.scanTemplateService.scanTemplate(model);
-      //console.log(this.scanTemplate);
-      //this.modalService.openModalWithTitle(ProgressAlertComponent,this.resourceString['SDE_SCANNING1'],'');
       this.progress = this.modalService.showProgressAlert(this.resourceString['SDE_SCANNING1'],'');
   
-      return this.jobService.registerJob(model).then((result)=>{ //.toPromise()     
+      return this.jobService.registerJob(model).then((result)=>{      
      
           const tStr = this.scanTemplateService.objToString();
           this.logService.trackTrace('scanService => scan => template:' + tStr);
@@ -251,7 +249,7 @@ export class ScanService {
     return false;
   }
 
-  beginCheckLoop(jobid:string): Promise<any> { //void
+  beginCheckLoop(jobid:string): Promise<any> { 
     if (this.isComplete) { return Promise.resolve(jobid); } 
     this.logService.trackTrace('beginCheckLoop()...');
     return new Promise((resolve,reject)=>{
@@ -279,7 +277,7 @@ export class ScanService {
           lastJobState: jobState,
           lastJobStateReason: jobStateReason
         };
-        //this.logService.logMsg("scan template status :" + this.scanTemplate.status.lastJobState+", JobstaeReason : "+this.scanTemplate.status.lastJobStateReason, "Information");
+
         // Checking if the job should be flagged as timeout
         if (this.checkScanTimeout()) {
           this.logService.trackTrace('if (checkScanTimeout()) { ');

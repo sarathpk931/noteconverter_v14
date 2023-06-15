@@ -179,10 +179,8 @@ export class ScanOptionsService {
   }
 
     getFileFormat(feature : any): FileFormat {
-  //alert('from :'+feature.from);
       if(feature.from == this.const_fileFormat)
       {
-        //alert(this.fileFormat[0]);
         return this.fileFormat[0];
       }
       else if (feature.from == this.const_type){
@@ -191,7 +189,6 @@ export class ScanOptionsService {
       else if (feature.from == this.const_size){
         return this.scanFeatures[1];
       }
-      //alert('end :'+this.fileFormat[0]);
      return this.fileFormat[0];
     }
 
@@ -237,7 +234,6 @@ export class ScanOptionsService {
       //const featuresList = this.scanFeatures;
   
        //const langStr = featuresList[0].selectedOption.value;// to do
-       //this.logService.logMsg('scanOptionsService => getValues => langStr:' + langStr, 'information');
       const sidedStr = selectedNote.type.value;//featuresList[0].options[0].value;    //selectedOption
       const originalSizeStr = selectedNote.size.value;//featuresList[0].options[0].value; //SelectedOption
   
@@ -288,7 +284,7 @@ export class ScanOptionsService {
       values.quality = '128';
       values.resolution = 'RES_300X300';
       values.searchableText = 'SEARCHABLE_IMAGE';
-       // = this.fileName;
+
       // To fix bug where the popover config menus do not appear (only dim the screen) when selecting non-latin-char-based languages.
       if(selectedNote.fileName != this.fileName)
       {
@@ -297,28 +293,10 @@ export class ScanOptionsService {
       else{
         values.fileName = window.btoa((encodeURIComponent(this.fileName)));
       }
-      //values.fileName = decodeURIComponent(window.atob(values.fileName));
       
-      values.email = selectedNote.email;//this.email;
+      values.email = selectedNote.email;
       return values;
     }
-
-    // updateDisabledOptions(feature: ScanFeature): void {
-    //   const currentOptions = this.getValues();
-    
-    //   feature.options.forEach((option) => {
-    //     option.disabledIf.forEach((disabledCondition) => {
-    //       if (currentOptions[disabledCondition.feature] === disabledCondition.value) {
-    //         option.disabled = true;
-    //         option.disabledMessage = disabledCondition.message;
-    //         return false;
-    //       } else {
-    //         option.disabled = false;
-    //         option.disabledMessage = null;
-    //       }
-    //     });
-    //   });
-    // }
     
   }
 

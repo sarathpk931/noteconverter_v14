@@ -29,16 +29,13 @@ export class FeaturePopoverComponent implements OnInit {
               {}
 
     ngOnInit(){
-    //alert("feature pop over");
       this.resourceString = this.resourceStringService.getObjStrings();
 
       this.modalService.currentValue.subscribe((data) =>{
         this.from = data;
-        //alert(this.from);
       });
       this.fileFormat = this.scanOptionsService.getFileFormat(this.from);
       this.fileFormatOption = this.fileFormat.options;
-      //alert(this.fileFormat.title);
     }
 
     selectOption(option : any){

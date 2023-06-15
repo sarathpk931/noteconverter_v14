@@ -26,14 +26,12 @@ export class ModalService {
 
     return this.dialog.open(ProgressAlertComponent, {
       data :{'title': title,'message':message}, 
-      //panelClass: (!this.isThirdGenBrowser) ? 'allow-outside-interaction' : 'allow-outside-banner-interaction'    
+      panelClass: (!this.isThirdGenBrowser) ? 'allow-outside-interaction' : 'allow-outside-banner-interaction'    
     });
   }
 
   closeModal(modalRef :MatDialogRef<any>){
-    //alert("close modal begin");
     if(modalRef){
-      //alert("close modal inside")
       modalRef.close();
     }
    }
@@ -63,7 +61,6 @@ export class ModalService {
   }
 
   public openModal(component : any){
-    //alert('before close :'+this.dialog.openDialogs.length);
     this.dialog.closeAll();
     this.dialog.openDialogs.pop();
     let dialogRef = this.dialog.open(component);
@@ -91,8 +88,6 @@ export class ModalService {
 
   public showAlert(component : any,title: string,message : string)
   {
-      //dependency in error handler service Ln:20, function to be written
-      //this.dialog.closeAll();
 
      this.dialog.open(component, {
       data :{'title': title,'message':message}
@@ -105,13 +100,11 @@ export class ModalService {
 
   public closeAllModals()
   {
-    //dependency in error handler service Ln:29, function to be written
     this.dialog.closeAll();
   }
 
   public openComponentModal(component: any,data:any)
   {
-    //dependency in error handler service Ln:29, function to be written
     this.dialog.closeAll();
     this.dialog.open(component, {
       data : data

@@ -54,11 +54,5 @@ export class StorageService {
     return this.provider('session', useEncryption);
   }
 
-  /* private storageProvider : Storage;
-  constructor() { 
-
-    this.storageProvider = window.localStorage;
-  } */
-
  
 }

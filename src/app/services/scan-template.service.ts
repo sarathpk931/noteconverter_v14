@@ -2,8 +2,6 @@ import { Injectable } from '@angular/core';
 import { Location } from '@angular/common';
 import { ApiService } from './api.service';
 import { LogService } from './log.service';
-//import { HttpClient } from '@angular/common/http';
-//import { ActivatedRoute } from '@angular/router';
 import * as _ from 'lodash';
 import {_scanSection,_generalSection,_destSec,_docSec,TemplateType,TemplateTypes,scanTemplate} from '../../app/model/scantemplate.model';
 import {environment} from '../../environments/environment'
@@ -16,68 +14,6 @@ import {environment} from '../../environments/environment'
 export class ScanTemplateService {
 
   private readonly XRX_SCAN_TEMPLATE_RETURN = '\n\n\r';
-
-  // public readonly templateTypes = {
-
-  //   'boolean': {
-  //     values: ['TRUE', 'FALSE']
-  //   },
-  //   'enum_autoexposure': {
-  //     supportsSimpleValidation: true,
-  //     values: ['ON', 'OFF']
-  //   },
-  //   'enum_originalsubtype': {
-  //     supportsSimpleValidation: true,
-  //     values: ['PRINTED_ORIGINAL']
-  //   },
-  //   'integer': {
-  //     validate: (v: any) => {
-  //       const pattern = /^[0-9]*$/;
-  //       return v.toString().match(pattern);
-  //     },
-  //     values: ['NUMBER (integer)']
-  //   },
-  //   'string': {
-  //     format: (v: any) => {
-  //       return "\"" + v + "\"";
-  //     }
-  //   },
-  //   'enum_resolution': { //XBB-167 requires  200 dpi, 300 dpi, 400 dpi, 600 dpi 
-  //     supportsSimpleValidation: true,
-  //     values: ['RES_72X72', 'RES_150X150', 'RES_100X100', 'RES_200X200', 'RES_300X300', 'RES_400X400', 'RES_600X600']
-  //   },
-  //   'enum_colormode': {
-  //     supportsSimpleValidation: true,
-  //     values: ['AUTO', 'BLACK_AND_WHITE', 'GRAYSCALE', 'FULL_COLOR']
-  //   },
-  //   'enum_docformat': {
-  //     supportsSimpleValidation: true,
-  //     values: ['XSM_TIFF_V6', 'TIFF_V6', 'JFIF_JPEG', 'PDF', 'PDF/A-1b', 'XPS']
-  //   },
-  //   'enum_inputorientation': {
-  //     supportsSimpleValidation: true,
-  //     values: ['PORTRAIT', 'LANDSCAPE']
-  //   },
-  //   'enum_searchabletext': {
-  //     supportsSimpleValidation: true,
-  //     values: ['IMAGE_ONLY', 'SEARCHABLE_IMAGE']
-  //   },
-  //   'enum_imagemode': {
-  //     supportsSimpleValidation: true,
-  //     values: ['MIXED', 'PHOTO', 'TEXT', 'MAP', 'NEWSPAPER_AND_MAGAZINE']
-  //   },
-  //   'enum_sided': {
-  //     supportsSimpleValidation: true,
-  //     values: ['ONE_SIDED', 'TWO_SIDED', 'SECOND_SIDE_ROTATION']
-  //   },
-  //   'enum_mediasize': {
-  //     supportsSimpleValidation: true,
-  //     values: ['AUTO', 'NA_5.5x7LEF', 'NA_5.5x7SEF', 'NA_5.5x8.5LEF', 'NA_5.5x8.5SEF', 'NA_8.5x11LEF',
-  //       'NA_8.5x11SEF', 'NA_8.5x13SEF', 'NA_8.5x14SEF', 'NA_11x17SEF',
-  //       'ISO_A5LEF', 'ISO_A5SEF', 'ISO_A4LEF', 'ISO_A4SEF', 'ISO_A3SEF',
-  //       'JIS_B4SEF', 'JIS_B5LEF', 'JIS_B5SEF']
-  //   }
-  // };
 
    private templateTypes: TemplateTypes = {
      'boolean': {
@@ -220,8 +156,6 @@ export class ScanTemplateService {
     private readonly location: Location,
     private readonly apiService: ApiService,
     private readonly logService: LogService,
-    //private http: HttpClient,
-    //private activatedRoute: ActivatedRoute,
   ) { 
     
     this.scanTemplateModel = {
@@ -355,7 +289,6 @@ export class ScanTemplateService {
   sectionString += '}' + this.XRX_SCAN_TEMPLATE_RETURN;
   return sectionString;
 
-  //return JSON.stringify(details);
 }
   getValueForKey = (key : string): TemplateType =>{
     const type = this.templateTypes[key];
@@ -369,25 +302,5 @@ scanTemplateFormatException(value: any, propName: string, acceptableValues: Arra
   return "The scan template is invalid. The property: " + propName +
     " is invalid. The acceptable values are: " + acceptableValues.join(',');
 }
-
-
-/* export class ScanTemplateFormatException extends Error {
-  value: any;
-  acceptableValues: any[];
-  propName: string;
-
-  constructor(value: any, propName: string, acceptableValues: any[]) {
-    super();
-    this.name = 'ScanTemplateFormatException';
-    this.value = value;
-    this.acceptableValues = acceptableValues;
-    this.propName = propName;
-  }
-
-  toString(): string {
-    return `The scan template is invalid. The property: ${this.propName} is invalid. The acceptable values are: ${this.acceptableValues.join(',')}.`;
-  }
-}
- */
 
 }

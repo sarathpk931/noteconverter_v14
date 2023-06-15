@@ -32,16 +32,13 @@ export class PrivacyPolicyComponent implements OnInit {
 
   ngOnInit(): void {
 
-    //this.logService.trackTrace("Initialising ngOnInit Privacy policy ");
     const progress =  this.modalService.openModalWithoutClose(ProgressAlertComponent,'','') //this.modalService.showProgressAlert('Alert','');
     const url = this.env.privacyPolicyUrl;
-    //this.logService.trackTrace("Before privacy policy open");
     this.http.get(url, {responseType:'text'})
       .subscribe({
           next:(response) => {
           this.privacyPolicy = (response as string);
           //this.showVersion = this.resourceString["VERSION"];
-          //this.logService.trackTrace("inside privacy policy subscribe");
           progress.close();
         },
         error:(error) => {
@@ -51,7 +48,6 @@ export class PrivacyPolicyComponent implements OnInit {
           //this.modalService.showGeneralError(error);
         }
     });
-    //this.logService.trackTrace("after privacy policy http call");
     }
       
     closeModal():void{

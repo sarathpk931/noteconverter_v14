@@ -12,7 +12,6 @@ import { Router } from '@angular/router';
 export class LogService {
 
   private storageProvider: Storage;
-  //private readonly filename = 'app-errors.log';
   env = environment;
   private angularPlugin = new AngularPlugin();
 
@@ -43,30 +42,21 @@ trackEvent(name: string): void {
 }
 
 trackTrace(message: string): void {
-  //alert(message);
   this.appInsights.trackTrace({ message });
 }
 
 trackException(exception : Exception){
-  //alert(exception)
   this.appInsights.trackException(exception);
-}
+} 
 
+public logMsg(message: string, logType?: string): void {
 
-    
-  
-  
-  
-  
-
-  public logMsg(message: string, logType?: string): void {
-
-    const config = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json; charset=utf-8',
-        'Authorization': 'ED803572-7B6B-4E56-8DCB-9F9C22C679FA'
-      })
-    };
+  const config = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json; charset=utf-8',
+      'Authorization': 'ED803572-7B6B-4E56-8DCB-9F9C22C679FA'
+    })
+  };
 
     const deviceID = this.storageProvider.getItem('deviceId');
 
@@ -77,20 +67,8 @@ trackException(exception : Exception){
     };
 
     this.http.post(this.env.deviceUrl+':5155/api/log', argParms, config).subscribe();
-    //http://10.117.207.162
   }
-
-  // log(error: Error): void {
-  //   const logEntry = new Date().toISOString() + ': ' + error.message + '\n';
-
-  //   const file = new Blob([logEntry], { type: 'text/plain' });
-  //   const a = document.createElement('a');
-  //   const url = URL.createObjectURL(file);
-  //   a.href = url;
-  //   a.download = this.filename;
-  //   a.click();
-  //   URL.revokeObjectURL(url);
-  // }
+  
 }
 
 export const LogTypes = {
