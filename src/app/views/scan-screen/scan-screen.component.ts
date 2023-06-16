@@ -197,18 +197,18 @@ export class ScanScreenComponent implements OnInit{
     createForm(){
       this.noteConvertorForm = this.formBuilder.group({
         email:['',[Validators.required,Validators.email]],
-        confirmEmail:['',[Validators.required,Validators.email]],
+        //confirmEmail:['',[Validators.required,Validators.email]],
         fileName : ['']//this.fileName
       },
-      { validators: this.emailMatchValidator },
+      //{ validators: this.emailMatchValidator },
      );
     }
 
-     emailMatchValidator(form: FormGroup) {
-      const email = form.get('email').value;
-      const confirmEmail = form.get('confirmEmail').value;
-      return email === confirmEmail ? null : { emailsMatch: true };
-    }
+    //  emailMatchValidator(form: FormGroup) {
+    //   const email = form.get('email').value;
+    //   const confirmEmail = form.get('confirmEmail').value;
+    //   return email === confirmEmail ? null : { emailsMatch: true };
+    // }
   
     get f():{[key: string]: AbstractControl}{
         return this.noteConvertorForm.controls;
@@ -218,7 +218,7 @@ export class ScanScreenComponent implements OnInit{
     resetForm(){
       this.noteConvertorForm.patchValue({
         email:'',
-        confirmEmail:'',
+        //confirmEmail:'',
         fileName : ''
       });
       //this.fileNameSpan.nativeElement.textContent = this.defaultFilename;
