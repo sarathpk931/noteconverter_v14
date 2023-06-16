@@ -52,6 +52,7 @@ import { EditableFieldComponent } from './views/editable-field/editable-field.co
 
 
 import { ScrollingModule } from '@angular/cdk/scrolling';
+import { TextFieldDirective } from './Directives/text-field.directive';
 
 @NgModule({
   declarations: [
@@ -69,6 +70,7 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
     NgScrollableDirective,
     ActionBarDirective,
     EditableFieldComponent,
+    TextFieldDirective,
   ],
   imports: [
     BrowserModule,

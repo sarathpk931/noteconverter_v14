@@ -19,7 +19,8 @@
     <div class="section-1 header themed">
       <div class="form">
         <div class="form-group">
-          <input type="email" formControlName="email" class="form-control focus_textbox" name="" placeholder="{{this.emailPlaceHolder}}" />
+          <input appTextField [initialValue]="" class=""  readOnlyClass="ad-themed" editableClass = "textField text-medium" formControlName="email" placeholder="{{this.emailPlaceHolder}}">
+          <!-- <input type="email" formControlName="email" class="form-control focus_textbox" name="" placeholder="{{this.emailPlaceHolder}}" /> -->
         </div>
         <p *ngIf="f['email'].hasError('email') && f['email'].touched" class="error_updated" style="text-align: left;">
           <span class="xrx-glyph xrx-alert"></span>&nbsp;{{this.emailValidation1}}
