@@ -83,7 +83,7 @@ import { TextFieldDirective } from './Directives/text-field.directive';
     ScrollingModule 
   ],
   providers: [
-    {
+    /* {
     provide :APP_INITIALIZER,
     useFactory:()=>  Device,
     multi:true,
@@ -92,7 +92,7 @@ import { TextFieldDirective } from './Directives/text-field.directive';
     provide :APP_INITIALIZER,
     useFactory:()=> Session,
     multi:true,
-  },
+  }, */
   {
   provide: ErrorHandler,
   useClass: ApplicationinsightsAngularpluginErrorService,
