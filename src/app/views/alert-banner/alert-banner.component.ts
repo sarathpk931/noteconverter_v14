@@ -6,7 +6,7 @@ import {DialogData} from '../../model/global';
 @Component({
   selector: 'app-alert-banner',
   templateUrl: './alert-banner.component.html',
-  styleUrls: ['./alert-banner.component.scss']
+  styleUrls: ['./alert-banner.component.less']
 })
 export class AlertBannerComponent {
 

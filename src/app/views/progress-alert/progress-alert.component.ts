@@ -8,7 +8,7 @@ import {AppModule} from '../../app.module';
 @Component({
   selector: 'app-progress-alert',
   templateUrl: './progress-alert.component.html',
-  styleUrls: ['./progress-alert.component.scss']
+  styleUrls: ['./progress-alert.component.less']
 })
 export class ProgressAlertComponent {
   generation = AppModule.Generation;

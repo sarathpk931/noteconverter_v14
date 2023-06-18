@@ -30,7 +30,7 @@ import { ResourcestringService} from '../../services/resourcestring.service';
 @Component({
   selector: 'app-scan-screen',
   templateUrl: './scan-screen.component.html',
-  styleUrls: ['./scan-screen.component.scss'],
+  styleUrls: ['./scan-screen.component.less'],
   
 })
 export class ScanScreenComponent implements OnInit{

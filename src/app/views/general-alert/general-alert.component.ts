@@ -7,7 +7,7 @@ import { ResourcestringService} from '../../services/resourcestring.service';
 @Component({
   selector: 'app-general-alert',
   templateUrl: './general-alert.component.html',
-  styleUrls: ['./general-alert.component.scss']
+  styleUrls: ['./general-alert.component.less']
 })
 export class GeneralAlertComponent {
 

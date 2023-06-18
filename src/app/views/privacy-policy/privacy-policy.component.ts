@@ -12,7 +12,7 @@ import { LogService } from '../../services/log.service';
 @Component({
   selector: 'app-privacy-policy',
   templateUrl: './privacy-policy.component.html',
-  styleUrls: ['./privacy-policy.component.scss']
+  styleUrls: ['./privacy-policy.component.less']
 })
 export class PrivacyPolicyComponent implements OnInit {
 

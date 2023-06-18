@@ -1,0 +1,38 @@
+// Color variables (appears count calculates by raw css)
+@color0: #ffffff; // Appears 2 times
+@color1: #cccccc; // Appears 2 times
+
+
+
+.document-save-popup {
+	background-color: #000000;
+	padding: 20px 20px;
+	position: absolute;
+	text-align: center;
+	.close-wrp {
+		.close-btn {
+			background: transparent;
+			border-radius: 5px;
+			border: 1px solid @color1;
+			color: @color0;
+			font-size: 16px;
+			height: 38px;
+			padding: 8px 15px;
+			svg {
+				margin-right: 6px;
+				vertical-align: text-bottom;
+				width: 18px;
+			}
+		}
+	}
+	h2 {
+		color: @color0;
+		font-size: 20px;
+		margin-bottom: 20px;
+	}
+	.note {
+		color: @color1;
+		font-size: 16px;
+		margin-bottom: 20px;
+	}
+}

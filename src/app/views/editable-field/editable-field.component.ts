@@ -4,7 +4,7 @@ import { DOCUMENT } from '@angular/common';
 @Component({
   selector: 'app-editable-field',
   templateUrl: './editable-field.component.html',
-  styleUrls: ['./editable-field.component.scss']
+  styleUrls: ['./editable-field.component.less']
 })
 export class EditableFieldComponent implements OnInit {
 

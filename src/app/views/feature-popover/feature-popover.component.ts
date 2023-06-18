@@ -9,7 +9,7 @@ import {FileFormat, FileFormatOption,resourceString} from '../../model/global';
 @Component({
   selector: 'app-feature-popover',
   templateUrl: './feature-popover.component.html',
-  styleUrls: ['./feature-popover.component.scss']
+  styleUrls: ['./feature-popover.component.less']
 })
 export class FeaturePopoverComponent implements OnInit {
 

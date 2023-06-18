@@ -10,7 +10,7 @@ declare const _: any;
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.less']
 })
 export class AppComponent implements OnInit {
 
