@@ -35,7 +35,7 @@ import { ResourcestringService} from '../../services/resourcestring.service';
 })
 export class ScanScreenComponent implements OnInit{
 
-  @ViewChild('fileNameSpan', { static: true }) fileNameSpan: ElementRef;
+  //@ViewChild('fileNameSpan', { static: true }) fileNameSpan: ElementRef;
   showPrivacySetting=false;
   noteConvertorForm:  FormGroup;
 
@@ -68,7 +68,7 @@ export class ScanScreenComponent implements OnInit{
   fileName: string = '';
   defaultFilename : string ='Xerox Scan';
   resourceString : resourceString[];
-  testfilename: string='';
+  //testfilename: string='';
 
   resFilename :string;
   fileextension:string;
@@ -105,12 +105,13 @@ export class ScanScreenComponent implements OnInit{
         scrollContainer.scrollTop = 0;
       }, 250, { leading: true }));
       } */
+      this.resfilenametemp= '{0} [Date & Time].{1}';
       this.resourceStringService.loadResources().then(response=>{
         this.resFilename=response.SDE_XEROX_SCAN.toString();
-        this.fileextension="docx";
+       // this.fileextension="docx";
         this.resfilenametemp=response.SDE_FMTSTR_DATE_TIMEFMTSTR.toString();
         
-        this.fileName=this.formatfilename(this.resFilename,this.fileextension,this.resfilenametemp);  //' [Date & Time].'
+        //this.fileName=this.formatfilename(this.resFilename,this.fileextension,this.resfilenametemp);  //' [Date & Time].'
         // this.fileName=response.SDE_XEROX_SCAN.toString()+' [Date & Time].';
         this.emailPlaceHolder = response.SDE_ENTER_EMAIL_RECEIVE1;
         this.xeroxTitle = response.SDE_WRITTEN_NOTE_CONVERSION4;
@@ -267,14 +268,15 @@ scan() {
   const regex = /^[^\\\/\:\*\?\"\<\>\|]+$/;
 
   this.fileName =  this.noteConvertorForm.controls["fileName"].value == '' ? this.defaultFilename : this.noteConvertorForm.controls["fileName"].value; //this.fileNameSpan.nativeElement.textContent
-  if (regex.test(this.fileName)) {
-    this.logger.trackTrace("mainDeviceconfig() -> if (regex.test(fileName))");
-    xrxDeviceConfigGetInterfaceVersion(AppSetting.url, this.deviceCallbackSuccess.bind(this), this.deviceCallBackFailure.bind(this), null, true);
-  } else {
-    this.logger.trackTrace("mainDeviceconfig() ELSE FOR if (regex.test(fileName))");
-    const text = this.resourceString['SDE_CHARACTERS_CANNOT_BE'].replace('{0}', '\\ / : * ? " < > |');
-    this.errorHandlerService.showErrorAlert(text, '', null, null);
-  }
+ //alert(this.fileName);
+  // if (regex.test(this.fileName)) {
+  //   this.logger.trackTrace("mainDeviceconfig() -> if (regex.test(fileName))");
+  //   xrxDeviceConfigGetInterfaceVersion(AppSetting.url, this.deviceCallbackSuccess.bind(this), this.deviceCallBackFailure.bind(this), null, true);
+  // } else {
+  //   this.logger.trackTrace("mainDeviceconfig() ELSE FOR if (regex.test(fileName))");
+  //   const text = this.resourceString['SDE_CHARACTERS_CANNOT_BE'].replace('{0}', '\\ / : * ? " < > |');
+  //   this.errorHandlerService.showErrorAlert(text, '', null, null);
+  // }
 }
 
 deviceCallbackSuccess() {

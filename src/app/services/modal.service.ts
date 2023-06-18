@@ -77,10 +77,10 @@ export class ModalService {
     this.dialog.openDialogs.pop();
     return  this.dialog.open(component, {
       data :{'title': title,'message':message},
-      maxWidth: '100vw',
-      maxHeight: '100vh',
-      height: '100%',
-      width: '100%'
+      // maxWidth: '100vw',
+      // maxHeight: '100vh',
+      // height: '100%',
+      // width: '100%'
     });
 
   }
