@@ -24,6 +24,7 @@ export class EditableFieldDirective {
   @HostBinding('value') value: string; 
   @HostBinding('readonly') isReadonly: boolean; 
   @HostBinding('class') hostClasses = ''; 
+  @HostBinding('class.visible') isVisible: boolean = false;
 
   private editing: boolean = false;
   renderer : Renderer2;
@@ -63,7 +64,8 @@ ngOnInit(){
 }
 
   @HostListener('click') onClick() { 
-
+    if (!this.isVisible) {
+      this.isVisible = true;
     //var extraText = this.additionalText;//alert(extraText);
     var newValue : string = '';
      
@@ -93,8 +95,10 @@ ngOnInit(){
     this.isReadonly = false; 
     this.hostClasses = 'selected'; 
     this.elementRef.nativeElement.select(); 
+  }
   } 
-  @HostListener('blur') onBlur() {  
+  @HostListener('blur') onBlur() { 
+    this.isVisible = false; 
     var enteredValue = this.elementRef.nativeElement.value.trim();
     this.tempTextValue = enteredValue;
     this.extension = this.selectedFileFormatOptions.title;
