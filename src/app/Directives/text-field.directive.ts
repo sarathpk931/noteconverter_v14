@@ -1,7 +1,7 @@
 import { Directive, ElementRef, HostBinding, HostListener, Input } from '@angular/core';
 
 @Directive({
-  selector: '[appTextField]'
+  selector: 'appTextField'
 })
 export class TextFieldDirective {
   @Input() initialValue: string; 

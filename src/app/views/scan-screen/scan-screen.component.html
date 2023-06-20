@@ -33,10 +33,14 @@
             <!-- Email Textbox-->
             <div class="grid-row themed">
               <div class="column-10-59 column-offset-10-2 column-5-g-61 column-offset-5-c-1">
-                <input appTextField [initialValue]="" class="form-control textField text-medium login"  readOnlyClass="ad-themed" editableClass = "textField text-medium" formControlName="email" placeholder="{{this.emailPlaceHolder}}" tabindex="-1"/>
+                <!-- <input appTextField [initialValue]="" class="form-control textField text-medium login"  readOnlyClass="ad-themed" editableClass = "textField text-medium" formControlName="email" placeholder="{{this.emailPlaceHolder}}" tabindex="-1"/> -->
+                <appTextField [initialValue]=""  type="email" class="ad-themed">
+                  <input class="form-control textField text-medium login " formControlName="email" placeholder="{{this.emailPlaceHolder}} " tabindex="-1" />
+
+                </appTextField>
               </div>
             </div>
-        
+
             <div class="grid-row themed">
                 <div class="validation-error">
                   <p *ngIf="f['email'].hasError('email') && f['email'].touched" class="error_updated" style="text-align: left;">

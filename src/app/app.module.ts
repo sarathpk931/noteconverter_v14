@@ -72,9 +72,6 @@ import { TextFieldDirective } from './Directives/text-field.directive';
     EditableFieldComponent,
     TextFieldDirective,
   ],
-  entryComponents:[
-    PrivacyPolicyComponent
-  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
