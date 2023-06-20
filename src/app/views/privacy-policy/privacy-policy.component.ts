@@ -7,6 +7,7 @@ import { ProgressAlertComponent } from '../progress-alert/progress-alert.compone
 import { ResourcestringService} from '../../services/resourcestring.service';
 import { resourceString} from '../../model/global';
 import { LogService } from '../../services/log.service';
+import smoothscroll from 'smoothscroll-polyfill';
 
 
 @Component({
@@ -20,7 +21,7 @@ export class PrivacyPolicyComponent implements OnInit {
   showVersion: string = '';
   env = environment;
   resourceString : resourceString[];
- 
+  //declare smoothscroll : any;
 
   constructor(
     private http: HttpClient,
@@ -31,9 +32,16 @@ export class PrivacyPolicyComponent implements OnInit {
     ){}
 
   ngOnInit(): void {
-
+    debugger;
     const progress =  this.modalService.openModalWithoutClose(ProgressAlertComponent,'','') //this.modalService.showProgressAlert('Alert','');
     const url = this.env.privacyPolicyUrl;
+    //this.smoothscroll.polyfill();
+    smoothscroll.polyfill();
+   
+    const element = document.getElementById('privacyContent');
+    
+    element.scrollIntoView({behavior : 'smooth'});
+    //alert(element.innerHTML);
     this.http.get(url, {responseType:'text'})
       .subscribe({
           next:(response) => {
@@ -48,6 +56,7 @@ export class PrivacyPolicyComponent implements OnInit {
           //this.modalService.showGeneralError(error);
         }
     });
+
     }
       
     closeModal():void{

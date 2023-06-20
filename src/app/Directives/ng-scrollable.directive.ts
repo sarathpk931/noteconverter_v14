@@ -3,6 +3,7 @@ import { Directive, ElementRef,NgModule, Input, OnInit, OnDestroy,NgZone,Optiona
 //import { Directionality } from '@angular/cdk/bidi';
 //import { merge, Observable } from 'rxjs';
 import {AppModule} from '../app.module';
+//import  from 'iscroll';
 
 @Directive({
   selector: '[ngScrollable]'
