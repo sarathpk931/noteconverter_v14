@@ -15,7 +15,7 @@ export class ModalService {
   isThirdGenBrowser : boolean = AppModule.isThirdGenBrowser;
 
   private fromData = new BehaviorSubject<string>('');
-    currentValue = this.fromData.asObservable();
+  currentValue = this.fromData.asObservable();
 
   constructor(
     public dialog : MatDialog,
@@ -23,10 +23,10 @@ export class ModalService {
     ) { }
 
   showProgressAlert(title: string, message : string):MatDialogRef<ProgressAlertComponent>{
-
     return this.dialog.open(ProgressAlertComponent, {
-      data :{'title': title,'message':message}, 
-      panelClass: (!this.isThirdGenBrowser) ? 'allow-outside-interaction' : 'allow-outside-banner-interaction'    
+      data :{'title': title,'message':message},
+      // panelClass: (!this.isThirdGenBrowser) ? 'allow-outside-interaction' : 'allow-outside-banner-interaction'
+      panelClass: 'progress-bar-modalbox' 
     });
   }
 
