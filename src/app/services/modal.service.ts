@@ -40,8 +40,13 @@ export class ModalService {
 
   const dialogRef =
      this.dialog.open(component, {
-      width : 'auto',
-      height : 'auto',
+      width: '1024px',
+      height : '',
+      position: {
+        top: '50vh',
+        left: '50vw'
+    },
+    panelClass:'makeItMiddle',
       data:{closeBtnName:'Close'},
       hasBackdrop : false,
       disableClose:true
@@ -63,7 +68,9 @@ export class ModalService {
   public openModal(component : any){
     this.dialog.closeAll();
     this.dialog.openDialogs.pop();
-    let dialogRef = this.dialog.open(component);
+    let dialogRef = this.dialog.open(component,{
+      panelClass: 'custom-modalbox'
+    });
     
     dialogRef.afterClosed().subscribe(result => {
       //console.log(`Dialog result: ${result}`);

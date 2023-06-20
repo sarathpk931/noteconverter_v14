@@ -3,7 +3,7 @@
 <!-- including without limitation, material generated from the software programs which are displayed on the screen such -->
 <!-- as icons, screen display looks, etc. -->
 
-<div class="modal-body full-screen privacy_updated">
+<div class="modal-body full-screen">
     <div class="header" action-bar>
         <div class="header-right">
             <button type="button" class="btn btn-medium btn-glyph xrx-close" (click)="closeModal()"></button>
@@ -20,6 +20,9 @@
     <div class="popup-content privacy_content" >
         <div   id="privacyContent" ><!--class="privacy_scroll-container"ngScrollable  ='{"autoHeight": true, "watchHeight": true}'-->
             <pre class="privacy-policy-content" >{{this.privacyPolicy}}</pre>
+    <div class="popup-content">
+        <div class="scroll-container">
+            <pre class="privacy-policy-content">{{this.privacyPolicy}}</pre>
         </div>
     </div>
 </div>
