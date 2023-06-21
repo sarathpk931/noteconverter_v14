@@ -83,9 +83,32 @@ custom-modalbox::before {
 }
 
 .form-control:focus {
-    color: #212529;
+    //color: #212529;
+    color: #380a2e;
     background-color: #fff;
     border-color: #f406c0;
     outline: 0;
     box-shadow: 0 0 0 0.25rem #ae0689;
 }
+
+.ad-themed ::placeholder {
+    color: white;
+  }
+  
+
+.editable-field-input {
+    width: calc(100% + 15px);
+    /*margin-top: 5px;*/
+    margin-top: -16px;
+    margin-left: -16px !important;
+    border: none;
+    padding: 18px 25px 21px 39px;
+    font-size: 28px;
+    outline: none;
+    vertical-align: middle;
+    border-radius: 3px;
+  
+    @media (min-width: 1024px) {
+      font-size: 24px;
+    }
+  }
