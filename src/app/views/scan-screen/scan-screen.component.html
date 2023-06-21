@@ -91,7 +91,7 @@
               </div>
 
               <div class="column-10-8 column-offset-10-1 column-5-c-12 column-offset-5-g-1">
-                  <button type="button" (click)="openFileFormat();" class="btn btn-medium">
+                  <button type="button" (click)="openFileFormat($event);" class="btn btn-medium">
                     {{this.selectedFileFormatOptions.title}}      
                   </button><!---->
               </div>
@@ -110,7 +110,7 @@
                     <li ng-class-odd="'featureOddRow'">
                         
 
-                        <button type="button" class="btn btn-medium btn-image" (click)="openScan();" tabindex="-1">
+                        <button type="button" class="btn btn-medium btn-image" (click)="openScan($event);" tabindex="-1">
                             <div class="image-container rounded">
                                 <img class="image" src="./../../../assets/Content/Images/{{this.selectedType.icon}}">
                             </div>
@@ -130,7 +130,7 @@
                     <li ng-class-even="'featureEvenRow'">
                         
 
-                      <button type="button" class="btn btn-medium btn-image" (click)="openSize();" tabindex="-1">
+                      <button type="button" class="btn btn-medium btn-image" (click)="openSize($event);" tabindex="-1">
                           <div class="image-container rounded">
                               <img class="image" src="./../../../assets/Content/Images/{{this.selectedSize.icon}}">
                           </div>

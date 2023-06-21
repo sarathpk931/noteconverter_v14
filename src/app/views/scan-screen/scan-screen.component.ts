@@ -1,7 +1,7 @@
 //scan-screen.component.ts
 
 import { Component,ViewChild,ElementRef, OnInit } from '@angular/core';
-import {MatDialog,MatDialogRef} from '@angular/material/dialog';
+import {MatDialog,MatDialogRef,DialogPosition} from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators,AbstractControl, ValidationErrors } from '@angular/forms';//ReactiveFormsModule,
 import {FeaturePopoverComponent} from '../feature-popover/feature-popover.component';
 import { PrivacyPolicyComponent} from '../privacy-policy/privacy-policy.component';
@@ -218,26 +218,41 @@ export class ScanScreenComponent implements OnInit{
       this.modalService.openLargeModal(PrivacyPolicyComponent);
     }
 
-    openFileFormat(){
+    openFileFormat(event: any){
+
+      console.log(event.clientX);
+      console.log(event.clientY);
+      let event_position: DialogPosition = { left: event.clientX + 'px', top: event.clientY + 'px'};
+
+      let direction:string ='rtl';
       this.modalService.setData({
         from : this.const_fileFormat
       });
-      this.modalService.openModal(FeaturePopoverComponent);
+      this.modalService.openModal(FeaturePopoverComponent,event_position);
       //modalRef.content.closeBtnName = 'Close';
     }
 
-    openScan(){
+    openScan(event: any){
+
+      console.log(event.clientX);
+      console.log(event.clientY);
+      let event_position: DialogPosition = { left: event.clientX + 'px', top: event.clientY + 'px'};
+      let direction:string ='rtl'; // to be decided based on click position
       this.modalService.setData({
         from : this.const_type
       });
-      this.modalService.openModal(FeaturePopoverComponent);
+      this.modalService.openModal(FeaturePopoverComponent,event_position);
     }
 
-    openSize(){
+    openSize(event: any){
+      console.log(event.clientX);
+      console.log(event.clientY);
+      let event_position: DialogPosition = { left: event.clientX + 'px', top: event.clientY + 'px'};
+      let direction:string ='rtl'; // to be decided based on click position
       this.modalService.setData({
         from : this.const_size
       });
-       this.modalService.openModal(FeaturePopoverComponent);
+       this.modalService.openModal(FeaturePopoverComponent,event_position);
     }
 
     

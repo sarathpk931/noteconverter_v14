@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {MatDialog,MatDialogRef} from '@angular/material/dialog';
+import {MatDialog,MatDialogRef,DialogPosition} from '@angular/material/dialog';
 import { ProgressAlertComponent} from '../views/progress-alert/progress-alert.component'; 
 import {AppComponent} from '../app.component';
 import { BehaviorSubject, timer} from 'rxjs';
@@ -65,11 +65,14 @@ export class ModalService {
     this.fromData.next(data);
   }
 
-  public openModal(component : any){
+  public openModal(component : any,dialog_postion:any){
     this.dialog.closeAll();
     this.dialog.openDialogs.pop();
     let dialogRef = this.dialog.open(component,{
-      panelClass: 'custom-modalbox'
+      panelClass: 'custom-modalbox',
+      position: dialog_postion,
+      //direction: ModalDirection
+      
     });
     
     dialogRef.afterClosed().subscribe(result => {
