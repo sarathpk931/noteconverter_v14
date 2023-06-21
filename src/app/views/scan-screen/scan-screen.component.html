@@ -53,17 +53,66 @@
             <div class="grid-row themed themed-header">
               <div class="column-10-50 column-offset-10-2 column-5-g-48 column-offset-5-c-1">
 
-                <button type="button" class="btn btn-medium subjectButton" style="text-align:left;" tabindex="-1">
+                <button
 
-                  <span id="_glyph" class="xrx-paperclip" style="line-height: 100%;text-align:left;"></span>
+                  #button
 
-                  <input type="text" formControlName="fileName" editableField placeholder="Xerox Scan" additionalText="{{this.resfilenametemp}}" class="editable-field-input option-text" maxlength="1000"  tabindex="-1">
+                  type="button"
+
+                  class="btn btn-medium subjectButton"
+
+                  style="text-align:left;"
+
+                  tabindex="-1"
+
+                  (click)="onClick()"
 
                  
 
+                  placeholder="Xerox Scan"
+
+                  additionalText="{{this.resfilenametemp}}"
+
+                  [preventDirectiveInit]="this.preventDirectiveInit"
+
+                  editableField
+
+                >
+
+                  <span id="_glyph" class="xrx-paperclip" style="line-height: 100%;text-align:left;"></span>
+
                 </button>
 
-            </div>
+
+
+
+                <input
+
+                  #inputField
+
+                  type="text"
+
+                  formControlName="fileName"
+
+                  placeholder="Xerox Scan"
+
+                  additionalText="{{this.resfilenametemp}}"
+
+                  class="editable-field-input option-text"
+
+                  maxlength="1000"
+
+                  tabindex="-1"
+
+                 
+
+                  [preventDirectiveInit]="this.preventDirectiveInit"
+
+                  editableField
+
+                >
+
+              </div>
 
               <div class="column-10-8 column-offset-10-1 column-5-c-12 column-offset-5-g-1">
                   <button type="button" (click)="openFileFormat();" class="btn btn-medium">

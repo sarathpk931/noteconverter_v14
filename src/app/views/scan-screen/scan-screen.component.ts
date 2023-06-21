@@ -75,6 +75,10 @@ export class ScanScreenComponent implements OnInit{
   formattedResult:string;
   resfilenametemp:string;
 
+  isbuttonVisible : boolean = true;
+
+  preventDirectiveInit : boolean = false;
+
   constructor(
     private dialog: MatDialog,
     private formBuilder: FormBuilder,
@@ -269,14 +273,14 @@ scan() {
 
   this.fileName =  this.noteConvertorForm.controls["fileName"].value == '' ? this.defaultFilename : this.noteConvertorForm.controls["fileName"].value; //this.fileNameSpan.nativeElement.textContent
  //alert(this.fileName);
-  // if (regex.test(this.fileName)) {
-  //   this.logger.trackTrace("mainDeviceconfig() -> if (regex.test(fileName))");
-  //   xrxDeviceConfigGetInterfaceVersion(AppSetting.url, this.deviceCallbackSuccess.bind(this), this.deviceCallBackFailure.bind(this), null, true);
-  // } else {
-  //   this.logger.trackTrace("mainDeviceconfig() ELSE FOR if (regex.test(fileName))");
-  //   const text = this.resourceString['SDE_CHARACTERS_CANNOT_BE'].replace('{0}', '\\ / : * ? " < > |');
-  //   this.errorHandlerService.showErrorAlert(text, '', null, null);
-  // }
+  if (regex.test(this.fileName)) {
+    this.logger.trackTrace("mainDeviceconfig() -> if (regex.test(fileName))");
+    xrxDeviceConfigGetInterfaceVersion(AppSetting.url, this.deviceCallbackSuccess.bind(this), this.deviceCallBackFailure.bind(this), null, true);
+  } else {
+    this.logger.trackTrace("mainDeviceconfig() ELSE FOR if (regex.test(fileName))");
+    const text = this.resourceString['SDE_CHARACTERS_CANNOT_BE'].replace('{0}', '\\ / : * ? " < > |');
+    this.errorHandlerService.showErrorAlert(text, '', null, null);
+  }
 }
 
 deviceCallbackSuccess() {
@@ -348,6 +352,33 @@ Templatecallback_success() {
  Templatecallback_failure(respText, newresp) {
   this.logger.trackTrace('Templatecallback_failure -> respText:' + respText + ' newresp:' + newresp);
   this.errorHandlerService.DEVICE_EIP_SCANV2_SERVICES_DISABLED();
+}
+
+onClick(){
+
+  this.isbuttonVisible = false;
+
+ 
+
+}
+
+
+
+
+onBlur(){
+
+ 
+
+  if (!this.isbuttonVisible) {
+
+    this.isbuttonVisible = true;
+
+    this.preventDirectiveInit = true; //alert(this.preventDirectiveInit);
+
+    //console.log('component :'+this.);
+
+  }
+
 }
     
 }

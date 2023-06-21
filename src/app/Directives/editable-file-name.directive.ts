@@ -1,4 +1,4 @@
-import {  Directive, ElementRef, HostListener, Input, OnInit,Renderer2,Inject,HostBinding } from '@angular/core';
+import {  Directive, ElementRef, HostListener, Input, OnInit,Renderer2,Inject,HostBinding,ViewChild } from '@angular/core';
 
 import { BehaviorSubject } from 'rxjs';
 
@@ -24,6 +24,13 @@ export class EditableFieldDirective {
 
   @Input() additionalText : string;
 
+  @Input() preventDirectiveInit: boolean;
+
+  private inputField: HTMLInputElement | null;
+
+  private buttonElement: HTMLButtonElement;
+
+  //@ViewChild('button') buttonElement: ElementRef<HTMLButtonElement>;
 
 
 
@@ -44,21 +51,10 @@ export class EditableFieldDirective {
 
   tempTextValue : string = '';
 
+  private initialized = false;
 
 
 
-  @HostBinding('value') value: string;
-
-  @HostBinding('readonly') isReadonly: boolean;
-
-  @HostBinding('class') hostClasses = '';
-
-
-
-
-  private editing: boolean = false;
-
-  renderer : Renderer2;
 
  
 
@@ -68,12 +64,29 @@ export class EditableFieldDirective {
 
     private scanOptionService : ScanOptionsService,
 
+    private renderer: Renderer2
+
     ) {}
 
 
 
 
 ngOnInit(){
+
+ 
+
+ 
+
+  this.inputField = document.querySelector('input[type="text"]');
+
+  if (this.inputField) {
+
+    this.inputField.style.display = 'none';
+
+  }
+
+  if(!this.preventDirectiveInit){
+
 
 
 
@@ -96,14 +109,19 @@ ngOnInit(){
 
   newValue = newValue.replace('{1}', this.extension);
 
+  //console.log(this.buttonElement);
 
+  this.buttonElement = this.renderer.selectRootElement('.subjectButton');
 
+ 
 
-  this.value = newValue;
+    this.buttonElement.innerText = newValue;console.log(this.buttonElement);
 
-  this.inputPlaceholder = this.defaultText;
+    this.initialized = true;
 
-  this.isReadonly = true;
+  }
+
+ 
 
 
 
@@ -118,9 +136,15 @@ ngOnInit(){
 
       //this.extension = this.extension.replace('.','');
 
-      if(this.value.includes('.')){
+      if(this.inputField.value.includes('.')){
 
-        this.value = this.value.substring(0,this.value.lastIndexOf('.')) + this.extension;
+        this.inputField.value = this.inputField.value.substring(0,this.inputField.value.lastIndexOf('.')) + this.extension;
+
+      }
+
+      if(this.buttonElement.innerText.includes('.')){
+
+        this.buttonElement.innerText = this.buttonElement.innerText.substring(0,this.buttonElement.innerText.lastIndexOf('.')) + this.extension;
 
       }
 
@@ -131,6 +155,8 @@ ngOnInit(){
 
 
 
+ 
+
 }
 
 
@@ -138,27 +164,37 @@ ngOnInit(){
 
   @HostListener('click') onClick() {
 
+    const isButton = this.elementRef.nativeElement.tagName.toLowerCase() === 'button';
+
+    if (isButton) {
+
+      if (this.inputField) {
+
+        this.inputField.style.display = 'inline-block';
+
+        this.inputField.style.boxShadow = 'none';
+
+        this.inputField.focus();
+
+      }
+
+      this.elementRef.nativeElement.style.display = 'none';
+
+      this.elementRef.nativeElement.dispatchEvent(new CustomEvent('clickEvent'));
 
 
 
-    //var extraText = this.additionalText;//alert(extraText);
 
-    var newValue : string = '';
+      var newValue : string = '';
 
      
-
-    // if(this.value.endsWith(this.additionalText)){
-
-    //   this.value = this.value.substring(0,this.value.length - this.additionalText.length);
-
-    // }
 
 
 
 
     if(this.isPlaceholderVisible){
 
-      this.value = this.placeholder;
+      this.inputField.value = this.placeholder;
 
       this.inputPlaceholder = '';
 
@@ -168,42 +204,42 @@ ngOnInit(){
 
     else{
 
-      //this.extension = this.selectedFileFormatOptions.title;
-
-      //this.extension = this.extension.replace('.','');
-
-      //newValue =   this.additionalText ;//
-
-      //newValue = newValue.replace('{0}', this.tempTextValue);
-
-      //newValue = newValue.replace('{1}', this.extension);
-
-      this.value = this.tempTextValue;
+      this.inputField.value = this.tempTextValue;
 
       this.isPlaceholderVisible = false;
 
-      // if(this.value.endsWith(extraText)){
+    }
 
-      //   this.value = this.value.substring(0,this.value.length - (extraText.length));
+    this.inputField.focus();
 
-      // }
+    this.inputField.select();
+
+
+
 
     }
 
    
 
-
-
-
-    this.isReadonly = false;
-
-    this.hostClasses = 'selected';
-
-    this.elementRef.nativeElement.select();
-
   }
 
-  @HostListener('blur') onBlur() {  
+
+
+
+  @HostListener('blur')  onBlur() {  //console.log("on blur");
+
+    const isTextbox = this.elementRef.nativeElement.tagName.toLowerCase() === 'input';
+
+    if (isTextbox) {
+
+      this.elementRef.nativeElement.style.display = 'inline-block';
+
+     
+
+      this.buttonElement.innerText = this.inputField.value;
+
+
+
 
     var enteredValue = this.elementRef.nativeElement.value.trim();
 
@@ -217,9 +253,6 @@ ngOnInit(){
 
     newValue = newValue.replace('{1}', this.extension);
 
-
-
-
     if(enteredValue == this.placeholder){
 
       this.inputPlaceholder = this.defaultText;
@@ -228,7 +261,9 @@ ngOnInit(){
 
       this.isPlaceholderVisible = true;
 
-      this.value = newValue;
+      this.inputField.value = newValue;
+
+      this.buttonElement.innerText = newValue;
 
     }
 
@@ -238,23 +273,31 @@ ngOnInit(){
 
       var newValue : string;
 
-      this.value = '';
+      this.inputField.value = '';
 
          
 
       newValue = newValue.replace('{0}', enteredValue);
 
-      this.value =  newValue;
+      this.inputField.value =  newValue;
+
+      this.buttonElement.innerText = newValue;console.log('blur :'+this.buttonElement.innerText);
 
       this.isPlaceholderVisible = false;
 
     }
 
-    this.isReadonly = true;
+    this.inputField.style.display = 'none';
 
-    this.hostClasses = '';
+    this.buttonElement.style.display = 'inline-block';
+
+    //this.elementRef.nativeElement.dispatchEvent(new CustomEvent('blurEvent'));
+
+    }
 
   }
+
+
 
 
 
