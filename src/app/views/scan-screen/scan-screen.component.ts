@@ -2,7 +2,7 @@
 
 import { Component,ViewChild,ElementRef, OnInit } from '@angular/core';
 import {MatDialog,MatDialogRef} from '@angular/material/dialog';
-import { FormBuilder, FormGroup, Validators,AbstractControl } from '@angular/forms';//ReactiveFormsModule,
+import { FormBuilder, FormGroup, Validators,AbstractControl, ValidationErrors } from '@angular/forms';//ReactiveFormsModule,
 import {FeaturePopoverComponent} from '../feature-popover/feature-popover.component';
 import { PrivacyPolicyComponent} from '../privacy-policy/privacy-policy.component';
 import { ModalService} from '../../services/modal.service';
@@ -64,6 +64,7 @@ export class ScanScreenComponent implements OnInit{
   resetTitle : string;
   privacyStatementTitle : string;
   emailValidation1 : string;
+  emailValidation2 : string;
 
   fileName: string = '';
   defaultFilename : string ='Xerox Scan';
@@ -76,8 +77,9 @@ export class ScanScreenComponent implements OnInit{
   resfilenametemp:string;
 
   isbuttonVisible : boolean = true;
-
   preventDirectiveInit : boolean = false;
+  isEmailInvalid : boolean = false;
+  isEmailRequired : boolean =false;
 
   constructor(
     private dialog: MatDialog,
@@ -123,6 +125,7 @@ export class ScanScreenComponent implements OnInit{
         this.resetTitle = response.SDE_RESET;
         this.privacyStatementTitle = response.SDE_PRIVACY_STATEMENT;
         this.emailValidation1 = response.SDE_EMAIL_NOT_VALID;
+        this.emailValidation2 = response.SDE_REQUIRED_FIELD1;
       }).catch(error=>{
         console.log(' catch error');
       });
@@ -141,7 +144,6 @@ export class ScanScreenComponent implements OnInit{
           this.selectedFileFormatOptions = object;
           const newFileName = this.selectedFileFormatOptions.value.toString();
           this.fileName=  this.formatfilename(this.resFilename,newFileName,this.resfilenametemp);   
-          //this.updateFileName();
         }
       })
 
@@ -159,32 +161,6 @@ export class ScanScreenComponent implements OnInit{
 
     }
     
-
-    ngAfterViewInit() {
-     //this.fileName = this.fileNameSpan.nativeElement.textContent;
-      //console.log('File name:', fileName);
-      // You can perform further processing with the fileName value here
-    }
-    // getDefaultFileName(): string {
-    //   //const now = new Date();
-    //   //const dateAndTime = now.toLocaleString('en-US', { hour12: false, timeZone: 'UTC' }).replace(/[/:\s]/g, '');
-    //   return `@${this.fileName}`+'[Date & Time].'+this.selectedFileFormatOptions.value;//${dateAndTime}
-    // }
-    // updateFileName() {
-    //   const atIndex = this.fileName.indexOf('.');
-    //   const fileName = this.fileName.slice(0,atIndex).trim();
-    //   this.fileName = fileName+'.';
-    //   this.fileName += this.selectedFileFormatOptions.value;
-    // }
-
-    // onFileNameClick() {
-    //   // // Trim the default value to show only "@ Xerox Scan"     
-    //    this.fileName = '@ Xerox Scan'
-    // }
-    // onFileNameBlur(){
-    //   this.fileName += ' [Date & Time].'+this.selectedFileFormatOptions.value;
-    // }
-
     formatfilename(fileName: string, fileExtension: string,resfilename:string): string{
       
       const template = resfilename.replace('{0}', fileName).replace('{1}', fileExtension);
@@ -201,7 +177,7 @@ export class ScanScreenComponent implements OnInit{
 
     createForm(){
       this.noteConvertorForm = this.formBuilder.group({
-        email:['',[Validators.required,Validators.email]],
+        email:['',[Validators.required,this.emailFormatValidator]],//,Validators.email
         //confirmEmail:['',[Validators.required,Validators.email]],
         fileName : ['']//this.fileName
       },
@@ -209,6 +185,13 @@ export class ScanScreenComponent implements OnInit{
      );
     }
 
+    emailFormatValidator(control: AbstractControl): ValidationErrors | null { 
+      const email: string = control.value; 
+      const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/; 
+      if (email && !emailRegex.test(email)) { 
+        return { invalidEmailFormat: true }; 
+      } return null; 
+    }
     //  emailMatchValidator(form: FormGroup) {
     //   const email = form.get('email').value;
     //   const confirmEmail = form.get('confirmEmail').value;
@@ -355,30 +338,22 @@ Templatecallback_success() {
 }
 
 onClick(){
-
   this.isbuttonVisible = false;
-
- 
-
 }
-
-
-
 
 onBlur(){
 
- 
-
   if (!this.isbuttonVisible) {
-
     this.isbuttonVisible = true;
-
-    this.preventDirectiveInit = true; //alert(this.preventDirectiveInit);
-
-    //console.log('component :'+this.);
-
+    this.preventDirectiveInit = true; 
   }
+}
 
+onEmailBlur(){
+  
+  const emailControl = this.f.email;
+  this.isEmailRequired = emailControl.hasError('required') && emailControl.touched;
+  this.isEmailInvalid = emailControl.hasError('email') && emailControl.touched;
 }
     
 }
