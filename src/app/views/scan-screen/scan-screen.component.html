@@ -67,9 +67,9 @@
                   style="text-align:left;"
                   tabindex="-1"
                   (click)="onClick()"
-                  placeholder="Xerox Scan"
+                  [placeholder]="this.defaultFilename"
                   additionalText="{{this.resfilenametemp}}"
-                  [preventDirectiveInit]="this.preventDirectiveInit"
+                  [preventDirectiveInit]="this.preventDirectiveInit" 
                   editableField
                 >
                   <span id="_glyph" class="xrx-paperclip" style="line-height: 100%;text-align:left;"></span>
@@ -79,12 +79,12 @@
                   #inputField
                   type="text"
                   formControlName="fileName"
-                  placeholder="Xerox Scan"
+                  [placeholder]="this.defaultFilename"
                   additionalText="{{this.resfilenametemp}}"
                   class="editable-field-input option-text"
                   maxlength="1000"
                   tabindex="-1"                
-                  [preventDirectiveInit]="this.preventDirectiveInit"
+                  [preventDirectiveInit]="this.preventDirectiveInit" 
                   editableField
                 >
 

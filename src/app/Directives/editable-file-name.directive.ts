@@ -16,17 +16,14 @@ export class EditableFieldDirective {
 
   private inputField: HTMLInputElement | null;
   private buttonElement: HTMLButtonElement;
-  //@ViewChild('button') buttonElement: ElementRef<HTMLButtonElement>;
 
   private defaultText: string;
-  private isPlaceholderVisible : boolean;
   private inputPlaceholder : string;
 
   selectedFileFormat : FileFormat;
   selectedFileFormatOptions : FileFormatOption;
   anyFileFormat = {from : 'fileFormat'};
   extension : string;
-  tempTextValue : string = '';
 
   constructor(
     private elementRef: ElementRef<HTMLInputElement>,
@@ -43,7 +40,7 @@ ngOnInit(){
   }
 
   if(!this.preventDirectiveInit){
-    this.isPlaceholderVisible = true;
+    this.scanOptionService.isPlaceholderVisible = true;
     this.selectedFileFormat = this.scanOptionService.getFileFormat(this.anyFileFormat);
     this.selectedFileFormatOptions = this.selectedFileFormat.options.find(item => item.isDefault === true);
     this.extension = this.selectedFileFormatOptions.title;
@@ -90,41 +87,38 @@ ngOnInit(){
 
       this.elementRef.nativeElement.style.display = 'none';
       this.elementRef.nativeElement.dispatchEvent(new CustomEvent('clickEvent'));
-console.log(this.isPlaceholderVisible);
       var newValue : string = '';
-    if(this.isPlaceholderVisible){ 
-      //console.log("placeholder");
+    if(this.scanOptionService.isPlaceholderVisible){ 
       this.inputField.value = this.placeholder;
       this.inputPlaceholder = '';
-      this.isPlaceholderVisible = true;
+      this.scanOptionService.isPlaceholderVisible = true;
     }
     else{
-      console.log("placeholder else");console.log(this.tempTextValue);
-      this.inputField.value = this.tempTextValue;
-      this.isPlaceholderVisible = false;
+      this.inputField.value = this.scanOptionService.tempTextValue;
+      this.scanOptionService.isPlaceholderVisible = false;
     }
     this.inputField.focus();
     this.inputField.select();
     }  
   }
 
-  @HostListener('blur')  onBlur() {  //console.log("on blur");
+  @HostListener('blur')  onBlur() {  
     const isTextbox = this.elementRef.nativeElement.tagName.toLowerCase() === 'input';
     if (isTextbox) {
       this.elementRef.nativeElement.style.display = 'inline-block';     
       this.buttonElement.innerText = this.inputField.value
 
       var enteredValue = this.elementRef.nativeElement.value.trim();
-      this.tempTextValue = enteredValue;
+      this.scanOptionService.tempTextValue = enteredValue; 
       this.extension = this.selectedFileFormatOptions.title;
       this.extension = this.extension.replace('.','');
       newValue =   this.additionalText ;
       newValue = newValue.replace('{1}', this.extension);
 
-      if(enteredValue == this.placeholder){
+      if((enteredValue == this.placeholder) || (enteredValue == '')){
         this.inputPlaceholder = this.defaultText;
         newValue = newValue.replace('{0}', this.defaultText);
-        this.isPlaceholderVisible = true;
+        this.scanOptionService.isPlaceholderVisible = true;
         this.inputField.value = newValue;
         this.buttonElement.innerText = newValue;
       }
@@ -136,8 +130,7 @@ console.log(this.isPlaceholderVisible);
         newValue = newValue.replace('{0}', enteredValue);
         this.inputField.value =  newValue;
         this.buttonElement.innerText = newValue;
-        this.isPlaceholderVisible = false;
-        //console.log('inside blur else :'+ this.isPlaceholderVisible);
+        this.scanOptionService.isPlaceholderVisible = false;
 
       }
 

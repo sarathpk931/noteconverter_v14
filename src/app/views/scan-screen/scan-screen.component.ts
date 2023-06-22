@@ -69,7 +69,6 @@ export class ScanScreenComponent implements OnInit{
   fileName: string = '';
   defaultFilename : string ='Xerox Scan';
   resourceString : resourceString[];
-  //testfilename: string='';
 
   resFilename :string;
   fileextension:string;
@@ -78,6 +77,7 @@ export class ScanScreenComponent implements OnInit{
 
   isbuttonVisible : boolean = true;
   preventDirectiveInit : boolean = false;
+
   isEmailInvalid : boolean = false;
   isEmailRequired : boolean =false;
 
@@ -360,7 +360,7 @@ onBlur(){
 
   if (!this.isbuttonVisible) {
     this.isbuttonVisible = true;
-    this.preventDirectiveInit = true; 
+    this.preventDirectiveInit = true;     
   }
 }
 

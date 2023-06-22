@@ -141,6 +141,9 @@ export class ScanOptionsService {
 
   public archivalFormat : BehaviorSubject<FileFormatOption> = new BehaviorSubject(null);
 
+  isPlaceholderVisible: boolean;
+  tempTextValue: string;
+
   constructor(private logService: LogService)
   {
     this.setDefaults(this.fileFormat);
