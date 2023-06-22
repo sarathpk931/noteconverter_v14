@@ -44,7 +44,8 @@ export class JobService {
         format: featureValues.fileFormat.toUpperCase(),
         archivalFormat:''
       };
-      this.logService.logMsg("Device Id : "+ job.deviceId.toString(),"Information");
+      this.logService.trackTrace('Device Id:' + job.deviceId.toString());
+      
       if (featureValues.fileFormat === "pdf") {
         job.archivalFormat = (featureValues.archivalFormat ? 'PDF/A-1b' : 'PDF');
       }
