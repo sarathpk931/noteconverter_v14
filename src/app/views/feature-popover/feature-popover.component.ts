@@ -13,6 +13,8 @@ import {FileFormat, FileFormatOption,resourceString} from '../../model/global';
 })
 export class FeaturePopoverComponent implements OnInit {
 
+  //arrowSegments: number[] = Array.from({ length: 12 });
+
     fileFormat : FileFormat;
     fileFormatOption : FileFormatOption[];
     from : string;
@@ -42,7 +44,7 @@ export class FeaturePopoverComponent implements OnInit {
       this.fileFormat = this.scanOptionsService.getFileFormat(this.from);
       this.fileFormatOption = this.fileFormat.options;
       
-
+      
     }
 
     
@@ -51,6 +53,7 @@ export class FeaturePopoverComponent implements OnInit {
       this.scanOptionsService.setSelectedOption(option,this.from);
       this.objectSelected.emit(option);
       this.modalService.closeModal(this.mtModalRef);
+      
       this.showPopover();
     }
 
@@ -62,28 +65,37 @@ export class FeaturePopoverComponent implements OnInit {
       const name = this.feature.name;
       const options: any = {}; 
   
-    
-      this.showPopoverHelper(this.event, name, options);
+      
+      this.showPopoverHelper(this.event, options);
     }
     
-    showPopoverHelper(e: MouseEvent, name: string, options: any): void {
+    showPopoverHelper(e: MouseEvent,options: any): void {
       const winHeight = window.innerHeight;
       const winWidth = window.innerWidth;
 
-      const popover = this.elementRef.nativeElement.querySelector(`#${name}`);
-      const contents = this.elementRef.nativeElement.querySelector(`#${name} div.contents`);
+      const popover = this.elementRef.nativeElement.querySelector('.popover');
+      const rect=popover.getBoundingClientRect();
+      console.log("popover native element top" + rect.top);
+      console.log("popover native element height" + rect.height);
+      console.log("popover native element width" + rect.width);
+      console.log("popover native element left" + rect.left);
 
-      const popoverModal = popover.closest('.modal-dialog');
+      //const popover = this.elementRef.nativeElement.querySelector(`.popover`);
+      const contents = popover.querySelector(`.contents`);
+      console.log("contents" + contents);
 
-      const arrow = popover.querySelector('.arrow');
-      const arrowContents = arrow.querySelector('*');
+      //const popoverModal = popover.closest('.cdk-overlay-container');
+      //console.log("popoverModal" + popoverModal);
+
+      //const arrow = popover.querySelector('.arrow');
+      //const arrowContents = arrow.querySelector('arrow-segment');
 
       this.renderer.setStyle(contents, 'position', 'fixed');
       this.renderer.setStyle(contents, 'z-index', '1');
       this.renderer.setStyle(contents, 'display', 'none');
 
-      this.renderer.setStyle(popoverModal, 'width', 'initial');
-      this.renderer.setStyle(popoverModal, 'height', 'initial');
+      //this.renderer.setStyle(popoverModal, 'width', 'initial');
+      //this.renderer.setStyle(popoverModal, 'height', 'initial');
 
       const height = contents.dataset.height || contents.offsetHeight;
       const width = contents.offsetWidth;
@@ -98,7 +110,7 @@ export class FeaturePopoverComponent implements OnInit {
         top = options.top;
       }
 
-      const totalSize = width + padding + arrow.offsetWidth;
+      const totalSize = width + padding + rect.offsetWidth;
       const availableSpaceOnRight = winWidth - e.pageX;
       const availableSpaceOnLeft = winWidth - availableSpaceOnRight;
 
@@ -110,27 +122,27 @@ export class FeaturePopoverComponent implements OnInit {
       let transform = 'none';
 
       if (totalSize < availableSpaceOnRight) {
-        calcLeft = e.pageX + arrow.offsetWidth;
+        calcLeft = e.pageX + rect.offsetWidth;
         arrowLeft = e.pageX;
         float = 'right';
       } else if (totalSize < availableSpaceOnLeft) {
-        arrowLeft = e.pageX - arrow.offsetWidth;
+        arrowLeft = e.pageX - rect.offsetWidth;
       } else {
         calcLeft = (winWidth - totalSize) / 2;
-        arrowLeft = e.pageX - arrow.offsetWidth / 2;
+        arrowLeft = e.pageX - rect.offsetWidth / 2;
         transform = 'rotate(270deg)';
         showArrow = false;
       }
 
       if (showArrow) {
-        this.renderer.setStyle(arrow, 'left', arrowLeft + 'px');
-        this.renderer.setStyle(arrow, 'top', e.pageY - arrow.offsetHeight / 2 + 'px');
-        this.renderer.setStyle(arrow, 'z-index', '1300');
-        this.renderer.setStyle(arrow, 'transform', transform);
-        this.renderer.setStyle(arrowContents, 'float', float);
-        this.renderer.removeStyle(arrow, 'display');
+        this.renderer.setStyle(rect, 'left', arrowLeft + 'px');
+        this.renderer.setStyle(rect, 'top', e.pageY - rect.offsetHeight / 2 + 'px');
+        this.renderer.setStyle(rect, 'z-index', '1300');
+        this.renderer.setStyle(rect, 'transform', transform);
+        this.renderer.setStyle(contents, 'float', float);
+        this.renderer.removeStyle(rect, 'display');
       } else {
-        this.renderer.setStyle(arrow, 'display', 'none');
+        this.renderer.setStyle(rect, 'display', 'none');
       }
 
       let adjustedTop = top;
@@ -154,9 +166,9 @@ export class FeaturePopoverComponent implements OnInit {
 
       const fixScrollBars = (): void => {
         if (!this.scrollBarsFixed) {
-          const scrollContent = this.elementRef.nativeElement.querySelector(`#${name} div.popover-scroll-content`);
-          const scrollChild = this.elementRef.nativeElement.querySelector(`#${name} div.popover-scroll-content ul.action-list`);
-          const buttons = this.elementRef.nativeElement.querySelectorAll(`#${name} div.popover-scroll-content ul.action-list button`);
+          const scrollContent = this.elementRef.nativeElement.querySelector(`popover-scroll-content`);
+          const scrollChild = this.elementRef.nativeElement.querySelector(`popover-scroll-content ul.action-list`);
+          const buttons = this.elementRef.nativeElement.querySelectorAll(`popover-scroll-content ul.action-list button`);
 
           const scrollContentWidth = scrollContent.offsetWidth - 2;
           const scrollContentInnerWidth = buttons[0].scrollWidth;

@@ -42,10 +42,10 @@ export class ModalService {
      this.dialog.open(component, {
       width: '1024px',
       height : '',
-      position: {
-        top: '50vh',
-        left: '50vw'
-    },
+      //position: {
+       // top: '50vh',
+       // left: '50vw'
+    //},
     panelClass:'makeItMiddle',
       data:{closeBtnName:'Close'},
       hasBackdrop : false,
@@ -65,12 +65,17 @@ export class ModalService {
     this.fromData.next(data);
   }
 
-  public openModal(component : any,dialog_postion:any){
+  public openModal(component : any,dialog_postion:any,rotationClass: string = ''){
     this.dialog.closeAll();
     this.dialog.openDialogs.pop();
+    let panelClass: string[] = ['custom-modalbox'];
+    if (rotationClass!== '') {
+     panelClass.push(rotationClass);
+    }
     let dialogRef = this.dialog.open(component,{
       panelClass: 'custom-modalbox',
       position: dialog_postion,
+      
       //direction: ModalDirection
       
     });

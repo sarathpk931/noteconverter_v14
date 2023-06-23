@@ -1,6 +1,6 @@
 //scan-screen.component.ts
 
-import { Component,ViewChild,ElementRef, OnInit } from '@angular/core';
+import { Component,ViewChild,ElementRef,Renderer2, OnInit,HostListener  } from '@angular/core';
 import {MatDialog,MatDialogRef,DialogPosition} from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators,AbstractControl, ValidationErrors } from '@angular/forms';//ReactiveFormsModule,
 import {FeaturePopoverComponent} from '../feature-popover/feature-popover.component';
@@ -35,6 +35,16 @@ import { ResourcestringService} from '../../services/resourcestring.service';
 })
 export class ScanScreenComponent implements OnInit{
 
+  winHeight: number;
+  winWidth: number;
+  midHeight:number;
+  midwidth:number;
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this.winHeight = window.innerHeight;
+    this.winWidth = window.innerWidth;
+  }
   //@ViewChild('fileNameSpan', { static: true }) fileNameSpan: ElementRef;
   showPrivacySetting=false;
   noteConvertorForm:  FormGroup;
@@ -90,9 +100,15 @@ export class ScanScreenComponent implements OnInit{
     private appComponent : AppComponent,
     private  logger: LogService,
     private resourceStringService : ResourcestringService,
-    private errorHandlerService : ErrorHandlerService
+    private errorHandlerService : ErrorHandlerService,
+    private elementRef: ElementRef,
+    private renderer: Renderer2
     ) {
       
+      this.winHeight = window.innerHeight;
+      this.winWidth = window.innerWidth
+      console.log("Window Height "+this.winHeight);
+      console.log("Window Width "+this.winWidth);
 
     }
 
@@ -234,20 +250,66 @@ export class ScanScreenComponent implements OnInit{
 
     openScan(event: any){
 
+
       console.log(event.clientX);
       console.log(event.clientY);
-      let event_position: DialogPosition = { left: event.clientX + 'px', top: event.clientY + 'px'};
+      let popupWidth =276;
+      let popupHeight=221;
+      this.midwidth=this.winWidth / 2;
+      let rotationClass: string = '';
+      let event_position: DialogPosition; 
+      let leftPosition:number;
+      if (event.clientX < this.midwidth) {
+       event_position = { left: event.clientX + 'px', top: (event.clientY - 111) + 'px'};
+       console.log("x less than midwidth" )
+    
+      }
+      
+      else {
+        const availableSpaceOnRight = this.winWidth - event.clientX;
+        if (event.clientX >= this.winWidth - popupWidth) {
+
+           leftPosition = event.clientX - (popupWidth - availableSpaceOnRight);
+          // Popup appears on the extreme right
+          rotationClass = 'popup-rotate';
+        }
+         event_position= { left: leftPosition + 'px', top: (event.clientY - 111) + 'px'};
+      }
+
       let direction:string ='rtl'; // to be decided based on click position
       this.modalService.setData({
         from : this.const_type
       });
-      this.modalService.openModal(FeaturePopoverComponent,event_position);
+      console.log("rotation class "+ rotationClass);
+      this.modalService.openModal(FeaturePopoverComponent,event_position,rotationClass);
     }
 
     openSize(event: any){
+
+      let popupWidth =236;
+      let popupHeight=469;
+      this.midwidth=this.winWidth / 2;
+      this.midHeight=this.winHeight/2;
       console.log(event.clientX);
       console.log(event.clientY);
-      let event_position: DialogPosition = { left: event.clientX + 'px', top: event.clientY + 'px'};
+      let event_position: DialogPosition;
+      let leftPosition:number;
+
+      if (event.clientX < this.midwidth) {
+        event_position = { left: event.clientX + 'px', top: (event.clientY - 235) + 'px'};
+        console.log("x less than midwidth" )
+     
+       }
+       else {
+        const availableSpaceOnRight = this.winWidth - event.clientX;
+        if (event.clientX >= this.winWidth - popupWidth) {
+
+           leftPosition = event.clientX - (popupWidth - availableSpaceOnRight);
+          
+        }
+         event_position= { left: leftPosition + 'px', top: (event.clientY - 235) + 'px'};
+      }
+      //event_position = { left: event.clientX + 'px', top: event.clientY + 'px'};
       let direction:string ='rtl'; // to be decided based on click position
       this.modalService.setData({
         from : this.const_size
