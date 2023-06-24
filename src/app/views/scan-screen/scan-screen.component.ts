@@ -77,7 +77,7 @@ export class ScanScreenComponent implements OnInit{
   emailValidation2 : string;
 
   fileName: string = '';
-  defaultFilename : string ='Xerox Scan';
+  //defaultFilename : string ='Xerox Scan';
   resourceString : resourceString[];
 
   resFilename :string;
@@ -199,6 +199,10 @@ export class ScanScreenComponent implements OnInit{
       },
       //{ validators: this.emailMatchValidator },
      );
+
+     if(AppModule.email !== ''){
+      this.noteConvertorForm.controls["email"].setValue(AppModule.email.toString());
+     }
     }
 
     emailFormatValidator(control: AbstractControl): ValidationErrors | null { 
@@ -227,6 +231,7 @@ export class ScanScreenComponent implements OnInit{
       });
       //this.fileNameSpan.nativeElement.textContent = this.defaultFilename;
       this.getDefaultValues();
+      this.errorHandlerService.wncWasReset();
     }
     
 
@@ -331,7 +336,7 @@ scan() {
   this.logger.trackTrace("mainDeviceconfig()...");
   const regex = /^[^\\\/\:\*\?\"\<\>\|]+$/;
 
-  this.fileName =  this.noteConvertorForm.controls["fileName"].value == '' ? this.defaultFilename : this.noteConvertorForm.controls["fileName"].value; //this.fileNameSpan.nativeElement.textContent
+  this.fileName =  this.noteConvertorForm.controls["fileName"].value == '' ? this.resFilename : this.noteConvertorForm.controls["fileName"].value; //this.fileNameSpan.nativeElement.textContent
  //alert(this.fileName);
   if (regex.test(this.fileName)) {
     this.logger.trackTrace("mainDeviceconfig() -> if (regex.test(fileName))");
@@ -394,7 +399,7 @@ Templatecallback_success() {
     fileFormat : this.selectedFileFormatOptions,
     size : this.selectedSizeOptions,
     type : this.selectedTypeOptions,
-    fileName : this.noteConvertorForm.controls["fileName"].value == '' ? this.defaultFilename : this.noteConvertorForm.controls["fileName"].value,//this.fileNameSpan.nativeElement.textContent
+    fileName : this.noteConvertorForm.controls["fileName"].value == '' ? this.resFilename : this.noteConvertorForm.controls["fileName"].value,//this.fileNameSpan.nativeElement.textContent
     email :  this.noteConvertorForm.controls["email"].value
   }
   this.logger.trackTrace('Templatecallback_success() file name before:' + this.selectedNote.fileName);

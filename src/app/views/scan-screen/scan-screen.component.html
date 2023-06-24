@@ -60,14 +60,14 @@
             <div class="grid-row themed themed-header">
               <div class="column-10-50 column-offset-10-2 column-5-g-48 column-offset-5-c-1">
 
-                <button
+                <button *ngIf="this.resFilename" 
                   #button 
                   type="button"
                   class="btn btn-medium subjectButton"
                   style="text-align:left;"
                   tabindex="-1"
                   (click)="onClick()"
-                  [placeholder]="this.defaultFilename"
+                  [placeholder]="this.resFilename"
                   additionalText="{{this.resfilenametemp}}"
                   [preventDirectiveInit]="this.preventDirectiveInit" 
                   editableField
@@ -75,11 +75,11 @@
                   <span id="_glyph" class="xrx-paperclip" style="line-height: 100%;text-align:left;"></span>
                 </button>
 
-                <input
+                <input *ngIf="this.resFilename"
                   #inputField
                   type="text"
                   formControlName="fileName"
-                  [placeholder]="this.defaultFilename"
+                  [placeholder]="this.resFilename"
                   additionalText="{{this.resfilenametemp}}"
                   class="editable-field-input option-text"
                   maxlength="1000"

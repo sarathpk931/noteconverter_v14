@@ -83,7 +83,7 @@ import { TextFieldDirective } from './Directives/text-field.directive';
     ScrollingModule 
   ],
   providers: [
-    /* {
+     {
     provide :APP_INITIALIZER,
     useFactory:()=>  Device,
     multi:true,
@@ -92,7 +92,7 @@ import { TextFieldDirective } from './Directives/text-field.directive';
     provide :APP_INITIALIZER,
     useFactory:()=> Session,
     multi:true,
-  }, */
+  }, /**/
   {
   provide: ErrorHandler,
   useClass: ApplicationinsightsAngularpluginErrorService,
@@ -121,25 +121,31 @@ export class AppModule {
   public static isThirdGenBrowser : boolean;
   public static isVersalink : boolean;
   public static isAltalink : boolean;
+  public static email : string;
  }
 
 export async function Session(url: string,timeout:number,async:boolean, ldap: string): Promise<any> {
   return new Promise((resolve, reject) => {
     function successCallbackSession (envelope: string, response: string) {
       var data =xrxSessionParseGetSessionInfo(response);
-      const parser = new DOMParser();
-      const xmlDoc = parser.parseFromString(data.firstChild, 'text/xml');
+      //console.log(data);
+      
+      // const parser = new DOMParser();
+      // const xmlDoc = parser.parseFromString(data.firstChild, 'text/xml');
       
       var userEmail = "";
-      if (data !== null) {
-        var userName = xrxGetElementValue(xmlDoc, "username");
+      if (data.firstChild !== null) {
+        var userName = xrxGetElementValue(data.firstChild, "username");
+        //alert('username :'+ userName);
         //const userName = data.firstChild.getElementsByTagName('qualifiedUsername')[0].firstChild.textContent;//alert("Username :"+ userName);
         if (userName !== null && userName.toLowerCase() !== 'guest')
-          userEmail = xrxGetElementValue(data, "from");
+          userEmail = xrxGetElementValue(data.firstChild, "from");//alert('email :'+ userEmail);
         const result ={
           
           email:userEmail
         };
+        AppModule.email = result.email.toString();//alert("AppModuule :"+ AppModule.email);
+        //alert('success :'+ result.email.toString());
         resolve(result.email.toString());
       }
     };
@@ -147,6 +153,8 @@ export async function Session(url: string,timeout:number,async:boolean, ldap: st
       result={
         email:""
       };
+      //alert('error :'+result.email.toString());
+      AppModule.email = '';
       reject(result);
     };
     xrxSessionGetSessionInfo(
