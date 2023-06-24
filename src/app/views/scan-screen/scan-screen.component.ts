@@ -45,7 +45,8 @@ export class ScanScreenComponent implements OnInit{
     this.winHeight = window.innerHeight;
     this.winWidth = window.innerWidth;
   }
-  //@ViewChild('fileNameSpan', { static: true }) fileNameSpan: ElementRef;
+  @ViewChild('button') button: ElementRef;
+  @ViewChild('inputField') inputField: ElementRef;
   showPrivacySetting=false;
   noteConvertorForm:  FormGroup;
 
@@ -130,7 +131,7 @@ export class ScanScreenComponent implements OnInit{
       this.resfilenametemp= '{0} [Date & Time].{1}';
       this.resourceStringService.loadResources().then(response=>{
         this.resFilename=response.SDE_XEROX_SCAN.toString();
-       // this.fileextension="docx";
+        this.fileextension="docx";
         this.resfilenametemp=response.SDE_FMTSTR_DATE_TIMEFMTSTR.toString();
         
         //this.fileName=this.formatfilename(this.resFilename,this.fileextension,this.resfilenametemp);  //' [Date & Time].'
@@ -178,7 +179,6 @@ export class ScanScreenComponent implements OnInit{
     }
     
     formatfilename(fileName: string, fileExtension: string,resfilename:string): string{
-      
       const template = resfilename.replace('{0}', fileName).replace('{1}', fileExtension);
       return template;
     }
@@ -228,8 +228,12 @@ export class ScanScreenComponent implements OnInit{
         email:'',
         //confirmEmail:'',
         fileName : ''
-      });
-      //this.fileNameSpan.nativeElement.textContent = this.defaultFilename;
+      }); 
+      this.fileName = this.resFilename;
+      this.inputField.nativeElement.value = this.resFilename;console.log(this.inputField.nativeElement.value);
+      this.button.nativeElement.innerText =this.formatfilename(this.resFilename,this.fileextension,this.resfilenametemp);
+      this.scanOptionService.isPlaceholderVisible = true;
+      //console.log('reset :'+this.scanOptionService.isPlaceholderVisible);
       this.getDefaultValues();
       this.errorHandlerService.wncWasReset();
     }
