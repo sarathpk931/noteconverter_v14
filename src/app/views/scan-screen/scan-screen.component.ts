@@ -247,8 +247,28 @@ export class ScanScreenComponent implements OnInit{
 
       console.log(event.clientX);
       console.log(event.clientY);
-      let event_position: DialogPosition = { left: event.clientX + 'px', top: event.clientY + 'px'};
-
+      //let event_position: DialogPosition = { left: event.clientX + 'px', top: event.clientY + 'px'};
+      let popupWidth =276;
+      let popupHeight=221;
+      this.midwidth=this.winWidth / 2;
+      let event_position: DialogPosition;
+      let leftPosition:number;
+      if (event.clientX < this.midwidth) {
+        event_position = { left: event.clientX + 'px', top: (event.clientY - 111) + 'px'};
+        console.log("x less than midwidth" )
+     
+       }
+       
+       else {
+         const availableSpaceOnRight = this.winWidth - event.clientX;
+         if (event.clientX >= this.winWidth - popupWidth) {
+ 
+            leftPosition = event.clientX - (popupWidth - availableSpaceOnRight);
+           // Popup appears on the extreme right
+           //rotationClass = 'popup-rotate';
+         }
+          event_position= { left: leftPosition + 'px', top: (event.clientY - 111) + 'px'};
+       }
       let direction:string ='rtl';
       this.modalService.setData({
         from : this.const_fileFormat
@@ -299,13 +319,15 @@ export class ScanScreenComponent implements OnInit{
       let popupHeight=469;
       this.midwidth=this.winWidth / 2;
       this.midHeight=this.winHeight/2;
+      const popupTop = this.winHeight - event.clientY;
       console.log(event.clientX);
       console.log(event.clientY);
+      console.log("popupTop in height px" + popupTop)
       let event_position: DialogPosition;
       let leftPosition:number;
 
       if (event.clientX < this.midwidth) {
-        event_position = { left: event.clientX + 'px', top: (event.clientY - 235) + 'px'};
+        event_position = { left: event.clientX + 'px', top: (event.clientY - 325) + 'px'};
         console.log("x less than midwidth" )
      
        }
@@ -316,7 +338,7 @@ export class ScanScreenComponent implements OnInit{
            leftPosition = event.clientX - (popupWidth - availableSpaceOnRight);
           
         }
-         event_position= { left: leftPosition + 'px', top: (event.clientY - 235) + 'px'};
+         event_position= { left: leftPosition + 'px', top: (event.clientY - 325) + 'px'};
       }
       //event_position = { left: event.clientX + 'px', top: event.clientY + 'px'};
       let direction:string ='rtl'; // to be decided based on click position
