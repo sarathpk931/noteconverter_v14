@@ -52,7 +52,8 @@ ngOnInit(){
     newValue = newValue.replace('{1}', this.extension);
 
     this.buttonElement = this.renderer.selectRootElement('.subjectButton');
-    this.buttonElement.innerText = newValue;
+    this.buttonElement.innerHTML = '<span id="_glyph" class="xrx-paperclip" style="line-height: 100%;"></span>&nbsp&nbsp' + newValue;
+    //this.buttonElement.innerText = newValue;
 
   }
 
@@ -65,7 +66,7 @@ ngOnInit(){
       }
 
       if(this.buttonElement.innerText.includes('.')){
-        this.buttonElement.innerText = this.buttonElement.innerText.substring(0,this.buttonElement.innerText.lastIndexOf('.')) + this.extension;
+        this.buttonElement.innerHTML = '<span id="_glyph" class="xrx-paperclip" style="line-height: 100%;"></span>' + this.buttonElement.innerText.substring(0,this.buttonElement.innerText.lastIndexOf('.')) + this.extension;
       }
     }
   })
@@ -106,7 +107,7 @@ ngOnInit(){
     const isTextbox = this.elementRef.nativeElement.tagName.toLowerCase() === 'input';
     if (isTextbox) {
       this.elementRef.nativeElement.style.display = 'inline-block';     
-      this.buttonElement.innerText = this.inputField.value
+      this.buttonElement.innerHTML = '<span id="_glyph" class="xrx-paperclip" style="line-height: 100%;"></span>&nbsp&nbsp' + this.inputField.value
 
       var enteredValue = this.elementRef.nativeElement.value.trim();
       this.scanOptionService.tempTextValue = enteredValue; 
@@ -120,7 +121,7 @@ ngOnInit(){
         newValue = newValue.replace('{0}', this.defaultText);
         this.scanOptionService.isPlaceholderVisible = true;
         this.inputField.value = newValue;
-        this.buttonElement.innerText = newValue;
+        this.buttonElement.innerHTML = '<span id="_glyph" class="xrx-paperclip" style="line-height: 100%;"></span>&nbsp&nbsp' + newValue;
       }
       else{
         this.inputPlaceholder = '';
@@ -129,7 +130,7 @@ ngOnInit(){
 
         newValue = newValue.replace('{0}', enteredValue);
         this.inputField.value =  newValue;
-        this.buttonElement.innerText = newValue;
+        this.buttonElement.innerHTML = '<span id="_glyph" class="xrx-paperclip" style="line-height: 100%;"></span>&nbsp&nbsp' + newValue;
         this.scanOptionService.isPlaceholderVisible = false;
 
       }
