@@ -17,12 +17,24 @@ export class FeaturePopoverComponent implements OnInit {
 
     fileFormat : FileFormat;
     fileFormatOption : FileFormatOption[];
-    from : string;
+    from : any;
     resourceString : resourceString[];
     scrollBarsFixed = false;
+
     @Output() objectSelected = new EventEmitter<any>();
     @Input() feature: any;
     @Input() event: MouseEvent;
+
+    const_fileFormat : string = "fileFormat";
+    const_type : string = "type";
+    const_size : string = 'size';
+    selectedFileFormat : FileFormat;
+    selectedType : FileFormat;
+    selectedSize : FileFormat;
+    anyFileFormat = {from : 'fileFormat'};
+    anyType = {from : 'type'};
+    anySize = {from : 'size'};
+    selectedOption: FileFormatOption;
         
 
     constructor(
@@ -44,12 +56,27 @@ export class FeaturePopoverComponent implements OnInit {
       this.fileFormat = this.scanOptionsService.getFileFormat(this.from);
       this.fileFormatOption = this.fileFormat.options;
       
+      //console.log(this.from.from);console.log(this.const_fileFormat);debugger;
+      if(this.from.from == this.const_fileFormat)
+      {
+        this.selectedFileFormat = this.scanOptionsService.getFileFormat(this.anyFileFormat);
+        this.selectedOption = this.selectedFileFormat.options.find(item => item.isDefault === true);
+      }
+      else if (this.from.from == this.const_type){
+        this.selectedType = this.scanOptionsService.getFileFormat(this.anyType);
+       this.selectedOption = this.selectedType.options.find(item => item.isDefault === true);
+      }
+      else if (this.from.from == this.const_size){
+        this.selectedSize = this.scanOptionsService.getFileFormat(this.anySize);
+        this.selectedOption = this.selectedSize.options.find(item => item.isDefault === true);
+      }
       
     }
 
     
 
     selectOption(option : any){
+      this.selectOption = option;
       this.scanOptionsService.setSelectedOption(option,this.from);
       this.objectSelected.emit(option);
       this.modalService.closeModal(this.mtModalRef);
