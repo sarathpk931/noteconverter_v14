@@ -34,8 +34,10 @@ export class FeaturePopoverComponent implements OnInit {
     anyFileFormat = {from : 'fileFormat'};
     anyType = {from : 'type'};
     anySize = {from : 'size'};
-    selectedOption: FileFormatOption;
-        
+    selectedFileFormatOption: FileFormatOption;
+    selectedTypeOption: FileFormatOption;
+    selectedSizeOption: FileFormatOption; 
+    selectedOption : FileFormatOption;
 
     constructor(
                 private scanOptionsService : ScanOptionsService, 
@@ -55,26 +57,58 @@ export class FeaturePopoverComponent implements OnInit {
       });
       this.fileFormat = this.scanOptionsService.getFileFormat(this.from);
       this.fileFormatOption = this.fileFormat.options;
-      
-      //console.log(this.from.from);console.log(this.const_fileFormat);debugger;
+
       if(this.from.from == this.const_fileFormat)
       {
         this.selectedFileFormat = this.scanOptionsService.getFileFormat(this.anyFileFormat);
-        this.selectedOption = this.selectedFileFormat.options.find(item => item.isDefault === true);
+        this.selectedFileFormatOption = this.selectedFileFormat.options.find(item => item.isDefault === true);
       }
       else if (this.from.from == this.const_type){
         this.selectedType = this.scanOptionsService.getFileFormat(this.anyType);
-       this.selectedOption = this.selectedType.options.find(item => item.isDefault === true);
+       this.selectedTypeOption = this.selectedType.options.find(item => item.isDefault === true);
       }
       else if (this.from.from == this.const_size){
         this.selectedSize = this.scanOptionsService.getFileFormat(this.anySize);
-        this.selectedOption = this.selectedSize.options.find(item => item.isDefault === true);
+        this.selectedSizeOption = this.selectedSize.options.find(item => item.isDefault === true);
       }
       
+      this.scanOptionsService.selectedFileFormatC.subscribe(object =>{
+        if(object){
+          this.selectedFileFormatOption = object;
+          
+        }
+      })
+
+      this.scanOptionsService.selectedTypeC.subscribe(type =>{
+        if(type){
+          this.selectedTypeOption = type;
+        }
+      })
+
+      this.scanOptionsService.selectedSizeC.subscribe(size =>{
+        if(size){
+          this.selectedSizeOption = size;
+        }
+      })
     }
 
-    
+    //default selection
+    getNgClass(option: any): any{
 
+      if(this.from.from == this.const_fileFormat)
+        {
+          return { selected : option === this.selectedFileFormatOption };
+        }
+        else if (this.from.from == this.const_type){
+          return { selected : option === this.selectedTypeOption };
+        }
+        else if (this.from.from == this.const_size){
+          return { selected : option === this.selectedSizeOption};
+        }
+      return ;
+    }
+
+    //when an option is selected
     selectOption(option : any){
       this.selectOption = option;
       this.scanOptionsService.setSelectedOption(option,this.from);
