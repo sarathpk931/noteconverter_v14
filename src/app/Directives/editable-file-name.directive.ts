@@ -36,7 +36,7 @@ ngOnInit(){
 
   this.inputField = document.querySelector('input[type="text"]');
   if (this.inputField) {
-    this.inputField.style.display = 'none';   
+    this.inputField.style.display = 'none';      
   }
 
   if(!this.preventDirectiveInit){
@@ -55,6 +55,8 @@ ngOnInit(){
     this.buttonElement.innerHTML = '<span id="_glyph" class="xrx-paperclip" style="line-height: 100%;"></span>&nbsp&nbsp' + newValue;
     //this.buttonElement.innerText = newValue;
 
+    this.appendGlyphToInput();
+
   }
 
   this.scanOptionService.selectedFileFormatC.subscribe(object =>{
@@ -71,6 +73,23 @@ ngOnInit(){
     }
   })
 
+}
+
+private appendGlyphToInput() {
+
+  const existingGlyph = this.inputField.parentNode.querySelector('#_glyphTextbox') as HTMLElement;
+  if (existingGlyph) {
+    //existingGlyph.style.display = 'inline-block';
+    return;
+  }
+
+  const attachmentGlyph = this.renderer.createElement('span');
+  attachmentGlyph.id = '_glyphTextbox';
+  attachmentGlyph.className = 'xrx-paperclip';
+  attachmentGlyph.style.lineHeight = '100%';
+  attachmentGlyph.innerHTML = '&nbsp;';
+  attachmentGlyph.style.display = 'none';
+  this.inputField.parentNode.insertBefore(attachmentGlyph, this.inputField.nextSibling);
 }
 
   @HostListener('click') onClick() {
@@ -97,6 +116,11 @@ ngOnInit(){
     else{
       this.inputField.value = this.scanOptionService.tempTextValue;
       this.scanOptionService.isPlaceholderVisible = false;
+    }
+    const attachmentGlyph = this.inputField.parentNode.querySelector('#_glyphTextbox') as HTMLElement;
+    if (attachmentGlyph) {
+      attachmentGlyph.style.display = 'inline-block';
+      attachmentGlyph.classList.add('option-text');
     }
     this.inputField.focus();
     this.inputField.select();
@@ -133,6 +157,11 @@ ngOnInit(){
         this.buttonElement.innerHTML = '<span id="_glyph" class="xrx-paperclip" style="line-height: 100%;"></span>&nbsp&nbsp' + newValue;
         this.scanOptionService.isPlaceholderVisible = false;
 
+      }
+      const attachmentGlyph = this.inputField.parentNode.querySelector('#_glyphTextbox')  as HTMLElement;
+      if (attachmentGlyph) {
+        attachmentGlyph.classList.remove('option-text');
+        attachmentGlyph.style.display = 'none';
       }
 
       this.inputField.style.display = 'none';
