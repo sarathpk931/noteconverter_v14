@@ -445,17 +445,17 @@ Templatecallback_success() {
   this.errorHandlerService.DEVICE_EIP_SCANV2_SERVICES_DISABLED();
 }
 
-onClick(){
-  this.isbuttonVisible = false;
-}
+// onClick(){
+//   this.isbuttonVisible = false;
+// }
 
-onBlur(){
+// onBlur(){
 
-  if (!this.isbuttonVisible) {
-    this.isbuttonVisible = true;
-    this.preventDirectiveInit = true;     
-  }
-}
+//   if (!this.isbuttonVisible) {
+//     this.isbuttonVisible = true;
+//     this.preventDirectiveInit = true;     
+//   }
+// }
 
 onEmailBlur(){
   

@@ -19,6 +19,7 @@ export class EditableFieldDirective {
 
   private defaultText: string;
   private inputPlaceholder : string;
+  private btnPaperClip : string ;
 
   selectedFileFormat : FileFormat;
   selectedFileFormatOptions : FileFormatOption;
@@ -50,9 +51,10 @@ ngOnInit(){
     newValue =   this.additionalText ;
     newValue = newValue.replace('{0}', (this.placeholder || ''));
     newValue = newValue.replace('{1}', this.extension);
+    this.btnPaperClip = '<span id="_glyph" class="xrx-paperclip" style="line-height: 100%;"></span>&nbsp&nbsp;';
 
     this.buttonElement = this.renderer.selectRootElement('.subjectButton');
-    this.buttonElement.innerHTML = '<span id="_glyph" class="xrx-paperclip" style="line-height: 100%;"></span>&nbsp&nbsp' + newValue;
+    this.buttonElement.innerHTML = this.btnPaperClip + newValue;
     //this.buttonElement.innerText = newValue;
 
     this.appendGlyphToInput();
@@ -68,7 +70,7 @@ ngOnInit(){
       }
 
       if(this.buttonElement.innerText.includes('.')){
-        this.buttonElement.innerHTML = '<span id="_glyph" class="xrx-paperclip" style="line-height: 100%;"></span>' + this.buttonElement.innerText.substring(0,this.buttonElement.innerText.lastIndexOf('.')) + this.extension;
+        this.buttonElement.innerHTML = this.btnPaperClip + this.buttonElement.innerText.substring(0,this.buttonElement.innerText.lastIndexOf('.')) + this.extension;
       }
     }
   })
@@ -131,7 +133,7 @@ private appendGlyphToInput() {
     const isTextbox = this.elementRef.nativeElement.tagName.toLowerCase() === 'input';
     if (isTextbox) {
       this.elementRef.nativeElement.style.display = 'inline-block';     
-      this.buttonElement.innerHTML = '<span id="_glyph" class="xrx-paperclip" style="line-height: 100%;"></span>&nbsp&nbsp' + this.inputField.value
+      this.buttonElement.innerHTML = this.btnPaperClip + this.inputField.value
 
       var enteredValue = this.elementRef.nativeElement.value.trim();
       this.scanOptionService.tempTextValue = enteredValue; 
@@ -145,7 +147,7 @@ private appendGlyphToInput() {
         newValue = newValue.replace('{0}', this.defaultText);
         this.scanOptionService.isPlaceholderVisible = true;
         this.inputField.value = newValue;
-        this.buttonElement.innerHTML = '<span id="_glyph" class="xrx-paperclip" style="line-height: 100%;"></span>&nbsp&nbsp' + newValue;
+        this.buttonElement.innerHTML = this.btnPaperClip + newValue;
       }
       else{
         this.inputPlaceholder = '';
@@ -154,7 +156,7 @@ private appendGlyphToInput() {
 
         newValue = newValue.replace('{0}', enteredValue);
         this.inputField.value =  newValue;
-        this.buttonElement.innerHTML = '<span id="_glyph" class="xrx-paperclip" style="line-height: 100%;"></span>&nbsp&nbsp' + newValue;
+        this.buttonElement.innerHTML = this.btnPaperClip + newValue;
         this.scanOptionService.isPlaceholderVisible = false;
 
       }
