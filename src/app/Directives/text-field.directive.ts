@@ -1,4 +1,4 @@
-import { Directive, ElementRef, HostBinding, HostListener, Input } from '@angular/core';
+import { Directive, ElementRef, HostBinding, HostListener, Input, } from '@angular/core';
 
 @Directive({
   selector: 'appTextField'
@@ -16,16 +16,17 @@ export class TextFieldDirective {
 
   constructor(private elementRef: ElementRef<HTMLInputElement>) { }
 
-  @HostListener('click') onClick() { //alert("focus");
+  @HostListener('click') onClick() { 
     this.editMode = true; 
     this.hostClasses =`${this.editableClass}`;
     this.editableText = this.initialValue || ''; 
+    const childNode = this.elementRef.nativeElement.firstElementChild as HTMLInputElement;
 
-    this.elementRef.nativeElement.focus(); 
-    this.elementRef.nativeElement.select(); 
+    childNode.focus(); 
+    childNode.select(); 
   } 
 
-  @HostListener('blur') onBlur() { //alert("blur");
+  @HostListener('blur') onBlur() { 
     this.hostClasses =`${this.readOnlyClass}`;
     this.editMode = false; 
   } 
