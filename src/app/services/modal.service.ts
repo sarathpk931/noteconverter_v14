@@ -10,6 +10,10 @@ import {AppModule} from '../../app/app.module';
   providedIn: 'root'
 })
 export class ModalService {
+  winHeight: number;
+  winWidth: number;
+  midHeight:number;
+  midwidth:number;
 
   deviceInformation:any;
   isThirdGenBrowser : boolean = AppModule.isThirdGenBrowser;
@@ -20,7 +24,13 @@ export class ModalService {
   constructor(
     public dialog : MatDialog,
     public  app : AppComponent    
-    ) { }
+    ) { 
+      this.winHeight = window.innerHeight;
+      this.winWidth = window.innerWidth;
+      this.midHeight=this.winHeight/2;
+      this.midwidth= this.midwidth/2
+
+    }
 
   showProgressAlert(title: string, message : string):MatDialogRef<ProgressAlertComponent>{
     return this.dialog.open(ProgressAlertComponent, {
@@ -43,8 +53,8 @@ export class ModalService {
       width: '1024px',
       height : '',
       position: {
-       top: '150px',
-       left: '350px'
+       top: this.midHeight+'px',
+       left: this.midwidth+ 'px'
     },
     panelClass:'makeItMiddle',
       data:{closeBtnName:'Close'},
