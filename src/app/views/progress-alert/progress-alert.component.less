@@ -1,18 +1,19 @@
 @import '../basic-alert/basic-alert.component.less';
 
-progress-alert {
-    &:extend(basic-alert all);
-    .progress-spinner {
-        position: relative;
-        background-image: url('../../../assets/Content/Images/spin.gif');
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: 128px;
-        height: 128px;
-        margin-bottom: 10px;
-    }
+:host{
+        .progress-alert {
+            &:extend(basic-alert all);
+            .progress-spinner {
+                position: relative;
+                background-image: url('../../../assets/Content/Images/spin.gif');
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: 128px;
+                height: 128px;
+                margin-bottom: 10px;
+            }
+        }
 }
-
 
 /* .alert-popup {
     position: fixed;
