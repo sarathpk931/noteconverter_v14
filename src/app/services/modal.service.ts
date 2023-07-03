@@ -24,13 +24,7 @@ export class ModalService {
   constructor(
     public dialog : MatDialog,
     public  app : AppComponent    
-    ) { 
-      this.winHeight = window.innerHeight;
-      this.winWidth = window.innerWidth;
-      this.midHeight=this.winHeight/2;
-      this.midwidth= this.midwidth/2
-
-    }
+    ) {}
 
   showProgressAlert(title: string, message : string):MatDialogRef<ProgressAlertComponent>{
     return this.dialog.open(ProgressAlertComponent, {
@@ -47,15 +41,23 @@ export class ModalService {
    }
 
   public openLargeModal(component : any):void{
+  const dialogWidth = 1024;
+  const dialogHeight = 768;
+  const viewportWidth = window.innerWidth;
+  const viewportHeight = window.innerHeight;
 
+  const topPosition = Math.max(0, (viewportHeight - dialogHeight) / 2);
+  const leftPosition = Math.max(0, (viewportWidth - dialogWidth) / 2);
   const dialogRef =
      this.dialog.open(component, {
       width: '1024px',
       height : '',
       position: {
-       top: this.midHeight+'px',
-       left: this.midwidth+ 'px'
-    },
+        top: topPosition + 'px',
+        left: leftPosition + 'px',
+        bottom:'',
+        right:''
+      },
     panelClass:'makeItMiddle',
       data:{closeBtnName:'Close'},
       hasBackdrop : false,
