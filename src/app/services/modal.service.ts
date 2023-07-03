@@ -10,11 +10,6 @@ import {AppModule} from '../../app/app.module';
   providedIn: 'root'
 })
 export class ModalService {
-  winHeight: number;
-  winWidth: number;
-  midHeight:number;
-  midwidth:number;
-
   deviceInformation:any;
   isThirdGenBrowser : boolean = AppModule.isThirdGenBrowser;
 
@@ -25,12 +20,25 @@ export class ModalService {
     public dialog : MatDialog,
     public  app : AppComponent    
     ) {}
+  
+
+  private calculateCenterPosition(dialogWidth: number, dialogHeight: number): DialogPosition {
+      const viewportWidth = window.innerWidth;
+      const viewportHeight = window.innerHeight;
+  
+      const topPosition = Math.max(0, (viewportHeight - dialogHeight) / 2);
+      const leftPosition = Math.max(0, (viewportWidth - dialogWidth) / 2);
+  
+      return { top: topPosition + 'px', left: leftPosition + 'px' };
+  }
 
   showProgressAlert(title: string, message : string):MatDialogRef<ProgressAlertComponent>{
+    
     return this.dialog.open(ProgressAlertComponent, {
       data :{'title': title,'message':message},
-      // panelClass: (!this.isThirdGenBrowser) ? 'allow-outside-interaction' : 'allow-outside-banner-interaction'
-      panelClass: 'progress-bar-modalbox' 
+      //panelClass: (!this.isThirdGenBrowser) ? 'allow-outside-interaction' : 'allow-outside-banner-interaction'
+      //panelClass:'progress-bar-modalbox'
+      
     });
   }
 
@@ -43,22 +51,13 @@ export class ModalService {
   public openLargeModal(component : any):void{
   const dialogWidth = 1024;
   const dialogHeight = 768;
-  const viewportWidth = window.innerWidth;
-  const viewportHeight = window.innerHeight;
-
-  const topPosition = Math.max(0, (viewportHeight - dialogHeight) / 2);
-  const leftPosition = Math.max(0, (viewportWidth - dialogWidth) / 2);
+  const position = this.calculateCenterPosition(dialogWidth, dialogHeight);
   const dialogRef =
      this.dialog.open(component, {
       width: '1024px',
       height : '',
-      position: {
-        top: topPosition + 'px',
-        left: leftPosition + 'px',
-        bottom:'',
-        right:''
-      },
-    panelClass:'makeItMiddle',
+      position: position,
+      panelClass:'makeItMiddle',
       data:{closeBtnName:'Close'},
       hasBackdrop : false,
       disableClose:true

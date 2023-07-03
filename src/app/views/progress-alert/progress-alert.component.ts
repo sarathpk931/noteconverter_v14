@@ -22,7 +22,7 @@ export class ProgressAlertComponent {
   {}
 
   ngOnInit(){
-
+    
    //alert("Progress alert :"+ this.isThirdGenBrowser);
   }
 }

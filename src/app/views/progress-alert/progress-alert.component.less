@@ -2,7 +2,6 @@
 
 :host{
         .progress-alert {
-            &:extend(basic-alert all);
             .progress-spinner {
                 position: relative;
                 background-image: url('../../../assets/Content/Images/spin.gif');
@@ -11,20 +10,39 @@
                 background-size: 128px;
                 height: 128px;
                 margin-bottom: 10px;
-            }
+                
+            }         
+            
         }
-}
 
-/* .alert-popup {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 9999;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: rgba(0, 0, 0, 0.5);
-  }
-   */
+        .alert-popup.alert-background {
+            position: fixed;
+            top: 0px;
+            bottom: 0px;
+            left: 0px;
+            right: 0px;
+            z-index: 9999999999;
+            outline: none;
+            opacity: 0;
+            background: rgba(27, 27, 27, .90);
+        }
+    
+        .alert-popup.alert-background.alert-opacity {
+            opacity: 1;
+        }
+    
+        .alert-popup .alert-container {
+            display: table;
+            margin: 0 auto;
+            height: 100%;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .alert-container .alert-content {
+            display: table-cell;
+            vertical-align: middle;
+            height: 100%;
+        }
+
+}
