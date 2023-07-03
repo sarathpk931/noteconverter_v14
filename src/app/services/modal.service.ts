@@ -42,10 +42,10 @@ export class ModalService {
      this.dialog.open(component, {
       width: '1024px',
       height : '',
-      //position: {
-       // top: '50vh',
-       // left: '50vw'
-    //},
+      position: {
+       top: '150px',
+       left: '350px'
+    },
     panelClass:'makeItMiddle',
       data:{closeBtnName:'Close'},
       hasBackdrop : false,
