@@ -1,12 +1,28 @@
+/**
+ * Privacy Policy Component
+ *
+ * Description: This component is used to show the privacy policy
+ *
+ * Usage:
+ * <app-privacy-policy></app-privacy-policy>
+ *
+ *
+ * Outputs:
+ * - A pop up will be shown with privacy policy.
+ *
+ */
 import { Component,OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MatDialogRef } from '@angular/material/dialog';
+
 import { ModalService} from '../../services/modal.service';
-import { environment } from '../../../environments/environment'
-import { ProgressAlertComponent } from '../progress-alert/progress-alert.component';
 import { ResourcestringService} from '../../services/resourcestring.service';
-import { resourceString} from '../../model/global';
 import { LogService } from '../../services/log.service';
+
+import { environment } from '../../../environments/environment';
+import { resourceString} from '../../model/global';
+import { ProgressAlertComponent } from '../progress-alert/progress-alert.component';
+
 import smoothscroll from 'smoothscroll-polyfill';
 
 
@@ -32,16 +48,14 @@ export class PrivacyPolicyComponent implements OnInit {
     ){}
 
   ngOnInit(): void {
-    //debugger;
-    const progress =  this.modalService.openModalWithoutClose(ProgressAlertComponent,'','') //this.modalService.showProgressAlert('Alert','');
+    
+    const progress =  this.modalService.openModalWithoutClose(ProgressAlertComponent,'','');
     const url = this.env.privacyPolicyUrl;
     //this.smoothscroll.polyfill();
     //smoothscroll.polyfill();
-   
-    //const element = document.getElementById('privacyContent');
-    
+       
     //element.scrollIntoView({behavior : 'smooth'});
-    //alert(element.innerHTML);
+
     this.http.get(url, {responseType:'text'})
       .subscribe({
           next:(response) => {
