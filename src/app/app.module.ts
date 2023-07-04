@@ -47,7 +47,6 @@ import * as _ from 'lodash';
 import { EditableFieldDirective } from './Directives/editable-file-name.directive';
 import { NgScrollableDirective } from './Directives/ng-scrollable.directive';
 import { ActionBarDirective } from './Directives/action-bar.directive';
-import { EditableFieldComponent } from './views/editable-field/editable-field.component';
 
 
 import { ScrollingModule } from '@angular/cdk/scrolling';
@@ -67,7 +66,6 @@ import { TextFieldDirective } from './Directives/text-field.directive';
     AlertBannerComponent,
     NgScrollableDirective,
     ActionBarDirective,
-    EditableFieldComponent,
     TextFieldDirective,
   ],
   imports: [
