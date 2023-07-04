@@ -1,5 +1,9 @@
+
 // Height variables (appears count calculates by raw css)
 @height0: 100%; // Appears 2 times
+:host{
+
+
 
 .alert {
 	z-index: 1500;
@@ -38,4 +42,46 @@
 			}
 		}
 	}
+}
+.alert-popup.alert-background {
+	position: fixed;
+	top: 0px;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+	z-index: 9999999999;
+	outline: none;
+	opacity: 0;
+	background: rgba(27, 27, 27, .90);
+}
+
+.alert-popup.alert-background.alert-opacity {
+	opacity: 1;
+}
+
+.alert-popup .alert-container {
+	display: table;
+	margin: 0 auto;
+	height: 100%;
+	width: 100%;
+	text-align: center;
+}
+
+.alert-container .alert-content {
+	display: table-cell;
+	vertical-align: middle;
+	height: 100%;
+}
+
+.alert-title {
+	font-weight: bold;
+}
+
+.alert-content h1,
+.alert-content h2,
+.alert-content h3,
+.alert-content {
+	color: white !important;
+}
+
 }
