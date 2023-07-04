@@ -1,10 +1,17 @@
+/**
+ * This sevice contains functions used to log traces and exception to azure environment
+ * 
+ */
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { StorageService } from '../services/storage.service';
-import {environment} from '../../environments/environment';
 import { AngularPlugin } from '@microsoft/applicationinsights-angularplugin-js';
 import { ApplicationInsights, Exception } from '@microsoft/applicationinsights-web';
 import { Router } from '@angular/router';
+
+import { StorageService } from '../services/storage.service';
+import {environment} from '../../environments/environment';
+
+
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +28,7 @@ export class LogService {
         instrumentationKey: this.env.instrumentationKey,
         enableAutoRouteTracking: true
     },
-}); 
+  }); 
 
   constructor(
     private http: HttpClient,
@@ -31,8 +38,6 @@ export class LogService {
     this.storageProvider = this.storageService.getLocalStorage(true);
     this.appInsights.loadAppInsights();
      
-    //const angularPlugin = new AngularPlugin();
-    //this.appInsights.addTelemetryInitializer(angularPlugin);
     this.appInsights.trackPageView();
   }
 

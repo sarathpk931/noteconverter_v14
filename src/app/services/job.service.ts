@@ -1,9 +1,10 @@
+/**
+ * This sevice contains functions used in scan functionality, where related scan job is created
+ * 
+ */
+
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders,HttpErrorResponse } from '@angular/common/http';
-import {throwError} from 'rxjs';
-import {catchError} from 'rxjs/operators';
-import { ApiService } from './api.service';
-import { ConfigurationService } from './configuration.service';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { LogService } from './log.service';
 import {environment} from '../../environments/environment';
 import {AppModule} from '../../app/app.module';
@@ -19,8 +20,7 @@ export class JobService {
   env = environment;
 
 
-  constructor(private http: HttpClient, private apiService: ApiService,
-    private configurationService: ConfigurationService, private logService: LogService) { }
+  constructor(private http: HttpClient, private logService: LogService) { }
 
     registerJob(featureValues: any) {
 
@@ -53,11 +53,11 @@ export class JobService {
       const request = {
         job: job
       };
- //this.apiService.apiUrl
+      //this.apiService.apiUrl
       return this.http.post(this.env.wncAddress+("/api/v1/job"), request, config).toPromise()
         .then((result: any) => {
           this.logService.trackTrace('jobService -> registerJob -> success -> result.data:' + result);
-          return result;//.data
+          return result;
         })
         .catch((error: any) => {
           this.logService.trackTrace('jobService -> registerJob -> ERROR...');

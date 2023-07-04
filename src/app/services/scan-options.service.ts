@@ -1,8 +1,11 @@
+/**
+ * This sevice contains functions used to initialize or hold several variable values 
+ * used in scan functioanlity and pop up selection
+ */
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { LogService } from './log.service';
-import { FileFormat,FileFormatOption,ScanFeatureOption,ScanFeature,selectedNote} from '../model/global';
-import { Strings } from '../model/global';
+import { FileFormat,FileFormatOption,ScanFeature,selectedNote,Strings} from '../model/global';
 
 @Injectable({
   providedIn: 'root'
@@ -181,6 +184,7 @@ export class ScanOptionsService {
     }); */
   }
 
+  //return corresponding option based on the parameter passed
     getFileFormat(feature : any): FileFormat {
       if(feature.from == this.const_fileFormat)
       {

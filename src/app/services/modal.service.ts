@@ -1,8 +1,14 @@
+/**
+ * This sevice contains functions used to open components as a pop up 
+ * 
+ */
+
 import { Injectable } from '@angular/core';
 import {MatDialog,MatDialogRef,DialogPosition} from '@angular/material/dialog';
+import { BehaviorSubject, timer} from 'rxjs';
+
 import { ProgressAlertComponent} from '../views/progress-alert/progress-alert.component'; 
 import {AppComponent} from '../app.component';
-import { BehaviorSubject, timer} from 'rxjs';
 import {AppModule} from '../../app/app.module';
 
 
@@ -32,22 +38,22 @@ export class ModalService {
       return { top: topPosition + 'px', left: leftPosition + 'px' };
   }
 
+  //function to show progress alert as a pop up
   showProgressAlert(title: string, message : string):MatDialogRef<ProgressAlertComponent>{
     
     return this.dialog.open(ProgressAlertComponent, {
-      data :{'title': title,'message':message},
-      //panelClass: (!this.isThirdGenBrowser) ? 'allow-outside-interaction' : 'allow-outside-banner-interaction'
-      //panelClass:'progress-bar-modalbox'
-      
+      data :{'title': title,'message':message},      
     });
   }
 
+  //function to close the passed reference of modal pop up
   closeModal(modalRef :MatDialogRef<any>){
     if(modalRef){
       modalRef.close();
     }
    }
 
+   //function to open large pop up 
   public openLargeModal(component : any):void{
   const dialogWidth = 1024;
   const dialogHeight = 768;
@@ -64,6 +70,7 @@ export class ModalService {
     });
   }
 
+  //function to open a pop up without a close button
   public openModalWithoutClose(component : any,title: string,message : string)
   {
     return this.dialog.open(component, {
@@ -72,6 +79,7 @@ export class ModalService {
 
   }
 
+  //set data to fromData
   setData(data:any){
     this.fromData.next(data);
   }
@@ -87,26 +95,21 @@ export class ModalService {
       panelClass: 'custom-modalbox',
       position: dialog_postion,
       
-      //direction: ModalDirection
-      
     });
     
     dialogRef.afterClosed().subscribe(result => {
-      //console.log(`Dialog result: ${result}`);
+
     });
     return dialogRef;
   }
   
+  //function to open a modal with title
   public openModalWithTitle(component : any,title: string,message : string){
 
     this.dialog.closeAll();
     this.dialog.openDialogs.pop();
     return  this.dialog.open(component, {
       data :{'title': title,'message':message},
-      // maxWidth: '100vw',
-      // maxHeight: '100vh',
-      // height: '100%',
-      // width: '100%'
     });
 
   }
@@ -114,21 +117,21 @@ export class ModalService {
 
   public showAlert(component : any,title: string,message : string)
   {
-
      this.dialog.open(component, {
       data :{'title': title,'message':message}
     });
-
     timer(3000).subscribe(()=>{
       this.dialog.closeAll();
     })
   }
 
+  //function to close all open modals
   public closeAllModals()
   {
     this.dialog.closeAll();
   }
 
+  //function to open a pop up with some paramters 
   public openComponentModal(component: any,data:any)
   {
     this.dialog.closeAll();

@@ -1,5 +1,10 @@
+/**
+ * This sevice contains functions used to create template for the scan
+ */
+
 import { Injectable } from '@angular/core';
 import { Location } from '@angular/common';
+
 import { ApiService } from './api.service';
 import { LogService } from './log.service';
 import * as _ from 'lodash';
@@ -262,10 +267,8 @@ export class ScanTemplateService {
     // Get the formatting function.
     const fun = this.getValueForKey(typeName);
    
-    // Can we validate?
     if (fun) {
 
-      // Do we have a validation function? If not we might be able to use the simple validation function.
       const validateFunction = fun?.validate ||
         ((fun?.supportSimpleValidation && fun.supportSimpleValidation == true) ? this.validateAgainstArray : null);
 

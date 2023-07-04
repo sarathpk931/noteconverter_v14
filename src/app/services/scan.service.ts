@@ -1,27 +1,33 @@
+/**
+ * This sevice contains functions used for scan functionality
+ */
+
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';//,HttpErrorResponse
+import { HttpClient } from '@angular/common/http';
 import { Observable, throwError ,Subject} from 'rxjs';
 import { catchError } from 'rxjs/operators';
+
 import { ScanOptionsService } from '../../app/services/scan-options.service';
 import { JobService } from './job.service';
-//import { AppComponent } from '../../app/app.component';
 import { ModalService } from '../../app/services/modal.service';
 import { LogService } from './log.service';
 import { ErrorHandlerService } from '../../app/services/error-handler.service';
 import { ScanTemplateService } from '../../app/services/scan-template.service';
+import { ResourcestringService} from '../services/resourcestring.service';
+
 import {xrxTemplatePutTemplate,xrxTemplateDeleteTemplate}  from  '../../assets/Xrx/XRXTemplate';
-//import { tap } from 'lodash';
 import {xrxStringToDom,xrxGetElementValue} from '../../assets/Xrx/XRXXmlHandler';
 import {xrxScanV2InitiateScanJobWithTemplate,xrxScanV2ParseInitiateScanJobWithTemplate} from '../../assets/Xrx/XRXScanV2';
 import {xrxJobMgmtGetJobDetails,xrxJobMgmtParseGetJobDetails,xrxJobMgmtParseJobStateReasons} from '../../assets/Xrx/XRXJobManagement';
 import {xrxParseJobStateReasons} from '../../assets/Xrx/XRX_EIPWSHelpers';
+
 import {environment} from '../../environments/environment';
-import {scanTemplate} from '../../app/model/scantemplate.model';
-import {BasicAlertComponent} from '../views/basic-alert/basic-alert.component';
-//import {ProgressAlertComponent} from '../views/progress-alert/progress-alert.component';
-import { resourceString} from '../model/global';
-import { ResourcestringService} from '../services/resourcestring.service';
 import {AppModule} from '../../app/app.module';
+import {scanTemplate} from '../../app/model/scantemplate.model';
+
+import {BasicAlertComponent} from '../views/basic-alert/basic-alert.component';
+import { resourceString} from '../model/global';
+
 
 @Injectable({
   providedIn: 'root'
@@ -50,7 +56,6 @@ export class ScanService {
   isVersaLink : boolean = AppModule.isVersalink;
   isAltaLink : boolean = AppModule.isAltalink;
 
-  private template: any;
   private completeScanPromise: any = null;
   private jobid: any = null;
   promiseResolve : any;
