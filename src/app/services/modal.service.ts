@@ -81,19 +81,11 @@ export class ModalService {
     this.fromData.next(data);
   }
 
-  public openModal(component : any,dialog_postion:any,rotationClass: string = ''){
+  public openModal(component : any,dialog_postion:any){
     this.dialog.closeAll();
     this.dialog.openDialogs.pop();
-    let panelClass: string[] = ['custom-modalbox'];
-    if (rotationClass!== '') {
-     panelClass.push(rotationClass);
-    }
     let dialogRef = this.dialog.open(component,{
-      panelClass: 'custom-modalbox',
       position: dialog_postion,
-      
-      //direction: ModalDirection
-      
     });
     
     dialogRef.afterClosed().subscribe(result => {
