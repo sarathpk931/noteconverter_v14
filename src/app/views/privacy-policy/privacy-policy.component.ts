@@ -37,7 +37,6 @@ export class PrivacyPolicyComponent implements OnInit {
   showVersion: string = '';
   env = environment;
   resourceString : resourceString[];
-  //declare smoothscroll : any;
 
   constructor(
     private http: HttpClient,
@@ -51,11 +50,7 @@ export class PrivacyPolicyComponent implements OnInit {
     
     const progress =  this.modalService.openModalWithoutClose(ProgressAlertComponent,'','');
     const url = this.env.privacyPolicyUrl;
-    //this.smoothscroll.polyfill();
-    //smoothscroll.polyfill();
        
-    //element.scrollIntoView({behavior : 'smooth'});
-
     this.http.get(url, {responseType:'text'})
       .subscribe({
           next:(response) => {
@@ -77,18 +72,6 @@ export class PrivacyPolicyComponent implements OnInit {
       this.modalService.closeModal(this.modalRef);
     }
 
-    /* private disableLinks(): void {
-      const links = document.getElementsByTagName('a');
-      for (let i = 0; i < links.length; i++) {
-        links[i].style.pointerEvents = 'none';
-      }
-    } */
-  /* disableLinks() :void{
-    const links  = this.el.nativeElement.querySelectorAll('a');
-     links.array.forEach(link => {
-      this.renderer.setStyle(link,'pointer-events','none');
-    });
-  } */
 }
   
 

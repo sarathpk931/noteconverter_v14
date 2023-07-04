@@ -28,7 +28,6 @@ import { AlertBannerComponent } from './views/alert-banner/alert-banner.componen
 import { BasicAlertComponent } from './views/basic-alert/basic-alert.component';
 
 import { GeneralAlertComponent } from './views/general-alert/general-alert.component';
-import {LogViewComponent} from '../app/views/log-view/log-view.component';
 import {XasStringDirective} from '../app/Directives/xas-string.directive';
 
 //pipes
@@ -57,7 +56,6 @@ import { TextFieldDirective } from './Directives/text-field.directive';
 @NgModule({
   declarations: [
     AppComponent,
-    LogViewComponent,
     PrivacyPolicyComponent,
     ProgressAlertComponent,
     ScanScreenComponent,
