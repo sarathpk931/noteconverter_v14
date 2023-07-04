@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {MatDialog,MatDialogRef,DialogPosition} from '@angular/material/dialog';
+import {MatDialog,MatDialogRef,MatDialogConfig,DialogPosition} from '@angular/material/dialog';
 import { ProgressAlertComponent} from '../views/progress-alert/progress-alert.component'; 
 import {AppComponent} from '../app.component';
 import { BehaviorSubject, timer} from 'rxjs';
@@ -57,12 +57,12 @@ export class ModalService {
     const position = this.centerDialog(dialogElement);
     const dialogRef =
       this.dialog.open(component, {
-        position: {
+        /* position: {
           left:'15vw',
           top:'10vh',
           right:'20vh'
         },
-        panelClass:'makeItMiddle',
+        panelClass:'makeItMiddle', */
         data:{closeBtnName:'Close'},
         hasBackdrop : false,
         disableClose:true
