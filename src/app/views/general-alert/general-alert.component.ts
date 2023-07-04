@@ -1,8 +1,24 @@
+/**
+ * General alert Component
+ *
+ * Description: This component is used to show general alerts from several pages
+ *
+ * Usage:
+ * <app-general-alert></app-general-alert>
+ *
+ *
+ * Outputs:
+ * - A pop up will be shown as per the inputs provided.
+ *
+ */
 import { Component,Inject } from '@angular/core';
 import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+
 import { ModalService} from '../../services/modal.service';
-import {DialogDataObject,resourceString} from '../../model/global';
 import { ResourcestringService} from '../../services/resourcestring.service';
+
+import {DialogDataObject,resourceString} from '../../model/global';
+
 
 @Component({
   selector: 'app-general-alert',
