@@ -11,18 +11,18 @@
 
         <div class="header-middle">
             <div class="header-title-container">
-                <div class="header-title"><span xasString="SDE_PRIVACY_STATEMENT"></span><span ng-if="$ctrl.showVersion" class="version" xas-string="VERSION"></span></div>
+                <div class="header-title"><span xasString="SDE_PRIVACY_STATEMENT"></span>
+                <!-- <span ng-if="$ctrl.showVersion" class="version" xas-string="VERSION"></span> -->
+            </div>
                     
             </div>
         </div>
     </div>
 
-    <div class="popup-content privacy_content" >
-        <div   id="privacyContent" ><!--class="privacy_scroll-container"ngScrollable  ='{"autoHeight": true, "watchHeight": true}'-->
-            <pre class="privacy-policy-content" >{{this.privacyPolicy}}</pre>
-    <div class="popup-content">
-        <div class="scroll-container">
-            <pre class="privacy-policy-content">{{this.privacyPolicy}}</pre>
+    <div class="popup-content" >
+        <div class="scroll-container" style="overflow:hidden" ngScrollable='{"autoHeight": true, "watchHeight": true}'>
+            <div class="privacy-policy-content" [innerHTML]="this.privacyPolicy"></div>
         </div>
     </div>
 </div>
+

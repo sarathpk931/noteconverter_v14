@@ -32,15 +32,15 @@ export class PrivacyPolicyComponent implements OnInit {
     ){}
 
   ngOnInit(): void {
-    debugger;
+    //debugger;
     const progress =  this.modalService.openModalWithoutClose(ProgressAlertComponent,'','') //this.modalService.showProgressAlert('Alert','');
     const url = this.env.privacyPolicyUrl;
     //this.smoothscroll.polyfill();
-    smoothscroll.polyfill();
+    //smoothscroll.polyfill();
    
-    const element = document.getElementById('privacyContent');
+    //const element = document.getElementById('privacyContent');
     
-    element.scrollIntoView({behavior : 'smooth'});
+    //element.scrollIntoView({behavior : 'smooth'});
     //alert(element.innerHTML);
     this.http.get(url, {responseType:'text'})
       .subscribe({
@@ -63,12 +63,12 @@ export class PrivacyPolicyComponent implements OnInit {
       this.modalService.closeModal(this.modalRef);
     }
 
-    private disableLinks(): void {
+    /* private disableLinks(): void {
       const links = document.getElementsByTagName('a');
       for (let i = 0; i < links.length; i++) {
         links[i].style.pointerEvents = 'none';
       }
-    }
+    } */
   /* disableLinks() :void{
     const links  = this.el.nativeElement.querySelectorAll('a');
      links.array.forEach(link => {
