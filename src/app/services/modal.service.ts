@@ -22,15 +22,18 @@ export class ModalService {
     ) {}
   
 
-  private calculateCenterPosition(dialogWidth: number, dialogHeight: number): DialogPosition {
+    private centerDialog(dialogElement: HTMLElement): DialogPosition {
       const viewportWidth = window.innerWidth;
       const viewportHeight = window.innerHeight;
-  
+      const dialogWidth = dialogElement.offsetWidth;
+      const dialogHeight = dialogElement.offsetHeight;
+    
       const topPosition = Math.max(0, (viewportHeight - dialogHeight) / 2);
       const leftPosition = Math.max(0, (viewportWidth - dialogWidth) / 2);
-  
+    
       return { top: topPosition + 'px', left: leftPosition + 'px' };
-  }
+    }
+    
 
   showProgressAlert(title: string, message : string):MatDialogRef<ProgressAlertComponent>{
     
@@ -49,19 +52,21 @@ export class ModalService {
    }
 
   public openLargeModal(component : any):void{
-  const dialogWidth = 1024;
-  const dialogHeight = 768;
-  const position = this.calculateCenterPosition(dialogWidth, dialogHeight);
-  const dialogRef =
-     this.dialog.open(component, {
-      width: '1024px',
-      height : '',
-      position: position,
-      panelClass:'makeItMiddle',
-      data:{closeBtnName:'Close'},
-      hasBackdrop : false,
-      disableClose:true
-    });
+
+    const dialogElement = document.querySelector('.scroll-container') as HTMLElement;
+    const position = this.centerDialog(dialogElement);
+    const dialogRef =
+      this.dialog.open(component, {
+        position: {
+          left:'15vw',
+          top:'10vh',
+          right:'20vh'
+        },
+        panelClass:'makeItMiddle',
+        data:{closeBtnName:'Close'},
+        hasBackdrop : false,
+        disableClose:true
+      });
   }
 
   public openModalWithoutClose(component : any,title: string,message : string)
