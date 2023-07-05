@@ -42,7 +42,7 @@
                 </appTextField>
               </div>
             </div>
-            <div class="grid-row themed" >
+            <div class="grid-row themed" [class.grid-row-no-error]="f['email'].hasError('required') && !f['email'].touched" >
               <div class="validation-error">
                   <span *ngIf="f['email'].hasError('required') && f['email'].touched" class="xrx-glyph xrx-alert"></span>
                   <span *ngIf="f['email'].hasError('required') && f['email'].touched" class="error-message">{{this.emailValidation2}}</span>
