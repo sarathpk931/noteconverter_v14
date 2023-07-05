@@ -267,7 +267,7 @@ export class ScanScreenComponent implements OnInit{
            // Popup appears on the extreme right
            //rotationClass = 'popup-rotate';
          }
-          event_position= { left: leftPosition + 'px', top: (event.clientY - 111) + 'px'};
+          event_position= { left: `calc(${leftPosition}px - 20%)`, top: (event.clientY - 111) + 'px'};
        }
       let direction:string ='rtl';
       this.modalService.setData({
