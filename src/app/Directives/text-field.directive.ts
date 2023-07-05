@@ -1,3 +1,6 @@
+/**
+ *  This directive is used to change the class of a controlon click and blur events
+ */
 import { Directive, ElementRef, HostBinding, HostListener, Input, } from '@angular/core';
 
 @Directive({
