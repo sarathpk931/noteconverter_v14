@@ -19,6 +19,7 @@ import {xrxTemplateGetInterfaceVersion} from '../../../assets/Xrx/XRXTemplate';
 import {xrxDeviceConfigGetInterfaceVersion} from '../../../assets/Xrx/XRXDeviceConfig';
 import {AppModule} from '../../app.module';
 import { ScrollingModule  } from '@angular/cdk/scrolling';
+import {BasicAlertComponent} from '../basic-alert/basic-alert.component';
 
 import { EditableFieldDirective } from  '../../Directives/editable-file-name.directive';
 //import { ProgressAlertComponent} from '../../views/progress-alert/progress-alert.component';
@@ -240,7 +241,10 @@ export class ScanScreenComponent implements OnInit{
     
 
     showPrivacyStatement(){
-      this.modalService.openLargeModal(PrivacyPolicyComponent);
+      //this.modalService.openLargeModal(PrivacyPolicyComponent);
+      const title = 'SDE_DOCUMENT_SUCCESSFULLY_SCANNED';
+      const msg = 'SDE_WILL_RECEIVE_EMAIL2';
+      this.modalService.openModalWithTitle(BasicAlertComponent,title,msg);
     }
 
     openFileFormat(event: any){
