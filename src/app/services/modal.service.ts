@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import {MatDialog,MatDialogRef,MatDialogConfig,DialogPosition} from '@angular/material/dialog';
+import {MatDialog,MatDialogRef,MatDialogConfig,DialogPosition,MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { Overlay, OverlayPositionBuilder } from '@angular/cdk/overlay';
 import { ProgressAlertComponent} from '../views/progress-alert/progress-alert.component'; 
 import {AppComponent} from '../app.component';
 import { BehaviorSubject, timer} from 'rxjs';
@@ -18,7 +19,9 @@ export class ModalService {
 
   constructor(
     public dialog : MatDialog,
-    public  app : AppComponent    
+    public  app : AppComponent,
+    private overlay: Overlay,
+    private positionBuilder: OverlayPositionBuilder 
     ) {}
   
 
@@ -52,20 +55,21 @@ export class ModalService {
    }
 
   public openLargeModal(component : any):void{
-
-    const dialogElement = document.querySelector('.scroll-container') as HTMLElement;
-    const position = this.centerDialog(dialogElement);
+    
     const dialogRef =
       this.dialog.open(component, {
-        /* position: {
-          left:'15vw',
-          top:'10vh',
-          right:'20vh'
-        },
-        panelClass:'makeItMiddle', */
+        
         data:{closeBtnName:'Close'},
         hasBackdrop : false,
-        disableClose:true
+        disableClose:true,
+        height:'',
+        width:'',
+        position: {
+          top: '',
+          left: '',
+          right:'',
+          bottom:''
+      },
       });
   }
 
