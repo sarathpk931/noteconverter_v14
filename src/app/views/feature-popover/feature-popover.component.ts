@@ -113,8 +113,9 @@ export class FeaturePopoverComponent implements OnInit {
       this.selectOption = option;
       this.scanOptionsService.setSelectedOption(option,this.from);
       this.objectSelected.emit(option);
-      this.modalService.closeModal(this.mtModalRef);
+      // this.modalService.closeModal(this.mtModalRef);
       
+      document.querySelector('.cdk-overlay-backdrop-showing').classList.add('cdk-overlay-backdrop-hide');
       this.showPopover();
     }
 
