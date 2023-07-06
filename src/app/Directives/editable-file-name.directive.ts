@@ -51,7 +51,7 @@ ngOnInit(){
     newValue =   this.additionalText ;
     newValue = newValue.replace('{0}', (this.placeholder || ''));
     newValue = newValue.replace('{1}', this.extension);
-    this.btnPaperClip = '<span id="_glyph" class="xrx-paperclip" style="line-height: 100%;"></span>&nbsp&nbsp;';
+    this.btnPaperClip = '<span id="_glyph" class="xrx-paperclip" style="line-height: 100%;"></span>&nbsp;&nbsp;';
 
     this.buttonElement = this.renderer.selectRootElement('.subjectButton');
     this.buttonElement.innerHTML = this.btnPaperClip + newValue;
@@ -70,7 +70,8 @@ ngOnInit(){
       }
 
       if(this.buttonElement.innerText.includes('.')){
-        this.buttonElement.innerHTML = this.btnPaperClip + this.buttonElement.innerText.substring(0,this.buttonElement.innerText.lastIndexOf('.')) + this.extension;
+        const cleanBtnPaperClip = this.btnPaperClip.replace(/&nbsp;/g,'');
+        this.buttonElement.innerHTML = cleanBtnPaperClip + this.buttonElement.innerText.substring(0,this.buttonElement.innerText.lastIndexOf('.')) + this.extension;
       }
     }
   })
