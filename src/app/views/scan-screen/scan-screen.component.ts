@@ -19,7 +19,6 @@ import {xrxTemplateGetInterfaceVersion} from '../../../assets/Xrx/XRXTemplate';
 import {xrxDeviceConfigGetInterfaceVersion} from '../../../assets/Xrx/XRXDeviceConfig';
 import {AppModule} from '../../app.module';
 import { ScrollingModule  } from '@angular/cdk/scrolling';
-
 import { EditableFieldDirective } from  '../../Directives/editable-file-name.directive';
 //import { ProgressAlertComponent} from '../../views/progress-alert/progress-alert.component';
 
