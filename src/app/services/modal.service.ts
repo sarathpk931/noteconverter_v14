@@ -75,7 +75,12 @@ export class ModalService {
   public openModalWithoutClose(component : any,title: string,message : string)
   {
     return this.dialog.open(component, {
-      data :{'title': title,'message':message},     
+      data :{'title': title,'message':message},
+      position: {
+        top: '',
+        left: 'calc(50% - 512px)',
+        
+    },    
     });
 
   }
