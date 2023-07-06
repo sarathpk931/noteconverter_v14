@@ -66,9 +66,8 @@ export class ModalService {
         width:'',
         position: {
           top: '',
-          left: '',
-          right:'',
-          bottom:''
+          left: 'calc(50% - 512px)',
+          
       },
       });
   }
