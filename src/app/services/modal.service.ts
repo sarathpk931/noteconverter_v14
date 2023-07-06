@@ -54,24 +54,26 @@ export class ModalService {
     }
    }
 
-  public openLargeModal(component : any):void{
-    
-    const dialogRef =
-      this.dialog.open(component, {
-        
-        data:{closeBtnName:'Close'},
-        hasBackdrop : false,
-        disableClose:true,
-        height:'',
-        width:'',
-        position: {
-          top: '',
-          left: 'calc(50% - 512px)',
-          
+   public openLargeModal(component: any): void {
+    const windowWidth = window.innerWidth;
+    const popupWidth = 1024;
+    const leftPosition = Math.max((windowWidth / 2) - (popupWidth / 2), 0) + 'px';
+    const rightPosition = Math.max((windowWidth / 2) + (popupWidth / 2), windowWidth - popupWidth) + 'px';
+  
+    const dialogRef = this.dialog.open(component, {
+      data: { closeBtnName: 'Close' },
+      hasBackdrop: false,
+      disableClose: true,
+      height: '',
+      width: '',
+      position: {
+        top: '',
+        left: leftPosition,
+        right: rightPosition,
       },
-      });
+    });
   }
-
+  
   public openModalWithoutClose(component : any,title: string,message : string)
   {
     return this.dialog.open(component, {
