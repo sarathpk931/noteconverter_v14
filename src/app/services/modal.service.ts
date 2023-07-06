@@ -42,6 +42,11 @@ export class ModalService {
     
     return this.dialog.open(ProgressAlertComponent, {
       data :{'title': title,'message':message},
+      position: {
+        top: '',
+        left: 'calc(50% - 512px)',
+        
+    },
       //panelClass: (!this.isThirdGenBrowser) ? 'allow-outside-interaction' : 'allow-outside-banner-interaction'
       //panelClass:'progress-bar-modalbox'
       
@@ -110,10 +115,11 @@ export class ModalService {
     this.dialog.openDialogs.pop();
     return  this.dialog.open(component, {
       data :{'title': title,'message':message},
-      // maxWidth: '100vw',
-      // maxHeight: '100vh',
-      // height: '100%',
-      // width: '100%'
+      position: {
+        top: '',
+        left: 'calc(50% - 512px)',
+        
+    },
     });
 
   }
@@ -141,6 +147,7 @@ export class ModalService {
     this.dialog.closeAll();
     this.dialog.open(component, {
       data : data
+      
     });
   }
 
