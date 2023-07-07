@@ -19,7 +19,6 @@ import {xrxTemplateGetInterfaceVersion} from '../../../assets/Xrx/XRXTemplate';
 import {xrxDeviceConfigGetInterfaceVersion} from '../../../assets/Xrx/XRXDeviceConfig';
 import {AppModule} from '../../app.module';
 import { ScrollingModule  } from '@angular/cdk/scrolling';
-
 import { EditableFieldDirective } from  '../../Directives/editable-file-name.directive';
 //import { ProgressAlertComponent} from '../../views/progress-alert/progress-alert.component';
 
@@ -267,7 +266,7 @@ export class ScanScreenComponent implements OnInit{
            // Popup appears on the extreme right
            //rotationClass = 'popup-rotate';
          }
-          event_position= { left: leftPosition + 'px', top: (event.clientY - 111) + 'px'};
+          event_position= { left: `calc(${leftPosition}px - 20%)`, top: (event.clientY - 111) + 'px'};
        }
       let direction:string ='rtl';
       this.modalService.setData({
@@ -288,6 +287,7 @@ export class ScanScreenComponent implements OnInit{
       let rotationClass: string = '';
       let event_position: DialogPosition; 
       let leftPosition:number;
+
       if (event.clientX < this.midwidth) {
        event_position = { left: event.clientX + 'px', top: (event.clientY - 111) + 'px'};
        console.log("x less than midwidth" )
@@ -297,20 +297,16 @@ export class ScanScreenComponent implements OnInit{
       else {
         const availableSpaceOnRight = this.winWidth - event.clientX;
         if (event.clientX >= this.winWidth - popupWidth) {
-
            leftPosition = event.clientX - (popupWidth - availableSpaceOnRight);
-          // Popup appears on the extreme right
-          rotationClass = 'popup-rotate';
         }
          event_position= { left: leftPosition + 'px', top: (event.clientY - 111) + 'px'};
       }
 
-      let direction:string ='rtl'; // to be decided based on click position
       this.modalService.setData({
         from : this.const_type
       });
-      console.log("rotation class "+ rotationClass);
-      this.modalService.openModal(FeaturePopoverComponent,event_position,rotationClass);
+
+      this.modalService.openModal(FeaturePopoverComponent,event_position);
     }
 
     openSize(event: any){

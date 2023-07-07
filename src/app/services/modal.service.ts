@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import {MatDialog,MatDialogRef,DialogPosition} from '@angular/material/dialog';
+import {MatDialog,MatDialogRef,MatDialogConfig,DialogPosition,MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { Overlay, OverlayPositionBuilder } from '@angular/cdk/overlay';
 import { ProgressAlertComponent} from '../views/progress-alert/progress-alert.component'; 
 import {AppComponent} from '../app.component';
 import { BehaviorSubject, timer} from 'rxjs';
@@ -18,24 +19,34 @@ export class ModalService {
 
   constructor(
     public dialog : MatDialog,
-    public  app : AppComponent    
+    public  app : AppComponent,
+    private overlay: Overlay,
+    private positionBuilder: OverlayPositionBuilder 
     ) {}
   
 
-  private calculateCenterPosition(dialogWidth: number, dialogHeight: number): DialogPosition {
+    private centerDialog(dialogElement: HTMLElement): DialogPosition {
       const viewportWidth = window.innerWidth;
       const viewportHeight = window.innerHeight;
-  
+      const dialogWidth = dialogElement.offsetWidth;
+      const dialogHeight = dialogElement.offsetHeight;
+    
       const topPosition = Math.max(0, (viewportHeight - dialogHeight) / 2);
       const leftPosition = Math.max(0, (viewportWidth - dialogWidth) / 2);
-  
+    
       return { top: topPosition + 'px', left: leftPosition + 'px' };
-  }
+    }
+    
 
   showProgressAlert(title: string, message : string):MatDialogRef<ProgressAlertComponent>{
     
     return this.dialog.open(ProgressAlertComponent, {
       data :{'title': title,'message':message},
+      position: {
+        top: '',
+        left: 'calc(50% - 512px)',
+        
+    },
       //panelClass: (!this.isThirdGenBrowser) ? 'allow-outside-interaction' : 'allow-outside-banner-interaction'
       //panelClass:'progress-bar-modalbox'
       
@@ -48,26 +59,35 @@ export class ModalService {
     }
    }
 
-  public openLargeModal(component : any):void{
-  const dialogWidth = 1024;
-  const dialogHeight = 768;
-  const position = this.calculateCenterPosition(dialogWidth, dialogHeight);
-  const dialogRef =
-     this.dialog.open(component, {
-      width: '1024px',
-      height : '',
-      position: position,
-      panelClass:'makeItMiddle',
-      data:{closeBtnName:'Close'},
-      hasBackdrop : false,
-      disableClose:true
+   public openLargeModal(component: any): void {
+    const windowWidth = window.innerWidth;
+    const popupWidth = 1024;
+    const leftPosition = Math.max((windowWidth / 2) - (popupWidth / 2), 0) + 'px';
+    const rightPosition = Math.max((windowWidth / 2) + (popupWidth / 2), windowWidth - popupWidth) + 'px';
+  
+    const dialogRef = this.dialog.open(component, {
+      data: { closeBtnName: 'Close' },
+      hasBackdrop: false,
+      disableClose: true,
+      height: '',
+      width: '',
+      position: {
+        top: '',
+        left: leftPosition,
+        right: rightPosition,
+      },
     });
   }
-
+  
   public openModalWithoutClose(component : any,title: string,message : string)
   {
     return this.dialog.open(component, {
-      data :{'title': title,'message':message},     
+      data :{'title': title,'message':message},
+      position: {
+        top: '',
+        left: 'calc(50% - 512px)',
+        
+    },    
     });
 
   }
@@ -76,19 +96,11 @@ export class ModalService {
     this.fromData.next(data);
   }
 
-  public openModal(component : any,dialog_postion:any,rotationClass: string = ''){
+  public openModal(component : any,dialog_postion:any){
     this.dialog.closeAll();
     this.dialog.openDialogs.pop();
-    let panelClass: string[] = ['custom-modalbox'];
-    if (rotationClass!== '') {
-     panelClass.push(rotationClass);
-    }
     let dialogRef = this.dialog.open(component,{
-      panelClass: 'custom-modalbox',
       position: dialog_postion,
-      
-      //direction: ModalDirection
-      
     });
     
     dialogRef.afterClosed().subscribe(result => {
@@ -103,10 +115,11 @@ export class ModalService {
     this.dialog.openDialogs.pop();
     return  this.dialog.open(component, {
       data :{'title': title,'message':message},
-      // maxWidth: '100vw',
-      // maxHeight: '100vh',
-      // height: '100%',
-      // width: '100%'
+      position: {
+        top: '',
+        left: 'calc(50% - 512px)',
+        
+    },
     });
 
   }
@@ -134,6 +147,7 @@ export class ModalService {
     this.dialog.closeAll();
     this.dialog.open(component, {
       data : data
+      
     });
   }
 
