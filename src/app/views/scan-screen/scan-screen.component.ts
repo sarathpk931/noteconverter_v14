@@ -303,7 +303,7 @@ export class ScanScreenComponent implements OnInit{
         } else {
           leftPosition = event.clientX;
         }
-         event_position= { left: `calc(${leftPosition}px - ${this.commonRightMarginForPopup})`, top: (event.clientY - 111) + 'px'};
+         event_position= { left: `calc(${leftPosition}px - ${this.commonRightMarginForPopup} - 20%)`, top: (event.clientY - 111) + 'px'};
       }
 
       this.modalService.setData({
