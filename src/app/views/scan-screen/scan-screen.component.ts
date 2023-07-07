@@ -91,6 +91,8 @@ export class ScanScreenComponent implements OnInit{
   isEmailInvalid : boolean = false;
   isEmailRequired : boolean =false;
 
+  commonRightMarginForPopup: string = '57px'
+
   constructor(
     private dialog: MatDialog,
     private formBuilder: FormBuilder,
@@ -266,7 +268,7 @@ export class ScanScreenComponent implements OnInit{
            // Popup appears on the extreme right
            //rotationClass = 'popup-rotate';
          }
-          event_position= { left: `calc(${leftPosition}px - 20%)`, top: (event.clientY - 111) + 'px'};
+          event_position= { left: `${leftPosition}px`, top: (event.clientY - 111) + 'px'};
        }
       let direction:string ='rtl';
       this.modalService.setData({
@@ -298,8 +300,10 @@ export class ScanScreenComponent implements OnInit{
         const availableSpaceOnRight = this.winWidth - event.clientX;
         if (event.clientX >= this.winWidth - popupWidth) {
            leftPosition = event.clientX - (popupWidth - availableSpaceOnRight);
+        } else {
+          leftPosition = event.clientX;
         }
-         event_position= { left: leftPosition + 'px', top: (event.clientY - 111) + 'px'};
+         event_position= { left: `calc(${leftPosition}px - ${this.commonRightMarginForPopup} - 20%)`, top: (event.clientY - 111) + 'px'};
       }
 
       this.modalService.setData({
@@ -330,11 +334,11 @@ export class ScanScreenComponent implements OnInit{
        else {
         const availableSpaceOnRight = this.winWidth - event.clientX;
         if (event.clientX >= this.winWidth - popupWidth) {
-
            leftPosition = event.clientX - (popupWidth - availableSpaceOnRight);
-          
+        } else {
+          leftPosition = event.clientX;
         }
-         event_position= { left: leftPosition + 'px', top: (event.clientY - 325) + 'px'};
+        event_position= { left: `${leftPosition}px`, top: (event.clientY - 325) + 'px'};
       }
       //event_position = { left: event.clientX + 'px', top: event.clientY + 'px'};
       let direction:string ='rtl'; // to be decided based on click position
