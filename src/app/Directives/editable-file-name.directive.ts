@@ -88,7 +88,7 @@ private appendGlyphToInput() {
 
   const attachmentGlyph = this.renderer.createElement('span');
   attachmentGlyph.id = '_glyphTextbox';
-  attachmentGlyph.className = 'xrx-paperclip';
+  attachmentGlyph.className = 'xrx-paperclip xrs-papericon';
   attachmentGlyph.style.lineHeight = '100%';
   attachmentGlyph.innerHTML = '&nbsp;';
   attachmentGlyph.style.display = 'none';
