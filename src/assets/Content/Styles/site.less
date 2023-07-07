@@ -6,7 +6,7 @@
 // 5" 800x480px displays
 // 10" 1024x600px displays
 // The base styles will be for 5" displays, and we'll use media queries to detect and style for 10"
-
+:host{
 html {
     overflow: hidden;
     background: @gray-texture 0 0 repeat;
@@ -436,4 +436,5 @@ input::-webkit-input-placeholder {
         margin-left: -8px;
         margin-right: -8px;
     }
+}
 }
