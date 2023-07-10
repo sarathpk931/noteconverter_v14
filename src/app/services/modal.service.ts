@@ -129,7 +129,12 @@ export class ModalService {
   {
 
      this.dialog.open(component, {
-      data :{'title': title,'message':message}
+      data :{'title': title,'message':message},
+      position: {
+        top: '',
+        left: 'calc(50% - 512px)',
+        
+    },
     });
 
     timer(3000).subscribe(()=>{
