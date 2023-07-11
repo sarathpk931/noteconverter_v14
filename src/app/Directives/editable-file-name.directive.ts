@@ -25,6 +25,7 @@ export class EditableFieldDirective {
   selectedFileFormatOptions : FileFormatOption;
   anyFileFormat = {from : 'fileFormat'};
   extension : string;
+  private strEnterFileName: string = 'Enter File Name';
 
   constructor(
     private elementRef: ElementRef<HTMLInputElement>,
@@ -37,7 +38,8 @@ ngOnInit(){
 
   this.inputField = document.querySelector('input[type="text"]');
   if (this.inputField) {
-    this.inputField.style.display = 'none';      
+    this.inputField.style.display = 'none';    
+    this.inputField.value = this.placeholder;  
   }
 
   if(!this.preventDirectiveInit){
@@ -102,6 +104,7 @@ private appendGlyphToInput() {
     if (isButton) {
 
       if (this.inputField) {
+        this.inputField.placeholder = this.strEnterFileName;
         this.inputField.style.display = 'inline-block';
         this.inputField.style.boxShadow = 'none';
         this.inputField.focus();
@@ -112,7 +115,13 @@ private appendGlyphToInput() {
       this.elementRef.nativeElement.dispatchEvent(new CustomEvent('clickEvent'));
       var newValue : string = '';
     if(this.scanOptionService.isPlaceholderVisible){ 
-      this.inputField.value = this.placeholder;
+
+      if (this.inputField.value == '') {
+        this.inputField.value = '';
+      } else {
+        this.inputField.value = this.placeholder;
+      }
+
       this.inputPlaceholder = '';
       this.scanOptionService.isPlaceholderVisible = true;
     }
@@ -142,13 +151,27 @@ private appendGlyphToInput() {
       this.extension = this.extension.replace('.','');
       newValue =   this.additionalText ;
       newValue = newValue.replace('{1}', this.extension);
+      this.inputField.placeholder = this.strEnterFileName;
 
       if((enteredValue == this.placeholder) || (enteredValue == '')){
-        this.inputPlaceholder = this.defaultText;
-        newValue = newValue.replace('{0}', this.defaultText);
+
+        if (enteredValue == '') {
+          this.inputPlaceholder = this.strEnterFileName;
+          newValue = '';
+          this.inputField.value = '';
+        } else {
+          this.inputPlaceholder = this.defaultText;
+          newValue = newValue.replace('{0}', this.defaultText);
+        }
+
         this.scanOptionService.isPlaceholderVisible = true;
         this.inputField.value = newValue;
-        this.buttonElement.innerHTML = this.btnPaperClip + newValue;
+        if (newValue == '') {
+          this.buttonElement.innerHTML = this.btnPaperClip + this.strEnterFileName;
+        } else {
+          this.buttonElement.innerHTML = this.btnPaperClip + newValue;
+        }
+        
       }
       else{
         this.inputPlaceholder = '';
