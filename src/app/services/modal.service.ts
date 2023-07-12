@@ -40,15 +40,28 @@ export class ModalService {
 
   showProgressAlert(title: string, message : string):MatDialogRef<ProgressAlertComponent>{
     this.dialog.closeAll();
+    // const windowWidth = window.innerWidth;
+    // const popupWidth = 1024;
+    // const leftPosition = Math.max((windowWidth / 2) - (popupWidth / 2), 0) + 'px';
+    // const rightPosition = Math.max((windowWidth / 2) + (popupWidth / 2), windowWidth - popupWidth) + 'px';
+    //alert(leftPosition);
+   // alert(rightPosition);
     return this.dialog.open(ProgressAlertComponent, {
       data :{'title': title,'message':message},
-      position: {
-        top: '',
-        left: 'calc(50% - 512px)',
+      //height: '',
+      //width: '',
+      // position: {
+      //   top: '',
+      //   left: leftPosition,
+      //   right: rightPosition,
+      // },
+    //   position: {
+    //     top: '',
+    //     left: 'calc(50% - 512px)',
         
-    },    
-      panelClass: (!this.isThirdGenBrowser) ? 'allow-outside-interaction' : 'allow-outside-banner-interaction',
-      hasBackdrop : false,
+    // },    
+      //panelClass: (!this.isThirdGenBrowser) ? 'allow-outside-interaction' : 'allow-outside-banner-interaction',
+      //hasBackdrop : false,
       
     });
   }
