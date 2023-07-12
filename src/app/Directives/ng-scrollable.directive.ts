@@ -2,8 +2,10 @@ import { Directive, ElementRef,NgModule, Input, OnInit, OnDestroy,NgZone,Optiona
 import { merge, Observable,fromEvent, interval, Subscription } from 'rxjs';
 import { debounce } from 'rxjs/operators';
 import {AppModule} from '../app.module';
-import { IscrollModule,IScroll,IscrollDirective } from 'angular-iscroll-probe';
-import {  } from 'iscroll';
+//import { IscrollModule,IscrollDirective } from 'angular-iscroll-probe';
+//import { IScroll } from 'iscroll';
+
+declare const IScroll: any; 
 
 @Directive({
   selector: '[ngScrollable]'
@@ -33,7 +35,7 @@ import {  } from 'iscroll';
     private $scrollEnd:any;
     private $$shadowDiv:any;
 
-    private scroller: IScroll;
+    private scroller: any;
     private currentY: number = 0;
     private resizeSubscription: Subscription | undefined;
     private device :boolean=true;
@@ -58,13 +60,13 @@ import {  } from 'iscroll';
         shadowDiv.classList.add('shadow');
         shadowDiv.style.position = 'fixed';
         element.appendChild(shadowDiv);
-        //this.$$shadowDiv = shadowDiv;
+        this.$$shadowDiv = shadowDiv;
 
 
         // Do this in a timeout so that content can finish loading
         setTimeout(() => {
           // Determine location of shadow based on position of scrollable content
-          alert("set time out");
+         
           const offSet = element.getBoundingClientRect();
           const borderTop = parseInt(getComputedStyle(element).borderTopWidth  || '0', 10);
           const borderLeft = parseInt(getComputedStyle(element).borderLeftWidth  || '0', 10);
@@ -82,7 +84,7 @@ import {  } from 'iscroll';
           /* fromEvent(element, 'scroll').pipe(debounce(() => interval(100)))
           .subscribe(() => { */
           element.addEventListener('scroll', () =>{
-            alert("Event Listener ")
+            
             const movingHeight = element.firstElementChild?.clientHeight ||0;
             const scrollTop = element.scrollTop;
             const scrollableHeight = element.clientHeight;
@@ -128,7 +130,8 @@ import {  } from 'iscroll';
           useTransition: this.useTransition === 'true',
         });
 
-        alert("scroller opriones initiated:"+ this.scroller);
+        //alert("scroller opriones initiated:"+ this.scroller);
+        console.log('Scroller object:', this.scroller);
 
         this.$$shadowDiv = document.createElement('div');
         this.$$shadowDiv.classList.add('shadow');
