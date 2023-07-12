@@ -272,6 +272,55 @@ input::-webkit-input-placeholder {
     color: lightgray;
 }
 
+/* Webkit Scroll Bars */
+@media(max-width:800px) {
+::-webkit-scrollbar {
+    width: 50px;
+}
+
+::-webkit-scrollbar-thumb {
+    border: 5px solid rgba(0, 0, 0, 0);
+    background-clip: padding-box;
+    background-color: rgba(0, 0, 0, 0.50);
+    box-shadow: none;
+    background-image:'';
+    -webkit-border-radius: 10px;
+    -webkit-box-shadow: none;
+}
+
+::-webkit-scrollbar-button {
+    border: none;
+    box-shadow: none;
+}
+
+::-webkit-scrollbar-track {
+    background-color: rgba(29, 29, 29, 0.15);
+    box-shadow: none;
+    border: none;
+    border-radius: 0px;
+    -webkit-box-shadow: none;
+}
+
+::-webkit-scrollbar-button:vertical:decrement {
+    background-color: rgba(29, 29, 29, 0.15);
+    height: 50px;
+    background-image: url('../../Content/images/up-arrow-png-8.png');
+    background-size: 36px 36px;
+    background-repeat: no-repeat;
+    background-position: center;
+    border: none;
+}
+
+::-webkit-scrollbar-button:vertical:increment {
+    margin-top: 10px;
+    height: 50px;
+    background-image: url('../../Content/images/Down-Arrow-PNG-Image.png');
+    background-size: 36px 36px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: rgba(29, 29, 29, 0.15);
+}
+}
 
 .removePlaceholder:focus::-webkit-input-placeholder {
     -webkit-transition: none;
