@@ -34,7 +34,7 @@ import { IscrollModule,IScroll,IscrollDirective } from 'angular-iscroll-probe';
     private $scrollEnd:any;
     private $$shadowDiv:any;
 
-    private scroller: IscrollDirective;
+    private scroller: IScroll;
     private resizeSubscription: Subscription | undefined;
 
     constructor(private elementRef: ElementRef) { }
@@ -108,7 +108,7 @@ import { IscrollModule,IScroll,IscrollDirective } from 'angular-iscroll-probe';
             }
           });
       }else{
-        const options: IScroll.IScrollOptions = {
+        this.scroller = new IScroll(element, {
           bounce: this.bounce === 'true',
           disableMouse: this.disableMouse === 'true',
           disablePointer: this.disablePointer === 'true',
@@ -124,11 +124,10 @@ import { IscrollModule,IScroll,IscrollDirective } from 'angular-iscroll-probe';
           scrollY: this.scrollY !== 'false',
           tap: this.tap !== 'false',
           useTransform: this.useTransform !== 'false',
-          useTransition: this.useTransition === 'true'
-        };
-        
-        this.scroller = new IScroll(element, options);
-        alert("scroller :"+ this.scroller);
+          useTransition: this.useTransition === 'true',
+        });
+
+        alert("scroller opriones initiated:"+ this.scroller);
 
         this.$$shadowDiv = document.createElement('div');
         element.appendChild(this.$$shadowDiv);
