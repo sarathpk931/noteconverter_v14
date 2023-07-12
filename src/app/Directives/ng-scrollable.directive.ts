@@ -3,7 +3,7 @@ import { merge, Observable,fromEvent, interval, Subscription } from 'rxjs';
 import { debounce } from 'rxjs/operators';
 import {AppModule} from '../app.module';
 import { IscrollModule,IScroll,IscrollDirective } from 'angular-iscroll-probe';
-
+import {  } from 'iscroll';
 
 @Directive({
   selector: '[ngScrollable]'
@@ -12,50 +12,45 @@ import { IscrollModule,IScroll,IscrollDirective } from 'angular-iscroll-probe';
 
   export class NgScrollableDirective implements OnInit, OnDestroy {
 
-    @Input() ngScrollable: any;
-    @Input() bounce: string;
-    @Input() disableMouse: string;
-    @Input() disablePointer: string;
-    @Input() disableTouch: string;
-    @Input() freeScroll: string;
-    @Input() hwCompositing: string;
-    @Input() momentum: string;
-    @Input() mouseWheel: string;
-    @Input() preventDefault: string;
-    @Input() probeType: string;
-    @Input() scrollbars: string;
-    @Input() scrollX: string;
-    @Input() scrollY: string;
-    @Input() tap: string;
-    @Input() useTransform: string;
-    @Input() useTransition: string;
-    
+    @Input() bounce: string | undefined;
+    @Input() disableMouse: string | undefined;
+    @Input() disablePointer: string | undefined;
+    @Input() disableTouch: string | undefined;
+    @Input() freeScroll: string | undefined;
+    @Input() hwCompositing: string | undefined;
+    @Input() momentum: string | undefined;
+    @Input() mouseWheel: string | undefined;
+    @Input() preventDefault: string | undefined;
+    @Input() probeType: string | undefined;
+    @Input() scrollbars: string | undefined;
+    @Input() scrollX: string | undefined;
+    @Input() scrollY: string | undefined;
+    @Input() tap: string | undefined;
+    @Input() useTransform: string | undefined;
+    @Input() useTransition: string | undefined;
+
     private $$config: any;
     private $scrollEnd:any;
     private $$shadowDiv:any;
 
     private scroller: IScroll;
+    private currentY: number = 0;
     private resizeSubscription: Subscription | undefined;
+    private device :boolean=true;
 
     constructor(private elementRef: ElementRef) { }
    
     ngOnInit(): void {
       const element = this.elementRef.nativeElement as HTMLElement;
 
-      if (this.ngScrollable) {
-        // Set the config if provided
-        const config = JSON.parse(this.ngScrollable);
-        this.$$config = config;
-        alert("config :"+ this.$$config);
-        this.$scrollEnd = config.scrollEnd;
-        alert("scrollEnd"+ this.$scrollEnd);
-      }
-
+      
       // Check if scrollY attribute is not set to 'false'
       //const scrollY = element.getAttribute('scrollY');
-      if (!this.disableTouch || this.disableTouch !== 'false'){
-      //if (scrollY !== 'false') {
-        alert("disableTouch:" +this.disableTouch);
+      //if (!this.disableTouch || this.disableTouch !== 'false'){
+      if (this.scrollY !== 'false') {
+
+        alert("scrollY:" +this.scrollY);
+
         element.style.overflowY = 'auto';
         element.style.position = 'relative';
 
@@ -63,15 +58,16 @@ import { IscrollModule,IScroll,IscrollDirective } from 'angular-iscroll-probe';
         shadowDiv.classList.add('shadow');
         shadowDiv.style.position = 'fixed';
         element.appendChild(shadowDiv);
-        this.$$shadowDiv = shadowDiv;
+        //this.$$shadowDiv = shadowDiv;
 
 
         // Do this in a timeout so that content can finish loading
         setTimeout(() => {
           // Determine location of shadow based on position of scrollable content
+          alert("set time out");
           const offSet = element.getBoundingClientRect();
-          const borderTop = parseInt(getComputedStyle(element).borderTopWidth, 10);
-          const borderLeft = parseInt(getComputedStyle(element).borderLeftWidth, 10);
+          const borderTop = parseInt(getComputedStyle(element).borderTopWidth  || '0', 10);
+          const borderLeft = parseInt(getComputedStyle(element).borderLeftWidth  || '0', 10);
 
           shadowDiv.style.top = `${offSet.top + borderTop}px`;
           shadowDiv.style.left = `${offSet.left + borderLeft}px`;
@@ -83,8 +79,10 @@ import { IscrollModule,IScroll,IscrollDirective } from 'angular-iscroll-probe';
           }
         }, 500);
 
-          fromEvent(element, 'scroll').pipe(debounce(() => interval(100)))
-          .subscribe(() => {
+          /* fromEvent(element, 'scroll').pipe(debounce(() => interval(100)))
+          .subscribe(() => { */
+          element.addEventListener('scroll', () =>{
+            alert("Event Listener ")
             const movingHeight = element.firstElementChild?.clientHeight ||0;
             const scrollTop = element.scrollTop;
             const scrollableHeight = element.clientHeight;
@@ -107,8 +105,11 @@ import { IscrollModule,IScroll,IscrollDirective } from 'angular-iscroll-probe';
               this.$$shadowDiv.classList.add('shadow-top');
             }
           });
-      }else{
+      
+      
+      
         this.scroller = new IScroll(element, {
+          
           bounce: this.bounce === 'true',
           disableMouse: this.disableMouse === 'true',
           disablePointer: this.disablePointer === 'true',
@@ -130,6 +131,7 @@ import { IscrollModule,IScroll,IscrollDirective } from 'angular-iscroll-probe';
         alert("scroller opriones initiated:"+ this.scroller);
 
         this.$$shadowDiv = document.createElement('div');
+        this.$$shadowDiv.classList.add('shadow');
         element.appendChild(this.$$shadowDiv);
 
         if (this.scroller.maxScrollY !== 0) {
@@ -137,7 +139,33 @@ import { IscrollModule,IScroll,IscrollDirective } from 'angular-iscroll-probe';
           alert("maxScrollY:" +this.scroller.maxScrollY);
         }
 
-        this.resizeSubscription = fromEvent(window, 'resize').pipe(debounce(() => interval(100)))
+        this.scroller.on('scrollStart', () => {
+          if (this.scroller.maxScrollY !== 0) {
+            this.$$shadowDiv.classList.add('shadow-bottom');
+            this.$$shadowDiv.classList.add('shadow-top');
+          }
+        });
+
+        this.scroller.on('scrollEnd', () => {
+          if (this.scroller.maxScrollY !== 0) {
+            if (this.scroller.y === this.scroller.maxScrollY) {
+              this.$$shadowDiv.classList.remove('shadow-bottom');
+            }
+            if (this.scroller.y === 0) {
+              this.$$shadowDiv.classList.remove('shadow-top');
+            }
+          }
+
+          if (this.scroller.y === this.scroller.maxScrollY && this.$scrollEnd && this.scroller.y !== this.currentY) {
+            this.$apply(() => {
+              this.$scrollEnd(this);
+            });
+          }
+    
+          this.currentY = this.scroller.y;
+        });
+
+        /* this.resizeSubscription = fromEvent(window, 'resize').pipe(debounce(() => interval(100)))
         .subscribe(() => {
           this.updateViewport();
           this.scroller.refresh();
@@ -151,11 +179,11 @@ import { IscrollModule,IScroll,IscrollDirective } from 'angular-iscroll-probe';
           if (this.scroller.y === 0) {
             this.$$shadowDiv.classList.remove('shadow-top');
           }
-        });
+        }); */
 
       }
-    }
     
+    }
   
 
     ngOnDestroy(): void {
@@ -171,6 +199,12 @@ import { IscrollModule,IScroll,IscrollDirective } from 'angular-iscroll-probe';
         const padding = this.$$config.padding || 0;
         element.style.height = `${(window.innerHeight - element.offsetTop) - padding}px`;
       }
+    }
+
+    private $apply(callback: Function) {
+      // Implement the $apply method for Angular's change detection
+      // Replace this with your actual implementation
+      callback();
     }
   
   }
