@@ -5,8 +5,6 @@ import {AppModule} from '../app.module';
 import { IscrollModule,IScroll,IscrollDirective } from 'angular-iscroll-probe';
 
 
-
-
 @Directive({
   selector: '[ngScrollable]'
 })
@@ -48,13 +46,16 @@ import { IscrollModule,IScroll,IscrollDirective } from 'angular-iscroll-probe';
         // Set the config if provided
         const config = JSON.parse(this.ngScrollable);
         this.$$config = config;
+        alert("config :"+ this.$$config);
         this.$scrollEnd = config.scrollEnd;
+        alert("scrollEnd"+ this.$scrollEnd);
       }
 
       // Check if scrollY attribute is not set to 'false'
       //const scrollY = element.getAttribute('scrollY');
       if (!this.disableTouch || this.disableTouch !== 'false'){
       //if (scrollY !== 'false') {
+        alert("disableTouch:" +this.disableTouch);
         element.style.overflowY = 'auto';
         element.style.position = 'relative';
 
@@ -127,12 +128,14 @@ import { IscrollModule,IScroll,IscrollDirective } from 'angular-iscroll-probe';
         };
         
         this.scroller = new IScroll(element, options);
+        alert("scroller :"+ this.scroller);
 
         this.$$shadowDiv = document.createElement('div');
         element.appendChild(this.$$shadowDiv);
 
         if (this.scroller.maxScrollY !== 0) {
           this.$$shadowDiv.classList.add('shadow-bottom');
+          alert("maxScrollY:" +this.scroller.maxScrollY);
         }
 
         this.resizeSubscription = fromEvent(window, 'resize').pipe(debounce(() => interval(100)))
