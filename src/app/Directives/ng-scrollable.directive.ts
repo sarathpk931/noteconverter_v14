@@ -1,31 +1,69 @@
 import { Directive, ElementRef,NgModule, Input, OnInit, OnDestroy,NgZone,Optional } from '@angular/core';
-//import {ScrollingModule ,CdkScrollable, ScrollDispatcher } from '@angular/cdk/scrolling';
-//import { Directionality } from '@angular/cdk/bidi';
-//import { merge, Observable } from 'rxjs';
+import { merge, Observable,fromEvent, interval, Subscription } from 'rxjs';
+import { debounce } from 'rxjs/operators';
 import {AppModule} from '../app.module';
-//import  from 'iscroll';
+import { IscrollModule,IScroll,IscrollDirective } from 'angular-iscroll-probe';
+
+
+
 
 @Directive({
   selector: '[ngScrollable]'
 })
 
 
-  export class NgScrollableDirective implements OnInit {
+  export class NgScrollableDirective implements OnInit, OnDestroy {
+
+    @Input() ngScrollable: any;
+    @Input() bounce: string;
+    @Input() disableMouse: string;
+    @Input() disablePointer: string;
+    @Input() disableTouch: string;
+    @Input() freeScroll: string;
+    @Input() hwCompositing: string;
+    @Input() momentum: string;
+    @Input() mouseWheel: string;
+    @Input() preventDefault: string;
+    @Input() probeType: string;
+    @Input() scrollbars: string;
+    @Input() scrollX: string;
+    @Input() scrollY: string;
+    @Input() tap: string;
+    @Input() useTransform: string;
+    @Input() useTransition: string;
+    
+    private $$config: any;
+    private $scrollEnd:any;
+    private $$shadowDiv:any;
+
+    private scroller: IscrollDirective;
+    private resizeSubscription: Subscription | undefined;
 
     constructor(private elementRef: ElementRef) { }
    
     ngOnInit(): void {
-      const element = this.elementRef.nativeElement;
+      const element = this.elementRef.nativeElement as HTMLElement;
+
+      if (this.ngScrollable) {
+        // Set the config if provided
+        const config = JSON.parse(this.ngScrollable);
+        this.$$config = config;
+        this.$scrollEnd = config.scrollEnd;
+      }
+
       // Check if scrollY attribute is not set to 'false'
-      const scrollY = element.getAttribute('scrollY');
-      if (scrollY !== 'false') {
+      //const scrollY = element.getAttribute('scrollY');
+      if (!this.disableTouch || this.disableTouch !== 'false'){
+      //if (scrollY !== 'false') {
         element.style.overflowY = 'auto';
         element.style.position = 'relative';
 
         const shadowDiv = document.createElement('div');
-        shadowDiv.className = 'shadow';
+        shadowDiv.classList.add('shadow');
         shadowDiv.style.position = 'fixed';
         element.appendChild(shadowDiv);
+        this.$$shadowDiv = shadowDiv;
+
 
         // Do this in a timeout so that content can finish loading
         setTimeout(() => {
@@ -44,31 +82,95 @@ import {AppModule} from '../app.module';
           }
         }, 500);
 
-        element.addEventListener('scroll', () => {
-          const movingHeight = element.firstElementChild.clientHeight;
-          const scrollTop = element.scrollTop;
-          const scrollableHeight = element.clientHeight;
-          const delta = movingHeight - scrollableHeight;
-          const atBottom = scrollTop >= delta;
+          fromEvent(element, 'scroll').pipe(debounce(() => interval(100)))
+          .subscribe(() => {
+            const movingHeight = element.firstElementChild?.clientHeight ||0;
+            const scrollTop = element.scrollTop;
+            const scrollableHeight = element.clientHeight;
+            const delta = movingHeight - scrollableHeight;
+            const atBottom = scrollTop >= delta;
 
-          // Adjust width so we don't have shadows on the scrollbar
-          shadowDiv.style.width = `${element.clientWidth}px`;
-          shadowDiv.style.height = `${element.clientHeight}px`;
-          
-          if (atBottom) {
-            shadowDiv.classList.remove('shadow-bottom');
+            // Adjust width so we don't have shadows on the scrollbar
+            this.$$shadowDiv.style.width = `${element.clientWidth}px`;
+            this.$$shadowDiv.style.width = `${element.clientHeight}px`;
+            
+            if (atBottom) {
+              this.$$shadowDiv.classList.remove('shadow-bottom');
+            } else {
+              this.$$shadowDiv.classList.add('shadow-bottom');
+            }
+
+            if (scrollTop === 0) {
+              this.$$shadowDiv.classList.remove('shadow-top');
+            } else {
+              this.$$shadowDiv.classList.add('shadow-top');
+            }
+          });
+      }else{
+        const options: IScroll.IScrollOptions = {
+          bounce: this.bounce === 'true',
+          disableMouse: this.disableMouse === 'true',
+          disablePointer: this.disablePointer === 'true',
+          disableTouch: this.disableTouch !== 'false',
+          freeScroll: this.freeScroll === 'true',
+          HWCompositing: this.hwCompositing === 'true',
+          momentum: this.momentum !== 'false',
+          mouseWheel: this.mouseWheel !== 'false',
+          preventDefault: this.preventDefault !== 'false',
+          probeType: this.probeType ? parseInt(this.probeType, 10) : 1,
+          scrollbars: 'custom',
+          scrollX: this.scrollX === 'true',
+          scrollY: this.scrollY !== 'false',
+          tap: this.tap !== 'false',
+          useTransform: this.useTransform !== 'false',
+          useTransition: this.useTransition === 'true'
+        };
+        
+        this.scroller = new IScroll(element, options);
+
+        this.$$shadowDiv = document.createElement('div');
+        element.appendChild(this.$$shadowDiv);
+
+        if (this.scroller.maxScrollY !== 0) {
+          this.$$shadowDiv.classList.add('shadow-bottom');
+        }
+
+        this.resizeSubscription = fromEvent(window, 'resize').pipe(debounce(() => interval(100)))
+        .subscribe(() => {
+          this.updateViewport();
+          this.scroller.refresh();
+
+          if (this.scroller.maxScrollY !== 0) {
+            this.$$shadowDiv.classList.add('shadow-bottom');
           } else {
-            shadowDiv.classList.add('shadow-bottom');
+            this.$$shadowDiv.classList.remove('shadow-bottom');
           }
 
-          if (scrollTop === 0) {
-            shadowDiv.classList.remove('shadow-top');
-          } else {
-            shadowDiv.classList.add('shadow-top');
+          if (this.scroller.y === 0) {
+            this.$$shadowDiv.classList.remove('shadow-top');
           }
         });
+
       }
     }
+    
+  
+
+    ngOnDestroy(): void {
+      if (this.resizeSubscription) {
+        this.resizeSubscription.unsubscribe();
+      }
+    }
+
+    private updateViewport(): void {
+      const element = this.elementRef.nativeElement as HTMLElement;
+  
+      if (this.$$config && this.$$config.autoHeight) {
+        const padding = this.$$config.padding || 0;
+        element.style.height = `${(window.innerHeight - element.offsetTop) - padding}px`;
+      }
+    }
+  
   }
   
   
