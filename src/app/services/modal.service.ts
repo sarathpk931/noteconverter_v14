@@ -106,17 +106,17 @@ export class ModalService {
       panelClass: `custom-dialog-position`,
       data: { clickPosition, additionalInfo: `calc(${clickPosition.y}px - ${dialog_postion.top})`}
     });
-
-    const customDialogPosition : HTMLElement = document.querySelector(".custom-dialog-position");
-    customDialogPosition.style.top = dialog_postion.top;
-    if(dialog_postion.left) {
-      customDialogPosition.style.left = dialog_postion.left;
-    } else if(dialog_postion.right) {
-      customDialogPosition.style.right = dialog_postion.right;
-    }
     
 
-    // stylesheet.insertRule(rule,index)
+    dialogRef.afterOpened().subscribe(result => {
+      const customDialogPosition : HTMLElement = document.querySelector(".custom-dialog-position");
+      customDialogPosition.style.top = dialog_postion.top;
+      if(dialog_postion.left) {
+        customDialogPosition.style.left = dialog_postion.left;
+      } else if(dialog_postion.right) {
+        customDialogPosition.style.right = dialog_postion.right;
+      }
+    });
     
     const arrowsSize = 20;
     const common_arrow_style = `
