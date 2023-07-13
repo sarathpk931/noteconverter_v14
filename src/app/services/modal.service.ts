@@ -103,8 +103,21 @@ export class ModalService {
 
     let dialogRef = this.dialog.open(component,{
       position: dialog_postion,
+      panelClass: `custom-dialog-position`,
       data: { clickPosition, additionalInfo: `calc(${clickPosition.y}px - ${dialog_postion.top})`}
     });
+
+    const customDialogPosition : HTMLElement = document.querySelector(".custom-dialog-position");
+    customDialogPosition.style.top = dialog_postion.top;
+    customDialogPosition.style.margin = '0';
+    if(dialog_postion.left) {
+      customDialogPosition.style.left = dialog_postion.left;
+    } else if(dialog_postion.right) {
+      customDialogPosition.style.right = dialog_postion.right;
+    }
+    
+
+    // stylesheet.insertRule(rule,index)
     
     const arrowsSize = 20;
     const common_arrow_style = `
