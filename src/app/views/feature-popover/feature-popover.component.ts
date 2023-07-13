@@ -120,17 +120,8 @@ export class FeaturePopoverComponent implements OnInit {
       this.objectSelected.emit(option);
       // this.modalService.closeModal(this.mtModalRef);
       
-      // if (document.querySelector('#modal_arrow')) {
-      //   // const popupContainer = document.querySelector('.cdk-overlay-container');
-      //   // popupContainer.removeChild(document.querySelector('#modal_arrow'));
-      //   document.querySelectorAll("#modal_arrow1").forEach(e => e.parentNode.removeChild(e));
-
-      // }
       document.querySelectorAll("#modal_arrow").forEach(e => e.parentNode.removeChild(e));
       document.querySelector('.cdk-overlay-backdrop-showing').classList.add('cdk-overlay-backdrop-hide');
-      
-
-
       this.showPopover();
     }
 

@@ -170,28 +170,6 @@ export class ModalService {
       console.log(data);
     });
 
-    // dialogRef.afterClosed().subscribe(result => {
-    //   // console.log(`Dialog result: ${result}`);
-
-    //   // if (document.querySelector('#modal_arrow')) {
-    //   //   const popupContainer = document.querySelector('.cdk-overlay-container');
-    //   //   popupContainer.removeChild(document.querySelector('#modal_arrow'));
-    //   // }
-
-
-    //   // if (document.querySelector('#modal_left_arrow')) {
-    //   //   popupContainer.removeChild(document.querySelector('#modal_left_arrow'));
-    //   // } else if (document.querySelector('#modal_right_arrow')) {
-    //   //   popupContainer.removeChild(document.querySelector('#modal_right_arrow'));
-    //   // }
-    //     // alert('a');
-    // });
-
-    // dialogRef.beforeClosed().subscribe(result => {
-    //   // alert('aakash');
-    //   document.querySelectorAll("#modal_arrow").forEach(e => e.parentNode.removeChild(e));
-        
-    // });
     return dialogRef;
   }
   
