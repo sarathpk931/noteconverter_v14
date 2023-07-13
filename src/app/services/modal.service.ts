@@ -109,7 +109,6 @@ export class ModalService {
 
     const customDialogPosition : HTMLElement = document.querySelector(".custom-dialog-position");
     customDialogPosition.style.top = dialog_postion.top;
-    customDialogPosition.style.margin = '0px';
     if(dialog_postion.left) {
       customDialogPosition.style.left = dialog_postion.left;
     } else if(dialog_postion.right) {
