@@ -91,7 +91,7 @@ export class ScanScreenComponent implements OnInit{
   isEmailInvalid : boolean = false;
   isEmailRequired : boolean =false;
 
-  commonRightMarginForPopup: string = '57px'
+  commonRightMarginForPopup: number = 57
 
   constructor(
     private dialog: MatDialog,
@@ -253,28 +253,23 @@ export class ScanScreenComponent implements OnInit{
       let popupHeight=221;
       this.midwidth=this.winWidth / 2;
       let event_position: DialogPosition;
-      let leftPosition:number;
+      let xForRightArrow:number;
+      let showLeftArrow = false;
+      let showRightArrow = true;
       if (event.clientX < this.midwidth) {
         event_position = { left: event.clientX + 'px', top: (event.clientY - 111) + 'px'};
         console.log("x less than midwidth" )
-     
        }
-       
-       else {
-         const availableSpaceOnRight = this.winWidth - event.clientX;
-         if (event.clientX >= this.winWidth - popupWidth) {
- 
-            leftPosition = event.clientX - (popupWidth - availableSpaceOnRight);
-           // Popup appears on the extreme right
-           //rotationClass = 'popup-rotate';
-         }
-          event_position= { left: `${leftPosition}px`, top: (event.clientY - 111) + 'px'};
+      else {
+        xForRightArrow = window.innerWidth - event.clientX;
+        event_position= { right: `${xForRightArrow}px`, top: (event.clientY - 111) + 'px'};
        }
       let direction:string ='rtl';
       this.modalService.setData({
         from : this.const_fileFormat
       });
-      this.modalService.openModal(FeaturePopoverComponent,event_position);
+
+      this.modalService.openModal(FeaturePopoverComponent,event_position, {x: event.clientX, y:event.clientY, showLeftArrow, showRightArrow, xForRightArrow});
       //modalRef.content.closeBtnName = 'Close';
     }
 
@@ -288,29 +283,25 @@ export class ScanScreenComponent implements OnInit{
       this.midwidth=this.winWidth / 2;
       let rotationClass: string = '';
       let event_position: DialogPosition; 
-      let leftPosition:number;
+      let xForRightArrow:number;
+      let showLeftArrow = false;
+      let showRightArrow = false;
 
       if (event.clientX < this.midwidth) {
        event_position = { left: event.clientX + 'px', top: (event.clientY - 111) + 'px'};
        console.log("x less than midwidth" )
-    
+       showLeftArrow = true;
       }
-      
       else {
-        const availableSpaceOnRight = this.winWidth - event.clientX;
-        if (event.clientX >= this.winWidth - popupWidth) {
-           leftPosition = event.clientX - (popupWidth - availableSpaceOnRight);
-        } else {
-          leftPosition = event.clientX;
+        showRightArrow = true;
+        xForRightArrow = window.innerWidth - event.clientX;
+         event_position= { right: `${xForRightArrow}px`, top: (event.clientY - 111) + 'px'};
         }
-         event_position= { left: `calc(${leftPosition}px - ${this.commonRightMarginForPopup} - 20%)`, top: (event.clientY - 111) + 'px'};
-      }
-
       this.modalService.setData({
         from : this.const_type
       });
 
-      this.modalService.openModal(FeaturePopoverComponent,event_position);
+      this.modalService.openModal(FeaturePopoverComponent,event_position, {x: event.clientX, y:event.clientY, showLeftArrow, showRightArrow, xForRightArrow});
     }
 
     openSize(event: any){
@@ -324,28 +315,27 @@ export class ScanScreenComponent implements OnInit{
       console.log(event.clientY);
       console.log("popupTop in height px" + popupTop)
       let event_position: DialogPosition;
-      let leftPosition:number;
+      let xForRightArrow:number;
+      let showLeftArrow = false;
+      let showRightArrow = false;
 
       if (event.clientX < this.midwidth) {
         event_position = { left: event.clientX + 'px', top: (event.clientY - 325) + 'px'};
         console.log("x less than midwidth" )
-     
+        showLeftArrow = true;
        }
-       else {
-        const availableSpaceOnRight = this.winWidth - event.clientX;
-        if (event.clientX >= this.winWidth - popupWidth) {
-           leftPosition = event.clientX - (popupWidth - availableSpaceOnRight);
-        } else {
-          leftPosition = event.clientX;
-        }
-        event_position= { left: `${leftPosition}px`, top: (event.clientY - 325) + 'px'};
+      else {
+        showRightArrow = true;
+        xForRightArrow = window.innerWidth - event.clientX;
+        event_position= { right: `${xForRightArrow}px`,  top: (event.clientY - 325) + 'px'};
       }
-      //event_position = { left: event.clientX + 'px', top: event.clientY + 'px'};
       let direction:string ='rtl'; // to be decided based on click position
       this.modalService.setData({
         from : this.const_size
       });
-       this.modalService.openModal(FeaturePopoverComponent,event_position);
+
+      // const xForRightArrow = `calc(${rightPosition}px - 20px)`;
+       this.modalService.openModal(FeaturePopoverComponent,event_position, {x: event.clientX, y:event.clientY, showLeftArrow, showRightArrow, xForRightArrow});
     }
 
     

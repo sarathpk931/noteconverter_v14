@@ -3,7 +3,7 @@ import {MatDialog,MatDialogRef,MatDialogConfig,DialogPosition,MAT_DIALOG_DATA} f
 import { Overlay, OverlayPositionBuilder } from '@angular/cdk/overlay';
 import { ProgressAlertComponent} from '../views/progress-alert/progress-alert.component'; 
 import {AppComponent} from '../app.component';
-import { BehaviorSubject, timer} from 'rxjs';
+import { BehaviorSubject, finalize, timer} from 'rxjs';
 import {AppModule} from '../../app/app.module';
 
 
@@ -96,16 +96,83 @@ export class ModalService {
     this.fromData.next(data);
   }
 
-  public openModal(component : any,dialog_postion:any){
+  public openModal(component : any,dialog_postion:any,  clickPosition:any){
+    document.querySelectorAll("#modal_arrow").forEach(e => e.parentNode.removeChild(e));
     this.dialog.closeAll();
     this.dialog.openDialogs.pop();
+
     let dialogRef = this.dialog.open(component,{
       position: dialog_postion,
+      data: { clickPosition, additionalInfo: `calc(${clickPosition.y}px - ${dialog_postion.top})`}
     });
     
-    dialogRef.afterClosed().subscribe(result => {
-      //console.log(`Dialog result: ${result}`);
+    const arrowsSize = 20;
+    const common_arrow_style = `
+      position: absolute; 
+      width: 0; 
+      height: 0; 
+      border-top: ${arrowsSize}px solid transparent; 
+      border-bottom: ${arrowsSize}px solid transparent; 
+      z-index: 1000; 
+      top: ${clickPosition.y  - arrowsSize}px;
+    `
+    const modalArrow = document.createElement("div");
+    const modalBoxShadow = 2;
+    modalArrow.id = 'modal_arrow';
+
+    if (clickPosition.showLeftArrow) {
+      modalArrow.style.cssText += `
+      ${common_arrow_style}
+      border-right: ${arrowsSize}px solid #ddd;
+      left: calc(${dialog_postion.left} - ${arrowsSize}px + ${modalBoxShadow}px);
+    `;
+    } else {
+      modalArrow.style.cssText += `
+      ${common_arrow_style}
+      border-left: ${arrowsSize}px solid #ddd;
+      right: calc(${clickPosition.xForRightArrow}px - ${arrowsSize}px + ${modalBoxShadow}px);
+    `;
+    }
+
+    const popupContainer = document.querySelector('.cdk-overlay-container');
+    popupContainer.appendChild(modalArrow);
+   
+    dialogRef.afterClosed()
+    .pipe(finalize(() => {
+      
+      
+      if (!document.querySelector(".cdk-overlay-pane")) {
+        document.querySelectorAll("#modal_arrow").forEach(e => e.parentNode.removeChild(e));
+      }
+
+      
+    }))
+    .subscribe(data => {
+      console.log(data);
     });
+
+    // dialogRef.afterClosed().subscribe(result => {
+    //   // console.log(`Dialog result: ${result}`);
+
+    //   // if (document.querySelector('#modal_arrow')) {
+    //   //   const popupContainer = document.querySelector('.cdk-overlay-container');
+    //   //   popupContainer.removeChild(document.querySelector('#modal_arrow'));
+    //   // }
+
+
+    //   // if (document.querySelector('#modal_left_arrow')) {
+    //   //   popupContainer.removeChild(document.querySelector('#modal_left_arrow'));
+    //   // } else if (document.querySelector('#modal_right_arrow')) {
+    //   //   popupContainer.removeChild(document.querySelector('#modal_right_arrow'));
+    //   // }
+    //     // alert('a');
+    // });
+
+    // dialogRef.beforeClosed().subscribe(result => {
+    //   // alert('aakash');
+    //   document.querySelectorAll("#modal_arrow").forEach(e => e.parentNode.removeChild(e));
+        
+    // });
     return dialogRef;
   }
   
