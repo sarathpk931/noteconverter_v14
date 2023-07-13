@@ -7,7 +7,7 @@ import { ProgressAlertComponent } from '../progress-alert/progress-alert.compone
 import { ResourcestringService} from '../../services/resourcestring.service';
 import { resourceString} from '../../model/global';
 import { LogService } from '../../services/log.service';
-import smoothscroll from 'smoothscroll-polyfill';
+
 
 
 @Component({
