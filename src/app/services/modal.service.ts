@@ -39,17 +39,10 @@ export class ModalService {
     
 
   showProgressAlert(title: string, message : string):MatDialogRef<ProgressAlertComponent>{
-    
+    this.dialog.closeAll();
+   
     return this.dialog.open(ProgressAlertComponent, {
-      data :{'title': title,'message':message},
-      position: {
-        top: '',
-        left: 'calc(50% - 512px)',
-        
-    },
-      //panelClass: (!this.isThirdGenBrowser) ? 'allow-outside-interaction' : 'allow-outside-banner-interaction'
-      //panelClass:'progress-bar-modalbox'
-      
+      data :{'title': title,'message':message}, 
     });
   }
 

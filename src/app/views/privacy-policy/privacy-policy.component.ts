@@ -61,6 +61,7 @@ export class PrivacyPolicyComponent implements OnInit {
       
     closeModal():void{
       this.modalService.closeModal(this.modalRef);
+      document.querySelector('.cdk-overlay-backdrop-showing').classList.add('cdk-overlay-backdrop-hide');
     }
 
     /* private disableLinks(): void {
