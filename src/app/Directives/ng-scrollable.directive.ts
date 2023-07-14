@@ -223,6 +223,15 @@ declare const IScroll: any;
         }
       }
     });
+
+    // Trigger viewVisible event
+    const viewVisibleEvent = new CustomEvent('viewVisible', { bubbles: true });
+    element.dispatchEvent(viewVisibleEvent);
+
+    // Trigger popoverVisible event
+    const popoverVisibleEvent = new CustomEvent('popoverVisible', { bubbles: true });
+    element.dispatchEvent(popoverVisibleEvent);
+    
   }
 
   private startHeightWatcher(): void {
@@ -285,25 +294,25 @@ declare const IScroll: any;
     const element = this.elementRef.nativeElement as HTMLElement;
     const targetNode = event.target as Node;
     console.log("view visible");
-    if (element.contains(targetNode)) {
+    //if (element.contains(targetNode)) {
       this.updateViewport();
       if (this.scroller) {
         this.scroller.refresh();
         this.updateShadowDiv();
       }
-    }
+    //}
   }
 
   @HostListener('document:popoverVisible', ['$event'])
   private onPopoverVisible(event: CustomEvent): void {
     const element = this.elementRef.nativeElement as HTMLElement;
     console.log("view popoverVisible");
-    if (element.closest('popover')?.getAttribute('id') === event.detail.id) {
+    //if (element.closest('popover')?.getAttribute('id') === event.detail.id) {
       this.updateViewport();
       if (this.scroller) {
         this.scroller.refresh();
         this.updateShadowDiv();
       }
-    }
+    //}
   }
 }
