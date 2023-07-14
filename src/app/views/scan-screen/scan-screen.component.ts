@@ -240,8 +240,8 @@ export class ScanScreenComponent implements OnInit{
 
     showPrivacyStatement(){
       this.modalService.emitPopoverVisible('popup-content');
-      //const event = new CustomEvent('viewVisible');
-      //document.dispatchEvent(event);
+      const event = new CustomEvent('viewVisible');
+      document.dispatchEvent(event);
       this.modalService.openLargeModal(PrivacyPolicyComponent);
     }
 

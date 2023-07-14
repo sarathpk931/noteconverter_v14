@@ -41,6 +41,8 @@ declare const IScroll: any;
     private scroller: any;
     private currentY: number = 0;
     private popoverVisibleSubscription: Subscription | undefined;
+    private isThirdGenBrowser :boolean;
+    private generation :number ;
 
 
     constructor(private elementRef: ElementRef, private modalService:ModalService) { }
@@ -51,15 +53,21 @@ declare const IScroll: any;
       this.wrapperHeight = element.offsetHeight;
       this.windowHeight = window.innerHeight;
       
-      console.log("Is Third Generation"+AppModule.isThirdGenBrowser);
-      console.log("Generation"+AppModule.Generation);
+      this.isThirdGenBrowser=AppModule.isThirdGenBrowser;
+      this.generation=AppModule.Generation;
+      //console.log("Is Third Generation"+AppModule.isThirdGenBrowser);
+      //console.log("Generation"+AppModule.Generation);
+      alert(this.isThirdGenBrowser);
+      alert(this.generation);
+
       
       if (!AppModule.isThirdGenBrowser && AppModule.Generation >= 9.0){
         this.link(element);
+        alert("Inside If");
       }
       else
       {
-
+        alert("Inside else");
       if (this.scrollY !== 'false') {
 
         element.style.overflowY = 'auto';
@@ -120,16 +128,7 @@ declare const IScroll: any;
     
     }
 
-    this.popoverVisibleSubscription=this.modalService.popoverVisible.subscribe((popoverId) => {
-      const element = this.elementRef.nativeElement as HTMLElement;
-      if (element.closest('popover')?.getAttribute('id') === popoverId) {
-        this.updateViewport();
-        if (this.scroller) {
-          this.scroller.refresh();
-          this.updateShadowDiv();
-        }
-      }
-    });
+    
   }
 
   ngOnDestroy(): void {
@@ -212,6 +211,18 @@ declare const IScroll: any;
 
     element.style.position = 'relative';
     element.classList.add('wrapper');
+
+    this.popoverVisibleSubscription=this.modalService.popoverVisible.subscribe((popoverId) => {
+      const element = this.elementRef.nativeElement as HTMLElement;
+      if (element.classList.contains('popup-content') && element.getAttribute('id') === popoverId) {
+        console.log("Inside Popover Visible subscribe");
+        this.updateViewport();
+        if (this.scroller) {
+          this.scroller.refresh();
+          this.updateShadowDiv();
+        }
+      }
+    });
   }
 
   private startHeightWatcher(): void {
@@ -286,7 +297,7 @@ declare const IScroll: any;
   @HostListener('document:popoverVisible', ['$event'])
   private onPopoverVisible(event: CustomEvent): void {
     const element = this.elementRef.nativeElement as HTMLElement;
-    console.log("view visible");
+    console.log("view popoverVisible");
     if (element.closest('popover')?.getAttribute('id') === event.detail.id) {
       this.updateViewport();
       if (this.scroller) {
