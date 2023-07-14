@@ -2,6 +2,7 @@ import { Directive, ElementRef,NgModule, Input, OnInit, OnDestroy,HostListener ,
 import { merge, Observable,fromEvent, interval, Subscription } from 'rxjs';
 import { debounce } from 'rxjs/operators';
 import {AppModule} from '../app.module';
+import { ModalService } from '../services/modal.service';
 
 declare const IScroll: any; 
 
@@ -39,12 +40,13 @@ declare const IScroll: any;
 
     private scroller: any;
     private currentY: number = 0;
-    private resizeSubscription: Subscription | undefined;
-    private device :boolean=true;
+    private popoverVisibleSubscription: Subscription | undefined;
 
-    constructor(private elementRef: ElementRef) { }
+
+    constructor(private elementRef: ElementRef, private modalService:ModalService) { }
    
     ngOnInit(): void {
+
       const element = this.elementRef.nativeElement as HTMLElement;
       this.wrapperHeight = element.offsetHeight;
       this.windowHeight = window.innerHeight;
@@ -118,14 +120,27 @@ declare const IScroll: any;
       
       }
     
-    }  
-  
+    }
+
+    this.popoverVisibleSubscription=this.modalService.popoverVisible.subscribe((popoverId) => {
+      const element = this.elementRef.nativeElement as HTMLElement;
+      if (element.closest('popover')?.getAttribute('id') === popoverId) {
+        this.updateViewport();
+        if (this.scroller) {
+          this.scroller.refresh();
+          this.updateShadowDiv();
+        }
+      }
+    });
   }
 
   ngOnDestroy(): void {
     this.stopHeightWatcher();
     if (this.shadowDiv) {
       this.shadowDiv.remove();
+    }
+    if (this.popoverVisibleSubscription) {
+      this.popoverVisibleSubscription.unsubscribe();
     }
   }
 
@@ -193,7 +208,7 @@ declare const IScroll: any;
     });
 
     if (this.ngScrollable && this.ngScrollable.watchHeight) {
-      // Do something with this.ngScrollable.watchHeight
+      
       this.startHeightWatcher();
     }
 
@@ -252,6 +267,33 @@ declare const IScroll: any;
         this.shadowDiv.classList.add('shadow-bottom');
       } else {
         this.shadowDiv.classList.remove('shadow-bottom');
+      }
+    }
+  }
+
+  @HostListener('document:viewVisible', ['$event'])
+    private onViewVisible(event: CustomEvent): void {
+    const element = this.elementRef.nativeElement as HTMLElement;
+    const targetNode = event.target as Node;
+    console.log("view visible");
+    if (element.contains(targetNode)) {
+      this.updateViewport();
+      if (this.scroller) {
+        this.scroller.refresh();
+        this.updateShadowDiv();
+      }
+    }
+  }
+
+  @HostListener('document:popoverVisible', ['$event'])
+  private onPopoverVisible(event: CustomEvent): void {
+    const element = this.elementRef.nativeElement as HTMLElement;
+    console.log("view visible");
+    if (element.closest('popover')?.getAttribute('id') === event.detail.id) {
+      this.updateViewport();
+      if (this.scroller) {
+        this.scroller.refresh();
+        this.updateShadowDiv();
       }
     }
   }
