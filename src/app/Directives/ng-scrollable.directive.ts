@@ -62,8 +62,6 @@ declare const IScroll: any;
 
       if (this.scrollY !== 'false') {
 
-        alert("scrollY:" +this.scrollY);
-
         element.style.overflowY = 'auto';
         element.style.position = 'relative';
 
