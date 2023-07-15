@@ -264,6 +264,36 @@ declare const IScroll: any;
       } else {
         this.shadowDiv.classList.remove('shadow-bottom');
       }
+
+      this.scroller.on('scrollStart', () => {
+    
+        if (this.scroller.maxScrollY !== 0) {
+          console.log("this.scroller.maxScrollY :" + this.scroller.maxScrollY);
+          this.shadowDiv!.classList.add('shadow-bottom');
+          this.shadowDiv!.classList.add('shadow-top');
+        }
+      });
+  
+      this.scroller.on('scrollEnd', () => {
+        
+        if (this.scroller.maxScrollY !== 0) {
+          
+          if (this.scroller.y === this.scroller.maxScrollY) {
+            this.shadowDiv!.classList.remove('shadow-bottom');
+          }
+          if (this.scroller.y === 0) {
+            this.shadowDiv!.classList.remove('shadow-top');
+          }
+        }
+  
+  
+        if (this.scroller.y === this.scroller.maxScrollY && this.$scrollEnd && this.scroller.y !== this.currentY) {
+          console.log("this.scroller.y :" +this.scroller.y);
+          this.$scrollEnd(this);
+        }
+  
+        this.currentY = this.scroller.y;
+      });
     }
   
   }
