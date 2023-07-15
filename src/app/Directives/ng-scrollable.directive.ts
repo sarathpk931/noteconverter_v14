@@ -1,4 +1,4 @@
-import { Directive, ElementRef,NgModule, Input, OnInit, OnDestroy,HostListener ,NgZone,Optional } from '@angular/core';
+import { Directive, ElementRef,NgModule, Input, OnInit, OnDestroy,HostListener,ContentChild  } from '@angular/core';
 import { merge, Observable,fromEvent, interval, Subscription } from 'rxjs';
 import { debounce } from 'rxjs/operators';
 import {AppModule} from '../app.module';
@@ -6,12 +6,17 @@ import { ModalService } from '../services/modal.service';
 
 declare const IScroll: any; 
 
+
+
 @Directive({
   selector: '[ngScrollable]'
 })
 
 
-  export class NgScrollableDirective implements OnInit, OnDestroy {
+  export class NgScrollableDirective implements OnDestroy {
+
+    @ContentChild('scrollableContent') scrollableContent!: ElementRef<HTMLElement>;
+
     @Input() ngScrollable: any | undefined;
     @Input() bounce: string | undefined;
     @Input() disableMouse: string | undefined;
@@ -29,6 +34,9 @@ declare const IScroll: any;
     @Input() tap: string | undefined;
     @Input() useTransform: string | undefined;
     @Input() useTransition: string | undefined;
+    @Input() isPopupOpen: boolean;
+    @Input() autoHeight: boolean;
+    @Input() watchHeight: boolean;
 
     private $$config: any;
     private $scrollEnd:any;
@@ -40,14 +48,14 @@ declare const IScroll: any;
 
     private scroller: any;
     private currentY: number = 0;
-    private popoverVisibleSubscription: Subscription | undefined;
     private isThirdGenBrowser :boolean;
     private generation :number ;
 
 
     constructor(private elementRef: ElementRef, private modalService:ModalService) { }
-   
-    ngOnInit(): void {
+  
+
+    ngAfterViewInit(): void {
 
       const element = this.elementRef.nativeElement as HTMLElement;
       this.wrapperHeight = element.offsetHeight;
@@ -55,20 +63,14 @@ declare const IScroll: any;
       
       this.isThirdGenBrowser=AppModule.isThirdGenBrowser;
       this.generation=AppModule.Generation;
-      //console.log("Is Third Generation"+AppModule.isThirdGenBrowser);
-      //console.log("Generation"+AppModule.Generation);
-      alert(this.isThirdGenBrowser);
-      alert(this.generation);
-
       
-      if (!AppModule.isThirdGenBrowser && AppModule.Generation >= 9.0){
+      if (!AppModule.isThirdGenBrowser && AppModule.Generation >= 7.0){
         this.link(element);
-        alert("Inside If");
-      }
+        //alert("Inside If");
+      } 
       else
       {
-        alert("Inside else");
-      if (this.scrollY !== 'false') {
+        if (this.scrollY !== 'false') {
 
         element.style.overflowY = 'auto';
         element.style.position = 'relative';
@@ -126,38 +128,33 @@ declare const IScroll: any;
       
       }
     
-    }
-
     
+    }
   }
 
   ngOnDestroy(): void {
-    this.stopHeightWatcher();
-    if (this.shadowDiv) {
-      this.shadowDiv.remove();
+      this.stopHeightWatcher();
+      if (this.shadowDiv) {
+        this.shadowDiv.remove();
+      }
     }
-    if (this.popoverVisibleSubscription) {
-      this.popoverVisibleSubscription.unsubscribe();
-    }
-  }
 
   private link(element: HTMLElement): void {
+    
     if (this.ngScrollable) {
-      // Do something with this.ngScrollable
       const config = JSON.parse(this.ngScrollable);
+      this.watchHeight=config.watchHeight;
+      this.autoHeight=config.autoHeight;
       this.$$config = config;
-      this.$scrollEnd = config.scrollEnd;
+      this.$scrollEnd = config.autoHeight;
     }
+    console.log("element inner html" + element.innerHTML);
 
     element.classList.add('ninth-gen');
 
-    this.shadowDiv = document.createElement('div');
-    if (element.scrollHeight !== 0) {
-      this.shadowDiv.classList.add('shadow-bottom');
-    }
-    element.appendChild(this.shadowDiv);
-
     this.wrapperHeight=element.offsetHeight;
+
+    console.log("wrapper Height"+ this.wrapperHeight);
 
     this.scroller = new IScroll(element, {
       bounce: this.bounce === 'true',
@@ -178,17 +175,34 @@ declare const IScroll: any;
       useTransition: this.useTransition === 'true',
     });
 
-    
+    this.shadowDiv = document.createElement('div');
 
+
+    if (element.scrollHeight !== 0) {
+      console.log("element.scrollHeight :" + element.scrollHeight);
+      this.shadowDiv.classList.add('shadow-bottom');
+    }
+    element.appendChild(this.shadowDiv);
+
+    console.log("element.scrollHeight :" + element.scrollHeight);
+    console.log("this.scroller.maxScrollY :"+this.scroller.maxScrollY);
+    console.log("this.scroller.y :"+this.scroller.y);
+    console.log("this.$scrollEnd :"+this.$scrollEnd);
+    console.log("this.currentY :"+this.currentY);
+    
     this.scroller.on('scrollStart', () => {
+    
       if (this.scroller.maxScrollY !== 0) {
+        console.log("this.scroller.maxScrollY :" + this.scroller.maxScrollY);
         this.shadowDiv!.classList.add('shadow-bottom');
         this.shadowDiv!.classList.add('shadow-top');
       }
     });
 
     this.scroller.on('scrollEnd', () => {
+      
       if (this.scroller.maxScrollY !== 0) {
+        
         if (this.scroller.y === this.scroller.maxScrollY) {
           this.shadowDiv!.classList.remove('shadow-bottom');
         }
@@ -197,44 +211,65 @@ declare const IScroll: any;
         }
       }
 
+
       if (this.scroller.y === this.scroller.maxScrollY && this.$scrollEnd && this.scroller.y !== this.currentY) {
-        // Do something with this.$scrollEnd
+        console.log("this.scroller.y :" +this.scroller.y);
+        this.$scrollEnd(this);
       }
 
       this.currentY = this.scroller.y;
     });
 
-    if (this.ngScrollable && this.ngScrollable.watchHeight) {
-      
+    if (this.autoHeight && this.watchHeight) {
+      console.log("this.ngScrollable && this.ngScrollable.watchHeight :" + this.ngScrollable && this.ngScrollable.watchHeight);
       this.startHeightWatcher();
     }
 
     element.style.position = 'relative';
     element.classList.add('wrapper');
 
-    this.popoverVisibleSubscription=this.modalService.popoverVisible.subscribe((popoverId) => {
-      const element = this.elementRef.nativeElement as HTMLElement;
-      if (element.classList.contains('popup-content') && element.getAttribute('id') === popoverId) {
-        console.log("Inside Popover Visible subscribe");
-        this.updateViewport();
-        if (this.scroller) {
-          this.scroller.refresh();
-          this.updateShadowDiv();
-        }
+    const scrollableContent = this.scrollableContent?.nativeElement;
+    
+    this.modalService.viewVisible.subscribe(() => {
+      // Update the viewport when the view is visible
+      this.updateViewport();
+      if (this.scroller) {
+        this.scroller.refresh();
+        this.updateShadowDiv();
       }
     });
 
-    // Trigger viewVisible event
-    const viewVisibleEvent = new CustomEvent('viewVisible', { bubbles: true });
-    element.dispatchEvent(viewVisibleEvent);
+    if(scrollableContent) {
+      const observer = new MutationObserver(() => {
+        this.updateScrollableContent();
+      });
 
-    // Trigger popoverVisible event
-    const popoverVisibleEvent = new CustomEvent('popoverVisible', { bubbles: true });
-    element.dispatchEvent(popoverVisibleEvent);
-    
+      observer.observe(scrollableContent, { childList: true, subtree: true });
+
+      this.updateScrollableContent();
+    }
+  }
+
+  private updateScrollableContent(): void {
+    const scrollableContent = this.scrollableContent?.nativeElement;
+    if (this.scroller && scrollableContent) {
+      this.scroller.refresh();
+      this.updateShadowDiv();
+    }
+
+    if (scrollableContent) {
+      const scrollableHeight = scrollableContent.scrollHeight;
+      if (scrollableHeight !== 0) {
+        this.shadowDiv.classList.add('shadow-bottom');
+      } else {
+        this.shadowDiv.classList.remove('shadow-bottom');
+      }
+    }
+  
   }
 
   private startHeightWatcher(): void {
+
     this.stopHeightWatcher(); // Ensure previous interval is cleared
     this.heightWatcher = setInterval(() => {
       const currentHeight = this.elementRef.nativeElement.offsetHeight;
@@ -262,7 +297,6 @@ declare const IScroll: any;
   private updateViewport(): void {
     // Perform viewport update logic here
     const element = this.elementRef.nativeElement as HTMLElement;
-
     if (this.$$config && this.$$config.autoHeight) {
       const padding = this.$$config.padding || 0;
       element.style.height = `${(window.innerHeight - element.offsetTop) - padding}px`;
@@ -287,32 +321,5 @@ declare const IScroll: any;
         this.shadowDiv.classList.remove('shadow-bottom');
       }
     }
-  }
-
-  @HostListener('document:viewVisible', ['$event'])
-    private onViewVisible(event: CustomEvent): void {
-    const element = this.elementRef.nativeElement as HTMLElement;
-    const targetNode = event.target as Node;
-    console.log("view visible");
-    //if (element.contains(targetNode)) {
-      this.updateViewport();
-      if (this.scroller) {
-        this.scroller.refresh();
-        this.updateShadowDiv();
-      }
-    //}
-  }
-
-  @HostListener('document:popoverVisible', ['$event'])
-  private onPopoverVisible(event: CustomEvent): void {
-    const element = this.elementRef.nativeElement as HTMLElement;
-    console.log("view popoverVisible");
-    //if (element.closest('popover')?.getAttribute('id') === event.detail.id) {
-      this.updateViewport();
-      if (this.scroller) {
-        this.scroller.refresh();
-        this.updateShadowDiv();
-      }
-    //}
   }
 }

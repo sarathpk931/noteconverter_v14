@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable,EventEmitter  } from '@angular/core';
 import {MatDialog,MatDialogRef,MatDialogConfig,DialogPosition,MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { Overlay, OverlayPositionBuilder } from '@angular/cdk/overlay';
 import { ProgressAlertComponent} from '../views/progress-alert/progress-alert.component'; 
@@ -15,8 +15,7 @@ export class ModalService {
   isThirdGenBrowser : boolean = AppModule.isThirdGenBrowser;
 
   private fromData = new BehaviorSubject<string>('');
-  private popoverVisibleSubject = new Subject<string>();
-  popoverVisible = this.popoverVisibleSubject.asObservable();
+  viewVisible: EventEmitter<void> = new EventEmitter<void>();
   currentValue = this.fromData.asObservable();
 
   constructor(
@@ -62,10 +61,6 @@ export class ModalService {
    }
 
    public openLargeModal(component: any): void {
-
-    this.emitPopoverVisible('popup-content');
-    const event = new CustomEvent('viewVisible');
-    document.dispatchEvent(event);
     const windowWidth = window.innerWidth;
     const popupWidth = 1024;
     const leftPosition = Math.max((windowWidth / 2) - (popupWidth / 2), 0) + 'px';
@@ -83,12 +78,13 @@ export class ModalService {
         right: rightPosition,
       },
     });
-    
+   
   }
 
-  public emitPopoverVisible(popoverId: string) {
-    this.popoverVisibleSubject.next(popoverId);
+  emitViewVisible(): void {
+    this.viewVisible.emit();
   }
+  
 
   public openModalWithoutClose(component : any,title: string,message : string)
   {
