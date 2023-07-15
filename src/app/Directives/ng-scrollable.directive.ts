@@ -148,13 +148,13 @@ declare const IScroll: any;
       this.$$config = config;
       this.$scrollEnd = config.autoHeight;
     }
-    console.log("element inner html" + element.innerHTML);
+    //////console.log("element inner html" + element.innerHTML);
 
     element.classList.add('ninth-gen');
 
     this.wrapperHeight=element.offsetHeight;
 
-    console.log("wrapper Height"+ this.wrapperHeight);
+    //console.log("wrapper Height"+ this.wrapperHeight);
 
     this.scroller = new IScroll(element, {
       bounce: this.bounce === 'true',
@@ -184,16 +184,16 @@ declare const IScroll: any;
     }
     element.appendChild(this.shadowDiv);
 
-    console.log("element.scrollHeight :" + element.scrollHeight);
-    console.log("this.scroller.maxScrollY :"+this.scroller.maxScrollY);
-    console.log("this.scroller.y :"+this.scroller.y);
-    console.log("this.$scrollEnd :"+this.$scrollEnd);
-    console.log("this.currentY :"+this.currentY);
+    //console.log("element.scrollHeight :" + element.scrollHeight);
+    //console.log("this.scroller.maxScrollY :"+this.scroller.maxScrollY);
+    //console.log("this.scroller.y :"+this.scroller.y);
+    //console.log("this.$scrollEnd :"+this.$scrollEnd);
+    //console.log("this.currentY :"+this.currentY);
     
     this.scroller.on('scrollStart', () => {
     
       if (this.scroller.maxScrollY !== 0) {
-        console.log("this.scroller.maxScrollY :" + this.scroller.maxScrollY);
+        //console.log("this.scroller.maxScrollY :" + this.scroller.maxScrollY);
         this.shadowDiv!.classList.add('shadow-bottom');
         this.shadowDiv!.classList.add('shadow-top');
       }
@@ -213,7 +213,7 @@ declare const IScroll: any;
 
 
       if (this.scroller.y === this.scroller.maxScrollY && this.$scrollEnd && this.scroller.y !== this.currentY) {
-        console.log("this.scroller.y :" +this.scroller.y);
+       // console.log("this.scroller.y :" +this.scroller.y);
         this.$scrollEnd(this);
       }
 
@@ -221,7 +221,7 @@ declare const IScroll: any;
     });
 
     if (this.autoHeight && this.watchHeight) {
-      console.log("this.ngScrollable && this.ngScrollable.watchHeight :" + this.ngScrollable && this.ngScrollable.watchHeight);
+      //console.log("this.ngScrollable && this.ngScrollable.watchHeight :" + this.ngScrollable && this.ngScrollable.watchHeight);
       this.startHeightWatcher();
     }
 
@@ -268,7 +268,7 @@ declare const IScroll: any;
       this.scroller.on('scrollStart', () => {
     
         if (this.scroller.maxScrollY !== 0) {
-          console.log("this.scroller.maxScrollY :" + this.scroller.maxScrollY);
+          //console.log("this.scroller.maxScrollY :" + this.scroller.maxScrollY);
           this.shadowDiv!.classList.add('shadow-bottom');
           this.shadowDiv!.classList.add('shadow-top');
         }
@@ -288,7 +288,7 @@ declare const IScroll: any;
   
   
         if (this.scroller.y === this.scroller.maxScrollY && this.$scrollEnd && this.scroller.y !== this.currentY) {
-          console.log("this.scroller.y :" +this.scroller.y);
+          //console.log("this.scroller.y :" +this.scroller.y);
           this.$scrollEnd(this);
         }
   
