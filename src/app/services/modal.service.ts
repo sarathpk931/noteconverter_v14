@@ -97,10 +97,6 @@ export class ModalService {
   setData(data:any){
     this.fromData.next(data);
   }
-
-  setPositionOfDialog() {
-
-  }
   
   public openModal(component : any,dialog_postion:any,  clickPosition:any){
     document.querySelectorAll("#modal_arrow").forEach(e => e.parentNode.removeChild(e));
@@ -114,7 +110,8 @@ export class ModalService {
       scrollStrategy: new NoopScrollStrategy()
     });
 
-    dialogRef.afterOpened().subscribe(result => {
+    dialogRef.afterOpened().subscribe((result => {
+      setTimeout(() => {
       const customDialogPosition : HTMLElement = document.querySelector(".custom-dialog-position");
       let horizontalPosition = '';
       if(dialog_postion.left) {
@@ -156,18 +153,14 @@ export class ModalService {
   
       const popupContainer = document.querySelector('.cdk-overlay-container');
       popupContainer.appendChild(modalArrow);
-    
-    });
+      },500);
+    }));
    
     dialogRef.afterClosed()
     .pipe(finalize(() => {
-      
-      
       if (!document.querySelector(".cdk-overlay-pane")) {
         document.querySelectorAll("#modal_arrow").forEach(e => e.parentNode.removeChild(e));
       }
-
-      
     }))
     .subscribe(data => {
       console.log(data);
