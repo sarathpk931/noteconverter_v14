@@ -3,8 +3,8 @@ import {MatDialog,MatDialogRef,MatDialogConfig,DialogPosition,MAT_DIALOG_DATA} f
 import { Overlay, OverlayPositionBuilder } from '@angular/cdk/overlay';
 import { ProgressAlertComponent} from '../views/progress-alert/progress-alert.component'; 
 import {AppComponent} from '../app.component';
-import { BehaviorSubject, timer,Subject } from 'rxjs';
 import {AppModule} from '../../app/app.module';
+import { BehaviorSubject,Subject, finalize, timer} from 'rxjs';
 
 
 @Injectable({
@@ -40,17 +40,10 @@ export class ModalService {
     
 
   showProgressAlert(title: string, message : string):MatDialogRef<ProgressAlertComponent>{
-    
+    this.dialog.closeAll();
+   
     return this.dialog.open(ProgressAlertComponent, {
-      data :{'title': title,'message':message},
-      position: {
-        top: '',
-        left: 'calc(50% - 512px)',
-        
-    },
-      //panelClass: (!this.isThirdGenBrowser) ? 'allow-outside-interaction' : 'allow-outside-banner-interaction'
-      //panelClass:'progress-bar-modalbox'
-      
+      data :{'title': title,'message':message}, 
     });
   }
 
@@ -103,16 +96,80 @@ export class ModalService {
     this.fromData.next(data);
   }
 
-  public openModal(component : any,dialog_postion:any){
+  setPositionOfDialog() {
+
+  }
+  
+  public openModal(component : any,dialog_postion:any,  clickPosition:any){
+    document.querySelectorAll("#modal_arrow").forEach(e => e.parentNode.removeChild(e));
     this.dialog.closeAll();
     this.dialog.openDialogs.pop();
+
     let dialogRef = this.dialog.open(component,{
-      position: dialog_postion,
+      position: { ...dialog_postion, top: '100%' },
+      panelClass: `custom-dialog-position`,
+      data: { clickPosition, additionalInfo: `calc(${clickPosition.y}px - ${dialog_postion.top})`}
     });
+
+    dialogRef.afterOpened().subscribe(result => {
+      const customDialogPosition : HTMLElement = document.querySelector(".custom-dialog-position");
+      let horizontalPosition = '';
+      if(dialog_postion.left) {
+        horizontalPosition = `left: ${dialog_postion.left}`;
+      } else if(dialog_postion.right) {
+        horizontalPosition = `right: ${dialog_postion.right}`;
+      }
+
+      customDialogPosition.style.cssText = `margin: 0!important; top: ${dialog_postion.top};${horizontalPosition};`
     
-    dialogRef.afterClosed().subscribe(result => {
-      //console.log(`Dialog result: ${result}`);
+    
+      const arrowsSize = 20;
+      const common_arrow_style = `
+        position: absolute; 
+        width: 0; 
+        height: 0; 
+        border-top: ${arrowsSize}px solid transparent; 
+        border-bottom: ${arrowsSize}px solid transparent; 
+        z-index: 1000; 
+        top: ${clickPosition.y  - arrowsSize}px;
+      `
+      const modalArrow = document.createElement("div");
+      const modalBoxShadow = 2;
+      modalArrow.id = 'modal_arrow';
+  
+      if (clickPosition.showLeftArrow) {
+        modalArrow.style.cssText += `
+        ${common_arrow_style}
+        border-right: ${arrowsSize}px solid #ddd;
+        left: calc(${dialog_postion.left} - ${arrowsSize}px + ${modalBoxShadow}px);
+      `;
+      } else {
+        modalArrow.style.cssText += `
+        ${common_arrow_style}
+        border-left: ${arrowsSize}px solid #ddd;
+        right: calc(${clickPosition.xForRightArrow}px - ${arrowsSize}px + ${modalBoxShadow}px);
+      `;
+      }
+  
+      const popupContainer = document.querySelector('.cdk-overlay-container');
+      popupContainer.appendChild(modalArrow);
+    
     });
+   
+    dialogRef.afterClosed()
+    .pipe(finalize(() => {
+      
+      
+      if (!document.querySelector(".cdk-overlay-pane")) {
+        document.querySelectorAll("#modal_arrow").forEach(e => e.parentNode.removeChild(e));
+      }
+
+      
+    }))
+    .subscribe(data => {
+      console.log(data);
+    });
+
     return dialogRef;
   }
   
@@ -136,7 +193,12 @@ export class ModalService {
   {
 
      this.dialog.open(component, {
-      data :{'title': title,'message':message}
+      data :{'title': title,'message':message},
+      position: {
+        top: '',
+        left: 'calc(50% - 512px)',
+        
+    },
     });
 
     timer(3000).subscribe(()=>{
