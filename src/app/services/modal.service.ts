@@ -1,6 +1,6 @@
 import { Injectable,EventEmitter  } from '@angular/core';
 import {MatDialog,MatDialogRef,MatDialogConfig,DialogPosition,MAT_DIALOG_DATA} from '@angular/material/dialog';
-import { Overlay, OverlayPositionBuilder } from '@angular/cdk/overlay';
+import { Overlay, OverlayPositionBuilder,NoopScrollStrategy  } from '@angular/cdk/overlay';
 import { ProgressAlertComponent} from '../views/progress-alert/progress-alert.component'; 
 import {AppComponent} from '../app.component';
 import {AppModule} from '../../app/app.module';
@@ -43,7 +43,8 @@ export class ModalService {
     this.dialog.closeAll();
    
     return this.dialog.open(ProgressAlertComponent, {
-      data :{'title': title,'message':message}, 
+      data :{'title': title,'message':message},
+      scrollStrategy: new NoopScrollStrategy()
     });
   }
 
@@ -69,6 +70,7 @@ export class ModalService {
         left: leftPosition,
         right: rightPosition,
       },
+      scrollStrategy: new NoopScrollStrategy()
     });
    
   }
@@ -108,7 +110,8 @@ export class ModalService {
     let dialogRef = this.dialog.open(component,{
       position: { ...dialog_postion, top: '100%' },
       panelClass: `custom-dialog-position`,
-      data: { clickPosition, additionalInfo: `calc(${clickPosition.y}px - ${dialog_postion.top})`}
+      data: { clickPosition, additionalInfo: `calc(${clickPosition.y}px - ${dialog_postion.top})`},
+      scrollStrategy: new NoopScrollStrategy()
     });
 
     dialogRef.afterOpened().subscribe(result => {
@@ -184,6 +187,7 @@ export class ModalService {
         left: 'calc(50% - 512px)',
         
     },
+    scrollStrategy: new NoopScrollStrategy()
     });
 
   }
@@ -199,6 +203,7 @@ export class ModalService {
         left: 'calc(50% - 512px)',
         
     },
+    scrollStrategy: new NoopScrollStrategy()
     });
 
     timer(3000).subscribe(()=>{
@@ -215,7 +220,8 @@ export class ModalService {
   {
     this.dialog.closeAll();
     this.dialog.open(component, {
-      data : data
+      data : data,
+      scrollStrategy: new NoopScrollStrategy()
       
     });
   }
