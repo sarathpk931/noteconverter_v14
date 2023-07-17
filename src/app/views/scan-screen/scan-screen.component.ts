@@ -1,6 +1,6 @@
 //scan-screen.component.ts
 
-import { Component,ViewChild,ElementRef,Renderer2, OnInit,HostListener  } from '@angular/core';
+import { Component,ViewChild,ElementRef,Renderer2, OnInit,HostListener,EventEmitter  } from '@angular/core';
 import {MatDialog,MatDialogRef,DialogPosition} from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators,AbstractControl, ValidationErrors } from '@angular/forms';//ReactiveFormsModule,
 import {FeaturePopoverComponent} from '../feature-popover/feature-popover.component';

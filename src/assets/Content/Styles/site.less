@@ -203,29 +203,7 @@ html, body, div, span, h1, h2, h3, h4, h5, h6, p, blockquote, dl, dt, dd, ol, ul
     vertical-align: middle;
 }
 
-.iScrollVerticalScrollbar {
-    position: absolute;
-    width: 4px;
-    top: 2px;
-    bottom: 2px;
-    right: 2px;
-    z-index: 30 !important;
-}
 
-.iScrollIndicator {
-    box-sizing: border-box;
-    position: absolute;
-    background: rgba(0, 0, 0, 0.5);
-    /*border: 1px solid rgba(255, 255, 255, 0.9);*/
-    border: none;
-    border-radius: 3px;
-    width: 100%;
-    transition-duration: 0ms;
-    display: block;
-    height: 214px;
-    transform: translate(0px, 0px);
-    transition-timing-function: cubic-bezier(0.1, 0.57, 0.1, 1)
-}
 
 
 input::-webkit-input-placeholder {
@@ -275,7 +253,7 @@ input::-webkit-input-placeholder {
 /* Webkit Scroll Bars */
 @media(max-width:800px) {
 ::-webkit-scrollbar {
-    width: 5px;
+    width: 50px;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -283,7 +261,7 @@ input::-webkit-input-placeholder {
     background-clip: padding-box;
     background-color: rgba(0, 0, 0, 0.50);
     box-shadow: none;
-    //background-image: url('');
+    background-image:'';
     -webkit-border-radius: 10px;
     -webkit-box-shadow: none;
 }
@@ -304,7 +282,7 @@ input::-webkit-input-placeholder {
 ::-webkit-scrollbar-button:vertical:decrement {
     background-color: rgba(29, 29, 29, 0.15);
     height: 50px;
-    background-image: url('../Images/up-arrow-png-8.png');
+    background-image: url('../../Content/Images/up-arrow-png-8.png');
     background-size: 36px 36px;
     background-repeat: no-repeat;
     background-position: center;
@@ -314,7 +292,7 @@ input::-webkit-input-placeholder {
 ::-webkit-scrollbar-button:vertical:increment {
     margin-top: 10px;
     height: 50px;
-    background-image: url('../Images/Down-Arrow-PNG-Image.png');
+    background-image: url('../../Content/Images/Down-Arrow-PNG-Image.png');
     background-size: 36px 36px;
     background-repeat: no-repeat;
     background-position: center;
@@ -416,14 +394,6 @@ input::-webkit-input-placeholder {
         margin-left: 40px;
         margin-right: 40px;
     }
-
-    @media (max-width:1023px) {
-        margin-bottom: 0;
-    }
-}
-
-.themed .validation-error-bottom {
-    margin-bottom: 8px;
 }
 
 .separator {

@@ -42,7 +42,7 @@
               "src/styles.less"
             ],
             "scripts": [
-              
+              "src/assets/js/iscroll-probe.js"
             ]
           },
           "configurations": {

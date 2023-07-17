@@ -10,7 +10,9 @@
 @import './assets/Content/Styles/textField.less';
 @import '../node_modules/@angular/cdk/overlay-prebuilt.css';
 @import '../node_modules/@angular/material/prebuilt-themes/indigo-pink.css';
-
+//@import '../node_modules/angular-iscroll-probe/src/lib/_iscroll.scss';
+@iscroll-wrapper-background-color: #777;
+@iscroll-scroller-background-color: #fff;
 
 .error_updated
 {
@@ -47,22 +49,25 @@
 
 
 
-// .editable-field-input {
-//   width: calc(100% + 15px);
-//   /*margin-top: 5px;*/
-//   margin-top: -16px;
-//   margin-left: -16px !important;
-//   border: none;
-//   padding: 18px 25px 21px 39px;
-//   font-size: 28px;
-//   outline: none;
-//   vertical-align: middle;
-//   border-radius: 3px;
-
-//   @media (min-width: 1024px) {
-//     font-size: 24px;
-//   }
-// }
+.editable-field-input {
+   width: 93.6%;
+    border: none;
+    height: 100%;
+    padding: 0.965rem 1.25rem 0.965rem 2.25rem;
+    font-size: 25px;
+    outline: none;
+    vertical-align: middle;
+    border-radius: 3px;
+    @media (max-width: 1024px) {
+      margin-top: 3px;
+    }
+   
+    @media (min-width: 100px) and (max-width:900px) {
+      font-size: 24px;
+      width: 87%;
+      padding-bottom: 19px;
+    }
+  }
 
 .mat-dialog-container{
   padding: 1px !important;
@@ -89,28 +94,28 @@
   background-color: rgba(0, 0, 0, 0.5);
 }
 
-.ad-themed ::placeholder {
-    color: white;
-  }
-  
-
-.editable-field-input {
-   width: 93.6%;
-    border: none;
+.iscroll-on {
+  .iscroll-wrapper {
+    position: relative;
+    width: 100%;
     height: 100%;
-    padding: 0.965rem 1.25rem 0.965rem 2.25rem;
-    font-size: 25px;
-    outline: none;
-    vertical-align: middle;
-    border-radius: 3px;
-    @media (max-width: 1024px) {
-      margin-top: 3px;
-    }
-   
-    @media (min-width: 100px) and (max-width:900px) {
-      font-size: 24px;
-      width: 87%;
-      padding-bottom: 19px;
-    }
+    overflow: hidden;
+    background-color: @iscroll-wrapper-background-color;
   }
+  .iscroll-scroller {
+    position: absolute;
+    width: 100%;
+    min-height: 100%;
+    background-color: @iscroll-scroller-background-color;
+  }
+}
+
+.iScrollVerticalScrollbar {
+  position: absolute;
+  width: 4px;
+  top: 2px;
+  bottom: 2px;
+  right: 2px;
+  z-index: 30 !important;
+}
 

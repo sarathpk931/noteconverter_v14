@@ -7,7 +7,7 @@
             </div> -->
     
         <div class="contents"> 
-            <div class="popover-scroll-content"  ngScrollable='{"watchHeight": true}'>
+            <div class="popover-scroll-content" #scrollableContent ngScrollable='{"watchHeight": true}'>
                 <ul class="action-list button-group">
                     <li *ngFor="let option of fileFormatOption">
                         <button class="btn btn-medium btn-image" (click)="selectOption(option)" [ngClass]="getNgClass(option)" >

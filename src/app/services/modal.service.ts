@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
+import { Injectable,EventEmitter  } from '@angular/core';
 import {MatDialog,MatDialogRef,MatDialogConfig,DialogPosition,MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { Overlay, OverlayPositionBuilder } from '@angular/cdk/overlay';
 import { ProgressAlertComponent} from '../views/progress-alert/progress-alert.component'; 
 import {AppComponent} from '../app.component';
-import { BehaviorSubject, finalize, timer} from 'rxjs';
 import {AppModule} from '../../app/app.module';
+import { BehaviorSubject,Subject, finalize, timer} from 'rxjs';
 
 
 @Injectable({
@@ -15,6 +15,7 @@ export class ModalService {
   isThirdGenBrowser : boolean = AppModule.isThirdGenBrowser;
 
   private fromData = new BehaviorSubject<string>('');
+  viewVisible: EventEmitter<void> = new EventEmitter<void>();
   currentValue = this.fromData.asObservable();
 
   constructor(
@@ -70,8 +71,14 @@ export class ModalService {
         right: rightPosition,
       },
     });
+   
+  }
+
+  emitViewVisible(): void {
+    this.viewVisible.emit();
   }
   
+
   public openModalWithoutClose(component : any,title: string,message : string)
   {
     return this.dialog.open(component, {

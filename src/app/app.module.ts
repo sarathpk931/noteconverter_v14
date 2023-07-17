@@ -57,17 +57,17 @@ import { TextFieldDirective } from './Directives/text-field.directive';
 @NgModule({
   declarations: [
     AppComponent,
+    NgScrollableDirective,
     LogViewComponent,
+    ScanScreenComponent,
     PrivacyPolicyComponent,
     ProgressAlertComponent,
-    ScanScreenComponent,
     FeaturePopoverComponent,
     XasStringDirective,
     GeneralAlertComponent,
     EditableFieldDirective,
     BasicAlertComponent,
     AlertBannerComponent,
-    NgScrollableDirective,
     ActionBarDirective,
     EditableFieldComponent,
     TextFieldDirective,
@@ -153,7 +153,7 @@ export async function Session(url: string,timeout:number,async:boolean, ldap: st
             //alert('success :'+ result.email.toString());
             resolve(result.email.toString());
           }
-       
+
       }
     };
     function errorCallbackSession (result: any) {
