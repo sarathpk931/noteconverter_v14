@@ -123,6 +123,7 @@ export class FeaturePopoverComponent implements OnInit {
       document.querySelectorAll("#modal_arrow").forEach(e => e.parentNode.removeChild(e));
       document.querySelector('.cdk-overlay-backdrop-showing').classList.add('cdk-overlay-backdrop-hide');
       //this.showPopover();
+      this.closeModal();
     }
 
     closeModal():void{
