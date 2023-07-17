@@ -66,7 +66,6 @@ export class ModalService {
       height: '',
       width: '',
       position: {
-        top: '',
         left: leftPosition,
         right: rightPosition,
       },
@@ -83,11 +82,12 @@ export class ModalService {
   {
     return this.dialog.open(component, {
       data :{'title': title,'message':message},
-      position: {
-        top: '',
-        left: 'calc(50% - 512px)',
-        
-    },    
+      height: '98%',
+      width: '100vw',
+      // position: {
+      //   top: '',
+      //   left: 'calc(50% - 512px)',
+      // },    
     });
 
   }
