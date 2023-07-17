@@ -153,6 +153,7 @@ export async function Session(url: string,timeout:number,async:boolean, ldap: st
             //alert('success :'+ result.email.toString());
             resolve(result.email.toString());
           }
+
       }
     };
     function errorCallbackSession (result: any) {
