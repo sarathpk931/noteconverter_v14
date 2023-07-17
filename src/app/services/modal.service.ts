@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
+import { Injectable,EventEmitter  } from '@angular/core';
 import {MatDialog,MatDialogRef,MatDialogConfig,DialogPosition,MAT_DIALOG_DATA} from '@angular/material/dialog';
-import { Overlay, OverlayPositionBuilder } from '@angular/cdk/overlay';
+import { Overlay, OverlayPositionBuilder,NoopScrollStrategy  } from '@angular/cdk/overlay';
 import { ProgressAlertComponent} from '../views/progress-alert/progress-alert.component'; 
 import {AppComponent} from '../app.component';
-import { BehaviorSubject, finalize, timer} from 'rxjs';
 import {AppModule} from '../../app/app.module';
+import { BehaviorSubject,Subject, finalize, timer} from 'rxjs';
 
 
 @Injectable({
@@ -15,6 +15,7 @@ export class ModalService {
   isThirdGenBrowser : boolean = AppModule.isThirdGenBrowser;
 
   private fromData = new BehaviorSubject<string>('');
+  viewVisible: EventEmitter<void> = new EventEmitter<void>();
   currentValue = this.fromData.asObservable();
 
   constructor(
@@ -42,7 +43,8 @@ export class ModalService {
     this.dialog.closeAll();
    
     return this.dialog.open(ProgressAlertComponent, {
-      data :{'title': title,'message':message}, 
+      data :{'title': title,'message':message},
+      scrollStrategy: new NoopScrollStrategy()
     });
   }
 
@@ -65,22 +67,29 @@ export class ModalService {
       height: '',
       width: '',
       position: {
-        top: '',
         left: leftPosition,
         right: rightPosition,
       },
+      scrollStrategy: new NoopScrollStrategy()
     });
+   
+  }
+
+  emitViewVisible(): void {
+    this.viewVisible.emit();
   }
   
+
   public openModalWithoutClose(component : any,title: string,message : string)
   {
     return this.dialog.open(component, {
       data :{'title': title,'message':message},
-      position: {
-        top: '',
-        left: 'calc(50% - 512px)',
-        
-    },    
+      height: '98%',
+      width: '100vw',
+      // position: {
+      //   top: '',
+      //   left: 'calc(50% - 512px)',
+      // },    
     });
 
   }
@@ -101,7 +110,8 @@ export class ModalService {
     let dialogRef = this.dialog.open(component,{
       position: { ...dialog_postion, top: '100%' },
       panelClass: `custom-dialog-position`,
-      data: { clickPosition, additionalInfo: `calc(${clickPosition.y}px - ${dialog_postion.top})`}
+      data: { clickPosition, additionalInfo: `calc(${clickPosition.y}px - ${dialog_postion.top})`},
+      scrollStrategy: new NoopScrollStrategy()
     });
 
     dialogRef.afterOpened().subscribe(result => {
@@ -177,6 +187,7 @@ export class ModalService {
         left: 'calc(50% - 512px)',
         
     },
+    scrollStrategy: new NoopScrollStrategy()
     });
 
   }
@@ -192,6 +203,7 @@ export class ModalService {
         left: 'calc(50% - 512px)',
         
     },
+    scrollStrategy: new NoopScrollStrategy()
     });
 
     timer(3000).subscribe(()=>{
@@ -208,7 +220,8 @@ export class ModalService {
   {
     this.dialog.closeAll();
     this.dialog.open(component, {
-      data : data
+      data : data,
+      scrollStrategy: new NoopScrollStrategy()
       
     });
   }

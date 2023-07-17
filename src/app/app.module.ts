@@ -57,17 +57,17 @@ import { TextFieldDirective } from './Directives/text-field.directive';
 @NgModule({
   declarations: [
     AppComponent,
+    NgScrollableDirective,
     LogViewComponent,
+    ScanScreenComponent,
     PrivacyPolicyComponent,
     ProgressAlertComponent,
-    ScanScreenComponent,
     FeaturePopoverComponent,
     XasStringDirective,
     GeneralAlertComponent,
     EditableFieldDirective,
     BasicAlertComponent,
     AlertBannerComponent,
-    NgScrollableDirective,
     ActionBarDirective,
     EditableFieldComponent,
     TextFieldDirective,
@@ -140,13 +140,20 @@ export async function Session(url: string,timeout:number,async:boolean, ldap: st
         //const userName = data.firstChild.getElementsByTagName('qualifiedUsername')[0].firstChild.textContent;//alert("Username :"+ userName);
         if (userName !== null && userName.toLowerCase() !== 'guest')
           userEmail = xrxGetElementValue(data.firstChild, "from");//alert('email :'+ userEmail);
-        const result ={
+          if(userEmail == null){
+            AppModule.email = ''
+            resolve('');
+          }
+          else{
+            const result ={
           
-          email:userEmail
-        };
-        AppModule.email = result.email.toString();//alert("AppModuule :"+ AppModule.email);
-        //alert('success :'+ result.email.toString());
-        resolve(result.email.toString());
+              email:userEmail
+            };
+            AppModule.email =  result.email.toString();//alert("AppModuule :"+ AppModule.email);
+            //alert('success :'+ result.email.toString());
+            resolve(result.email.toString());
+          }
+
       }
     };
     function errorCallbackSession (result: any) {
