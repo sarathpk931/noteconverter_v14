@@ -64,7 +64,7 @@ declare const IScroll: any;
       this.isThirdGenBrowser=AppModule.isThirdGenBrowser;
       this.generation=AppModule.Generation;
       
-      if (!AppModule.isThirdGenBrowser && AppModule.Generation >= 7.0){
+      if (!AppModule.isThirdGenBrowser && AppModule.Generation >= 9.0){
         this.link(element);
         //alert("Inside If");
       } 
@@ -75,11 +75,11 @@ declare const IScroll: any;
         element.style.overflowY = 'auto';
         element.style.position = 'relative';
 
-        const shadowDiv = document.createElement('div');
-        shadowDiv.classList.add('shadow');
-        shadowDiv.style.position = 'fixed';
-        element.appendChild(shadowDiv);
-        this.shadowDiv = shadowDiv;
+        this.shadowDiv = document.createElement('div');
+        this.shadowDiv.classList.add('shadow');
+        this.shadowDiv.style.position = 'fixed';
+        //element.appendChild(this.shadowDiv);
+        //this.shadowDiv = shadowDiv;
 
 
         // Do this in a timeout so that content can finish loading
@@ -90,13 +90,13 @@ declare const IScroll: any;
           const borderTop = parseInt(getComputedStyle(element).borderTopWidth  || '0', 10);
           const borderLeft = parseInt(getComputedStyle(element).borderLeftWidth  || '0', 10);
 
-          shadowDiv.style.top = `${offSet.top + borderTop}px`;
-          shadowDiv.style.left = `${offSet.left + borderLeft}px`;
-          shadowDiv.style.height = `${element.clientHeight}px`;
-          shadowDiv.style.width = `${element.clientWidth}px`;
+          this.shadowDiv.style.top = `${offSet.top + borderTop}px`;
+          this.shadowDiv.style.left = `${offSet.left + borderLeft}px`;
+          this.shadowDiv.style.height = `${element.clientHeight}px`;
+          this.shadowDiv.style.width = `${element.clientWidth}px`;
 
           if (element.scrollHeight > element.clientHeight) {
-            shadowDiv.classList.add('shadow-bottom');
+            this.shadowDiv.classList.add('shadow-bottom');
           }
         }, 500);
 
