@@ -13,7 +13,7 @@ declare const IScroll: any;
 })
 
 
-  export class NgScrollableDirective implements OnDestroy {
+  export class NgScrollableDirective implements OnInit,OnDestroy {
 
     @ContentChild('scrollableContent') scrollableContent!: ElementRef<HTMLElement>;
 
@@ -54,7 +54,9 @@ declare const IScroll: any;
 
     constructor(private elementRef: ElementRef, private modalService:ModalService) { }
   
-
+    ngOnInit() {
+      
+    }
     ngAfterViewInit(): void {
 
       const element = this.elementRef.nativeElement as HTMLElement;
