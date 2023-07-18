@@ -174,7 +174,7 @@ declare const IScroll: any;
 
 
     if (element.scrollHeight !== 0) {
-      console.log("element.scrollHeight :" + element.scrollHeight);
+      //console.log("element.scrollHeight :" + element.scrollHeight);
       this.shadowDiv.classList.add('shadow-bottom');
     }
     element.appendChild(this.shadowDiv);
