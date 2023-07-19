@@ -66,7 +66,6 @@ declare const IScroll: any;
       
       if (!AppModule.isThirdGenBrowser && AppModule.Generation >= 7.0){
         this.link(element);
-        //alert("Inside If");
       } 
       else
       {
@@ -75,28 +74,27 @@ declare const IScroll: any;
         element.style.overflowY = 'auto';
         element.style.position = 'relative';
 
-        const shadowDiv = document.createElement('div');
-        shadowDiv.classList.add('shadow');
-        shadowDiv.style.position = 'fixed';
-        element.appendChild(shadowDiv);
-        this.shadowDiv = shadowDiv;
+        this.shadowDiv = document.createElement('div');
+        this.shadowDiv.classList.add('shadow');
+        this.shadowDiv.style.position = 'fixed';
+        //element.appendChild(this.shadowDiv);
+       
 
 
         // Do this in a timeout so that content can finish loading
         setTimeout(() => {
           // Determine location of shadow based on position of scrollable content
-         
           const offSet = element.getBoundingClientRect();
           const borderTop = parseInt(getComputedStyle(element).borderTopWidth  || '0', 10);
           const borderLeft = parseInt(getComputedStyle(element).borderLeftWidth  || '0', 10);
 
-          shadowDiv.style.top = `${offSet.top + borderTop}px`;
-          shadowDiv.style.left = `${offSet.left + borderLeft}px`;
-          shadowDiv.style.height = `${element.clientHeight}px`;
-          shadowDiv.style.width = `${element.clientWidth}px`;
+          this.shadowDiv.style.top = `${offSet.top + borderTop}px`;
+          this.shadowDiv.style.left = `${offSet.left + borderLeft}px`;
+          this.shadowDiv.style.height = `${element.clientHeight}px`;
+          this.shadowDiv.style.width = `${element.clientWidth}px`;
 
           if (element.scrollHeight > element.clientHeight) {
-            shadowDiv.classList.add('shadow-bottom');
+            this.shadowDiv.classList.add('shadow-bottom');
           }
         }, 500);
 
@@ -148,13 +146,10 @@ declare const IScroll: any;
       this.$$config = config;
       this.$scrollEnd = config.autoHeight;
     }
-    //////console.log("element inner html" + element.innerHTML);
 
     element.classList.add('ninth-gen');
 
     this.wrapperHeight=element.offsetHeight;
-
-    //console.log("wrapper Height"+ this.wrapperHeight);
 
     this.scroller = new IScroll(element, {
       bounce: this.bounce === 'true',
@@ -184,16 +179,9 @@ declare const IScroll: any;
     }
     element.appendChild(this.shadowDiv);
 
-    //console.log("element.scrollHeight :" + element.scrollHeight);
-    //console.log("this.scroller.maxScrollY :"+this.scroller.maxScrollY);
-    //console.log("this.scroller.y :"+this.scroller.y);
-    //console.log("this.$scrollEnd :"+this.$scrollEnd);
-    //console.log("this.currentY :"+this.currentY);
-    
     this.scroller.on('scrollStart', () => {
     
       if (this.scroller.maxScrollY !== 0) {
-        //console.log("this.scroller.maxScrollY :" + this.scroller.maxScrollY);
         this.shadowDiv!.classList.add('shadow-bottom');
         this.shadowDiv!.classList.add('shadow-top');
       }
@@ -213,7 +201,6 @@ declare const IScroll: any;
 
 
       if (this.scroller.y === this.scroller.maxScrollY && this.$scrollEnd && this.scroller.y !== this.currentY) {
-       // console.log("this.scroller.y :" +this.scroller.y);
         this.$scrollEnd(this);
       }
 
@@ -221,7 +208,6 @@ declare const IScroll: any;
     });
 
     if (this.autoHeight && this.watchHeight) {
-      //console.log("this.ngScrollable && this.ngScrollable.watchHeight :" + this.ngScrollable && this.ngScrollable.watchHeight);
       this.startHeightWatcher();
     }
 
@@ -288,7 +274,6 @@ declare const IScroll: any;
   
   
         if (this.scroller.y === this.scroller.maxScrollY && this.$scrollEnd && this.scroller.y !== this.currentY) {
-          //console.log("this.scroller.y :" +this.scroller.y);
           this.$scrollEnd(this);
         }
   
@@ -299,8 +284,8 @@ declare const IScroll: any;
   }
 
   private startHeightWatcher(): void {
-
-    this.stopHeightWatcher(); // Ensure previous interval is cleared
+    // Ensure previous interval is cleared
+    this.stopHeightWatcher(); 
     this.heightWatcher = setInterval(() => {
       const currentHeight = this.elementRef.nativeElement.offsetHeight;
       const currentWindowHeight = window.innerHeight;
@@ -325,7 +310,6 @@ declare const IScroll: any;
   }
 
   private updateViewport(): void {
-    // Perform viewport update logic here
     const element = this.elementRef.nativeElement as HTMLElement;
     if (this.$$config && this.$$config.autoHeight) {
       const padding = this.$$config.padding || 0;
