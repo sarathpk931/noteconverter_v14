@@ -52,6 +52,7 @@ export class ModalService {
     if(modalRef){
       modalRef.close();
     }
+    this.removeArrow();
    }
 
    public openLargeModal(component: any): void {
@@ -99,7 +100,7 @@ export class ModalService {
   }
   
   public openModal(component : any,dialog_postion:any,  clickPosition:any){
-    document.querySelectorAll("#modal_arrow").forEach(e => e.parentNode.removeChild(e));
+    this.removeArrow();
     this.dialog.closeAll();
     this.dialog.openDialogs.pop();
 
@@ -158,19 +159,17 @@ export class ModalService {
    
     dialogRef.afterClosed()
     .pipe(finalize(() => {
-      if (!document.querySelector(".cdk-overlay-pane")) {
-        document.querySelectorAll("#modal_arrow").forEach(e => e.parentNode.removeChild(e));
-      }
+      this.removeArrow();
     }))
     .subscribe(data => {
-      console.log(data);
+      this.removeArrow();
     });
 
     return dialogRef;
   }
   
   public openModalWithTitle(component : any,title: string,message : string){
-
+    this.removeArrow();
     this.dialog.closeAll();
     this.dialog.openDialogs.pop();
     return  this.dialog.open(component, {
@@ -207,6 +206,7 @@ export class ModalService {
   public closeAllModals()
   {
     this.dialog.closeAll();
+    this.removeArrow();
   }
 
   public openComponentModal(component: any,data:any)
@@ -219,5 +219,10 @@ export class ModalService {
     });
   }
 
+  removeArrow() {
+    if (document.querySelectorAll("#modal_arrow").length > 0) {
+      document.querySelectorAll("#modal_arrow").forEach(e => e.parentNode.removeChild(e));
+    }
+  }
 }
 
