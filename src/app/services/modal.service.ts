@@ -41,7 +41,8 @@ export class ModalService {
 
   showProgressAlert(title: string, message : string):MatDialogRef<ProgressAlertComponent>{
     this.dialog.closeAll();
-   
+    this.removeArrow();
+    
     return this.dialog.open(ProgressAlertComponent, {
       data :{'title': title,'message':message},
       scrollStrategy: new NoopScrollStrategy()
@@ -83,6 +84,7 @@ export class ModalService {
 
   public openModalWithoutClose(component : any,title: string,message : string)
   {
+    this.removeArrow();
     return this.dialog.open(component, {
       data :{'title': title,'message':message},
       height: '98%',
@@ -187,7 +189,7 @@ export class ModalService {
 
   public showAlert(component : any,title: string,message : string)
   {
-
+    this.removeArrow();
      this.dialog.open(component, {
       data :{'title': title,'message':message},
       position: {
@@ -211,6 +213,7 @@ export class ModalService {
 
   public openComponentModal(component: any,data:any)
   {
+    this.removeArrow();
     this.dialog.closeAll();
     this.dialog.open(component, {
       data : data,
