@@ -107,7 +107,7 @@ export class ModalService {
       position: { ...dialog_postion, top: '100%' },
       panelClass: `custom-dialog-position`,
       data: { clickPosition, additionalInfo: `calc(${clickPosition.y}px - ${dialog_postion.top})`},
-      scrollStrategy: new NoopScrollStrategy()
+      //scrollStrategy:  NoopScrollStrategy()
     });
 
     dialogRef.afterOpened().subscribe((result => {
@@ -163,7 +163,7 @@ export class ModalService {
       }
     }))
     .subscribe(data => {
-      console.log(data);
+      //console.log(data);
     });
 
     return dialogRef;

@@ -16,7 +16,7 @@ export class ApiService {
    }
 
    public apiBaseUrl(): string {
-    console.log("Service URL" + this.url + this.getPrefix());
+    //console.log("Service URL" + this.url + this.getPrefix());
     return this.url + this.getPrefix();
   }
 
