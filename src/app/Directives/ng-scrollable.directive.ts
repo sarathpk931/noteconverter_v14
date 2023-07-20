@@ -148,7 +148,7 @@ declare const IScroll: any;
       this.$$config = config;
       this.$scrollEnd = config.autoHeight;
     }
-    console.log("Line 151");
+
     element.classList.add('ninth-gen');
 
     this.wrapperHeight=element.offsetHeight;
