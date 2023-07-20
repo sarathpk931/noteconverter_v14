@@ -155,13 +155,12 @@ export class ModalService {
       `;
       }
   
-      const popupContainer = document.querySelector('.cdk-overlay-container');
-      popupContainer.appendChild(modalArrow);
+      // const popupContainer = document.querySelector('.cdk-overlay-container');
+      // popupContainer.appendChild(modalArrow);
 
-      const test : HTMLElement = document.querySelector('.cdk-overlay-container');
-      test.style.position = 'fixed';
-      
-      this.enableLinks();
+      const popupContainer : HTMLElement = document.querySelector('.cdk-overlay-container');
+      popupContainer.appendChild(modalArrow);
+      popupContainer.style.position = 'fixed';
       },500);
     }));
    
@@ -169,6 +168,7 @@ export class ModalService {
     .pipe(finalize(() => {
       this.removeArrow();
       this.enableLinks();
+      // alert('closed');
     }))
     .subscribe(data => {
       this.removeArrow();
