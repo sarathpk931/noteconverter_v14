@@ -109,8 +109,8 @@ export class ScanScreenComponent implements OnInit{
       
       this.winHeight = window.innerHeight;
       this.winWidth = window.innerWidth
-      console.log("Window Height "+this.winHeight);
-      console.log("Window Width "+this.winWidth);
+      //console.log("Window Height "+this.winHeight);
+      //console.log("Window Width "+this.winWidth);
 
     }
 
@@ -258,7 +258,7 @@ export class ScanScreenComponent implements OnInit{
       let showRightArrow = true;
       if (event.clientX < this.midwidth) {
         event_position = { left: event.clientX + 'px', top: (event.clientY - 111) + 'px'};
-        console.log("x less than midwidth" )
+        //console.log("x less than midwidth" )
        }
       else {
         xForRightArrow = window.innerWidth - event.clientX;
@@ -288,7 +288,7 @@ export class ScanScreenComponent implements OnInit{
 
       if (event.clientX < this.midwidth) {
        event_position = { left: event.clientX + 'px', top: (event.clientY - 111) + 'px'};
-       console.log("x less than midwidth" )
+       //console.log("x less than midwidth" )
        showLeftArrow = true;
       }
       else {
@@ -310,9 +310,9 @@ export class ScanScreenComponent implements OnInit{
       this.midwidth=this.winWidth / 2;
       this.midHeight=this.winHeight/2;
       const popupTop = this.winHeight - event.clientY;
-      console.log(event.clientX);
-      console.log(event.clientY);
-      console.log("popupTop in height px" + popupTop)
+      //console.log(event.clientX);
+      //console.log(event.clientY);
+      //console.log("popupTop in height px" + popupTop)
       let event_position: DialogPosition;
       let xForRightArrow:number;
       let showLeftArrow = false;
@@ -320,7 +320,7 @@ export class ScanScreenComponent implements OnInit{
 
       if (event.clientX < this.midwidth) {
         event_position = { left: event.clientX + 'px', top: (event.clientY - 325) + 'px'};
-        console.log("x less than midwidth" )
+        //console.log("x less than midwidth" )
         showLeftArrow = true;
        }
       else {
