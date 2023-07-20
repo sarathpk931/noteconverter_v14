@@ -246,8 +246,8 @@ export class ScanScreenComponent implements OnInit{
 
     openFileFormat(event: any){
       this.modalService.disableLinks();
-      console.log(event.clientX);
-      console.log(event.clientY);
+      //console.log(event.clientX);
+      //console.log(event.clientY);
       //let event_position: DialogPosition = { left: event.clientX + 'px', top: event.clientY + 'px'};
       let popupWidth =276;
       let popupHeight=221;
@@ -275,8 +275,8 @@ export class ScanScreenComponent implements OnInit{
 
     openScan(event: any){
       this.modalService.disableLinks();
-      console.log(event.clientX);
-      console.log(event.clientY);
+      //console.log(event.clientX);
+      //console.log(event.clientY);
       let popupWidth =276;
       let popupHeight=221;
       this.midwidth=this.winWidth / 2;

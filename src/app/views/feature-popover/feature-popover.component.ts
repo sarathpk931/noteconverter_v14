@@ -1,4 +1,4 @@
-import { Component, OnInit,Input, Output,EventEmitter } from '@angular/core';
+import { Component, OnInit,Input, Output,EventEmitter,ChangeDetectorRef } from '@angular/core';
 import {  MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
 import { ElementRef, Renderer2, Inject  } from '@angular/core';
 import { ScanOptionsService} from '../../services/scan-options.service';
@@ -48,6 +48,7 @@ export class FeaturePopoverComponent implements OnInit {
                 public mtModalRef : MatDialogRef<any>,
                 private elementRef: ElementRef,
                 private renderer: Renderer2,
+                private changeDetectorRef: ChangeDetectorRef,
                 @Inject(MAT_DIALOG_DATA) public data : DialogDataObject
               )
               {}
@@ -94,6 +95,14 @@ export class FeaturePopoverComponent implements OnInit {
           this.selectedSizeOption = size;
         }
       })
+    }
+
+    ngAfterViewInit(): void {
+      this.changeDetectorRef.detectChanges(); // Trigger change detection
+  
+      setTimeout(() => {
+        this.modalService.emitViewVisible(); // Call the emitViewVisible method after a delay
+      });
     }
 
     //default selection

@@ -161,7 +161,7 @@ export class ModalService {
       const popupContainer : HTMLElement = document.querySelector('.cdk-overlay-container');
       popupContainer.appendChild(modalArrow);
       popupContainer.style.position = 'fixed';
-      },500);
+      },100);
     }));
    
     dialogRef.afterClosed()
@@ -171,7 +171,7 @@ export class ModalService {
       const timeout = setTimeout(() => {
         this.enableLinks();
         clearTimeout(timeout);
-      }, 500);
+      }, 100);
       // alert('closed');
     }))
     .subscribe(data => {

@@ -66,7 +66,7 @@ declare const IScroll: any;
       this.isThirdGenBrowser=AppModule.isThirdGenBrowser;
       this.generation=AppModule.Generation;
       
-      if (!AppModule.isThirdGenBrowser && AppModule.Generation >= 9.0){
+      if (!AppModule.isThirdGenBrowser && AppModule.Generation >= 7.0){
         this.link(element);
       } 
       else
@@ -148,7 +148,7 @@ declare const IScroll: any;
       this.$$config = config;
       this.$scrollEnd = config.autoHeight;
     }
-
+    console.log("Line 151");
     element.classList.add('ninth-gen');
 
     this.wrapperHeight=element.offsetHeight;
@@ -173,11 +173,12 @@ declare const IScroll: any;
     });
 
     //this.shadowDiv = document.createElement('div');
-
+    console.log("Line 176");
 
     if (element.scrollHeight !== 0) {
       //console.log("element.scrollHeight :" + element.scrollHeight);
       //this.shadowDiv.classList.add('shadow-bottom');
+      console.log("Line 180");
     }
     //element.appendChild(this.shadowDiv);
 
