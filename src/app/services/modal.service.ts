@@ -158,6 +158,9 @@ export class ModalService {
       const popupContainer = document.querySelector('.cdk-overlay-container');
       popupContainer.appendChild(modalArrow);
 
+      const test : HTMLElement = document.querySelector('.cdk-overlay-container');
+      test.style.position = 'fixed';
+      
       this.enableLinks();
       },500);
     }));
