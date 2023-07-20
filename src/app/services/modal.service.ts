@@ -167,7 +167,11 @@ export class ModalService {
     dialogRef.afterClosed()
     .pipe(finalize(() => {
       this.removeArrow();
-      this.enableLinks();
+
+      const timeout = setTimeout(() => {
+        this.enableLinks();
+        clearTimeout(timeout);
+      }, 500);
       // alert('closed');
     }))
     .subscribe(data => {
