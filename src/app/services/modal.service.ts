@@ -111,7 +111,7 @@ export class ModalService {
       position: { ...dialog_postion, top: '100%' },
       panelClass: `custom-dialog-position`,
       data: { clickPosition, additionalInfo: `calc(${clickPosition.y}px - ${dialog_postion.top})`},
-      //scrollStrategy:  NoopScrollStrategy()
+      scrollStrategy:  new NoopScrollStrategy()
     });
 
     dialogRef.afterOpened().subscribe((result => {
