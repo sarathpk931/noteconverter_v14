@@ -17,6 +17,7 @@ export class ModalService {
   private fromData = new BehaviorSubject<string>('');
   viewVisible: EventEmitter<void> = new EventEmitter<void>();
   currentValue = this.fromData.asObservable();
+  arrIds: string[] = ["#btn_openFileFormat", "#btn_openScan", "#btn_openSize"];
 
   constructor(
     public dialog : MatDialog,
@@ -156,12 +157,15 @@ export class ModalService {
   
       const popupContainer = document.querySelector('.cdk-overlay-container');
       popupContainer.appendChild(modalArrow);
+
+      this.enableLinks();
       },500);
     }));
    
     dialogRef.afterClosed()
     .pipe(finalize(() => {
       this.removeArrow();
+      this.enableLinks();
     }))
     .subscribe(data => {
       this.removeArrow();
@@ -227,5 +231,27 @@ export class ModalService {
       document.querySelectorAll("#modal_arrow").forEach(e => e.parentNode.removeChild(e));
     }
   }
+
+  
+disableLinks() :void {
+  this.arrIds.forEach(function (btnId) {
+    const button : HTMLElement = document.querySelector(btnId);
+    button.style.pointerEvents = 'none';
+  });
+} 
+
+enableLinks() :void {
+  this.arrIds.forEach(btnId => {
+    const button : HTMLElement = document.querySelector(btnId);
+    button.style.pointerEvents = 'auto';
+  });
+} 
+
 }
 
+    /* private disableLinks(): void {
+      const links = document.getElementsByTagName('a');
+      for (let i = 0; i < links.length; i++) {
+        links[i].style.pointerEvents = 'none';
+      }
+    } */

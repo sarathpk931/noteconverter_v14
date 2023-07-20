@@ -245,7 +245,7 @@ export class ScanScreenComponent implements OnInit{
     }
 
     openFileFormat(event: any){
-
+      this.modalService.disableLinks();
       console.log(event.clientX);
       console.log(event.clientY);
       //let event_position: DialogPosition = { left: event.clientX + 'px', top: event.clientY + 'px'};
@@ -274,8 +274,7 @@ export class ScanScreenComponent implements OnInit{
     }
 
     openScan(event: any){
-
-
+      this.modalService.disableLinks();
       console.log(event.clientX);
       console.log(event.clientY);
       let popupWidth =276;
@@ -305,7 +304,7 @@ export class ScanScreenComponent implements OnInit{
     }
 
     openSize(event: any){
-
+      this.modalService.disableLinks();
       let popupWidth =236;
       let popupHeight=469;
       this.midwidth=this.winWidth / 2;
@@ -452,5 +451,4 @@ onEmailBlur(){
   this.isEmailRequired = emailControl.hasError('required') && emailControl.touched;
   this.isEmailInvalid = emailControl.hasError('email') && emailControl.touched;
 }
-    
 }
