@@ -17,6 +17,7 @@ export class ModalService {
   private fromData = new BehaviorSubject<string>('');
   viewVisible: EventEmitter<void> = new EventEmitter<void>();
   currentValue = this.fromData.asObservable();
+  arrIds: string[] = ["#btn_openFileFormat", "#btn_openScan", "#btn_openSize"];
 
   constructor(
     public dialog : MatDialog,
@@ -41,7 +42,8 @@ export class ModalService {
 
   showProgressAlert(title: string, message : string):MatDialogRef<ProgressAlertComponent>{
     this.dialog.closeAll();
-   
+    this.removeArrow();
+    
     return this.dialog.open(ProgressAlertComponent, {
       data :{'title': title,'message':message},
       scrollStrategy: new NoopScrollStrategy()
@@ -52,6 +54,7 @@ export class ModalService {
     if(modalRef){
       modalRef.close();
     }
+    this.removeArrow();
    }
 
    public openLargeModal(component: any): void {
@@ -82,6 +85,7 @@ export class ModalService {
 
   public openModalWithoutClose(component : any,title: string,message : string)
   {
+    this.removeArrow();
     return this.dialog.open(component, {
       data :{'title': title,'message':message},
       height: '98%',
@@ -99,7 +103,7 @@ export class ModalService {
   }
   
   public openModal(component : any,dialog_postion:any,  clickPosition:any){
-    document.querySelectorAll("#modal_arrow").forEach(e => e.parentNode.removeChild(e));
+    this.removeArrow();
     this.dialog.closeAll();
     this.dialog.openDialogs.pop();
 
@@ -151,26 +155,34 @@ export class ModalService {
       `;
       }
   
-      const popupContainer = document.querySelector('.cdk-overlay-container');
+      // const popupContainer = document.querySelector('.cdk-overlay-container');
+      // popupContainer.appendChild(modalArrow);
+
+      const popupContainer : HTMLElement = document.querySelector('.cdk-overlay-container');
       popupContainer.appendChild(modalArrow);
+      popupContainer.style.position = 'fixed';
       },500);
     }));
    
     dialogRef.afterClosed()
     .pipe(finalize(() => {
-      if (!document.querySelector(".cdk-overlay-pane")) {
-        document.querySelectorAll("#modal_arrow").forEach(e => e.parentNode.removeChild(e));
-      }
+      this.removeArrow();
+
+      const timeout = setTimeout(() => {
+        this.enableLinks();
+        clearTimeout(timeout);
+      }, 500);
+      // alert('closed');
     }))
     .subscribe(data => {
-      //console.log(data);
+      this.removeArrow();
     });
 
     return dialogRef;
   }
   
   public openModalWithTitle(component : any,title: string,message : string){
-
+    this.removeArrow();
     this.dialog.closeAll();
     this.dialog.openDialogs.pop();
     return  this.dialog.open(component, {
@@ -188,7 +200,7 @@ export class ModalService {
 
   public showAlert(component : any,title: string,message : string)
   {
-
+    this.removeArrow();
      this.dialog.open(component, {
       data :{'title': title,'message':message},
       position: {
@@ -207,10 +219,12 @@ export class ModalService {
   public closeAllModals()
   {
     this.dialog.closeAll();
+    this.removeArrow();
   }
 
   public openComponentModal(component: any,data:any)
   {
+    this.removeArrow();
     this.dialog.closeAll();
     this.dialog.open(component, {
       data : data,
@@ -219,5 +233,32 @@ export class ModalService {
     });
   }
 
+  removeArrow() {
+    if (document.querySelectorAll("#modal_arrow").length > 0) {
+      document.querySelectorAll("#modal_arrow").forEach(e => e.parentNode.removeChild(e));
+    }
+  }
+
+  
+disableLinks() :void {
+  this.arrIds.forEach(function (btnId) {
+    const button : HTMLElement = document.querySelector(btnId);
+    button.style.pointerEvents = 'none';
+  });
+} 
+
+enableLinks() :void {
+  this.arrIds.forEach(btnId => {
+    const button : HTMLElement = document.querySelector(btnId);
+    button.style.pointerEvents = 'auto';
+  });
+} 
+
 }
 
+    /* private disableLinks(): void {
+      const links = document.getElementsByTagName('a');
+      for (let i = 0; i < links.length; i++) {
+        links[i].style.pointerEvents = 'none';
+      }
+    } */

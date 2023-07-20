@@ -125,6 +125,7 @@ export class FeaturePopoverComponent implements OnInit {
 
     closeModal():void{
       this.modalService.closeModal(this.mtModalRef);
+      this.modalService.removeArrow();
     }
     
 }
