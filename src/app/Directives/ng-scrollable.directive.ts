@@ -219,7 +219,7 @@ declare const IScroll: any;
     
     this.modalService.viewVisible.subscribe(() => {
       // Update the viewport when the view is visible
-      this.updateViewport();
+      //this.updateViewport();
       if (this.scroller) {
         this.scroller.refresh();
         //this.updateShadowDiv();
@@ -294,7 +294,7 @@ declare const IScroll: any;
       if (currentHeight !== this.wrapperHeight || currentWindowHeight !== this.windowHeight) {
         this.wrapperHeight = currentHeight;
         this.windowHeight = currentWindowHeight;
-        this.updateViewport();
+        //this.updateViewport();
         if (this.scroller) {
           this.scroller.refresh();
           //this.updateShadowDiv();
@@ -321,7 +321,7 @@ declare const IScroll: any;
   @HostListener('window:resize')
   private onWindowResize(): void {
     this.windowHeight = window.innerHeight;
-    this.updateViewport();
+    //this.updateViewport();
     if (this.scroller) {
       this.scroller.refresh();
       //this.updateShadowDiv();
