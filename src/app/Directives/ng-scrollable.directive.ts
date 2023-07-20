@@ -185,6 +185,7 @@ declare const IScroll: any;
     this.scroller.on('scrollStart', () => {
     
       if (this.scroller.maxScrollY !== 0) {
+        console.log("Line 188");
         //this.shadowDiv!.classList.add('shadow-bottom');
         //this.shadowDiv!.classList.add('shadow-top');
       }
@@ -193,7 +194,7 @@ declare const IScroll: any;
     this.scroller.on('scrollEnd', () => {
       
       if (this.scroller.maxScrollY !== 0) {
-        
+        console.log("Line 197");
         if (this.scroller.y === this.scroller.maxScrollY) {
           //this.shadowDiv!.classList.remove('shadow-bottom');
         }
@@ -205,12 +206,14 @@ declare const IScroll: any;
 
       if (this.scroller.y === this.scroller.maxScrollY && this.$scrollEnd && this.scroller.y !== this.currentY) {
         this.$scrollEnd(this);
+        console.log("Line 209");
       }
 
       this.currentY = this.scroller.y;
     });
 
     if (this.autoHeight && this.watchHeight) {
+      console.log("Line 216");
       this.startHeightWatcher();
     }
 
@@ -223,6 +226,7 @@ declare const IScroll: any;
       // Update the viewport when the view is visible
       this.updateViewport();
       if (this.scroller) {
+        console.log("Line 299");
         this.scroller.refresh();
         //this.updateShadowDiv();
       }
@@ -242,6 +246,7 @@ declare const IScroll: any;
   private updateScrollableContent(): void {
     const scrollableContent = this.scrollableContent?.nativeElement;
     if (this.scroller && scrollableContent) {
+      console.log("Line 249");
       this.scroller.refresh();
       //this.updateShadowDiv();
     }
