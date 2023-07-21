@@ -67,8 +67,8 @@ export class ModalService {
       data: { closeBtnName: 'Close' },
       hasBackdrop: false,
       disableClose: true,
-      height: '',
-      width: '',
+      height: '98%',
+      width: '100vw',
       position: {
         left: leftPosition,
         right: rightPosition,
