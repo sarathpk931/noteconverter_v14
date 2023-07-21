@@ -6,8 +6,8 @@
         <button type="button" class="btn btn-medium btn-glyph xrx-close" (click)="closeModal()"></button>
             </div> -->
     
-        <div class="contents"> 
-            <div class="popover-scroll-content" style="overflow:hidden" ngScrollable='{ "watchHeight": true}'>
+        <div class="contents" #scrollableContent>
+            <div class="popover-scroll-content" style="overflow:hidden" ngScrollable='{"autoHeight": true,"watchHeight": true}'>
                 <ul class="action-list button-group">
                     <li *ngFor="let option of fileFormatOption">
                         <button class="btn btn-medium btn-image" (click)="selectOption(option)" [ngClass]="getNgClass(option)" >

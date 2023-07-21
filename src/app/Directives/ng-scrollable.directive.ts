@@ -192,7 +192,6 @@ declare const IScroll: any;
     this.scroller.on('scrollEnd', () => {
       
       if (this.scroller.maxScrollY !== 0) {
-        
         if (this.scroller.y === this.scroller.maxScrollY) {
           //this.shadowDiv!.classList.remove('shadow-bottom');
         }
@@ -220,7 +219,7 @@ declare const IScroll: any;
     
     this.modalService.viewVisible.subscribe(() => {
       // Update the viewport when the view is visible
-      this.updateViewport();
+      //this.updateViewport();
       if (this.scroller) {
         this.scroller.refresh();
         //this.updateShadowDiv();
@@ -295,7 +294,7 @@ declare const IScroll: any;
       if (currentHeight !== this.wrapperHeight || currentWindowHeight !== this.windowHeight) {
         this.wrapperHeight = currentHeight;
         this.windowHeight = currentWindowHeight;
-        this.updateViewport();
+        //this.updateViewport();
         if (this.scroller) {
           this.scroller.refresh();
           //this.updateShadowDiv();
@@ -322,7 +321,7 @@ declare const IScroll: any;
   @HostListener('window:resize')
   private onWindowResize(): void {
     this.windowHeight = window.innerHeight;
-    this.updateViewport();
+    //this.updateViewport();
     if (this.scroller) {
       this.scroller.refresh();
       //this.updateShadowDiv();
