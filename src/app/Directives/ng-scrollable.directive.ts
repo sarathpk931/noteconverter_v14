@@ -84,7 +84,8 @@ declare const IScroll: any;
         // Do this in a timeout so that content can finish loading
         setTimeout(() => {
           // Determine location of shadow based on position of scrollable content
-          const offSet = element.getBoundingClientRect();
+          this.updateShadowDivPosition();
+          /* const offSet = element.getBoundingClientRect();
           const borderTop = parseInt(getComputedStyle(element).borderTopWidth  || '0', 10);
           const borderLeft = parseInt(getComputedStyle(element).borderLeftWidth  || '0', 10);
 
@@ -95,7 +96,7 @@ declare const IScroll: any;
 
           if (element.scrollHeight > element.clientHeight) {
             this.shadowDiv.classList.add('shadow-bottom');
-          }
+          } */
         }, 500);
 
          
@@ -177,7 +178,8 @@ declare const IScroll: any;
 
     setTimeout(() => {
       // Determine location of shadow based on position of scrollable content
-      const offSet = element.getBoundingClientRect();
+      this.updateShadowDivPosition();
+      /* const offSet = element.getBoundingClientRect();
       const borderTop = parseInt(getComputedStyle(element).borderTopWidth || '0', 10);
       const borderLeft = parseInt(getComputedStyle(element).borderLeftWidth || '0', 10);
 
@@ -188,7 +190,7 @@ declare const IScroll: any;
 
       if (element.scrollHeight > element.clientHeight) {
         this.shadowDiv.classList.add('shadow-bottom');
-      }
+      } */
     }, 500)
 
     if (element.scrollHeight !== 0) {
@@ -355,4 +357,20 @@ declare const IScroll: any;
       }
     }
   }
+
+  private updateShadowDivPosition(): void {
+    const offSet = this.elementRef.nativeElement.getBoundingClientRect();
+    const borderTop = parseInt(getComputedStyle(this.elementRef.nativeElement).borderTopWidth || '0', 10);
+    const borderLeft = parseInt(getComputedStyle(this.elementRef.nativeElement).borderLeftWidth || '0', 10);
+  
+    this.shadowDiv.style.top = `${offSet.top + borderTop}px`;
+    this.shadowDiv.style.left = `${offSet.left + borderLeft}px`;
+    this.shadowDiv.style.height = `${this.elementRef.nativeElement.clientHeight}px`;
+    this.shadowDiv.style.width = `${this.elementRef.nativeElement.clientWidth}px`;
+  
+    if (this.elementRef.nativeElement.scrollHeight > this.elementRef.nativeElement.clientHeight) {
+      this.shadowDiv.classList.add('shadow-bottom');
+    }
+  }
+  
 }
