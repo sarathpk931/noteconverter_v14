@@ -44,7 +44,7 @@ declare const IScroll: any;
     private wrapperHeight: number;
     private windowHeight: number;
     private heightWatcher: any;
-
+    
 
     private scroller: any;
     private currentY: number = 0;
@@ -55,10 +55,10 @@ declare const IScroll: any;
     constructor(private elementRef: ElementRef, private modalService:ModalService) { }
   
     ngOnInit() {
-      
+    
     }
     ngAfterViewInit(): void {
-
+      
       const element = this.elementRef.nativeElement as HTMLElement;
       this.wrapperHeight = element.offsetHeight;
       this.windowHeight = window.innerHeight;
@@ -76,12 +76,10 @@ declare const IScroll: any;
         element.style.overflowY = 'auto';
         element.style.position = 'relative';
 
-        //this.shadowDiv = document.createElement('div');
-        //this.shadowDiv.classList.add('shadow');
-        //this.shadowDiv.style.position = 'fixed';
-        //element.appendChild(this.shadowDiv);
-       
-
+        this.shadowDiv = document.createElement('div');
+        this.shadowDiv.classList.add('shadow');
+        this.shadowDiv.style.position = 'fixed';
+        element.appendChild(this.shadowDiv);
 
         // Do this in a timeout so that content can finish loading
         setTimeout(() => {
@@ -90,13 +88,13 @@ declare const IScroll: any;
           const borderTop = parseInt(getComputedStyle(element).borderTopWidth  || '0', 10);
           const borderLeft = parseInt(getComputedStyle(element).borderLeftWidth  || '0', 10);
 
-          // this.shadowDiv.style.top = `${offSet.top + borderTop}px`;
-          // this.shadowDiv.style.left = `${offSet.left + borderLeft}px`;
-          // this.shadowDiv.style.height = `${element.clientHeight}px`;
-          // this.shadowDiv.style.width = `${element.clientWidth}px`;
+          this.shadowDiv.style.top = `${offSet.top + borderTop}px`;
+          this.shadowDiv.style.left = `${offSet.left + borderLeft}px`;
+          this.shadowDiv.style.height = `${element.clientHeight}px`;
+          this.shadowDiv.style.width = `${element.clientWidth}px`;
 
           if (element.scrollHeight > element.clientHeight) {
-            //this.shadowDiv.classList.add('shadow-bottom');
+            this.shadowDiv.classList.add('shadow-bottom');
           }
         }, 500);
 
@@ -110,19 +108,19 @@ declare const IScroll: any;
             const atBottom = scrollTop >= delta;
 
             // Adjust width so we don't have shadows on the scrollbar
-            // this.shadowDiv.style.width = `${element.clientWidth}px`;
-            // this.shadowDiv.style.width = `${element.clientHeight}px`;
+            this.shadowDiv.style.width = `${element.clientWidth}px`;
+            this.shadowDiv.style.width = `${element.clientHeight}px`;
             
             if (atBottom) {
-             // this.shadowDiv.classList.remove('shadow-bottom');
+             this.shadowDiv.classList.remove('shadow-bottom');
             } else {
-              //this.shadowDiv.classList.add('shadow-bottom');
+              this.shadowDiv.classList.add('shadow-bottom');
             }
 
             if (scrollTop === 0) {
-              //this.shadowDiv.classList.remove('shadow-top');
+              this.shadowDiv.classList.remove('shadow-top');
             } else {
-              //this.shadowDiv.classList.add('shadow-top');
+              this.shadowDiv.classList.add('shadow-top');
             }
           });
       
@@ -172,31 +170,50 @@ declare const IScroll: any;
       useTransition: this.useTransition === 'true',
     });
 
-    //this.shadowDiv = document.createElement('div');
+    this.shadowDiv = document.createElement('div');
+    this.shadowDiv.classList.add('shadow');
+    this.shadowDiv.style.position = 'fixed';
+    element.appendChild(this.shadowDiv);
 
+    setTimeout(() => {
+      // Determine location of shadow based on position of scrollable content
+      const offSet = element.getBoundingClientRect();
+      const borderTop = parseInt(getComputedStyle(element).borderTopWidth || '0', 10);
+      const borderLeft = parseInt(getComputedStyle(element).borderLeftWidth || '0', 10);
+
+      this.shadowDiv.style.top = `${offSet.top + borderTop}px`;
+      this.shadowDiv.style.left = `${offSet.left + borderLeft}px`;
+      this.shadowDiv.style.height = `${element.clientHeight}px`;
+      this.shadowDiv.style.width = `${element.clientWidth}px`;
+
+      if (element.scrollHeight > element.clientHeight) {
+        this.shadowDiv.classList.add('shadow-bottom');
+      }
+    }, 500)
 
     if (element.scrollHeight !== 0) {
       //console.log("element.scrollHeight :" + element.scrollHeight);
-      //this.shadowDiv.classList.add('shadow-bottom');
+      this.shadowDiv.classList.add('shadow-bottom');
     }
-    //element.appendChild(this.shadowDiv);
+    // element.appendChild(this.shadowDiv);
 
     this.scroller.on('scrollStart', () => {
     
       if (this.scroller.maxScrollY !== 0) {
-        //this.shadowDiv!.classList.add('shadow-bottom');
-        //this.shadowDiv!.classList.add('shadow-top');
+        this.shadowDiv!.classList.add('shadow-bottom');
+        this.shadowDiv!.classList.add('shadow-top');
       }
     });
 
     this.scroller.on('scrollEnd', () => {
       
       if (this.scroller.maxScrollY !== 0) {
+        
         if (this.scroller.y === this.scroller.maxScrollY) {
-          //this.shadowDiv!.classList.remove('shadow-bottom');
+          this.shadowDiv!.classList.remove('shadow-bottom');
         }
         if (this.scroller.y === 0) {
-          //this.shadowDiv!.classList.remove('shadow-top');
+          this.shadowDiv!.classList.remove('shadow-top');
         }
       }
 
@@ -222,9 +239,10 @@ declare const IScroll: any;
       //this.updateViewport();
       if (this.scroller) {
         this.scroller.refresh();
-        //this.updateShadowDiv();
+        this.updateShadowDiv();
       }
     });
+
 
     if(scrollableContent) {
       const observer = new MutationObserver(() => {
@@ -241,23 +259,23 @@ declare const IScroll: any;
     const scrollableContent = this.scrollableContent?.nativeElement;
     if (this.scroller && scrollableContent) {
       this.scroller.refresh();
-      //this.updateShadowDiv();
+      this.updateShadowDiv();
     }
 
     if (scrollableContent) {
       const scrollableHeight = scrollableContent.scrollHeight;
       if (scrollableHeight !== 0) {
-        //this.shadowDiv.classList.add('shadow-bottom');
+        this.shadowDiv.classList.add('shadow-bottom');
       } else {
-        //this.shadowDiv.classList.remove('shadow-bottom');
+        this.shadowDiv.classList.remove('shadow-bottom');
       }
 
       this.scroller.on('scrollStart', () => {
     
         if (this.scroller.maxScrollY !== 0) {
           //console.log("this.scroller.maxScrollY :" + this.scroller.maxScrollY);
-          //this.shadowDiv!.classList.add('shadow-bottom');
-          //this.shadowDiv!.classList.add('shadow-top');
+          this.shadowDiv!.classList.add('shadow-bottom');
+          this.shadowDiv!.classList.add('shadow-top');
         }
       });
   
@@ -266,10 +284,10 @@ declare const IScroll: any;
         if (this.scroller.maxScrollY !== 0) {
           
           if (this.scroller.y === this.scroller.maxScrollY) {
-            //this.shadowDiv!.classList.remove('shadow-bottom');
+            this.shadowDiv!.classList.remove('shadow-bottom');
           }
           if (this.scroller.y === 0) {
-            //this.shadowDiv!.classList.remove('shadow-top');
+            this.shadowDiv!.classList.remove('shadow-top');
           }
         }
   
@@ -297,7 +315,7 @@ declare const IScroll: any;
         //this.updateViewport();
         if (this.scroller) {
           this.scroller.refresh();
-          //this.updateShadowDiv();
+          this.updateShadowDiv();
         }
       }
     }, 100);
@@ -324,16 +342,16 @@ declare const IScroll: any;
     //this.updateViewport();
     if (this.scroller) {
       this.scroller.refresh();
-      //this.updateShadowDiv();
+      this.updateShadowDiv();
     }
   }
 
   private updateShadowDiv(): void {
     if (this.shadowDiv) {
       if (this.scroller && this.scroller.maxScrollY !== 0) {
-        //this.shadowDiv.classList.add('shadow-bottom');
+        this.shadowDiv.classList.add('shadow-bottom');
       } else {
-        //this.shadowDiv.classList.remove('shadow-bottom');
+        this.shadowDiv.classList.remove('shadow-bottom');
       }
     }
   }
