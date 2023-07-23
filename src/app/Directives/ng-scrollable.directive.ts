@@ -179,18 +179,6 @@ declare const IScroll: any;
     setTimeout(() => {
       // Determine location of shadow based on position of scrollable content
       this.updateShadowDivPosition();
-      /* const offSet = element.getBoundingClientRect();
-      const borderTop = parseInt(getComputedStyle(element).borderTopWidth || '0', 10);
-      const borderLeft = parseInt(getComputedStyle(element).borderLeftWidth || '0', 10);
-
-      this.shadowDiv.style.top = `${offSet.top + borderTop}px`;
-      this.shadowDiv.style.left = `${offSet.left + borderLeft}px`;
-      this.shadowDiv.style.height = `${element.clientHeight}px`;
-      this.shadowDiv.style.width = `${element.clientWidth}px`;
-
-      if (element.scrollHeight > element.clientHeight) {
-        this.shadowDiv.classList.add('shadow-bottom');
-      } */
     }, 500)
 
     if (element.scrollHeight !== 0) {
@@ -239,7 +227,6 @@ declare const IScroll: any;
     this.modalService.viewVisible.subscribe(() => {
       // Update the viewport when the view is visible
       //this.updateViewport();
-      this.updateShadowDivPosition();
       if (this.scroller) {
         this.scroller.refresh();
         this.updateShadowDiv();
@@ -249,7 +236,7 @@ declare const IScroll: any;
 
     if(scrollableContent) {
       const observer = new MutationObserver(() => {
-        this.updateShadowDivPosition();
+        
         this.updateScrollableContent();
       });
 
@@ -261,6 +248,11 @@ declare const IScroll: any;
 
   private updateScrollableContent(): void {
     const scrollableContent = this.scrollableContent?.nativeElement;
+    setTimeout(() => {
+      // Determine location of shadow based on position of scrollable content
+      this.updateShadowDivPosition();
+    }, 500)
+
     if (this.scroller && scrollableContent) {
       this.scroller.refresh();
       this.updateShadowDiv();
