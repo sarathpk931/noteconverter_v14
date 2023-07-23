@@ -239,6 +239,7 @@ declare const IScroll: any;
     this.modalService.viewVisible.subscribe(() => {
       // Update the viewport when the view is visible
       //this.updateViewport();
+      this.updateShadowDivPosition();
       if (this.scroller) {
         this.scroller.refresh();
         this.updateShadowDiv();
@@ -248,6 +249,7 @@ declare const IScroll: any;
 
     if(scrollableContent) {
       const observer = new MutationObserver(() => {
+        this.updateShadowDivPosition();
         this.updateScrollableContent();
       });
 
