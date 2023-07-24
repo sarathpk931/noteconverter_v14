@@ -27,6 +27,7 @@ export class ErrorHandlerService {
     button1Callback: any,
     button2Callback: any
   ): void {
+    console.log("Show Error Alert function");
     this.modalService.closeAllModals();
 
     const data = {
@@ -108,6 +109,7 @@ export class ErrorHandlerService {
   }
 
   wncWasReset(): void {
+    console.log("Wnc was reset");
     this.showErrorAlert('SDE_WRITTEN_NOTE_CONVERSION5', '', null, null);
   }
 
