@@ -236,7 +236,6 @@ export class ScanScreenComponent implements OnInit{
       this.scanOptionService.isPlaceholderVisible = true;
       //console.log('reset :'+this.scanOptionService.isPlaceholderVisible);
       this.getDefaultValues();
-      console.log("reset Form");
       this.errorHandlerService.wncWasReset();
     }
     

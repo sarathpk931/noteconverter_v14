@@ -8,7 +8,7 @@
     <div class="header themed" action-bar>
 
       <div class="header-right">
-        <button type="button" class="btn btn-medium btn-glyph-label xrx-scan" (click)="scan()" [ngClass]="!noteConvertorForm?.valid ? 'disabled' : ''" >
+        <button type="button" class="btn btn-medium btn-glyph-label xrx-scan" (click)="scan()" [disabled]="!noteConvertorForm?.valid" >
           <span>{{this.scanTitle}}</span>
         </button>
       </div>

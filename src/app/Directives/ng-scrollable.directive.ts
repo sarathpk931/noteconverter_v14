@@ -171,6 +171,7 @@ declare const IScroll: any;
       useTransition: this.useTransition === 'true',
     });
 
+    
     this.shadowDiv = document.createElement('div');
     this.shadowDiv.classList.add('shadow');
     this.shadowDiv.style.position = 'fixed';
@@ -223,6 +224,8 @@ declare const IScroll: any;
     element.classList.add('wrapper');
 
     const scrollableContent = this.scrollableContent?.nativeElement;
+
+   
     
     this.modalService.viewVisible.subscribe(() => {
       // Update the viewport when the view is visible
@@ -248,6 +251,9 @@ declare const IScroll: any;
 
   private updateScrollableContent(): void {
     const scrollableContent = this.scrollableContent?.nativeElement;
+
+    
+
     setTimeout(() => {
       // Determine location of shadow based on position of scrollable content
       this.updateShadowDivPosition();
@@ -353,6 +359,7 @@ declare const IScroll: any;
   }
 
   private updateShadowDivPosition(): void {
+    
     const offSet = this.elementRef.nativeElement.getBoundingClientRect();
     const borderTop = parseInt(getComputedStyle(this.elementRef.nativeElement).borderTopWidth || '0', 10);
     const borderLeft = parseInt(getComputedStyle(this.elementRef.nativeElement).borderLeftWidth || '0', 10);
