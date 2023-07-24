@@ -218,15 +218,12 @@ export class ModalService {
 
   public closeAllModals()
   {
-    console.log("Modal service close all Modals function");
     this.dialog.closeAll();
     this.removeArrow();
-    console.log("after dialog Close all and Remove arrow");
   }
 
   public openComponentModal(component: any,data:any)
   {
-    console.log("Open Component Modal");
     this.removeArrow();
     this.dialog.closeAll();
     this.dialog.open(component, {
