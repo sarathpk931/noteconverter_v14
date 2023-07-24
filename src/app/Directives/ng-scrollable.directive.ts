@@ -174,13 +174,13 @@ declare const IScroll: any;
     
     this.shadowDiv = document.createElement('div');
     this.shadowDiv.classList.add('shadow');
-    this.shadowDiv.style.position = 'fixed !important';
+    this.shadowDiv.style.position = 'fixed';
     element.appendChild(this.shadowDiv);
 
-    // setTimeout(() => {
+    setTimeout(() => {
       // Determine location of shadow based on position of scrollable content
-      // this.updateShadowDivPosition();
-    // }, 500)
+      this.updateShadowDivPosition();
+    }, 500)
 
     if (element.scrollHeight !== 0) {
       //console.log("element.scrollHeight :" + element.scrollHeight);
