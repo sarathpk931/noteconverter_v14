@@ -174,9 +174,9 @@ declare const IScroll: any;
     
     this.shadowDiv = document.createElement('div');
     this.shadowDiv.classList.add('shadow');
-    this.shadowDiv.style.position = 'fixed';
+    this.shadowDiv.style.position = 'fixed !important';
     element.appendChild(this.shadowDiv);
-    
+
     // setTimeout(() => {
       // Determine location of shadow based on position of scrollable content
       // this.updateShadowDivPosition();
