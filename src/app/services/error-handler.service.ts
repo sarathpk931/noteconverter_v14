@@ -28,7 +28,7 @@ export class ErrorHandlerService {
     button2Callback: any
   ): void {
     console.log("Show Error Alert function");
-    this.modalService.closeAllModals();
+    //this.modalService.closeAllModals();
 
     const data = {
       title: sdeTitle,
