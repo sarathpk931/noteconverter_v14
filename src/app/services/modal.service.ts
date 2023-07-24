@@ -46,6 +46,8 @@ export class ModalService {
     
     return this.dialog.open(ProgressAlertComponent, {
       data :{'title': title,'message':message},
+      height: '98%',
+      width: '100vw',
       scrollStrategy: new NoopScrollStrategy()
     });
   }
