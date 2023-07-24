@@ -231,6 +231,8 @@ export class ModalService {
     this.dialog.closeAll();
     this.dialog.open(component, {
       data : data,
+      height: '98%',
+      width: '100vw',
       scrollStrategy: new NoopScrollStrategy()
       
     });
