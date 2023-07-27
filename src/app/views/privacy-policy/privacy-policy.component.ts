@@ -1,3 +1,4 @@
+
 /**
  * Privacy Policy Component
  *
@@ -11,7 +12,8 @@
  * - A pop up will be shown with privacy policy.
  *
  */
-import { Component,OnInit } from '@angular/core';
+import { Component,OnInit,ChangeDetectorRef } from '@angular/core';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { HttpClient } from '@angular/common/http';
 import { MatDialogRef } from '@angular/material/dialog';
 
@@ -23,7 +25,7 @@ import { environment } from '../../../environments/environment';
 import { resourceString} from '../../model/global';
 import { ProgressAlertComponent } from '../progress-alert/progress-alert.component';
 
-import smoothscroll from 'smoothscroll-polyfill';
+
 
 
 @Component({
@@ -44,6 +46,8 @@ export class PrivacyPolicyComponent implements OnInit {
     public modalRef : MatDialogRef<any>,
     private resourceStringService : ResourcestringService,
     private  logService: LogService,
+    private changeDetectorRef: ChangeDetectorRef,
+    private sanitizer: DomSanitizer
     ){}
 
   ngOnInit(): void {
@@ -66,13 +70,24 @@ export class PrivacyPolicyComponent implements OnInit {
         }
     });
 
+    
+    
     }
-      
+    
+    ngAfterViewInit(): void {
+      this.changeDetectorRef.detectChanges(); // Trigger change detection
+  
+      setTimeout(() => {
+        this.modalService.emitViewVisible(); // Call the emitViewVisible method after a delay
+      });
+    }
+  
     closeModal():void{
       this.modalService.closeModal(this.modalRef);
+      document.querySelector('.cdk-overlay-backdrop-showing').classList.add('cdk-overlay-backdrop-hide');
     }
-
 }
+
   
 
 

@@ -12,14 +12,13 @@
  *
  */
 
-import { Component, OnInit,Input,ElementRef, Renderer2 } from '@angular/core';
-import {  MatDialogRef } from '@angular/material/dialog'
-
+import { Component, OnInit,Input, Output,EventEmitter,ChangeDetectorRef } from '@angular/core';
+import {  MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
+import { ElementRef, Renderer2, Inject  } from '@angular/core';
 import { ScanOptionsService} from '../../services/scan-options.service';
 import { ModalService} from '../../services/modal.service';
 import { ResourcestringService} from '../../services/resourcestring.service';
-
-import {FileFormat, FileFormatOption,resourceString} from '../../model/global';
+import { DialogDataObject, FileFormat, FileFormatOption,resourceString} from '../../model/global';
 
 @Component({
   selector: 'app-feature-popover',
@@ -28,6 +27,13 @@ import {FileFormat, FileFormatOption,resourceString} from '../../model/global';
 })
 export class FeaturePopoverComponent implements OnInit {
 
+    fileFormat : FileFormat;
+    fileFormatOption : FileFormatOption[];
+    from : any;
+    resourceString : resourceString[];
+    scrollBarsFixed = false;
+
+    @Output() objectSelected = new EventEmitter<any>();
     @Input() feature: any;
     @Input() event: MouseEvent;
 
@@ -45,12 +51,9 @@ export class FeaturePopoverComponent implements OnInit {
     selectedTypeOption: FileFormatOption;
     selectedSizeOption: FileFormatOption; 
     selectedOption : FileFormatOption;
-
-    fileFormat : FileFormat;
-    fileFormatOption : FileFormatOption[];
-    from : any;
-    resourceString : resourceString[];
-    scrollBarsFixed = false;
+    showLeftArrow: boolean = true;
+    showRightArrow: boolean = false;
+    testStyle: string = "";
 
     constructor(
                 private scanOptionsService : ScanOptionsService, 
@@ -58,12 +61,15 @@ export class FeaturePopoverComponent implements OnInit {
                 private resourceStringService : ResourcestringService,
                 public mtModalRef : MatDialogRef<any>,
                 private elementRef: ElementRef,
-                private renderer: Renderer2
+                private renderer: Renderer2,
+                private changeDetectorRef: ChangeDetectorRef,
+                @Inject(MAT_DIALOG_DATA) public data : DialogDataObject
               )
               {}
 
     ngOnInit(){
       this.resourceString = this.resourceStringService.getObjStrings();
+      this.testStyle = this.data.additionalInfo;
 
       this.modalService.currentValue.subscribe((data) =>{
         this.from = data;
@@ -105,6 +111,14 @@ export class FeaturePopoverComponent implements OnInit {
       })
     }
 
+    ngAfterViewInit(): void {
+      this.changeDetectorRef.detectChanges(); // Trigger change detection
+  
+      setTimeout(() => {
+        this.modalService.emitViewVisible(); // Call the emitViewVisible method after a delay
+      });
+    }
+
     //default selection
     getNgClass(option: any): any{
 
@@ -125,9 +139,16 @@ export class FeaturePopoverComponent implements OnInit {
     selectOption(option : any){
       this.selectOption = option;
       this.scanOptionsService.setSelectedOption(option,this.from);
-      this.modalService.closeModal(this.mtModalRef);
+      this.objectSelected.emit(option);
       
+      document.querySelectorAll("#modal_arrow").forEach(e => e.parentNode.removeChild(e));
+      document.querySelector('.cdk-overlay-backdrop-showing').classList.add('cdk-overlay-backdrop-hide');
+      this.closeModal();
     }
 
+    closeModal():void{
+      this.modalService.closeModal(this.mtModalRef);
+      this.modalService.removeArrow();
+    }
     
 }

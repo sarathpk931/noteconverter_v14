@@ -38,12 +38,10 @@
               "src/web.config"
             ],
             "styles": [
-              
-              "node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.less"
             ],
             "scripts": [
-              
+              "src/assets/js/iscroll-probe.js"
             ]
           },
           "configurations": {

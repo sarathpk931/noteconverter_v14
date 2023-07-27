@@ -16,8 +16,10 @@
  *
  */
 
-import { Component,ViewChild,ElementRef, OnInit,HostListener  } from '@angular/core';
+import { Component,ViewChild,ElementRef,Renderer2, OnInit,HostListener,EventEmitter  } from '@angular/core';
 import { FormBuilder, FormGroup, Validators,AbstractControl, ValidationErrors } from '@angular/forms';
+//scan-screen.component.ts
+
 import {MatDialog,MatDialogRef,DialogPosition} from '@angular/material/dialog';
 
 import {FeaturePopoverComponent} from '../feature-popover/feature-popover.component';
@@ -38,6 +40,9 @@ import {xrxTemplateGetInterfaceVersion} from '../../../assets/Xrx/XRXTemplate';
 import {xrxDeviceConfigGetInterfaceVersion} from '../../../assets/Xrx/XRXDeviceConfig';
 
 import {AppModule} from '../../app.module';
+import { ScrollingModule  } from '@angular/cdk/scrolling';
+import { EditableFieldDirective } from  '../../Directives/editable-file-name.directive';
+
 
 
 @Component({
@@ -107,6 +112,8 @@ export class ScanScreenComponent implements OnInit{
   isEmailInvalid : boolean = false;
   isEmailRequired : boolean =false;
 
+  commonRightMarginForPopup: number = 57
+
   constructor(
     private dialog: MatDialog,
     private formBuilder: FormBuilder,
@@ -121,14 +128,13 @@ export class ScanScreenComponent implements OnInit{
       
       this.winHeight = window.innerHeight;
       this.winWidth = window.innerWidth;
-
     }
 
     ngOnInit(){
 
-      //load resourcestring and assign to variables
-      this.resfilenametemp= '{0} [Date & Time].{1}';
-      this.resourceStringService.loadResources().then(response=>{
+        //load resourcestring and assign to variables
+        this.resfilenametemp= '{0} [Date & Time].{1}';
+        this.resourceStringService.loadResources().then(response=>{
         this.resFilename=response.SDE_XEROX_SCAN.toString();
         this.fileextension="docx";
         this.resfilenametemp=response.SDE_FMTSTR_DATE_TIMEFMTSTR.toString();
@@ -246,105 +252,81 @@ export class ScanScreenComponent implements OnInit{
     }
 
     openFileFormat(event: any){
-
-        //console.log(event.clientX);
-        //console.log(event.clientY);
-        //let event_position: DialogPosition = { left: event.clientX + 'px', top: event.clientY + 'px'};
-        let popupWidth =276;
-        let popupHeight=221;
-        this.midwidth=this.winWidth / 2;
-        let event_position: DialogPosition;
-        let leftPosition:number;
-        if (event.clientX < this.midwidth) {
-          event_position = { left: event.clientX + 'px', top: (event.clientY - 111) + 'px'};
-          console.log("x less than midwidth" )
-      
-        }
-        
-        else {
-          const availableSpaceOnRight = this.winWidth - event.clientX;
-          if (event.clientX >= this.winWidth - popupWidth) {
-  
-              leftPosition = event.clientX - (popupWidth - availableSpaceOnRight);
-            // Popup appears on the extreme right
-            //rotationClass = 'popup-rotate';
-          }
-            event_position= { left: leftPosition + 'px', top: (event.clientY - 111) + 'px'};
-        }
-        let direction:string ='rtl';
-        this.modalService.setData({
-          from : this.const_fileFormat
-        });
-        this.modalService.openModal(FeaturePopoverComponent,event_position);
-        //modalRef.content.closeBtnName = 'Close';
+      this.modalService.disableLinks();
+      let popupWidth =276;
+      let popupHeight=221;
+      this.midwidth=this.winWidth / 2;
+      let event_position: DialogPosition;
+      let xForRightArrow:number;
+      let showLeftArrow = false;
+      let showRightArrow = true;
+      if (event.clientX < this.midwidth) {
+        event_position = { left: event.clientX + 'px', top: (event.clientY - 111) + 'px'};
+       }
+      else {
+        xForRightArrow = window.innerWidth - event.clientX;
+        event_position= { right: `${xForRightArrow}px`, top: (event.clientY - 111) + 'px'};
+       }
+      let direction:string ='rtl';
+      this.modalService.setData({
+        from : this.const_fileFormat
+      });
+      this.modalService.openModal(FeaturePopoverComponent,event_position, {x: event.clientX, y:event.clientY, showLeftArrow, showRightArrow, xForRightArrow});
     }
 
     openScan(event: any){
-        //console.log(event.clientX);
-        //console.log(event.clientY);
-        let popupWidth =276;
-        let popupHeight=221;
-        this.midwidth=this.winWidth / 2;
-        let rotationClass: string = '';
-        let event_position: DialogPosition; 
-        let leftPosition:number;
-        if (event.clientX < this.midwidth) {
-        event_position = { left: event.clientX + 'px', top: (event.clientY - 111) + 'px'};
-        console.log("x less than midwidth" )
-      
-        }      
-        else {
-          const availableSpaceOnRight = this.winWidth - event.clientX;
-          if (event.clientX >= this.winWidth - popupWidth) {
+      this.modalService.disableLinks();
+      let popupWidth =276;
+      let popupHeight=221;
+      this.midwidth=this.winWidth / 2;
+      let rotationClass: string = '';
+      let event_position: DialogPosition; 
+      let xForRightArrow:number;
+      let showLeftArrow = false;
+      let showRightArrow = false;
 
-            leftPosition = event.clientX - (popupWidth - availableSpaceOnRight);
-            // Popup appears on the extreme right
-            rotationClass = 'popup-rotate';
-          }
-          event_position= { left: leftPosition + 'px', top: (event.clientY - 111) + 'px'};
+      if (event.clientX < this.midwidth) {
+       event_position = { left: event.clientX + 'px', top: (event.clientY - 111) + 'px'};
+       showLeftArrow = true;
+      }
+      else {
+        showRightArrow = true;
+        xForRightArrow = window.innerWidth - event.clientX;
+         event_position= { right: `${xForRightArrow}px`, top: (event.clientY - 111) + 'px'};
         }
+      this.modalService.setData({
+        from : this.const_type
+      });
 
-        let direction:string ='rtl'; // to be decided based on click position
-        this.modalService.setData({
-          from : this.const_type
-        });
-        console.log("rotation class "+ rotationClass);
-        this.modalService.openModal(FeaturePopoverComponent,event_position,rotationClass);
+      this.modalService.openModal(FeaturePopoverComponent,event_position, {x: event.clientX, y:event.clientY, showLeftArrow, showRightArrow, xForRightArrow});
     }
 
     openSize(event: any){
-
+      this.modalService.disableLinks();
       let popupWidth =236;
       let popupHeight=469;
       this.midwidth=this.winWidth / 2;
       this.midHeight=this.winHeight/2;
       const popupTop = this.winHeight - event.clientY;
-      console.log(event.clientX);
-      console.log(event.clientY);
-      console.log("popupTop in height px" + popupTop)
       let event_position: DialogPosition;
-      let leftPosition:number;
+      let xForRightArrow:number;
+      let showLeftArrow = false;
+      let showRightArrow = false;
 
       if (event.clientX < this.midwidth) {
         event_position = { left: event.clientX + 'px', top: (event.clientY - 325) + 'px'};
-        console.log("x less than midwidth" )
-     
+        showLeftArrow = true;
        }
-       else {
-        const availableSpaceOnRight = this.winWidth - event.clientX;
-        if (event.clientX >= this.winWidth - popupWidth) {
-
-           leftPosition = event.clientX - (popupWidth - availableSpaceOnRight);
-          
-        }
-         event_position= { left: leftPosition + 'px', top: (event.clientY - 325) + 'px'};
+      else {
+        showRightArrow = true;
+        xForRightArrow = window.innerWidth - event.clientX;
+        event_position= { right: `${xForRightArrow}px`,  top: (event.clientY - 325) + 'px'};
       }
-      //event_position = { left: event.clientX + 'px', top: event.clientY + 'px'};
       let direction:string ='rtl'; // to be decided based on click position
       this.modalService.setData({
         from : this.const_size
       });
-       this.modalService.openModal(FeaturePopoverComponent,event_position);
+       this.modalService.openModal(FeaturePopoverComponent,event_position, {x: event.clientX, y:event.clientY, showLeftArrow, showRightArrow, xForRightArrow});
     }
 
     
@@ -359,8 +341,7 @@ scan() {
   this.logger.trackTrace("mainDeviceconfig()...");
   const regex = /^[^\\\/\:\*\?\"\<\>\|]+$/;
 
-  this.fileName =  this.noteConvertorForm.controls["fileName"].value == '' ? this.resFilename : this.noteConvertorForm.controls["fileName"].value; //this.fileNameSpan.nativeElement.textContent
- //alert(this.fileName);
+  this.fileName =  this.noteConvertorForm.controls["fileName"].value == '' ? this.resFilename : this.noteConvertorForm.controls["fileName"].value;
   if (regex.test(this.fileName)) {
     this.logger.trackTrace("mainDeviceconfig() -> if (regex.test(fileName))");
     xrxDeviceConfigGetInterfaceVersion(AppSetting.url, this.deviceCallbackSuccess.bind(this), this.deviceCallBackFailure.bind(this), null, true);
@@ -441,5 +422,11 @@ Templatecallback_success() {
   this.logger.trackTrace('Templatecallback_failure -> respText:' + respText + ' newresp:' + newresp);
   this.errorHandlerService.DEVICE_EIP_SCANV2_SERVICES_DISABLED();
 }
-    
+
+onEmailBlur(){
+  
+  const emailControl = this.f.email;
+  this.isEmailRequired = emailControl.hasError('required') && emailControl.touched;
+  this.isEmailInvalid = emailControl.hasError('email') && emailControl.touched;
+}
 }

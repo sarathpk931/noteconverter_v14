@@ -8,8 +8,11 @@
 @import './assets/Content/Styles/site.less';
 @import './assets/Content/Styles/editableField.less';
 @import './assets/Content/Styles/textField.less';
+@import '../node_modules/@angular/cdk/overlay-prebuilt.css';
 //@import '../node_modules/@angular/material/prebuilt-themes/indigo-pink.css';
-
+//@import '../node_modules/angular-iscroll-probe/src/lib/_iscroll.scss';
+@iscroll-wrapper-background-color: #777;
+@iscroll-scroller-background-color: #fff;
 
 .error_updated
 {
@@ -17,125 +20,115 @@
     font-size: 13px;
 }
 
-.makeItMiddle{
-    margin:0px;
-    top :150px;
-    left:350px;
-    //transform: translate(-50%, -50%);
+.ad-themed ::placeholder {
+  color: white;
 }
-
-.mat-dialog-container{
-  padding: 1px !important;
-  overflow: hidden !important;
-}
-.arrow {
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.arrow-segment {
-  width: 1px;
-  height: 2px;
-  margin-top: 1px;
-  background-color: #000; /* Adjust the color as needed */
-}
-
-.cdk-overlay-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.cdk-overlay-backdrop {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-}
-
-
-//original css prior to change
-.custom-modalbox {
-    mat-dialog-container {
-        padding: 1px;
-        cursor:pointer;
-        border-radius: 4px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.24);       
-    }
-}
-
-.popup-rotate.contents {
-  transform: rotate(270deg);
-  transform-origin: left top;
-  direction: rtl;
-}
-
-.cdk-overlay-pane.custom-modalbox{
-
-  max-width: fit-content; 
-  position: relative; 
-  margin-left: 495px; 
-  margin-top: 320px;
-}
-
-/* .progress-bar-modalbox{
-    overflow: hidden;
-    margin:auto;
-    
-    opacity: 1 !important;
-    position: fixed
-} */
-
 
 .form-control {
-    height: 62px;
-    color: #fff;
-    background-color: transparent;
-    background-clip: padding-box;
-    border: 1px solid #380a2e;
-    border-radius: 3px;
-    box-shadow: #d829b7 0px 1px 0px 0px inset, #d829b7 1px 0px 0px 0px inset;
-    border-color: #380a2e;
-    text-shadow: #1d1d1d 0px -1px 0px;
-    width: 100%;
+  height: 62px;
+  width: 100%;
+  color: #fff;
+  background-color: transparent;
+  background-clip: padding-box;
+  border: 1px solid #380a2e;
+  border-radius: 3px;
+  box-shadow: #d829b7 0px 1px 0px 0px inset, #d829b7 1px 0px 0px 0px inset;
+  border-color: #380a2e;
+  text-shadow: #1d1d1d 0px -1px 0px;
+
 }
 
 .form-control:focus {
-    //color: #212529;
-    color: #380a2e;
-    background-color: #fff;
-    border-color: #f406c0;
-    outline: 0;
-    box-shadow: 0 0 0 0.25rem #ae0689;
+  //color: #212529;
+  color: #380a2e;
+  background-color: #fff;
+  border-color: #f406c0;
+  outline: 0;
+  box-shadow: 0 0 0 0.25rem #ae0689;
 }
 
-.ad-themed ::placeholder {
-    color: white;
-  }
-  
 
 .editable-field-input {
-    width: calc(100% + 15px);
-    /*margin-top: 5px;*/
-    margin-top: -16px;
-    margin-left: -16px !important;
-    border: none;
-    padding: 18px 25px 21px 39px;
-    font-size: 28px;
-    outline: none;
-    vertical-align: middle;
-    border-radius: 3px;
-  
-    @media (min-width: 1024px) {
-      font-size: 24px;
-    }
+  width: 100%;
+   border: none;
+   height: 62px;
+   padding: 0.965rem 1.25rem 0.965rem 2.25rem;
+   font-size: 28px;
+   outline: none;
+   vertical-align: middle;
+   border-radius: 3px;
+   @media (max-width: 1023px) {
+     height :68px;
+   }
+ }
+
+
+.mat-dialog-container{
+  padding: 1px !important;
+  border-radius: 0px !important;
+  overflow:hidden !important;
+}
+
+.cdk-global-scrollblock{
+  overflow-y: hidden;
+  //display:none;
+}
+.cdk-overlay-pane {
+  max-width: none !important;
+  position: absolute !important;
+  vertical-align: middle !important;
+  align-items: center !important;
   }
+
+.cdk-overlay-backdrop-hide {
+    display: none;
+  }
+.cdk-overlay-container{
+  display: block !important;
+}
+.cdk-overlay-backdrop {
+  position: absolute;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.iscroll-on {
+  .iscroll-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: @iscroll-wrapper-background-color;
+
+  }
+  .iscroll-scroller {
+    position: absolute;
+    width: 100%;
+    min-height: 100%;
+    background-color: @iscroll-scroller-background-color;
+  }
+}
+
+.iScrollVerticalScrollbar {
+  position: absolute;
+  width: 4px;
+  top: 2px;
+  bottom: 2px;
+  right: 2px;
+  z-index: 30 !important;
+}
+
+
+.iScrollIndicator {
+  box-sizing: border-box;
+  position: absolute;
+  background: rgba(0,0,0,.5);
+  border: none;
+  border-radius: 3px;
+  width: 100%;
+  transition-duration: 0ms;
+  display: block;
+  height: 214px;
+  transform: translate(0);
+  transition-timing-function: cubic-bezier(.1,.57,.1,1)
+}
