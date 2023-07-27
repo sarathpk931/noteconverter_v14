@@ -1,6 +1,18 @@
+/**
+ * Progress Alert Component
+ *
+ * Description: This component is used to show the progress bar
+ *
+ * Usage:
+ * <app-progress-alert></app-progress-alert>
+ *
+ *
+ * Outputs:
+ * - A pop up will be shown with progress spinner.
+ *
+ */
 import { Component,Inject } from '@angular/core';
-import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { ModalService} from '../../services/modal.service';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import {DialogData} from '../../model/global';
 import {AppModule} from '../../app.module';
 
@@ -15,7 +27,6 @@ export class ProgressAlertComponent {
   isThirdGenBrowser = AppModule.isThirdGenBrowser;
 
   constructor(
-    private modalService : ModalService,
     public mtModalRef : MatDialogRef<any>,
     @Inject(MAT_DIALOG_DATA) public data : DialogData
   )
@@ -23,6 +34,5 @@ export class ProgressAlertComponent {
 
   ngOnInit(){
     
-   //alert("Progress alert :"+ this.isThirdGenBrowser);
   }
 }

@@ -1,5 +1,19 @@
+/**
+ * Alert Banner Component
+ *
+ * Description: This component is used to show alert messages
+ *
+ * Usage:
+ * <app-privacy-policy></app-privacy-policy>
+ *
+ *
+ * Outputs:
+ * - A pop up will be shown with privacy policy.
+ *
+ */
 import { Component,Inject } from '@angular/core';
 import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+
 import { ModalService} from '../../services/modal.service';
 import {DialogData} from '../../model/global';
 

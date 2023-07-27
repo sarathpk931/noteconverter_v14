@@ -1,13 +1,30 @@
+
+/**
+ * Privacy Policy Component
+ *
+ * Description: This component is used to show the privacy policy
+ *
+ * Usage:
+ * <app-privacy-policy></app-privacy-policy>
+ *
+ *
+ * Outputs:
+ * - A pop up will be shown with privacy policy.
+ *
+ */
 import { Component,OnInit,ChangeDetectorRef } from '@angular/core';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { HttpClient } from '@angular/common/http';
 import { MatDialogRef } from '@angular/material/dialog';
+
 import { ModalService} from '../../services/modal.service';
-import { environment } from '../../../environments/environment'
-import { ProgressAlertComponent } from '../progress-alert/progress-alert.component';
 import { ResourcestringService} from '../../services/resourcestring.service';
-import { resourceString} from '../../model/global';
 import { LogService } from '../../services/log.service';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+
+import { environment } from '../../../environments/environment';
+import { resourceString} from '../../model/global';
+import { ProgressAlertComponent } from '../progress-alert/progress-alert.component';
+
 
 
 
@@ -23,7 +40,6 @@ export class PrivacyPolicyComponent implements OnInit {
   env = environment;
   resourceString : resourceString[];
 
-
   constructor(
     private http: HttpClient,
     private modalService : ModalService,
@@ -35,10 +51,10 @@ export class PrivacyPolicyComponent implements OnInit {
     ){}
 
   ngOnInit(): void {
-
-    const progress =  this.modalService.openModalWithoutClose(ProgressAlertComponent,'','') //this.modalService.showProgressAlert('Alert','');
-    const url = this.env.privacyPolicyUrl;
     
+    const progress =  this.modalService.openModalWithoutClose(ProgressAlertComponent,'','');
+    const url = this.env.privacyPolicyUrl;
+       
     this.http.get(url, {responseType:'text'})
       .subscribe({
           next:(response) => {
@@ -70,23 +86,7 @@ export class PrivacyPolicyComponent implements OnInit {
       this.modalService.closeModal(this.modalRef);
       document.querySelector('.cdk-overlay-backdrop-showing').classList.add('cdk-overlay-backdrop-hide');
     }
-
-    
-  }
-    
-
-    /* private disableLinks(): void {
-      const links = document.getElementsByTagName('a');
-      for (let i = 0; i < links.length; i++) {
-        links[i].style.pointerEvents = 'none';
-      }
-    } */
-  /* disableLinks() :void{
-    const links  = this.el.nativeElement.querySelectorAll('a');
-     links.array.forEach(link => {
-      this.renderer.setStyle(link,'pointer-events','none');
-    });
-  } */
+}
 
   
 

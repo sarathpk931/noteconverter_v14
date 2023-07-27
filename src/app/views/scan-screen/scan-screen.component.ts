@@ -1,28 +1,47 @@
-//scan-screen.component.ts
+/**
+ * Scan Screen Component
+ *
+ * Description: This component is used to get the input values such as email, file name and other scan related values
+ *
+ * Usage:
+ * <app-scan-screen></app-scan-screen>
+ *
+ * Inputs:
+ * - email: to which email scanned file has to be send.
+ * - filename: By default Xerox scan will be the file name. If any file name given in this field then that will be the file name in email.
+ * 
+ *
+ * Outputs:
+ * - Scanned file will be sent as an attachment to the specified email id.
+ *
+ */
 
 import { Component,ViewChild,ElementRef,Renderer2, OnInit,HostListener,EventEmitter  } from '@angular/core';
+import { FormBuilder, FormGroup, Validators,AbstractControl, ValidationErrors } from '@angular/forms';
+//scan-screen.component.ts
+
 import {MatDialog,MatDialogRef,DialogPosition} from '@angular/material/dialog';
-import { FormBuilder, FormGroup, Validators,AbstractControl, ValidationErrors } from '@angular/forms';//ReactiveFormsModule,
+
 import {FeaturePopoverComponent} from '../feature-popover/feature-popover.component';
 import { PrivacyPolicyComponent} from '../privacy-policy/privacy-policy.component';
+
 import { ModalService} from '../../services/modal.service';
 import { ScanOptionsService} from '../../services/scan-options.service';
-import { FileFormat, FileFormatOption,resourceString,Strings} from '../../model/global';
 import { ScanService } from '../../services/scan.service';
 import { ErrorHandlerService } from '../../services/error-handler.service';
-import { AppComponent } from '../../app.component';
-import {selectedNote,AppSetting} from '../../model/global'
 import { LogService } from '../../services/log.service';
+import { ResourcestringService} from '../../services/resourcestring.service';
+
+import { FileFormat, FileFormatOption,resourceString,Strings,selectedNote,AppSetting} from '../../model/global';
+
 import {xrxScanV2GetInterfaceVersion} from '../../../assets/Xrx/XRXScanV2';
 import {xrxJobMgmtGetInterfaceVersion} from '../../../assets/Xrx/XRXJobManagement';
 import {xrxTemplateGetInterfaceVersion} from '../../../assets/Xrx/XRXTemplate';
 import {xrxDeviceConfigGetInterfaceVersion} from '../../../assets/Xrx/XRXDeviceConfig';
+
 import {AppModule} from '../../app.module';
 import { ScrollingModule  } from '@angular/cdk/scrolling';
 import { EditableFieldDirective } from  '../../Directives/editable-file-name.directive';
-//import { ProgressAlertComponent} from '../../views/progress-alert/progress-alert.component';
-
-import { ResourcestringService} from '../../services/resourcestring.service';
 
 
 
@@ -34,21 +53,19 @@ import { ResourcestringService} from '../../services/resourcestring.service';
 })
 export class ScanScreenComponent implements OnInit{
 
+ 
+  @ViewChild('button') button: ElementRef;
+  @ViewChild('inputField') inputField: ElementRef;
+  @HostListener('window:resize', ['$event'])
+
   winHeight: number;
   winWidth: number;
   midHeight:number;
   midwidth:number;
 
-  @HostListener('window:resize', ['$event'])
-  onResize(event: any) {
-    this.winHeight = window.innerHeight;
-    this.winWidth = window.innerWidth;
-  }
-  @ViewChild('button') button: ElementRef;
-  @ViewChild('inputField') inputField: ElementRef;
-  showPrivacySetting=false;
   noteConvertorForm:  FormGroup;
 
+  //constants for pop up
    const_fileFormat : string = "fileFormat";
    const_type : string = "type";
    const_size : string = 'size';
@@ -57,6 +74,7 @@ export class ScanScreenComponent implements OnInit{
    anyType = {from : 'type'};
    anySize = {from : 'size'};
 
+   //pop up related variables
   matDialogRef: MatDialogRef<any>;
   selectedFileFormat : FileFormat;
   selectedFileFormatOptions : FileFormatOption;
@@ -64,10 +82,15 @@ export class ScanScreenComponent implements OnInit{
   selectedTypeOptions : FileFormatOption;
   selectedSize : FileFormat;
   selectedSizeOptions : FileFormatOption;
+
+  //device information
   generation = AppModule.Generation;
   model = AppModule.model;
+
+  //formgroup for validation
   selectedNote : selectedNote;
-  resource_Strings:Strings;
+
+  //resourcestrings used in html
   emailPlaceHolder : string;
   xeroxTitle : string;
   scanTitle : string;
@@ -75,15 +98,13 @@ export class ScanScreenComponent implements OnInit{
   privacyStatementTitle : string;
   emailValidation1 : string;
   emailValidation2 : string;
-
-  fileName: string = '';
-  //defaultFilename : string ='Xerox Scan';
   resourceString : resourceString[];
 
+  fileName: string = '';
   resFilename :string;
   fileextension:string;
-  formattedResult:string;
   resfilenametemp:string;
+  btnGlyph : string = '<span id="_glyph" class="xrx-paperclip" style="line-height: 100%;"></span>&nbsp&nbsp';
 
   isbuttonVisible : boolean = true;
   preventDirectiveInit : boolean = false;
@@ -99,44 +120,25 @@ export class ScanScreenComponent implements OnInit{
     private modalService : ModalService,
     private scanOptionService : ScanOptionsService,
     private scanService :ScanService,
-    private appComponent : AppComponent,
     private  logger: LogService,
     private resourceStringService : ResourcestringService,
     private errorHandlerService : ErrorHandlerService,
     private elementRef: ElementRef,
-    private renderer: Renderer2
     ) {
       
       this.winHeight = window.innerHeight;
-      this.winWidth = window.innerWidth
-      //console.log("Window Height "+this.winHeight);
-      //console.log("Window Width "+this.winWidth);
-
+      this.winWidth = window.innerWidth;
     }
 
     ngOnInit(){
 
-      // If we have an email in session, attempt to validate fields (to enable scan button)
-      // if (Global.Email) 
-      // {
-      //   this.validateAllFields();
-      // }
-
-      // If not eigth gen, whenever scroll-container scrolls (its an accident, so scrolltop to 0) to fix shadows
-      /* if (!this.device.isEighthGen && !this.device.isThirdGenBrowser) {
-      const scrollContainer = document.querySelector('.scroll-container') as HTMLElement; //TODO:reference package https://www.npmjs.com/package/angular-iscroll
-      scrollContainer.addEventListener('scroll', _.debounce(() => {
-        scrollContainer.scrollTop = 0;
-      }, 250, { leading: true }));
-      } */
-      this.resfilenametemp= '{0} [Date & Time].{1}';
-      this.resourceStringService.loadResources().then(response=>{
+        //load resourcestring and assign to variables
+        this.resfilenametemp= '{0} [Date & Time].{1}';
+        this.resourceStringService.loadResources().then(response=>{
         this.resFilename=response.SDE_XEROX_SCAN.toString();
         this.fileextension="docx";
         this.resfilenametemp=response.SDE_FMTSTR_DATE_TIMEFMTSTR.toString();
         
-        //this.fileName=this.formatfilename(this.resFilename,this.fileextension,this.resfilenametemp);  //' [Date & Time].'
-        // this.fileName=response.SDE_XEROX_SCAN.toString()+' [Date & Time].';
         this.emailPlaceHolder = response.SDE_ENTER_EMAIL_RECEIVE1;
         this.xeroxTitle = response.SDE_WRITTEN_NOTE_CONVERSION4;
         this.scanTitle = response.SDE_SCAN;
@@ -145,16 +147,14 @@ export class ScanScreenComponent implements OnInit{
         this.emailValidation1 = response.SDE_EMAIL_NOT_VALID;
         this.emailValidation2 = response.SDE_REQUIRED_FIELD1;
       }).catch(error=>{
-        console.log(' catch error');
+        console.log(' cannot load resource strings');
       });
     
-      
       this.resourceString = this.resourceStringService.getObjStrings();
   
       this.createForm();
 
       this.getDefaultValues();
-      //this.fileName = this.getDefaultFileName();
       
       //observables to show selected values
       this.scanOptionService.selectedFileFormatC.subscribe(object =>{
@@ -178,11 +178,17 @@ export class ScanScreenComponent implements OnInit{
       })
 
     }
+
+    onResize(event: any) {
+      this.winHeight = window.innerHeight;
+      this.winWidth = window.innerWidth;
+    }
     
     formatfilename(fileName: string, fileExtension: string,resfilename:string): string{
       const template = resfilename.replace('{0}', fileName).replace('{1}', fileExtension);
       return template;
     }
+    //get default values selected
     getDefaultValues(){
       this.selectedFileFormat = this.scanOptionService.getFileFormat(this.anyFileFormat);
       this.selectedFileFormatOptions = this.selectedFileFormat.options.find(item => item.isDefault === true);
@@ -192,20 +198,20 @@ export class ScanScreenComponent implements OnInit{
       this.selectedSizeOptions = this.selectedSize.options.find(item => item.isDefault === true);
     }
 
+    //form group creation
     createForm(){
-      this.noteConvertorForm = this.formBuilder.group({
-        email:['',[Validators.required,this.emailFormatValidator]],//,Validators.email
-        //confirmEmail:['',[Validators.required,Validators.email]],
-        fileName : ['']//this.fileName
-      },
-      //{ validators: this.emailMatchValidator },
-     );
+        this.noteConvertorForm = this.formBuilder.group({
+          email:['',[Validators.required,this.emailFormatValidator]],
+          fileName : ['']
+        },
+      );
 
-     if(AppModule.email !== ''){
-      this.noteConvertorForm.controls["email"].setValue(AppModule.email.toString());
-     }
+      if(AppModule.email !== ''){
+        this.noteConvertorForm.controls["email"].setValue(AppModule.email.toString());
+      }
     }
 
+    //email validation
     emailFormatValidator(control: AbstractControl): ValidationErrors | null { 
       const email: string = control.value; 
       const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/; 
@@ -213,42 +219,40 @@ export class ScanScreenComponent implements OnInit{
         return { invalidEmailFormat: true }; 
       } return null; 
     }
-    //  emailMatchValidator(form: FormGroup) {
-    //   const email = form.get('email').value;
-    //   const confirmEmail = form.get('confirmEmail').value;
-    //   return email === confirmEmail ? null : { emailsMatch: true };
-    // }
+    //email control blur event
+    onEmailBlur(){
   
+      const emailControl = this.f.email;
+      this.isEmailRequired = emailControl.hasError('required') && emailControl.touched;
+      this.isEmailInvalid = emailControl.hasError('email') && emailControl.touched;
+    }
+  
+    //get each controls
     get f():{[key: string]: AbstractControl}{
         return this.noteConvertorForm.controls;
     }
 
-      
+    //when we click the reset button
     resetForm(){
       this.noteConvertorForm.patchValue({
         email:'',
-        //confirmEmail:'',
         fileName : ''
       }); 
       this.fileName = this.resFilename;
-      this.inputField.nativeElement.value = this.resFilename;//console.log(this.inputField.nativeElement.value);
-      this.button.nativeElement.innerHTML = '<span id="_glyph" class="xrx-paperclip" style="line-height: 100%;"></span>&nbsp&nbsp' + this.formatfilename(this.resFilename,this.fileextension,this.resfilenametemp);
+      this.inputField.nativeElement.value = this.resFilename;
+      this.button.nativeElement.innerHTML =  + this.formatfilename(this.resFilename,this.fileextension,this.resfilenametemp);
       this.scanOptionService.isPlaceholderVisible = true;
-      //console.log('reset :'+this.scanOptionService.isPlaceholderVisible);
       this.getDefaultValues();
       this.errorHandlerService.wncWasReset();
     }
     
-
+    //show privacy statement
     showPrivacyStatement(){
       this.modalService.openLargeModal(PrivacyPolicyComponent);
     }
 
     openFileFormat(event: any){
       this.modalService.disableLinks();
-      //console.log(event.clientX);
-      //console.log(event.clientY);
-      //let event_position: DialogPosition = { left: event.clientX + 'px', top: event.clientY + 'px'};
       let popupWidth =276;
       let popupHeight=221;
       this.midwidth=this.winWidth / 2;
@@ -258,7 +262,6 @@ export class ScanScreenComponent implements OnInit{
       let showRightArrow = true;
       if (event.clientX < this.midwidth) {
         event_position = { left: event.clientX + 'px', top: (event.clientY - 111) + 'px'};
-        //console.log("x less than midwidth" )
        }
       else {
         xForRightArrow = window.innerWidth - event.clientX;
@@ -268,15 +271,11 @@ export class ScanScreenComponent implements OnInit{
       this.modalService.setData({
         from : this.const_fileFormat
       });
-
       this.modalService.openModal(FeaturePopoverComponent,event_position, {x: event.clientX, y:event.clientY, showLeftArrow, showRightArrow, xForRightArrow});
-      //modalRef.content.closeBtnName = 'Close';
     }
 
     openScan(event: any){
       this.modalService.disableLinks();
-      //console.log(event.clientX);
-      //console.log(event.clientY);
       let popupWidth =276;
       let popupHeight=221;
       this.midwidth=this.winWidth / 2;
@@ -288,7 +287,6 @@ export class ScanScreenComponent implements OnInit{
 
       if (event.clientX < this.midwidth) {
        event_position = { left: event.clientX + 'px', top: (event.clientY - 111) + 'px'};
-       //console.log("x less than midwidth" )
        showLeftArrow = true;
       }
       else {
@@ -310,9 +308,6 @@ export class ScanScreenComponent implements OnInit{
       this.midwidth=this.winWidth / 2;
       this.midHeight=this.winHeight/2;
       const popupTop = this.winHeight - event.clientY;
-      //console.log(event.clientX);
-      //console.log(event.clientY);
-      //console.log("popupTop in height px" + popupTop)
       let event_position: DialogPosition;
       let xForRightArrow:number;
       let showLeftArrow = false;
@@ -320,7 +315,6 @@ export class ScanScreenComponent implements OnInit{
 
       if (event.clientX < this.midwidth) {
         event_position = { left: event.clientX + 'px', top: (event.clientY - 325) + 'px'};
-        //console.log("x less than midwidth" )
         showLeftArrow = true;
        }
       else {
@@ -332,8 +326,6 @@ export class ScanScreenComponent implements OnInit{
       this.modalService.setData({
         from : this.const_size
       });
-
-      // const xForRightArrow = `calc(${rightPosition}px - 20px)`;
        this.modalService.openModal(FeaturePopoverComponent,event_position, {x: event.clientX, y:event.clientY, showLeftArrow, showRightArrow, xForRightArrow});
     }
 
@@ -342,7 +334,6 @@ export class ScanScreenComponent implements OnInit{
 
 scan() {
   this.logger.trackTrace("ctrl.scan ...");
-  //this.modalService.openModalWithTitle(ProgressAlertComponent,this.resourceString['SDE_SCANNING1'],'');
    this.mainDeviceconfig();
 };
 
@@ -350,8 +341,7 @@ scan() {
   this.logger.trackTrace("mainDeviceconfig()...");
   const regex = /^[^\\\/\:\*\?\"\<\>\|]+$/;
 
-  this.fileName =  this.noteConvertorForm.controls["fileName"].value == '' ? this.resFilename : this.noteConvertorForm.controls["fileName"].value; //this.fileNameSpan.nativeElement.textContent
- //alert(this.fileName);
+  this.fileName =  this.noteConvertorForm.controls["fileName"].value == '' ? this.resFilename : this.noteConvertorForm.controls["fileName"].value;
   if (regex.test(this.fileName)) {
     this.logger.trackTrace("mainDeviceconfig() -> if (regex.test(fileName))");
     xrxDeviceConfigGetInterfaceVersion(AppSetting.url, this.deviceCallbackSuccess.bind(this), this.deviceCallBackFailure.bind(this), null, true);
@@ -432,18 +422,6 @@ Templatecallback_success() {
   this.logger.trackTrace('Templatecallback_failure -> respText:' + respText + ' newresp:' + newresp);
   this.errorHandlerService.DEVICE_EIP_SCANV2_SERVICES_DISABLED();
 }
-
-// onClick(){
-//   this.isbuttonVisible = false;
-// }
-
-// onBlur(){
-
-//   if (!this.isbuttonVisible) {
-//     this.isbuttonVisible = true;
-//     this.preventDirectiveInit = true;     
-//   }
-// }
 
 onEmailBlur(){
   

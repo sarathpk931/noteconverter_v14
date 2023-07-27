@@ -1,8 +1,22 @@
+/**
+ * Basic Alert Component
+ *
+ * Description: This component is used to show messages from several pages.
+ *
+ * Usage:
+ * <app-basic-alert></app-basic-alert>
+ *
+ *
+ * Outputs:
+ * - A pop up will be shown with a message.
+ *
+ */
 import { Component,Inject } from '@angular/core';
 import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+
 import { ModalService} from '../../services/modal.service';
-import {DialogData,resourceString} from '../../model/global';
 import { ResourcestringService} from '../../services/resourcestring.service';
+import {DialogData,resourceString} from '../../model/global';
 
 @Component({
   selector: 'app-basic-alert',

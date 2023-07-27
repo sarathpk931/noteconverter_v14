@@ -1,3 +1,17 @@
+/**
+ * Feature pop over Component
+ *
+ * Description: This component is used to show the 3 pop ups - file format, scan and size
+ *
+ * Usage:
+ * <app-feature-popover></app-feature-popover>
+ *
+ *
+ * Outputs:
+ * - A pop up will be shown with file format / scan/ size details.
+ *
+ */
+
 import { Component, OnInit,Input, Output,EventEmitter,ChangeDetectorRef } from '@angular/core';
 import {  MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
 import { ElementRef, Renderer2, Inject  } from '@angular/core';
@@ -13,7 +27,6 @@ import { DialogDataObject, FileFormat, FileFormatOption,resourceString} from '..
 })
 export class FeaturePopoverComponent implements OnInit {
 
-
     fileFormat : FileFormat;
     fileFormatOption : FileFormatOption[];
     from : any;
@@ -27,12 +40,13 @@ export class FeaturePopoverComponent implements OnInit {
     const_fileFormat : string = "fileFormat";
     const_type : string = "type";
     const_size : string = 'size';
-    selectedFileFormat : FileFormat;
-    selectedType : FileFormat;
-    selectedSize : FileFormat;
     anyFileFormat = {from : 'fileFormat'};
     anyType = {from : 'type'};
     anySize = {from : 'size'};
+
+    selectedFileFormat : FileFormat;
+    selectedType : FileFormat;
+    selectedSize : FileFormat;
     selectedFileFormatOption: FileFormatOption;
     selectedTypeOption: FileFormatOption;
     selectedSizeOption: FileFormatOption; 
