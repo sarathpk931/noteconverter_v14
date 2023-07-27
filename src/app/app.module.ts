@@ -86,14 +86,15 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 @NgModule({
   declarations: [
     AppComponent,
+    NgScrollableDirective,
+    LogViewComponent,
+    ScanScreenComponent,
     PrivacyPolicyComponent,
     ProgressAlertComponent,
-    ScanScreenComponent,
     FeaturePopoverComponent,
     GeneralAlertComponent,
     BasicAlertComponent,
     AlertBannerComponent,
-    NgScrollableDirective,
     ActionBarDirective,
     TextFieldDirective,
     XasStringDirective,
@@ -163,12 +164,19 @@ export async function Session(url: string,timeout:number,async:boolean, ldap: st
  
         if (userName !== null && userName.toLowerCase() !== 'guest')
           userEmail = xrxGetElementValue(data.firstChild, "from");
-        const result ={
+          if(userEmail == null){
+            AppModule.email = ''
+            resolve('');
+          }
+          else{
+            const result ={
           
-          email:userEmail
-        };
-        AppModule.email = result.email.toString();
-        resolve(result.email.toString());
+              email:userEmail
+            };
+            AppModule.email =  result.email.toString();//alert("AppModuule :"+ AppModule.email);
+            //alert('success :'+ result.email.toString());
+            resolve(result.email.toString());
+          }
       }
     };
     function errorCallbackSession (result: any) {

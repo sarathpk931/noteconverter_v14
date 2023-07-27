@@ -1,110 +1,83 @@
-basic-alert {
-    .alert-popup.alert-background {
-        position: fixed;
-        top: 0px;
-        bottom: 0px;
-        left: 0px;
-        right: 0px;
-        z-index: 9999999999;
-        outline: none;
-        opacity: 0;
-        background: rgba(27, 27, 27, .90);
-    }
 
-    .alert-popup.alert-background.alert-opacity {
-        opacity: 1;
-    }
+// Height variables (appears count calculates by raw css)
+@height0: 100%; // Appears 2 times
+:host{
+.alert {
+	z-index: 1500;
+	.alert-container {
+		display: table;
+		height: @height0;
+		margin: 0 auto;
+		text-align: center;
+		width: 100%;
+		.alert-content {
+			color: rgba(255, 255, 255, 0.6);
+			display: table-cell;
+			height: @height0;
+			vertical-align: middle;
+			.alert-title {
+				font-weight: bold;
+			}
+			h1 {
+				color: white !important;
+			}
+			h2 {
+				color: white !important;
+			}
+			h3 {
+				color: white !important;
+			}
+			.alert-additional-info {
+				color: #9f9f9f !important;
+				margin-top: 10px;
+			}
+			.alert-button-container {
+				margin-top: 10px;
+				.btn {
+					min-width: 160px;
+				}
+			}
+		}
+	}
+}
+.alert-popup.alert-background {
+	position: fixed;
+	top: 0px;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+	z-index: 9999999999;
+	outline: none;
+	opacity: 0;
+	background: rgba(27, 27, 27, .90);
+}
 
-    .alert-popup .alert-container {
-        display: table;
-        margin: 0 auto;
-        height: 100%;
-        width: 100%;
-        text-align: center;
-    }
+.alert-popup.alert-background.alert-opacity {
+	opacity: 1;
+}
 
-    .alert-container .alert-content {
-        display: table-cell;
-        vertical-align: middle;
-        height: 100%;
-    }
+.alert-popup .alert-container {
+	display: table;
+	margin: 0 auto;
+	height: 100%;
+	width: 100%;
+	text-align: center;
+}
 
-    .alert-title {
-        font-weight: bold;
-    }
+.alert-container .alert-content {
+	display: table-cell;
+	vertical-align: middle;
+	height: 100%;
+}
 
-    .alert-content h1,
-    .alert-content h2,
-    .alert-content h3,
-    .alert-content {
-        color: white !important;
-    }
+.alert-title {
+	font-weight: bold;
+}
 
-    .alert-additional-info {
-        color: rgba(255, 255, 255, 0.6);
-    }
-
-    .btn-secondary-alert {
-        background-color: transparent;
-        border-color: #ffffff !important;
-        font-weight: bold;
-        color: white;
-    }
-
-    .btn-secondary-alert:active {
-        box-shadow: none !important;
-        text-shadow: none !important;
-        background: #fff !important;
-        color: #000 !important;
-    }
-
-    @media(min-width:800px) {
-        .alert-content {
-            padding-left: 20px;
-            padding-right: 20px;
-        }
-
-        .alert-title, .alert-additional-info {
-            font-size: 28px;
-        }
-
-        .alert-title {
-            margin-bottom: 10px;
-        }
-
-        .alert-button-container {
-            margin-top: 10px;
-        }
-
-        .alert-button-container > button {
-            margin-right: 5px;
-        }
-    }
-
-    @media(min-width:1024px) {
-        .alert-content {
-            padding-left: 40px;
-            padding-right: 40px;
-        }
-
-        .alert-title, .alert-additional-info {
-            font-size: 24px;
-        }
-
-        .alert-title {
-            margin-bottom: 16px;
-        }
-
-        .alert-button-container {
-            margin-top: 16px;
-        }
-
-        .alert-button-container > button {
-            margin-right: 8px;
-        }
-    }
-
-    .btn.glyph-button:before {
-        margin-right: 12px;
-    }
+.alert-content h1,
+.alert-content h2,
+.alert-content h3,
+.alert-content {
+	color: white !important;
+}
 }

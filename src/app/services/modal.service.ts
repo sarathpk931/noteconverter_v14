@@ -1,9 +1,10 @@
-import { Injectable } from '@angular/core';
-import {MatDialog,MatDialogRef,DialogPosition} from '@angular/material/dialog';
+import { Injectable,EventEmitter  } from '@angular/core';
+import {MatDialog,MatDialogRef,MatDialogConfig,DialogPosition,MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { Overlay, OverlayPositionBuilder,NoopScrollStrategy  } from '@angular/cdk/overlay';
 import { ProgressAlertComponent} from '../views/progress-alert/progress-alert.component'; 
 import {AppComponent} from '../app.component';
-import { BehaviorSubject, timer} from 'rxjs';
 import {AppModule} from '../../app/app.module';
+import { BehaviorSubject,Subject, finalize, timer} from 'rxjs';
 
 
 @Injectable({
@@ -14,31 +15,40 @@ export class ModalService {
   isThirdGenBrowser : boolean = AppModule.isThirdGenBrowser;
 
   private fromData = new BehaviorSubject<string>('');
+  viewVisible: EventEmitter<void> = new EventEmitter<void>();
   currentValue = this.fromData.asObservable();
+  arrIds: string[] = ["#btn_openFileFormat", "#btn_openScan", "#btn_openSize"];
 
   constructor(
     public dialog : MatDialog,
-    public  app : AppComponent    
+    public  app : AppComponent,
+    private overlay: Overlay,
+    private positionBuilder: OverlayPositionBuilder 
     ) {}
   
 
-  private calculateCenterPosition(dialogWidth: number, dialogHeight: number): DialogPosition {
+    private centerDialog(dialogElement: HTMLElement): DialogPosition {
       const viewportWidth = window.innerWidth;
       const viewportHeight = window.innerHeight;
-  
+      const dialogWidth = dialogElement.offsetWidth;
+      const dialogHeight = dialogElement.offsetHeight;
+    
       const topPosition = Math.max(0, (viewportHeight - dialogHeight) / 2);
       const leftPosition = Math.max(0, (viewportWidth - dialogWidth) / 2);
-  
+    
       return { top: topPosition + 'px', left: leftPosition + 'px' };
-  }
+    }
+    
 
   showProgressAlert(title: string, message : string):MatDialogRef<ProgressAlertComponent>{
+    this.dialog.closeAll();
+    this.removeArrow();
     
     return this.dialog.open(ProgressAlertComponent, {
       data :{'title': title,'message':message},
-      //panelClass: (!this.isThirdGenBrowser) ? 'allow-outside-interaction' : 'allow-outside-banner-interaction'
-      //panelClass:'progress-bar-modalbox'
-      
+      height: '98%',
+      width: '100vw',
+      scrollStrategy: new NoopScrollStrategy()
     });
   }
 
@@ -46,28 +56,46 @@ export class ModalService {
     if(modalRef){
       modalRef.close();
     }
+    this.removeArrow();
    }
 
-  public openLargeModal(component : any):void{
-  const dialogWidth = 1024;
-  const dialogHeight = 768;
-  const position = this.calculateCenterPosition(dialogWidth, dialogHeight);
-  const dialogRef =
-     this.dialog.open(component, {
-      width: '1024px',
-      height : '',
-      position: position,
-      panelClass:'makeItMiddle',
-      data:{closeBtnName:'Close'},
-      hasBackdrop : false,
-      disableClose:true
+   public openLargeModal(component: any): void {
+    const windowWidth = window.innerWidth;
+    const popupWidth = 1024;
+    const leftPosition = Math.max((windowWidth / 2) - (popupWidth / 2), 0) + 'px';
+    const rightPosition = Math.max((windowWidth / 2) + (popupWidth / 2), windowWidth - popupWidth) + 'px';
+  
+    const dialogRef = this.dialog.open(component, {
+      data: { closeBtnName: 'Close' },
+      hasBackdrop: false,
+      disableClose: true,
+      height: '98%',
+      width: '100vw',
+      position: {
+        left: leftPosition,
+        right: rightPosition,
+      },
+      scrollStrategy: new NoopScrollStrategy()
     });
+   
   }
+
+  emitViewVisible(): void {
+    this.viewVisible.emit();
+  }
+  
 
   public openModalWithoutClose(component : any,title: string,message : string)
   {
+    this.removeArrow();
     return this.dialog.open(component, {
-      data :{'title': title,'message':message},     
+      data :{'title': title,'message':message},
+      height: '98%',
+      width: '100vw',
+      // position: {
+      //   top: '',
+      //   left: 'calc(50% - 512px)',
+      // },    
     });
 
   }
@@ -75,38 +103,98 @@ export class ModalService {
   setData(data:any){
     this.fromData.next(data);
   }
-
-  public openModal(component : any,dialog_postion:any,rotationClass: string = ''){
+  
+  public openModal(component : any,dialog_postion:any,  clickPosition:any){
+    this.removeArrow();
     this.dialog.closeAll();
     this.dialog.openDialogs.pop();
-    let panelClass: string[] = ['custom-modalbox'];
-    if (rotationClass!== '') {
-     panelClass.push(rotationClass);
-    }
+
     let dialogRef = this.dialog.open(component,{
-      panelClass: 'custom-modalbox',
-      position: dialog_postion,
-      
-      //direction: ModalDirection
-      
+      position: { ...dialog_postion, top: '100%' },
+      panelClass: `custom-dialog-position`,
+      data: { clickPosition, additionalInfo: `calc(${clickPosition.y}px - ${dialog_postion.top})`},
+      //scrollStrategy:  new NoopScrollStrategy()
     });
+
+    dialogRef.afterOpened().subscribe((result => {
+      setTimeout(() => {
+      const customDialogPosition : HTMLElement = document.querySelector(".custom-dialog-position");
+      let horizontalPosition = '';
+      if(dialog_postion.left) {
+        horizontalPosition = `left: ${dialog_postion.left}`;
+      } else if(dialog_postion.right) {
+        horizontalPosition = `right: ${dialog_postion.right}`;
+      }
+
+      customDialogPosition.style.cssText = `margin: 0!important; top: ${dialog_postion.top};${horizontalPosition};`
     
-    dialogRef.afterClosed().subscribe(result => {
-      //console.log(`Dialog result: ${result}`);
+    
+      const arrowsSize = 20;
+      const common_arrow_style = `
+        position: absolute; 
+        width: 0; 
+        height: 0; 
+        border-top: ${arrowsSize}px solid transparent; 
+        border-bottom: ${arrowsSize}px solid transparent; 
+        z-index: 1000; 
+        top: ${clickPosition.y  - arrowsSize}px;
+      `
+      const modalArrow = document.createElement("div");
+      const modalBoxShadow = 2;
+      modalArrow.id = 'modal_arrow';
+  
+      if (clickPosition.showLeftArrow) {
+        modalArrow.style.cssText += `
+        ${common_arrow_style}
+        border-right: ${arrowsSize}px solid #ddd;
+        left: calc(${dialog_postion.left} - ${arrowsSize}px + ${modalBoxShadow}px);
+      `;
+      } else {
+        modalArrow.style.cssText += `
+        ${common_arrow_style}
+        border-left: ${arrowsSize}px solid #ddd;
+        right: calc(${clickPosition.xForRightArrow}px - ${arrowsSize}px + ${modalBoxShadow}px);
+      `;
+      }
+  
+      // const popupContainer = document.querySelector('.cdk-overlay-container');
+      // popupContainer.appendChild(modalArrow);
+
+      const popupContainer : HTMLElement = document.querySelector('.cdk-overlay-container');
+      popupContainer.appendChild(modalArrow);
+      popupContainer.style.position = 'fixed';
+      },100);
+    }));
+   
+    dialogRef.afterClosed()
+    .pipe(finalize(() => {
+      this.removeArrow();
+
+      const timeout = setTimeout(() => {
+        this.enableLinks();
+        clearTimeout(timeout);
+      }, 100);
+      // alert('closed');
+    }))
+    .subscribe(data => {
+      this.removeArrow();
     });
+
     return dialogRef;
   }
   
   public openModalWithTitle(component : any,title: string,message : string){
-
+    this.removeArrow();
     this.dialog.closeAll();
     this.dialog.openDialogs.pop();
     return  this.dialog.open(component, {
       data :{'title': title,'message':message},
-      // maxWidth: '100vw',
-      // maxHeight: '100vh',
-      // height: '100%',
-      // width: '100%'
+      position: {
+        top: '',
+        left: 'calc(50% - 512px)',
+        
+    },
+    scrollStrategy: new NoopScrollStrategy()
     });
 
   }
@@ -114,9 +202,15 @@ export class ModalService {
 
   public showAlert(component : any,title: string,message : string)
   {
-
+    this.removeArrow();
      this.dialog.open(component, {
-      data :{'title': title,'message':message}
+      data :{'title': title,'message':message},
+      position: {
+        top: '',
+        left: 'calc(50% - 512px)',
+        
+    },
+    scrollStrategy: new NoopScrollStrategy()
     });
 
     timer(3000).subscribe(()=>{
@@ -127,15 +221,48 @@ export class ModalService {
   public closeAllModals()
   {
     this.dialog.closeAll();
+    this.removeArrow();
   }
 
   public openComponentModal(component: any,data:any)
   {
+    this.removeArrow();
     this.dialog.closeAll();
     this.dialog.open(component, {
-      data : data
+      data : data,
+      height: '98%',
+      width: '100vw',
+      scrollStrategy: new NoopScrollStrategy()
+      
     });
   }
 
+  removeArrow() {
+    if (document.querySelectorAll("#modal_arrow").length > 0) {
+      document.querySelectorAll("#modal_arrow").forEach(e => e.parentNode.removeChild(e));
+    }
+  }
+
+  
+disableLinks() :void {
+  this.arrIds.forEach(function (btnId) {
+    const button : HTMLElement = document.querySelector(btnId);
+    button.style.pointerEvents = 'none';
+  });
+} 
+
+enableLinks() :void {
+  this.arrIds.forEach(btnId => {
+    const button : HTMLElement = document.querySelector(btnId);
+    button.style.pointerEvents = 'auto';
+  });
+} 
+
 }
 
+    /* private disableLinks(): void {
+      const links = document.getElementsByTagName('a');
+      for (let i = 0; i < links.length; i++) {
+        links[i].style.pointerEvents = 'none';
+      }
+    } */
