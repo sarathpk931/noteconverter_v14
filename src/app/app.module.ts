@@ -87,7 +87,6 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
   declarations: [
     AppComponent,
     NgScrollableDirective,
-    LogViewComponent,
     ScanScreenComponent,
     PrivacyPolicyComponent,
     ProgressAlertComponent,

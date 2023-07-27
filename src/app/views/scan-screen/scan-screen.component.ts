@@ -423,10 +423,4 @@ Templatecallback_success() {
   this.errorHandlerService.DEVICE_EIP_SCANV2_SERVICES_DISABLED();
 }
 
-onEmailBlur(){
-  
-  const emailControl = this.f.email;
-  this.isEmailRequired = emailControl.hasError('required') && emailControl.touched;
-  this.isEmailInvalid = emailControl.hasError('email') && emailControl.touched;
-}
 }
