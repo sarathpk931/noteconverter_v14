@@ -1,3 +1,8 @@
+/**
+ * This sevice contains functions used to handle resource string related methods
+ * 
+ */
+
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { resourceString,Strings } from '../model/global';
@@ -15,6 +20,7 @@ export class ResourcestringService {
 
   constructor(    private http: HttpClient,) { }
 
+  //call resource string related api and return related array
 loadResources = async () => { 
     try { 
         var regex = /(\w+)\-?/g; 

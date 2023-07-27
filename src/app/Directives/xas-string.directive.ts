@@ -1,4 +1,7 @@
-//xas-string.directive 
+
+/**
+ *  This directive is used to chnage the entered string into printer local language
+ */
 import { Directive,Input,ElementRef,Renderer2 } from '@angular/core';
 import { ResourcestringService} from '../services/resourcestring.service';
 import { resourceString} from '../model/global';
@@ -30,26 +33,7 @@ export class XasStringDirective {
   }
 
   private replaceString():string{
-
-
     let string = this.xasString;
-    // const matches = string.match(/\{(\d)\}/g);
-
-    // if(matches && this.formatValues){
-      
-    //   const formatString = JSON.parse(this.formatValues);
-    //   const formatValues = Array.isArray(formatString) ? formatString : [formatString];
-        
-
-    //     if (matches.length !== formatString.length)
-    //                             throw ("Format string length mismatch between " + this.xasString + " and " + this.formatValues);
-
-    //     matches.forEach((match,index) =>{ debugger;
-    //       const fv = formatValues[index].toString().trim();
-    //       string = string.replace(match, fv);
-    //     });
-    //   }
-      
     return this.resourceString[string];
   }
 

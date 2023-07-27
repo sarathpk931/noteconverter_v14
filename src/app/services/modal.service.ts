@@ -1,10 +1,15 @@
+/**
+ * This sevice contains functions used to open components as a pop up 
+ * 
+ */
 import { Injectable,EventEmitter  } from '@angular/core';
 import {MatDialog,MatDialogRef,MatDialogConfig,DialogPosition,MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { BehaviorSubject,Subject, finalize, timer} from 'rxjs';
 import { Overlay, OverlayPositionBuilder,NoopScrollStrategy  } from '@angular/cdk/overlay';
+
 import { ProgressAlertComponent} from '../views/progress-alert/progress-alert.component'; 
 import {AppComponent} from '../app.component';
 import {AppModule} from '../../app/app.module';
-import { BehaviorSubject,Subject, finalize, timer} from 'rxjs';
 
 
 @Injectable({
@@ -40,6 +45,7 @@ export class ModalService {
     }
     
 
+  //function to show progress alert as a pop up
   showProgressAlert(title: string, message : string):MatDialogRef<ProgressAlertComponent>{
     this.dialog.closeAll();
     this.removeArrow();
@@ -52,6 +58,7 @@ export class ModalService {
     });
   }
 
+  //function to close the passed reference of modal pop up
   closeModal(modalRef :MatDialogRef<any>){
     if(modalRef){
       modalRef.close();
@@ -59,6 +66,7 @@ export class ModalService {
     this.removeArrow();
    }
 
+   //function to open large pop up 
    public openLargeModal(component: any): void {
     const windowWidth = window.innerWidth;
     const popupWidth = 1024;
@@ -80,10 +88,11 @@ export class ModalService {
    
   }
 
+
+  //function to open a pop up without a close button
   emitViewVisible(): void {
     this.viewVisible.emit();
   }
-  
 
   public openModalWithoutClose(component : any,title: string,message : string)
   {
@@ -100,6 +109,7 @@ export class ModalService {
 
   }
 
+  //set data to fromData
   setData(data:any){
     this.fromData.next(data);
   }
@@ -127,7 +137,6 @@ export class ModalService {
       }
 
       customDialogPosition.style.cssText = `margin: 0!important; top: ${dialog_postion.top};${horizontalPosition};`
-    
     
       const arrowsSize = 20;
       const common_arrow_style = `
@@ -169,7 +178,6 @@ export class ModalService {
     dialogRef.afterClosed()
     .pipe(finalize(() => {
       this.removeArrow();
-
       const timeout = setTimeout(() => {
         this.enableLinks();
         clearTimeout(timeout);
@@ -183,6 +191,7 @@ export class ModalService {
     return dialogRef;
   }
   
+  //function to open a modal with title
   public openModalWithTitle(component : any,title: string,message : string){
     this.removeArrow();
     this.dialog.closeAll();
@@ -202,6 +211,7 @@ export class ModalService {
 
   public showAlert(component : any,title: string,message : string)
   {
+
     this.removeArrow();
      this.dialog.open(component, {
       data :{'title': title,'message':message},
@@ -212,18 +222,19 @@ export class ModalService {
     },
     scrollStrategy: new NoopScrollStrategy()
     });
-
     timer(3000).subscribe(()=>{
       this.dialog.closeAll();
     })
   }
 
+  //function to close all open modals
   public closeAllModals()
   {
     this.dialog.closeAll();
     this.removeArrow();
   }
 
+  //function to open a pop up with some paramters 
   public openComponentModal(component: any,data:any)
   {
     this.removeArrow();

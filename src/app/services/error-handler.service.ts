@@ -1,6 +1,9 @@
+/**
+ * This sevice contains functions for showing specific alerts for errors occuring during scan
+ * 
+ */
 import { Injectable } from '@angular/core';
 import { ModalService } from './modal.service';
-import { AppComponent } from '../../app/app.component';
 import { MatDialog } from '@angular/material/dialog';
 import { GeneralAlertComponent } from '../views/general-alert/general-alert.component';
 import { AlertBannerComponent } from '../views/alert-banner/alert-banner.component';
@@ -10,7 +13,7 @@ import { AlertBannerComponent } from '../views/alert-banner/alert-banner.compone
 })
 export class ErrorHandlerService {
 
-  constructor(private modalService: ModalService,appComponent:AppComponent,private dialog: MatDialog) { }
+  constructor(private modalService: ModalService,private dialog: MatDialog) { }
 
   parseError(errorSDEName: string): void {
     var localizedString = errorSDEName;
@@ -183,7 +186,4 @@ export class ErrorHandlerService {
 
   // End of FMEA Methods
   
-  closeAllModals(){
-    this.modalService.closeAllModals();
-  }
 }

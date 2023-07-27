@@ -2,10 +2,7 @@ import { Injectable } from '@angular/core';
 import { Location } from '@angular/common';
 import { StorageService } from './storage.service';
 import { ActivatedRoute } from '@angular/router';
-import {AppModule} from '../../app/app.module';
-import { xrxDeviceConfigGetDeviceInformation } from '../../assets/Xrx/XRXDeviceConfig';
-import {xrxStringToDom} from '../../assets/Xrx/XRXXmlHandler';
-//import {xrxGetElementValue} from '../../assets/Xrx/XRXXmlHandler';
+
 import * as _ from 'lodash';
 
 
@@ -65,48 +62,4 @@ export class ConfigurationService {
   clearQueryString() {
     this.route.queryParams.subscribe({}); 
   }
-
-   Device(url: string, timeout: number , async: boolean): Promise<any> {
-    return new Promise((resolve, reject) => {
-    function successCallback (envelope: any, response: any)  {
-      
-     const doc = xrxStringToDom(response);
-     const info = doc.querySelector("devcfg\\:Information, Information");
-     const parser = new DOMParser();
-    const xmlDoc = parser.parseFromString(info.firstChild.data, 'text/xml');
-    const generation = Number(xmlDoc.getElementsByTagName('generation')[0].textContent);
-    AppModule.Generation = generation;
-
-     const model = xmlDoc.getElementsByTagName('model')[0].textContent;
-     AppModule.model = model.toString();
-     const deviceId = xmlDoc.getElementsByTagName('serial')[0].textContent;
-     AppModule.deviceId = deviceId.toString();
-     const isVersalink = _.includes(model.toLowerCase(), 'versalink') || _.includes(model.toLowerCase(), 'primelink');
-     const isAltalink = _.includes(model.toLowerCase(), 'altalink');
-     const isThirdGenBrowser = _.includes(navigator.userAgent.toLowerCase(), "x3g_");
-     AppModule.isThirdGenBrowser = isThirdGenBrowser;
-     AppModule.isVersalink = isVersalink;
-     AppModule.isAltalink = isAltalink;
-     const result = {
-        isThirdGenBrowser: isThirdGenBrowser,
-        generation: generation,
-        isVersalink: isVersalink,
-        isAltalink: isAltalink,
-        isEighthGen: generation < 9.0,
-        model: model
-        };
-        
-        resolve(result);
-      };
-        function errorCallback  (result: any)  {
-        reject(result);};
-        xrxDeviceConfigGetDeviceInformation(
-        url,
-        successCallback,
-        errorCallback,
-        timeout,
-        async
-        );
-      })
-  };
 }

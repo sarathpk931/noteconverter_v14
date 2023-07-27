@@ -240,7 +240,7 @@ export class ScanScreenComponent implements OnInit{
       }); 
       this.fileName = this.resFilename;
       this.inputField.nativeElement.value = this.resFilename;
-      this.button.nativeElement.innerHTML =  + this.formatfilename(this.resFilename,this.fileextension,this.resfilenametemp);
+      this.button.nativeElement.innerHTML = this.btnGlyph + this.formatfilename(this.resFilename,this.fileextension,this.resfilenametemp);
       this.scanOptionService.isPlaceholderVisible = true;
       this.getDefaultValues();
       this.errorHandlerService.wncWasReset();
