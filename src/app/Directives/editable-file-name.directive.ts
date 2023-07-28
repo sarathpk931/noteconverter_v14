@@ -3,6 +3,7 @@
  * on click the entered values are selected. A glyph is also shown with the text.
  */
 import {  Directive, ElementRef, HostListener, Input, OnInit,Renderer2,Inject,HostBinding,ViewChild } from '@angular/core';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { FileFormat, FileFormatOption} from '../model/global';
 import { ScanOptionsService} from '../services/scan-options.service';
 
@@ -33,7 +34,8 @@ export class EditableFieldDirective {
   constructor(
     private elementRef: ElementRef<HTMLInputElement>,
     private scanOptionService : ScanOptionsService,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private sanitizer : DomSanitizer
     ) {}
 
 
@@ -57,10 +59,12 @@ ngOnInit(){
     newValue = newValue.replace('{0}', (this.placeholder || ''));
     newValue = newValue.replace('{1}', this.extension);
     this.btnPaperClip = '<span id="_glyph" class="xrx-paperclip" style="line-height: 100%;"></span>&nbsp;&nbsp;';
+    const sanitizedContent : SafeHtml = this.sanitizer.bypassSecurityTrustHtml(this.btnPaperClip + newValue)
 
     this.buttonElement = this.renderer.selectRootElement('.subjectButton');
-    this.buttonElement.innerHTML = this.btnPaperClip + newValue;
+    //this.buttonElement.innerHTML = this.btnPaperClip + newValue;
     //this.buttonElement.innerText = newValue;
+    this.renderer.setProperty(this.buttonElement,'innerHTML',sanitizedContent);
 
     this.appendGlyphToInput();
 
