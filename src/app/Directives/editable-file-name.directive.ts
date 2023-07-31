@@ -2,7 +2,7 @@
  *  This directive is used to show a control as button and on its click as an input control
  * on click the entered values are selected. A glyph is also shown with the text.
  */
-import {  Directive, ElementRef, HostListener, Input, OnInit,Renderer2,Inject,HostBinding,ViewChild } from '@angular/core';
+import {  Directive, ElementRef, HostListener, Input, OnInit,Renderer2,Inject,HostBinding,ViewChild,SecurityContext } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { FileFormat, FileFormatOption} from '../model/global';
 import { ScanOptionsService} from '../services/scan-options.service';
@@ -150,7 +150,7 @@ private appendGlyphToInput() {
     const isTextbox = this.elementRef.nativeElement.tagName.toLowerCase() === 'input';
     if (isTextbox) {
       this.elementRef.nativeElement.style.display = 'inline-block';     
-      this.buttonElement.innerHTML = this.btnPaperClip + this.inputField.value
+      this.buttonElement.innerHTML = this.sanitizer.sanitize(SecurityContext.HTML, this.btnPaperClip + this.inputField.value).toString();
 
       var enteredValue = this.elementRef.nativeElement.value.trim();
       this.scanOptionService.tempTextValue = enteredValue; 

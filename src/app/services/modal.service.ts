@@ -6,6 +6,7 @@ import { Injectable,EventEmitter  } from '@angular/core';
 import {MatDialog,MatDialogRef,MatDialogConfig,DialogPosition,MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { BehaviorSubject,Subject, finalize, timer} from 'rxjs';
 import { Overlay, OverlayPositionBuilder,NoopScrollStrategy  } from '@angular/cdk/overlay';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 import { ProgressAlertComponent} from '../views/progress-alert/progress-alert.component'; 
 import {AppComponent} from '../app.component';
@@ -28,7 +29,8 @@ export class ModalService {
     public dialog : MatDialog,
     public  app : AppComponent,
     private overlay: Overlay,
-    private positionBuilder: OverlayPositionBuilder 
+    private positionBuilder: OverlayPositionBuilder,
+    private sanitizer : DomSanitizer 
     ) {}
   
 
