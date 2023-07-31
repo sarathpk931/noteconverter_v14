@@ -19,6 +19,7 @@ export class EditableFieldDirective {
 
   private inputField: HTMLInputElement | null;
   private buttonElement: HTMLButtonElement;
+  private isInputFocused = false;
 
   private defaultText: string;
   private inputPlaceholder : string;
@@ -100,9 +101,10 @@ private appendGlyphToInput() {
   this.inputField.parentNode.insertBefore(attachmentGlyph, this.inputField.nextSibling);
 }
 
-  @HostListener('click') onClick() {
-
+  @HostListener('click', ['$event']) onClick(event: Event) {
+    event.stopPropagation();
     const isButton = this.elementRef.nativeElement.tagName.toLowerCase() === 'button';
+    this.isInputFocused = true;
 
     if (isButton) {
 
@@ -144,6 +146,8 @@ private appendGlyphToInput() {
 
   @HostListener('blur')  onBlur() {  
     const isTextbox = this.elementRef.nativeElement.tagName.toLowerCase() === 'input';
+    this.isInputFocused = false;
+
     if (isTextbox) {
       this.elementRef.nativeElement.style.display = 'inline-block';     
       this.buttonElement.innerHTML = this.btnPaperClip + this.inputField.value
@@ -199,6 +203,16 @@ private appendGlyphToInput() {
 
       }
 
+  }
+
+  @HostListener('document:click', ['$event']) onDocumentClick(event: Event) {
+
+    const targetNode = event.target as Node;
+    if (!this.elementRef.nativeElement.contains(targetNode) && !this.isInputFocused) {
+      if (this.inputField) {
+        this.inputField.blur();
+      }
+    }
   }
 
 
