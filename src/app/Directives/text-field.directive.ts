@@ -10,38 +10,19 @@ export class TextFieldDirective {
   @Input() initialValue: string; 
   @Input() readOnlyClass: string;
   @Input() editableClass : string;
-  @Input() locked: boolean = false;
-  
 
   private editMode = false; 
   private editableText: string;
   editing: boolean = false;
   currentTextField: ElementRef | null = null;
-  
-  @HostBinding ('class') hostClasses = '';
+  //@HostBinding ('class') hostClasses = '';
   //@HostBinding (editableClass) editmode = true;
 
   constructor(private elementRef: ElementRef<HTMLInputElement>) { }
 
-  ngOnInit(){
-    this.elementRef.nativeElement.querySelector('input').setAttribute('readonly', 'true');
-    
-  }
-
-  @HostListener('click') onClick() { 
-    this.editMode = true; 
-    this.hostClasses =`${this.editableClass}`;
-    this.editableText = this.initialValue || ''; 
-    const childNode = this.elementRef.nativeElement.firstElementChild as HTMLInputElement;
-
-    childNode.focus(); 
-    childNode.select(); 
-  } 
-
   @HostListener('tap', ['$event'])
   @HostListener('click', ['$event'])
-  onTextFieldClick(event: Event) {
-    this.currentTextField = this.elementRef;
+  onTextFieldClick(event: Event) {  
 
     if (
       event.target instanceof Element &&
@@ -55,13 +36,9 @@ export class TextFieldDirective {
 
     this.elementRef.nativeElement.querySelector('input').removeAttribute('readonly');
 
-    if (!event.defaultPrevented && !this.locked) {
+    if (!event.defaultPrevented) {
       const alreadyEditing = this.editing;
       this.scrollTextFieldIntoView();
-
-      setTimeout(() => {
-        this.editing = true;
-      }, 50);
 
       setTimeout(() => {
         this.elementRef.nativeElement.querySelector('input').focus();
@@ -80,36 +57,60 @@ export class TextFieldDirective {
     }
   }
 
-  @HostListener('blur') onBlur() { 
-    this.hostClasses =`${this.readOnlyClass}`;
-    this.editMode = false; 
-  } 
-
-  @HostListener('keydown.enter') onEnter() { 
-    this.elementRef.nativeElement.blur(); 
-  } 
-
-  /* handleKeyEnter(key: KeyboardEvent) {
-    if (key.key === 'Enter') {
-      key.stopPropagation();
-      key.preventDefault();
-      this.outsideClick();
-      return false;
-    }
-  } */
-
   outsideClick(event: MouseEvent) {
-    const targetNode = event.target as Node;
+   
+        if (this.elementRef.nativeElement.tagName.toLowerCase() === 'input') {
+          this.elementRef.nativeElement.blur();
+        } else if (
+          this.elementRef.nativeElement.tagName.toLowerCase() === 'button' &&
+          this.elementRef.nativeElement.querySelector('input')
+        ) {
+          const inputField = this.elementRef.nativeElement.querySelector('input');
+          inputField.focus();
+          inputField.blur();
+        }
 
-    if (this.editMode && !this.elementRef.nativeElement.contains(targetNode)) {
-      this.editMode = false;
-      this.hostClasses = `${this.readOnlyClass}`;
     }
-
-  }
-
+  
   scrollTextFieldIntoView() {
-    // Implement the logic for scrolling the element into view (same as in the AngularJS code)
-  }
+      const inputElement = this.elementRef.nativeElement.querySelector('input') as HTMLElement;
+      const scrollContainer = inputElement.closest('div[ngScrollable]') as HTMLElement;
+    
+      if (window['IScroll'] && window['IScroll'].length > 0) {
+        // Ensure we have an iscroll to scroll with and scroll to element with 15 px of padding above the element
+        window['IScroll'][window['IScroll'].length - 1].scrollToElement(inputElement, null, 0, -15);
+    
+        // Scroll to element doesn't execute the scroll start and scroll end events,
+        // so we have to fire them manually (or update iscroll-probe)
+        setTimeout(() => {
+          window['IScroll'][window['IScroll'].length - 1]._execEvent('scrollStart');
+          window['IScroll'][window['IScroll'].length - 1]._execEvent('scrollEnd');
+        }, 50);
+      } else {
+        if (window.innerHeight == 480) {
+          const eighthGenKeyboardSpacer = scrollContainer.querySelector(".eighth-gen-keyboard-spacer") as HTMLElement;
+          if (eighthGenKeyboardSpacer) {
+            eighthGenKeyboardSpacer.classList.add("show");
+          }
+        }
+    
+        if (scrollContainer.querySelector(inputElement.tagName)) {
+          // Get parent until we have a top
+          let inputContainer = inputElement;
+          while (inputContainer.getBoundingClientRect().top === 0) {
+            inputContainer = inputContainer.parentElement as HTMLElement;
+          }
+    
+          // Scroll the element into position if it's not already in position
+          if (
+            Math.round(inputContainer.getBoundingClientRect().top) !== 43 &&
+            Math.round(inputContainer.getBoundingClientRect().top) !== 65
+          ) {
+            scrollContainer.scrollTop += inputContainer.getBoundingClientRect().top - 43;
+          }
+        }
+      }
+    }
 }
+
 

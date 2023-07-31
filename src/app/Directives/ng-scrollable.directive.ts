@@ -66,7 +66,7 @@ declare const IScroll: any;
       this.isThirdGenBrowser=AppModule.isThirdGenBrowser;
       this.generation=AppModule.Generation;
       
-      if (!AppModule.isThirdGenBrowser && AppModule.Generation >= 9.0){
+      if (!AppModule.isThirdGenBrowser && AppModule.Generation >= 7.0){
         this.link(element);
       } 
       else
@@ -85,18 +85,6 @@ declare const IScroll: any;
         setTimeout(() => {
           // Determine location of shadow based on position of scrollable content
           this.updateShadowDivPosition();
-          /* const offSet = element.getBoundingClientRect();
-          const borderTop = parseInt(getComputedStyle(element).borderTopWidth  || '0', 10);
-          const borderLeft = parseInt(getComputedStyle(element).borderLeftWidth  || '0', 10);
-
-          this.shadowDiv.style.top = `${offSet.top + borderTop}px`;
-          this.shadowDiv.style.left = `${offSet.left + borderLeft}px`;
-          this.shadowDiv.style.height = `${element.clientHeight}px`;
-          this.shadowDiv.style.width = `${element.clientWidth}px`;
-
-          if (element.scrollHeight > element.clientHeight) {
-            this.shadowDiv.classList.add('shadow-bottom');
-          } */
         }, 500);
 
          
