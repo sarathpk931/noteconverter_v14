@@ -81,6 +81,7 @@ import { TextFieldDirective } from './Directives/text-field.directive';
 import {XasStringDirective} from '../app/Directives/xas-string.directive';
 
 import { ScrollingModule } from '@angular/cdk/scrolling';
+import { BlurOnClickOutsideDirective } from './Directives/blur-on-click-outside.directive';
 
 
 @NgModule({
@@ -98,6 +99,7 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
     TextFieldDirective,
     XasStringDirective,
     EditableFieldDirective,
+    BlurOnClickOutsideDirective,
   ],
   imports: [
     BrowserModule,
