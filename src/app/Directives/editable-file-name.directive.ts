@@ -59,12 +59,12 @@ ngOnInit(){
     newValue = newValue.replace('{0}', (this.placeholder || ''));
     newValue = newValue.replace('{1}', this.extension);
     this.btnPaperClip = '<span id="_glyph" class="xrx-paperclip" style="line-height: 100%;"></span>&nbsp;&nbsp;';
-    const sanitizedContent : SafeHtml = this.sanitizer.bypassSecurityTrustHtml(this.btnPaperClip + newValue)
+    //const sanitizedContent : SafeHtml = this.sanitizer.bypassSecurityTrustHtml(this.btnPaperClip + newValue)
 
     this.buttonElement = this.renderer.selectRootElement('.subjectButton');
-    //this.buttonElement.innerHTML = this.btnPaperClip + newValue;
+    this.buttonElement.innerHTML = this.sanitizer.sanitize(SecurityContext.HTML,this.btnPaperClip + newValue);
     //this.buttonElement.innerText = newValue;
-    this.renderer.setProperty(this.buttonElement,'innerHTML',sanitizedContent);
+    //this.renderer.setProperty(this.buttonElement,'innerHTML',sanitizedContent);
 
     this.appendGlyphToInput();
 
@@ -80,7 +80,7 @@ ngOnInit(){
 
       if(this.buttonElement.innerText.includes('.')){
         const cleanBtnPaperClip = this.btnPaperClip.replace(/&nbsp;/g,'');
-        this.buttonElement.innerHTML = cleanBtnPaperClip + this.buttonElement.innerText.substring(0,this.buttonElement.innerText.lastIndexOf('.')) + this.extension;
+        this.buttonElement.innerHTML = this.sanitizer.sanitize(SecurityContext.HTML,cleanBtnPaperClip + this.buttonElement.innerText.substring(0,this.buttonElement.innerText.lastIndexOf('.')) + this.extension);
       }
     }
   })
@@ -174,9 +174,9 @@ private appendGlyphToInput() {
         this.scanOptionService.isPlaceholderVisible = true;
         this.inputField.value = newValue;
         if (newValue == '') {
-          this.buttonElement.innerHTML = this.btnPaperClip + this.strEnterFileName;
+          this.buttonElement.innerHTML = this.sanitizer.sanitize(SecurityContext.HTML, this.btnPaperClip + this.strEnterFileName);
         } else {
-          this.buttonElement.innerHTML = this.btnPaperClip + newValue;
+          this.buttonElement.innerHTML = this.sanitizer.sanitize(SecurityContext.HTML, this.btnPaperClip + newValue);
         }
         
       }
@@ -187,7 +187,7 @@ private appendGlyphToInput() {
 
         newValue = newValue.replace('{0}', enteredValue);
         this.inputField.value =  newValue;
-        this.buttonElement.innerHTML = this.btnPaperClip + newValue;
+        this.buttonElement.innerHTML = this.sanitizer.sanitize(SecurityContext.HTML,this.btnPaperClip + newValue);
         this.scanOptionService.isPlaceholderVisible = false;
 
       }
