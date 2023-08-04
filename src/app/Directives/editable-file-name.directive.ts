@@ -3,7 +3,7 @@
  * on click the entered values are selected. A glyph is also shown with the text.
  */
 import {  Directive, ElementRef, HostListener, Input, OnInit,Renderer2,Inject,HostBinding,ViewChild } from '@angular/core';
-import { FileFormat, FileFormatOption,} from '../model/global';
+import { FileFormat, FileFormatOption} from '../model/global';
 import { ScanOptionsService} from '../services/scan-options.service';
 import { ResourcestringService } from '../services/resourcestring.service';
 
