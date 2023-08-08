@@ -6,6 +6,7 @@ import {  Directive, ElementRef, HostListener, Input, OnInit,Renderer2,Inject,Ho
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { FileFormat, FileFormatOption} from '../model/global';
 import { ScanOptionsService} from '../services/scan-options.service';
+import { ResourcestringService } from '../services/resourcestring.service';
 
 
 @Directive({
@@ -30,9 +31,10 @@ export class EditableFieldDirective {
   selectedFileFormatOptions : FileFormatOption;
   anyFileFormat = {from : 'fileFormat'};
   extension : string;
-  private strEnterFileName: string = 'Enter File Name';
+  filePlaceHolder:string;
 
   constructor(
+    private resourceStringService : ResourcestringService,
     private elementRef: ElementRef<HTMLInputElement>,
     private scanOptionService : ScanOptionsService,
     private renderer: Renderer2,
@@ -85,6 +87,11 @@ ngOnInit(){
       }
     }
   })
+  this.resourceStringService.loadResources().then(response=>{
+    this.filePlaceHolder = response.SDE_ENTER_FILE_NAME1;
+  }).catch(error=>{
+    console.log(' cannot load resource strings');
+  });
 
 }
 
@@ -113,8 +120,8 @@ private appendGlyphToInput() {
     if (isButton) {
 
       if (this.inputField) {
-        this.inputField.placeholder = this.strEnterFileName;
-        this.inputField.style.display = 'inline-block';
+        this.inputField.placeholder = this.filePlaceHolder;
+         this.inputField.style.display = 'inline-block';
         this.inputField.style.boxShadow = 'none';
         this.inputField.focus();
 
@@ -162,12 +169,11 @@ private appendGlyphToInput() {
       this.extension = this.extension.replace('.','');
       newValue =   this.additionalText ;
       newValue = newValue.replace('{1}', this.extension);
-      this.inputField.placeholder = this.strEnterFileName;
+      this.inputField.placeholder = this.filePlaceHolder;
 
       if((enteredValue == this.placeholder) || (enteredValue == '')){
 
         if (enteredValue == '') {
-          this.inputPlaceholder = this.strEnterFileName;
           newValue = '';
           this.inputField.value = '';
         } else {
@@ -176,9 +182,9 @@ private appendGlyphToInput() {
         }
 
         this.scanOptionService.isPlaceholderVisible = true;
-        this.inputField.value = newValue;
+        this.inputField.value = enteredValue;
         if (newValue == '') {
-          this.buttonElement.innerHTML = this.sanitizer.sanitize(SecurityContext.HTML, this.btnPaperClip + this.strEnterFileName);
+          this.buttonElement.innerHTML = this.sanitizer.sanitize(SecurityContext.HTML,this.btnPaperClip + this.filePlaceHolder);
         } else {
           this.buttonElement.innerHTML = this.sanitizer.sanitize(SecurityContext.HTML, this.btnPaperClip + newValue);
         }
