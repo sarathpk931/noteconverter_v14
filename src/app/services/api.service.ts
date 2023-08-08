@@ -10,8 +10,8 @@ export class ApiService {
   private prefix: string;
 
   constructor(private configurationService: ConfigurationService) {
-    this.url = this.configurationService.getSetting('apiUrl');
-    this.prefix = this.configurationService.getSetting('apiPrefix');
+    //this.url = this.configurationService.getSetting('apiUrl');
+    //this.prefix = this.configurationService.getSetting('apiPrefix');
 
    }
 
