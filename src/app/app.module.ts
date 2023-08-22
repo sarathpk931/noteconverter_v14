@@ -82,6 +82,7 @@ import {XasStringDirective} from '../app/Directives/xas-string.directive';
 
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { BlurOnClickOutsideDirective } from './Directives/blur-on-click-outside.directive';
+import { XasStopEventDirective } from './Directives/xas-stop-event.directive';
 
 
 @NgModule({
@@ -100,6 +101,7 @@ import { BlurOnClickOutsideDirective } from './Directives/blur-on-click-outside.
     XasStringDirective,
     EditableFieldDirective,
     BlurOnClickOutsideDirective,
+    XasStopEventDirective,
   ],
   imports: [
     BrowserModule,
