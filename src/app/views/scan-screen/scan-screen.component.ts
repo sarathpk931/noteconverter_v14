@@ -196,6 +196,9 @@ export class ScanScreenComponent implements OnInit{
       this.selectedTypeOptions = this.selectedType.options.find(item => item.isDefault === true);
       this.selectedSize = this.scanOptionService.getFileFormat(this.anySize);
       this.selectedSizeOptions = this.selectedSize.options.find(item => item.isDefault === true);
+      this.scanOptionService.selectedFileFormat.next(this.selectedFileFormatOptions);
+      this.scanOptionService.selectedType.next(this.selectedTypeOptions);
+      this.scanOptionService.selectedSize.next(this.selectedSizeOptions);
     }
 
     //form group creation
@@ -217,7 +220,7 @@ export class ScanScreenComponent implements OnInit{
       const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/; 
       if (email && !emailRegex.test(email)) { 
         return { invalidEmailFormat: true }; 
-      } return null; 
+      } return { invalidEmailFormat: false }; 
     }
     //email control blur event
     onEmailBlur(){
