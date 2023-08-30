@@ -38,14 +38,22 @@ export class TextFieldDirective {
 
     if (!event.defaultPrevented) {
       const alreadyEditing = this.editing;
+
+    this.elementRef.nativeElement.querySelector('input').focus();
+    if(event.target["value"]!="" && event.target["value"]!=undefined){
+      this.elementRef.nativeElement.querySelector('input').select();
+    }
+      
+
+
       this.scrollTextFieldIntoView();
 
-      setTimeout(() => {
-        this.elementRef.nativeElement.querySelector('input').focus();
-        if (!alreadyEditing) {
-          this.elementRef.nativeElement.querySelector('input').select();
-        }
-      }, 200);
+      // setTimeout(() => {
+      //   this.elementRef.nativeElement.querySelector('input').focus();
+      //   if (!alreadyEditing) {
+      //     this.elementRef.nativeElement.querySelector('input').select();
+      //   }
+      // }, 200);
 
       document.removeEventListener('tap', this.outsideClick);
       document.removeEventListener('click', this.outsideClick);
