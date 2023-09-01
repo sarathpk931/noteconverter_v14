@@ -8,7 +8,7 @@
     <div class="header themed" action-bar>
 
       <div class="header-right">
-        <button type="button" class="btn btn-medium btn-glyph-label xrx-scan" (click)="scan()" [disabled]="!noteConvertorForm?.valid" >
+        <button type="button" class="btn btn-medium btn-glyph-label xrx-scan" (click)="scan()" [disabled]="!noteConvertorForm?.valid || inputField.nativeElement.value==''" >
           <span>{{this.scanTitle}}</span>
         </button>
       </div>
@@ -38,7 +38,7 @@
                 tabindex="-1"/> -->
                 <appTextField [initialValue]=""  type="email" class="ad-themed">
                   <input class="form-control textField text-medium login " formControlName="email" 
-                  placeholder="{{this.emailPlaceHolder}} " tabindex="-1" blurOnClickOutside />
+                  placeholder="{{this.emailPlaceHolder }}" (click)="emailTextClick($event)" #inputTextField tabindex="-1" blurOnClickOutside />
                 </appTextField>
               </div>
             </div>
@@ -80,7 +80,7 @@
                   additionalText="{{this.resfilenametemp}}"
                   class="editable-field-input option-text"
                   maxlength="1000"
-                  tabindex="-1"                
+                  tabindex="-1"             
                   [preventDirectiveInit]="this.preventDirectiveInit" 
                   editableField
                   style="width: 100%;box-sizing: border-box; border-radius: 3px;"

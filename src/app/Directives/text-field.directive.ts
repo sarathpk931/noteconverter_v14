@@ -40,9 +40,9 @@ export class TextFieldDirective {
       const alreadyEditing = this.editing;
 
     this.elementRef.nativeElement.querySelector('input').focus();
-    if(event.target["value"]!="" && event.target["value"]!=undefined){
-      this.elementRef.nativeElement.querySelector('input').select();
-    }
+    // if(event.target["value"]!="" && event.target["value"]!=undefined){
+    //   this.elementRef.nativeElement.querySelector('input').select();
+    // }
       
 
 
