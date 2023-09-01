@@ -295,10 +295,10 @@ export class ScanOptionsService {
       // To fix bug where the popover config menus do not appear (only dim the screen) when selecting non-latin-char-based languages.
       if(selectedNote.fileName != this.fileName)
       {
-        values.fileName = window.btoa((encodeURIComponent(selectedNote.fileName)));
+        values.fileName = window.btoa(selectedNote.fileName);
       }
       else{
-        values.fileName = window.btoa((encodeURIComponent(this.fileName)));
+        values.fileName = window.btoa(this.fileName);
       }
       
       values.email = selectedNote.email;

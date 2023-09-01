@@ -25,7 +25,7 @@
 
     <!-- <cdk-virtual-scroll-viewport itemSize="50" class="scroll-container" autosize> -->
 
-    <div class ="scroll-container" style="position:relative;overflow:hidden" XasStopEvent ngScrollable='{"autoHeight": true, "watchHeight": true}'>
+    <div class ="scroll-container" style="position:relative;overflow:hidden" ngScrollable='{"autoHeight": true, "watchHeight": true}'>
       
       <div class="grid-container" >
         
@@ -37,12 +37,12 @@
                 editableClass = "form-control textField text-medium login" formControlName="email" placeholder="{{this.emailPlaceHolder}}" 
                 tabindex="-1"/> -->
                 <appTextField [initialValue]=""  type="email" class="ad-themed">
-                  <input class="form-control textField text-medium login " formControlName="email" 
+                  <input class="form-control textField text-medium login " formControlName="email" (keydown)="onKeyDown($event)" 
                   placeholder="{{this.emailPlaceHolder}} " tabindex="-1" blurOnClickOutside />
                 </appTextField>
               </div>
             </div>
-            <div class="grid-row themed" [class.grid-row-no-error]="f['email'].hasError('required') && !f['email'].touched" >
+            <div class="grid-row themed" [class.grid-row-no-error]="((f['email'].hasError('required') && !f['email'].touched) || (!f['email'].hasError('invalidEmailFormat')))" >
               <div class="validation-error" [class.validation-error-bottom]="f['email'].hasError('required') && f['email'].touched">
                   <span *ngIf="f['email'].hasError('required') && f['email'].touched" class="xrx-glyph xrx-alert"></span>
                   <span *ngIf="f['email'].hasError('required') && f['email'].touched" class="error-message">{{this.emailValidation2}}</span>
@@ -61,7 +61,7 @@
                 <button *ngIf="this.resFilename" 
                   #button 
                   type="button"
-                  class="btn btn-medium subjectButton"
+                  class="btn btn-medium subjectButton btn-font"
                   style="text-align:left;"
                   tabindex="-1"                 
                   [placeholder]="this.resFilename"
@@ -72,7 +72,7 @@
                 >
                 </button>
                 <div style="width: 100%; position: relative;">
-                <input *ngIf="this.resFilename"
+                <input *ngIf="this.resFilename" (keydown)="onKeyDown($event)" 
                   #inputField
                   type="text"
                   formControlName="fileName"
@@ -138,7 +138,7 @@
                               <span class="left-text" xasString={{this.selectedSize.title}}></span>
 
                               <span class="right-text" *ngIf="this.resourceString[selectedSizeOptions.title] != null">{{this.resourceString[selectedSizeOptions.title]}}</span>
-                              <span class="right-text" *ngIf="this.resourceString[selectedSizeOptions.title] == null"> {{ this.selectedSizeOptions.title}}&nbsp;<span *ngIf="this.selectedSizeOptions.glyph" ngClass="{{this.selectedSizeOptions.glyph}}"> </span></span>
+                              <span class="right-text" *ngIf="this.resourceString[selectedSizeOptions.title] == null"> {{ this.selectedSizeOptions.title}}<span *ngIf="this.selectedSizeOptions.glyph" ngClass="{{this.selectedSizeOptions.glyph}}"> </span></span>
                           </div>
                       </button>
 

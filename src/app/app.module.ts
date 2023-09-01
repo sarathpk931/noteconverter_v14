@@ -72,6 +72,8 @@ import {xrxSessionGetSessionInfo,xrxSessionParseGetSessionInfo}  from  '../asset
 import {xrxGetElementValue} from '../assets/Xrx/XRXXmlHandler';
 
 import * as _ from 'lodash';
+import { environment } from '../environments/environment';
+
 
 //Directives
 import { EditableFieldDirective } from './Directives/editable-file-name.directive';
@@ -234,3 +236,43 @@ export async function Session(url: string,timeout:number,async:boolean, ldap: st
       })
   };
   
+  var domain = extractDomainFromCurrentURL();
+  console.log(domain);
+if (domain === 'localhost') {
+  environment.production = false;
+  environment.wncAppAddress = 'https://wnc-web-dev.services.xerox.com';
+  environment.repoAddress = 'wncservice-test.services.xerox.com';
+  environment.wncAddress = 'https://wncservice-test.services.xerox.com';
+} else if (domain === 'wnc-web-dev.services.xerox.com' || domain === 'https://wnc-web-dev.services.xerox.com' ) {
+  environment.wncAppAddress = 'https://wnc-web-test.services.xerox.com';
+  environment.production = false;
+  environment.repoAddress = 'wncservice-test.services.xerox.com';
+  environment.wncAddress = 'https://wncservice-test.services.xerox.com';
+}
+ else if (domain === 'wnc-web-test.services.xerox.com' || domain === 'https://wnc-web-test.services.xerox.com') {
+  environment.wncAppAddress = 'https://wnc-web-test.services.xerox.com';
+  environment.production = false;
+  environment.repoAddress = 'wncservice-test.services.xerox.com';
+  environment.wncAddress = 'https://wncservice-test.services.xerox.com';
+}
+else if (domain === 'wnc-web-stage.services.xerox.com' || domain === 'https://wnc-web-stage.services.xerox.com') {
+  environment.wncAppAddress = 'https://wnc-web-stage.services.xerox.com';
+  environment.production = false;
+  environment.repoAddress = 'wncservice-stage.services.xerox.com';
+  environment.wncAddress = 'https://wncservice-stage.services.xerox.com';
+}
+else if (domain === 'wnc-web.services.xerox.com' || domain === 'https://wnc-web.services.xerox.com') {
+  environment.wncAppAddress = 'https://wnc-web.services.xerox.com';
+  environment.production = true;
+  environment.repoAddress = 'wncservice.services.xerox.com';
+  environment.wncAddress = 'https://wncservice.services.xerox.com';
+}
+function extractDomainFromCurrentURL() {
+  // Get the current URL from window.location.href
+  var currentURL = window.location.href;
+  // Create a temporary anchor element
+  var anchor = document.createElement('a');
+  anchor.href = currentURL;
+  // Extract and return the hostname (domain name)
+  return anchor.hostname;
+}
