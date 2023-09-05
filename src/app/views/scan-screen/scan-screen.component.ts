@@ -56,6 +56,7 @@ export class ScanScreenComponent implements OnInit{
  
   @ViewChild('button') button: ElementRef;
   @ViewChild('inputField') inputField: ElementRef;
+  @ViewChild('inputTextField') inputTextField: ElementRef;
   @HostListener('window:resize', ['$event'])
 
   winHeight: number;
@@ -177,6 +178,11 @@ export class ScanScreenComponent implements OnInit{
         }
       })
 
+    }
+
+    emailTextClick(event){
+      if(this.inputTextField.nativeElement.value!=null && this.inputTextField.nativeElement.value!="" && this.inputTextField.nativeElement.value!=undefined)
+        this.inputTextField.nativeElement.select();
     }
 
     onResize(event: any) {
