@@ -220,7 +220,7 @@ export class ScanScreenComponent implements OnInit{
       const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/; 
       if (email && !emailRegex.test(email)) { 
         return { invalidEmailFormat: true }; 
-      } return { invalidEmailFormat: false }; 
+      } return null; 
     }
     //email control blur event
     onEmailBlur(){
