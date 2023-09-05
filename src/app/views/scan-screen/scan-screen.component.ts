@@ -202,13 +202,16 @@ export class ScanScreenComponent implements OnInit{
       this.selectedTypeOptions = this.selectedType.options.find(item => item.isDefault === true);
       this.selectedSize = this.scanOptionService.getFileFormat(this.anySize);
       this.selectedSizeOptions = this.selectedSize.options.find(item => item.isDefault === true);
+      this.scanOptionService.selectedFileFormat.next(this.selectedFileFormatOptions);
+      this.scanOptionService.selectedType.next(this.selectedTypeOptions);
+      this.scanOptionService.selectedSize.next(this.selectedSizeOptions);
     }
 
     //form group creation
     createForm(){
         this.noteConvertorForm = this.formBuilder.group({
           email:['',[Validators.required,this.emailFormatValidator]],
-          fileName : ['']
+          fileName: [this.resFilename]
         },
       );
 
@@ -242,7 +245,7 @@ export class ScanScreenComponent implements OnInit{
     resetForm(){
       this.noteConvertorForm.patchValue({
         email:'',
-        fileName : ''
+        fileName: this.resFilename
       }); 
       this.fileName = this.resFilename;
       this.inputField.nativeElement.value = this.resFilename;
@@ -333,7 +336,22 @@ export class ScanScreenComponent implements OnInit{
         from : this.const_size
       });
        this.modalService.openModal(FeaturePopoverComponent,event_position, {x: event.clientX, y:event.clientY, showLeftArrow, showRightArrow, xForRightArrow});
+  }
+
+  onKeyDown(event: KeyboardEvent) {
+
+    const keyCode = event.keyCode || event.which;
+
+    if (keyCode === 13) { // 13 represents the Enter key code
+
+      event.preventDefault();
+
+      event.stopPropagation();
+
     }
+
+  }
+
 
     
 // scan functionalities 
@@ -409,7 +427,7 @@ Templatecallback_success() {
     fileFormat : this.selectedFileFormatOptions,
     size : this.selectedSizeOptions,
     type : this.selectedTypeOptions,
-    fileName : this.noteConvertorForm.controls["fileName"].value == '' ? this.resFilename : this.noteConvertorForm.controls["fileName"].value,//this.fileNameSpan.nativeElement.textContent
+    fileName : this.noteConvertorForm.controls["fileName"].value == null ? this.resFilename : this.noteConvertorForm.controls["fileName"].value,//this.fileNameSpan.nativeElement.textContent
     email :  this.noteConvertorForm.controls["email"].value
   }
   this.logger.trackTrace('Templatecallback_success() file name before:' + this.selectedNote.fileName);
