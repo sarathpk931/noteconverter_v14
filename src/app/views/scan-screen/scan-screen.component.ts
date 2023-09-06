@@ -125,6 +125,7 @@ export class ScanScreenComponent implements OnInit{
     private resourceStringService : ResourcestringService,
     private errorHandlerService : ErrorHandlerService,
     private elementRef: ElementRef,
+    private renderer: Renderer2
     ) {
       
       this.winHeight = window.innerHeight;
@@ -348,11 +349,18 @@ export class ScanScreenComponent implements OnInit{
 
       event.stopPropagation();
 
+      // Blur all input fields
+      this.blurInputFields();
     }
 
   }
 
-
+  blurInputFields() {
+    // Use the Renderer2 to trigger the blur event on the input fields
+    this.renderer.selectRootElement(this.inputField.nativeElement).blur();
+    this.renderer.selectRootElement(this.inputTextField.nativeElement).blur();
+    // Add more input fields if needed
+  }
     
 // scan functionalities 
 
