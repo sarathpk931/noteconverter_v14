@@ -179,12 +179,12 @@ export class ScanScreenComponent implements OnInit{
         }
       })
 
-    }
+  }
 
-    emailTextClick(event){
-      if(this.inputTextField.nativeElement.value!=null && this.inputTextField.nativeElement.value!="" && this.inputTextField.nativeElement.value!=undefined)
-        this.inputTextField.nativeElement.select();
-    }
+  emailTextClick(event) {
+    if (this.inputTextField.nativeElement.value != null && this.inputTextField.nativeElement.value != "" && this.inputTextField.nativeElement.value != undefined)
+      this.inputTextField.nativeElement.select();
+  }
 
     onResize(event: any) {
       this.winHeight = window.innerHeight;
@@ -243,7 +243,8 @@ export class ScanScreenComponent implements OnInit{
     }
 
     //when we click the reset button
-    resetForm(){
+  resetForm() {
+    this.noteConvertorForm.reset();
       this.noteConvertorForm.patchValue({
         email:'',
         fileName: this.resFilename
@@ -257,8 +258,8 @@ export class ScanScreenComponent implements OnInit{
     }
     
     //show privacy statement
-    showPrivacyStatement(){
-      this.modalService.openLargeModal(PrivacyPolicyComponent);
+  showPrivacyStatement(){
+    this.modalService.openLargeModal(PrivacyPolicyComponent);
     }
 
     openFileFormat(event: any){
@@ -311,32 +312,38 @@ export class ScanScreenComponent implements OnInit{
       this.modalService.openModal(FeaturePopoverComponent,event_position, {x: event.clientX, y:event.clientY, showLeftArrow, showRightArrow, xForRightArrow});
     }
 
-    openSize(event: any){
-      this.modalService.disableLinks();
-      let popupWidth =236;
-      let popupHeight=469;
-      this.midwidth=this.winWidth / 2;
-      this.midHeight=this.winHeight/2;
-      const popupTop = this.winHeight - event.clientY;
-      let event_position: DialogPosition;
-      let xForRightArrow:number;
-      let showLeftArrow = false;
-      let showRightArrow = false;
+  openSize(event: any) {
+    this.modalService.disableLinks();
+    let popupWidth = 236;
+    let popupHeight = 469;
+    this.midwidth = this.winWidth / 2;
+    this.midHeight = this.winHeight / 2;
+    //const popupTop = this.winHeight - event.clientY;
+    let popupTop = "";
+    let event_position: DialogPosition;
+    let xForRightArrow: number;
+    let showLeftArrow = false;
+    let showRightArrow = false;
+    if (this.winHeight > event.clientY) {
+      popupTop = (this.winHeight - event.clientY) / 2 + 'px'
+    } else {
+      popupTop = '0px'
+    }
 
-      if (event.clientX < this.midwidth) {
-        event_position = { left: event.clientX + 'px', top: (event.clientY - 325) + 'px'};
-        showLeftArrow = true;
-       }
-      else {
-        showRightArrow = true;
-        xForRightArrow = window.innerWidth - event.clientX;
-        event_position= { right: `${xForRightArrow}px`,  top: (event.clientY - 325) + 'px'};
-      }
-      let direction:string ='rtl'; // to be decided based on click position
-      this.modalService.setData({
-        from : this.const_size
-      });
-       this.modalService.openModal(FeaturePopoverComponent,event_position, {x: event.clientX, y:event.clientY, showLeftArrow, showRightArrow, xForRightArrow});
+    if (event.clientX < this.midwidth) {
+      event_position = { left: event.clientX + 'px', top: '5px', bottom: '5px' };
+      showLeftArrow = true;
+    }
+    else {
+      showRightArrow = true;
+      xForRightArrow = window.innerWidth - event.clientX;
+      event_position = { right: `${xForRightArrow}px`, top: '5px', bottom: '5px' };
+    }
+    let direction: string = 'rtl'; 
+    this.modalService.setData({
+      from: this.const_size
+    });
+    this.modalService.openModal(FeaturePopoverComponent, event_position, { x: event.clientX, y: event.clientY, showLeftArrow, showRightArrow, xForRightArrow });
   }
 
   onKeyDown(event: KeyboardEvent) {
@@ -344,23 +351,26 @@ export class ScanScreenComponent implements OnInit{
     const keyCode = event.keyCode || event.which;
 
     if (keyCode === 13) { // 13 represents the Enter key code
-
       event.preventDefault();
-
       event.stopPropagation();
 
       // Blur all input fields
       this.blurInputFields();
+
+      const activeElement = document.activeElement as HTMLInputElement | HTMLTextAreaElement;
+      if (activeElement) {
+        activeElement.blur();
+      }
     }
-
   }
 
-  blurInputFields() {
-    // Use the Renderer2 to trigger the blur event on the input fields
-    this.renderer.selectRootElement(this.inputField.nativeElement).blur();
-    this.renderer.selectRootElement(this.inputTextField.nativeElement).blur();
-    // Add more input fields if needed
-  }
+    blurInputFields() {
+
+      // Use the Renderer2 to trigger the blur event on the input fields
+      this.renderer.selectRootElement(this.inputField.nativeElement).blur();
+      this.renderer.selectRootElement(this.inputTextField.nativeElement).blur();
+
+    }
     
 // scan functionalities 
 
@@ -380,7 +390,7 @@ scan() {
   } else {
     this.logger.trackTrace("mainDeviceconfig() ELSE FOR if (regex.test(fileName))");
     const text = this.resourceString['SDE_CHARACTERS_CANNOT_BE'].replace('{0}', '\\ / : * ? " < > |');
-    this.errorHandlerService.showErrorAlert(text, '', null, null);
+    this.errorHandlerService.showErrorAlert(text, '', null, null); 
   }
 }
 

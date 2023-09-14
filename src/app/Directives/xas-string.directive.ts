@@ -33,7 +33,7 @@ export class XasStringDirective {
   }
 
   private replaceString():string{
-    let string = this.xasString;
+    let string = this.xasString;   
     return this.resourceString[string];
   }
 

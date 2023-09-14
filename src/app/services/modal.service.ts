@@ -54,7 +54,7 @@ export class ModalService {
     
     return this.dialog.open(ProgressAlertComponent, {
       data :{'title': title,'message':message},
-      height: '98%',
+      height: '100vh',
       width: '100vw',
       scrollStrategy: new NoopScrollStrategy()
     });
@@ -100,7 +100,7 @@ export class ModalService {
     this.removeArrow();
     return this.dialog.open(component, {
       data :{'title': title,'message':message},
-      height: '98%',
+      height: '100vh',
       width: '100vw',
       // position: {
       //   top: '',

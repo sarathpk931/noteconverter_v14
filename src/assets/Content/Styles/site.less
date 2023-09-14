@@ -1,4 +1,4 @@
-﻿@import (optional) 'theme.less';
+@import (optional) 'theme.less';
 @import (optional) 'colors.less';
 @import (optional) 'text.less';
 
@@ -256,15 +256,15 @@ input::-webkit-input-placeholder {
     width: 50px;
 }
 
-::-webkit-scrollbar-thumb {
+  ::-webkit-scrollbar-thumb {
     border: 5px solid rgba(0, 0, 0, 0);
     background-clip: padding-box;
     background-color: rgba(0, 0, 0, 0.50);
     box-shadow: none;
-    background-image:'';
+    background-image: @darkgray-texture !important;
     -webkit-border-radius: 10px;
     -webkit-box-shadow: none;
-}
+  }
 
 ::-webkit-scrollbar-button {
     border: none;
@@ -306,8 +306,8 @@ input::-webkit-input-placeholder {
 }
 
 .keepPlaceHolder::-webkit-input-placeholder {
-    transition: all 86400s, color 1ms;
-    -webkit-transition: all 86400s, color 1ms;
+  transition: all 86400s, color 1ms, opacity 0s;
+  -webkit-transition: all 86400s, color 1ms, opacity 0s;
 }
 
 .btn.btn-plain {
@@ -359,7 +359,7 @@ input::-webkit-input-placeholder {
     margin-left: -10px;
     margin-right: -8px;
     position: relative;
-    // top: 2px;
+    top: 2px;
 }
 
 .validation-error {

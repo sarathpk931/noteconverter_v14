@@ -29,11 +29,11 @@
  * - AppComponent: The root component that gets bootstrapped when the application starts.
  */
 import { HttpClientModule } from '@angular/common/http';
-import { APP_INITIALIZER, NgModule,ErrorHandler } from '@angular/core';
+import { APP_INITIALIZER, NgModule, ErrorHandler } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { ApplicationinsightsAngularpluginErrorService } from '@microsoft/applicationinsights-angularplugin-js';
-import { MatDialogModule,MatDialogRef } from '@angular/material/dialog';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -41,16 +41,16 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
 //services
-import {LogService} from '../app/services/log.service';
-import {StorageService} from '../app/services/storage.service';
-import {ScanOptionsService} from '../app/services/scan-options.service';
-import {ErrorHandlerService} from '../app/services/error-handler.service';
-import {JobService} from '../app//services/job.service';
-import {ApiService} from '../app/services/api.service';
-import {ConfigurationService} from '../app/services/configuration.service';
-import {ScanService} from './services/scan.service';
-import {ScanTemplateService} from './services/scan-template.service';
-import {ResourcestringService } from './services/resourcestring.service';
+import { LogService } from '../app/services/log.service';
+import { StorageService } from '../app/services/storage.service';
+import { ScanOptionsService } from '../app/services/scan-options.service';
+import { ErrorHandlerService } from '../app/services/error-handler.service';
+import { JobService } from '../app//services/job.service';
+import { ApiService } from '../app/services/api.service';
+import { ConfigurationService } from '../app/services/configuration.service';
+import { ScanService } from './services/scan.service';
+import { ScanTemplateService } from './services/scan-template.service';
+import { ResourcestringService } from './services/resourcestring.service';
 import { ModalService } from './services/modal.service';
 
 //components
@@ -67,24 +67,22 @@ import { TranslatePipe } from './filters/translate.pipe';
 
 //xerox javascript libraries
 import { xrxDeviceConfigGetDeviceInformation } from '../assets/Xrx/XRXDeviceConfig';
-import {xrxStringToDom} from '../assets/Xrx/XRXXmlHandler';
-import {xrxSessionGetSessionInfo,xrxSessionParseGetSessionInfo}  from  '../assets/Xrx/XRXSession';
-import {xrxGetElementValue} from '../assets/Xrx/XRXXmlHandler';
+import { xrxStringToDom } from '../assets/Xrx/XRXXmlHandler';
+import { xrxSessionGetSessionInfo, xrxSessionParseGetSessionInfo } from '../assets/Xrx/XRXSession';
+import { xrxGetElementValue } from '../assets/Xrx/XRXXmlHandler';
 
 import * as _ from 'lodash';
 import { environment } from '../environments/environment';
-
 
 //Directives
 import { EditableFieldDirective } from './Directives/editable-file-name.directive';
 import { NgScrollableDirective } from './Directives/ng-scrollable.directive';
 import { ActionBarDirective } from './Directives/action-bar.directive';
 import { TextFieldDirective } from './Directives/text-field.directive';
-import {XasStringDirective} from '../app/Directives/xas-string.directive';
+import { XasStringDirective } from '../app/Directives/xas-string.directive';
+import { XasPlaceholderDirective } from './Directives/xas-placeholder.directive';
 
 import { ScrollingModule } from '@angular/cdk/scrolling';
-import { BlurOnClickOutsideDirective } from './Directives/blur-on-click-outside.directive';
-import { XasStopEventDirective } from './Directives/xas-stop-event.directive';
 
 
 @NgModule({
@@ -102,8 +100,7 @@ import { XasStopEventDirective } from './Directives/xas-stop-event.directive';
     TextFieldDirective,
     XasStringDirective,
     EditableFieldDirective,
-    BlurOnClickOutsideDirective,
-    XasStopEventDirective,
+    XasPlaceholderDirective
   ],
   imports: [
     BrowserModule,
@@ -113,70 +110,72 @@ import { XasStopEventDirective } from './Directives/xas-stop-event.directive';
     MatDialogModule,
     FormsModule,
     ReactiveFormsModule,
-    ScrollingModule 
+    ScrollingModule
   ],
   providers: [
-     {
-    provide :APP_INITIALIZER,
-    useFactory:()=>  Device,
-    multi:true,
-  }, 
-  {
-    provide :APP_INITIALIZER,
-    useFactory:()=> Session,
-    multi:true,
-  }, /**/
-  {
-  provide: ErrorHandler,
-  useClass: ApplicationinsightsAngularpluginErrorService,
-  },  
-   
+    {
+      provide: APP_INITIALIZER,
+      useFactory: () => Device,
+      multi: true,
+    },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: () => Session,
+      multi: true,
+    }, /**/
+    {
+      provide: ErrorHandler,
+      useClass: ApplicationinsightsAngularpluginErrorService,
+    },
+
     TranslatePipe,
     AppComponent,
   ],
-  
+
   bootstrap: [AppComponent]
 })
 export class AppModule {
-  public static Generation:any;
-  public static model : string;
-  public static deviceId:string;
-  public static isThirdGenBrowser : boolean;
-  public static isVersalink : boolean;
-  public static isAltalink : boolean;
-  public static email : string;
- }
+  public static Generation: any;
+  public static model: string;
+  public static deviceId: string;
+  public static isThirdGenBrowser: boolean;
+  public static isVersalink: boolean;
+  public static isAltalink: boolean;
+  public static email: string;
+}
 
- //get logged in user information
-export async function Session(url: string,timeout:number,async:boolean, ldap: string): Promise<any> {
+//get logged in user information
+export async function Session(url: string, timeout: number, async: boolean, ldap: string): Promise<any> {
   return new Promise((resolve, reject) => {
-    function successCallbackSession (envelope: string, response: string) {
-      var data =xrxSessionParseGetSessionInfo(response);
-      
+    function successCallbackSession(envelope: string, response: string) {
+      var data = xrxSessionParseGetSessionInfo(response);
+
       var userEmail = "";
       if (data.firstChild !== null) {
         var userName = xrxGetElementValue(data.firstChild, "username");
- 
+
         if (userName !== null && userName.toLowerCase() !== 'guest')
           userEmail = xrxGetElementValue(data.firstChild, "from");
-          if(userEmail == null){
-            AppModule.email = ''
-            resolve('');
-          }
-          else{
-            const result ={
-          
-              email:userEmail
-            };
-            AppModule.email =  result.email.toString();//alert("AppModuule :"+ AppModule.email);
-            //alert('success :'+ result.email.toString());
-            resolve(result.email.toString());
-          }
+        if (userEmail == null) {
+          AppModule.email = ''
+          resolve('');
+        }
+        else {
+          const result = {
+
+            email: userEmail
+          };
+          AppModule.email = result.email.toString();//alert("AppModuule :"+ AppModule.email);
+          //alert('success :' + result.email.toString());
+          debugger;
+          resolve(result.email.toString());
+        }
       }
     };
-    function errorCallbackSession (result: any) {
-      result={
-        email:""
+    function errorCallbackSession(result: any) {
+      debugger;
+      result = {
+        email: ""
       };
       AppModule.email = '';
       reject(result);
@@ -189,60 +188,65 @@ export async function Session(url: string,timeout:number,async:boolean, ldap: st
       async,
       ldap
     );
-  });}
+  });
+}
 
-  //get device information
-  export async function Device(url: string, timeout: number , async: boolean): Promise<any> {
-    return new Promise((resolve, reject) => {
-    function successCallback (envelope: any, response: any)  {
-      
-     const doc = xrxStringToDom(response);
-     const info = doc.querySelector("devcfg\\:Information, Information");
-     const parser = new DOMParser();
-    const xmlDoc = parser.parseFromString(info.firstChild.data, 'text/xml');
-    const generation = Number(xmlDoc.getElementsByTagName('generation')[0].textContent);
-    AppModule.Generation = generation;
+//get device information
+export async function Device(url: string, timeout: number, async: boolean): Promise<any> {
+  return new Promise((resolve, reject) => {
+    function successCallback(envelope: any, response: any) {
 
-     const model = xmlDoc.getElementsByTagName('model')[0].textContent;
-     AppModule.model = model.toString();
-     const deviceId = xmlDoc.getElementsByTagName('serial')[0].textContent;
-     AppModule.deviceId = deviceId.toString();
-     const isVersalink = _.includes(model.toLowerCase(), 'versalink') || _.includes(model.toLowerCase(), 'primelink');
-     const isAltalink = _.includes(model.toLowerCase(), 'altalink');
-     const isThirdGenBrowser = _.includes(navigator.userAgent.toLowerCase(), "x3g_");
-     AppModule.isThirdGenBrowser = isThirdGenBrowser;
-     AppModule.isVersalink = isVersalink;
-     AppModule.isAltalink = isAltalink;
-     const result = {
+      const doc = xrxStringToDom(response);
+      const info = doc.querySelector("devcfg\\:Information, Information");
+      const parser = new DOMParser();
+      const xmlDoc = parser.parseFromString(info.firstChild.data, 'text/xml');
+      const generation = Number(xmlDoc.getElementsByTagName('generation')[0].textContent);
+      AppModule.Generation = generation;
+
+      const model = xmlDoc.getElementsByTagName('model')[0].textContent;
+      AppModule.model = model.toString();
+      const deviceId = xmlDoc.getElementsByTagName('serial')[0].textContent;
+      AppModule.deviceId = deviceId.toString(); 
+      const isVersalink = _.includes(model.toLowerCase(), 'versalink') || _.includes(model.toLowerCase(), 'primelink');
+      const isAltalink = _.includes(model.toLowerCase(), 'altalink');
+      const isThirdGenBrowser = _.includes(navigator.userAgent.toLowerCase(), "x3g_");
+      AppModule.isThirdGenBrowser = isThirdGenBrowser;
+      AppModule.isVersalink = isVersalink;
+      AppModule.isAltalink = isAltalink;
+      const result = {
         isThirdGenBrowser: isThirdGenBrowser,
         generation: generation,
         isVersalink: isVersalink,
         isAltalink: isAltalink,
         isEighthGen: generation < 9.0,
         model: model
-        };
-        
-        resolve(result);
       };
-        function errorCallback  (result: any)  {
-        reject(result);};
-        xrxDeviceConfigGetDeviceInformation(
-        url,
-        successCallback,
-        errorCallback,
-        timeout,
-        async
-        );
-      })
-  };
-  
-  var domain = extractDomainFromCurrentURL();
-  console.log(domain);
+
+      resolve(result);
+    };
+    function errorCallback(result: any) {
+      
+      reject(result);
+    };
+    xrxDeviceConfigGetDeviceInformation(
+      url,
+      successCallback,
+      errorCallback,
+      timeout,
+      async
+    );
+  })
+};
+
+var domain = extractDomainFromCurrentURL();
+console.log(domain);
+
 if (domain === 'localhost') {
   environment.production = false;
   environment.wncAppAddress = 'https://wnc-web-dev.services.xerox.com';
   environment.repoAddress = 'wncservice-test.services.xerox.com';
   environment.wncAddress = 'https://wncservice-test.services.xerox.com';
+
 } else if (domain === 'wnc-web-dev.services.xerox.com' || domain === 'https://wnc-web-dev.services.xerox.com' ) {
   environment.wncAppAddress = 'https://wnc-web-test.services.xerox.com';
   environment.production = false;
@@ -267,12 +271,15 @@ else if (domain === 'wnc-web.services.xerox.com' || domain === 'https://wnc-web.
   environment.repoAddress = 'wncservice.services.xerox.com';
   environment.wncAddress = 'https://wncservice.services.xerox.com';
 }
+
 function extractDomainFromCurrentURL() {
   // Get the current URL from window.location.href
   var currentURL = window.location.href;
+
   // Create a temporary anchor element
   var anchor = document.createElement('a');
   anchor.href = currentURL;
+
   // Extract and return the hostname (domain name)
   return anchor.hostname;
 }

@@ -35,57 +35,69 @@ import { ProgressAlertComponent } from '../progress-alert/progress-alert.compone
 })
 export class PrivacyPolicyComponent implements OnInit {
 
-  privacyPolicy : string = '';
+  privacyPolicy: string = '';
   showVersion: string = '';
   env = environment;
-  resourceString : resourceString[];
+  resourceString: resourceString[];
+
 
   constructor(
     private http: HttpClient,
-    private modalService : ModalService,
-    public modalRef : MatDialogRef<any>,
-    private resourceStringService : ResourcestringService,
-    private  logService: LogService,
+    private modalService: ModalService,
+    public modalRef: MatDialogRef<any>,
+    private resourceStringService: ResourcestringService,
+    private logService: LogService,
     private changeDetectorRef: ChangeDetectorRef,
-    private sanitizer: DomSanitizer
-    ){}
+    private progressAlert: MatDialogRef<any>,
+
+  ) {
+
+  }
 
   ngOnInit(): void {
-    
-    const progress =  this.modalService.openModalWithoutClose(ProgressAlertComponent,'','');
-    const url = this.env.privacyPolicyUrl;
-       
-    this.http.get(url, {responseType:'text'})
-      .subscribe({
-          next:(response) => {
-          this.privacyPolicy = (response as string);
-          //this.showVersion = this.resourceString["VERSION"];
-          progress.close();
-        },
-        error:(error) => {
-          this.logService.trackTrace("inside privacy policy error"+error);
-          this.showVersion = 'v1.0'; //this.strings.VERSION
-          progress.close();
-          //this.modalService.showGeneralError(error);
-        }
-    });
+    setTimeout(() => {
+      this.progressAlert = this.modalService.openModalWithoutClose(ProgressAlertComponent, '', '');
+      const url = this.env.privacyPolicyUrl;
 
-    
-    
-    }
-    
-    ngAfterViewInit(): void {
-      this.changeDetectorRef.detectChanges(); // Trigger change detection
-  
-      setTimeout(() => {
-        this.modalService.emitViewVisible(); // Call the emitViewVisible method after a delay
-      });
-    }
-  
-    closeModal():void{
-      this.modalService.closeModal(this.modalRef);
-      document.querySelector('.cdk-overlay-backdrop-showing').classList.add('cdk-overlay-backdrop-hide');
-    }
+      this.http.get(url,
+        { responseType: 'text' })
+        .subscribe({
+          next: (response) => {
+            this.privacyPolicy = (response as string);
+            //this.showVersion = this.resourceString["VERSION"];
+
+            this.progressAlert.close();
+          },
+          error: (error) => {
+            this.logService.trackTrace("inside privacy policy error" + error);
+            this.showVersion = 'v1.0'; //this.strings.VERSION
+            this.progressAlert.close();
+            //this.modalService.showGeneralError(error);
+          }
+        });
+    }, 500);
+
+  }
+
+  ngAfterViewInit(): void {
+    this.changeDetectorRef.detectChanges(); // Trigger change detection
+
+    setTimeout(() => {
+      this.modalService.emitViewVisible(); // Call the emitViewVisible method after a delay
+    });
+  }
+
+  closeModal(): void {
+    this.modalRef.close();
+    this.progressAlert.close();
+    this.modalService.closeModal(this.modalRef);
+    //document.querySelector('.cdk-overlay-backdrop-showing').classList.add('cdk-overlay-backdrop-hide');
+
+    //document.querySelector('.cdk-overlay-container').classList.remove('cdk-overlay-container');
+
+  }
+
+
 }
 
   

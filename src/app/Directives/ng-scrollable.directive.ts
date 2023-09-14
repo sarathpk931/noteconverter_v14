@@ -66,7 +66,7 @@ declare const IScroll: any;
       this.isThirdGenBrowser=AppModule.isThirdGenBrowser;
       this.generation=AppModule.Generation;
       
-      if (!AppModule.isThirdGenBrowser && AppModule.Generation >= 9.0){
+      if (!AppModule.isThirdGenBrowser && AppModule.Generation >= 7.0){
         this.link(element);
       } 
       else

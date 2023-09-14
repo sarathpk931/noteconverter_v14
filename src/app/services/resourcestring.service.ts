@@ -24,14 +24,14 @@ export class ResourcestringService {
 loadResources = async () => { 
     try { 
         var regex = /(\w+)\-?/g; 
-        const locale = regex.exec(window.navigator.language || window.navigator.language)[1] || 'en-US'; 
+      const locale = regex.exec(window.navigator.language || window.navigator.language)[1] || 'en-US';
         const result: any = await this.http.get(this.env.wncAppAddress + `/api/strings?lang=${encodeURIComponent(locale)}`).toPromise(); 
         this.objStrings = result.strings;
         this.strings =result.strings;
         
         return this.strings;
       } 
-        catch (error) { 
+    catch (error) {
           console.error(error);
           throw error
         } 
