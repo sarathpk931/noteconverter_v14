@@ -371,7 +371,7 @@ export class ScanService {
             this.logService.trackTrace('else if ProcessingStopped NextOriginalWait');
             setTimeout(()=>{
               this.beginCheckLoop(jobid);
-            },2000
+            },5000
             );
           }
           else if (!(jobState === 'Completed' && jobStateReason === "None") && (jobState === 'Completed' || jobState === 'ProcessingStopped')) {
@@ -408,7 +408,7 @@ export class ScanService {
             setTimeout(()=>{
               this.logService.trackTrace("inside checkloop -> else case ->"+jobid);
               this.beginCheckLoop(jobid);
-            },2000
+            },500
             );
       
           }

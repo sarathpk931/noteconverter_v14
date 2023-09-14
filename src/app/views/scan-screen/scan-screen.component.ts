@@ -40,10 +40,6 @@ import {xrxTemplateGetInterfaceVersion} from '../../../assets/Xrx/XRXTemplate';
 import {xrxDeviceConfigGetInterfaceVersion} from '../../../assets/Xrx/XRXDeviceConfig';
 
 import {AppModule} from '../../app.module';
-import { ScrollingModule  } from '@angular/cdk/scrolling';
-import { EditableFieldDirective } from  '../../Directives/editable-file-name.directive';
-import {BasicAlertComponent} from '..//basic-alert/basic-alert.component';
-
 
 
 @Component({

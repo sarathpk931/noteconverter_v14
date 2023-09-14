@@ -98,7 +98,12 @@ export class ModalService {
   public openModalWithoutClose(component : any,title: string,message : string)
   {
     this.removeArrow();
-    this.dialog.closeAll();
+    
+     // Check if title is null or undefined and replace with an empty string if needed
+    title = title !== null && title !== undefined ? title : '';
+     // Check if message is null or undefined and replace with an empty string if needed
+    message = message !== null && message !== undefined ? message : '';
+    
     return this.dialog.open(component, {
       data :{'title': title,'message':message},
       height: '100vh',
