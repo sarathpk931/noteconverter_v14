@@ -185,7 +185,7 @@ export class ScanService {
       function finish (callId: any, response: any) {
         this.logService.trackTrace('putTemplate => successCallback');
         this.logService.trackTrace(`scanService => putTemplate => callId:${callId} response:${response}`);
-        this.finishPutTemplate(callId, response,printerUrl,3000);
+        this.finishPutTemplate(callId, response,printerUrl,500);
         const result={};
         resolve (result);
       };
@@ -201,7 +201,7 @@ export class ScanService {
           tStr,
           finish.bind(this),
           fail.bind(this),
-          5000
+          500
         );
       });
     }
@@ -299,7 +299,7 @@ export class ScanService {
         if(this.isVersaLink){
           this.broadcastJobState('jobProgress', 'Exit');
         }
-      
+     
         if (jobState === 'Completed' && jobStateReason === 'JobCompletedSuccessfully') {
           this.modalService.closeAllModals();
       
