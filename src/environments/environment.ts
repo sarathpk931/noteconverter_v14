@@ -7,7 +7,7 @@ export const environment = {
   apiUrl:'http://127.0.0.1',
   wncAddress : 'https://wncservice-test.services.xerox.com',
   repoAddress : 'wncservice-test.services.xerox.com',
-  wncAppAddress: 'http://localhost:5179',//'https://wnc-web-test.services.xerox.com',
+  wncAppAddress: 'https://wnc-web-test.services.xerox.com',//'http://localhost:5179',//
   privacyPolicyUrl : 'https://appgallery.services.xerox.com/api/apps/template-privacy-policy',
   deviceUrl : 'http://localhost',
   instrumentationKey: 'b6a8b481-1fb8-4509-86f7-d618fc0287e9',
