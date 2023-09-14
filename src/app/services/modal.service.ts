@@ -98,6 +98,7 @@ export class ModalService {
   public openModalWithoutClose(component : any,title: string,message : string)
   {
     this.removeArrow();
+    this.dialog.closeAll();
     return this.dialog.open(component, {
       data :{'title': title,'message':message},
       height: '100vh',

@@ -255,10 +255,7 @@ export class ScanScreenComponent implements OnInit{
       this.button.nativeElement.innerHTML = this.btnGlyph + this.formatfilename(this.resFilename,this.fileextension,this.resfilenametemp);
       this.scanOptionService.isPlaceholderVisible = true;
       this.getDefaultValues();
-      //this.errorHandlerService.wncWasReset();
-          const title = 'SDE_DOCUMENT_SUCCESSFULLY_SCANNED'; 
-          const msg = 'SDE_WILL_RECEIVE_EMAIL2';
-          this.modalService.openModalWithTitle(BasicAlertComponent,title,msg);
+      this.errorHandlerService.wncWasReset();
     }
     
     //show privacy statement
