@@ -199,11 +199,13 @@ export class ModalService {
     this.dialog.openDialogs.pop();
     return  this.dialog.open(component, {
       data :{'title': title,'message':message},
-      position: {
+      height: '100vh',
+      width: '100vw',
+      /* position: {
         top: '',
         left: 'calc(50% - 512px)',
         
-    },
+    }, */
     scrollStrategy: new NoopScrollStrategy()
     });
 
