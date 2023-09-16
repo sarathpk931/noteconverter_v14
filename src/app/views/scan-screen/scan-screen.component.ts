@@ -40,7 +40,11 @@ import {xrxTemplateGetInterfaceVersion} from '../../../assets/Xrx/XRXTemplate';
 import {xrxDeviceConfigGetInterfaceVersion} from '../../../assets/Xrx/XRXDeviceConfig';
 
 import {AppModule} from '../../app.module';
+import { ScrollingModule  } from '@angular/cdk/scrolling';
+import { EditableFieldDirective } from  '../../Directives/editable-file-name.directive';
 
+
+declare function keyboardClose() :any;
 
 @Component({
   selector: 'app-scan-screen',
@@ -353,7 +357,7 @@ export class ScanScreenComponent implements OnInit{
 
       // Blur all input fields
       this.blurInputFields();
-
+      keyboardClose(); 
       const activeElement = document.activeElement as HTMLInputElement | HTMLTextAreaElement;
       if (activeElement) {
         activeElement.blur();

@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError ,Subject} from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { MatDialogRef } from '@angular/material/dialog';
 
 import { ScanOptionsService } from '../../app/services/scan-options.service';
 import { JobService } from './job.service';
@@ -40,7 +41,7 @@ export class ScanService {
   
   isScanning: boolean = false;
   isComplete: boolean = false;
-  progress : any;
+  progress: MatDialogRef<any>;
 
   env = environment;
   scanTemplate : scanTemplate;
@@ -137,7 +138,8 @@ export class ScanService {
 
 
 
-    public scan(model): Promise<void> {
+  public scan(model): Promise<void> {
+      this.progress = this.modalService.showProgressAlert(this.resourceString['SDE_SCANNING1'], '');
       this.logService.trackTrace('service.scan');
       if (this.isScanning) {
         this.logService.trackTrace('service.scan -> isScanning : Please wait!!!!');
@@ -149,7 +151,7 @@ export class ScanService {
 
       model.jobid = this.jobid;
       this.scanTemplate = this.scanTemplateService.scanTemplate(model);
-      this.progress = this.modalService.showProgressAlert(this.resourceString['SDE_SCANNING1'],'');
+      
   
       return this.jobService.registerJob(model).then((result)=>{      
      
@@ -299,7 +301,7 @@ export class ScanService {
         if(this.isVersaLink){
           this.broadcastJobState('jobProgress', 'Exit');
         }
-     
+      
         if (jobState === 'Completed' && jobStateReason === 'JobCompletedSuccessfully') {
           this.modalService.closeAllModals();
       
@@ -371,7 +373,7 @@ export class ScanService {
             this.logService.trackTrace('else if ProcessingStopped NextOriginalWait');
             setTimeout(()=>{
               this.beginCheckLoop(jobid);
-            },5000
+            },2000
             );
           }
           else if (!(jobState === 'Completed' && jobStateReason === "None") && (jobState === 'Completed' || jobState === 'ProcessingStopped')) {

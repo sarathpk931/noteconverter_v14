@@ -51,14 +51,13 @@ export class ModalService {
   showProgressAlert(title: string, message : string):MatDialogRef<ProgressAlertComponent>{
     this.dialog.closeAll();
     this.removeArrow();
-     // Check if title is null or undefined and replace with an empty string if needed
-     title = title !== null && title !== undefined ? title : '';
-     // Check if message is null or undefined and replace with an empty string if needed
+
+    // Check if title is null or undefined and replace with an empty string if needed
+    title = title !== null && title !== undefined ? title : '';
+    // Check if message is null or undefined and replace with an empty string if needed
     message = message !== null && message !== undefined ? message : '';
 
     return this.dialog.open(ProgressAlertComponent, {
-
-      
       data :{'title': title,'message':message},
       height: '100vh',
       width: '100vw',
@@ -104,12 +103,12 @@ export class ModalService {
   public openModalWithoutClose(component : any,title: string,message : string)
   {
     this.removeArrow();
-    
-     // Check if title is null or undefined and replace with an empty string if needed
+
+    // Check if title is null or undefined and replace with an empty string if needed
     title = title !== null && title !== undefined ? title : '';
-     // Check if message is null or undefined and replace with an empty string if needed
+    // Check if message is null or undefined and replace with an empty string if needed
     message = message !== null && message !== undefined ? message : '';
-    
+
     return this.dialog.open(component, {
       data :{'title': title,'message':message},
       height: '100vh',
@@ -208,9 +207,10 @@ export class ModalService {
   public openModalWithTitle(component : any,title: string,message : string){
     this.removeArrow();
     this.dialog.closeAll();
-     // Check if title is null or undefined and replace with an empty string if needed
-     title = title !== null && title !== undefined ? title : '';
-     // Check if message is null or undefined and replace with an empty string if needed
+
+    // Check if title is null or undefined and replace with an empty string if needed
+    title = title !== null && title !== undefined ? title : '';
+    // Check if message is null or undefined and replace with an empty string if needed
     message = message !== null && message !== undefined ? message : '';
 
     this.dialog.openDialogs.pop();
@@ -218,11 +218,6 @@ export class ModalService {
       data :{'title': title,'message':message},
       height: '100vh',
       width: '100vw',
-      /* position: {
-        top: '',
-        left: 'calc(50% - 512px)',
-        
-    }, */
     scrollStrategy: new NoopScrollStrategy()
     });
 
@@ -231,10 +226,11 @@ export class ModalService {
 
   public showAlert(component : any,title: string,message : string)
   {
-     // Check if title is null or undefined and replace with an empty string if needed
-     title = title !== null && title !== undefined ? title : '';
-     // Check if message is null or undefined and replace with an empty string if needed
+    // Check if title is null or undefined and replace with an empty string if needed
+    title = title !== null && title !== undefined ? title : '';
+    // Check if message is null or undefined and replace with an empty string if needed
     message = message !== null && message !== undefined ? message : '';
+
     this.removeArrow();
      this.dialog.open(component, {
       data :{'title': title,'message':message},

@@ -122,7 +122,7 @@ export class ScanOptionsService {
       title:'A4',
       glyph:'xrx-portrait'
     },{
-      value: 'A4_Portrait',
+      value: 'A4_Landscape',
       title:'A4',
       glyph:'xrx-landscape'
     },
@@ -293,11 +293,10 @@ export class ScanOptionsService {
       values.searchableText = 'SEARCHABLE_IMAGE';
 
       // To fix bug where the popover config menus do not appear (only dim the screen) when selecting non-latin-char-based languages.
-      if(selectedNote.fileName != this.fileName)
-      {
+      if (selectedNote.fileName != this.fileName) {
         values.fileName = window.btoa(unescape(encodeURIComponent(selectedNote.fileName)));
       }
-      else{
+      else {
         values.fileName = window.btoa(unescape(encodeURIComponent(this.fileName)));
       }
       
