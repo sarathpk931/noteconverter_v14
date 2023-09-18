@@ -224,7 +224,7 @@ export function xrxTemplatePutTemplate( url, templateName, template, callback_su
     if((url == null) || (url == ""))
         url = "http://127.0.0.1";
 	var sendUrl = url + XRX_TEMPLATE_PATH;
-	var sendReq = xrxTemplatePutTemplateRequest( templateName, template, credentials );//alert("sendReq"+sendUrl);
+	var sendReq = xrxTemplatePutTemplateRequest( templateName, template, credentials );
     xrxCallWebservice( sendUrl, sendReq, callback_success, callback_failure, timeout );
 } 
 

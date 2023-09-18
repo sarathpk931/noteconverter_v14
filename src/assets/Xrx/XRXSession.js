@@ -150,8 +150,8 @@ export function xrxSessionGetSessionInfo( url, callback_success, callback_failur
 {
     if((url == null) || (url == ""))
         url = "http://127.0.0.1";
-	var sendUrl = url + XRX_SESSION_PATH;//alert("Send Url"+sendUrl);
-	var sendReq = xrxSessionGetSessionInfoRequest(ldap);//alert("Send req :"+ sendReq);
+	var sendUrl = url + XRX_SESSION_PATH;
+	var sendReq = xrxSessionGetSessionInfoRequest(ldap);
     return xrxCallWebservice( sendUrl, sendReq, callback_success, callback_failure, timeout, null, null, null, async );
 } 
 
@@ -162,7 +162,6 @@ export function xrxSessionGetSessionInfo( url, callback_success, callback_failur
 */
 export function xrxSessionGetSessionInfoRequest(LDAP)
 {
-	//alert("xrxSessionGetSessionInfoRequest :"+LDAP);
 	var ldapAttributeNameList = '',
 	ldapAttribues = '',
 	request;
@@ -179,7 +178,7 @@ export function xrxSessionGetSessionInfoRequest(LDAP)
 	// create request
 		request = XRX_SESSION_SOAPSTART + xrxCreateTag( 'GetSessionInformationRequest', XRX_SESSION_NAMESPACE, ldapAttributeNameList) + XRX_SOAPEND;
 		// return request
-		//alert("Request :"+ request);
+		
 		return request;
 }
 
@@ -191,7 +190,7 @@ export function xrxSessionGetSessionInfoRequest(LDAP)
 */
 export function xrxSessionParseSessionPayload( response )
 {
-	//alert("xrxSessionParseSessionPayload");
+	
 	return xrxGetElementValue( response, "Information" );
 }
 
@@ -203,10 +202,10 @@ export function xrxSessionParseSessionPayload( response )
 */
 export function xrxSessionParseGetSessionInfo( response )
 {
-	var data = xrxSessionParseSessionPayload( xrxStringToDom( response ) );//alert("result of xrxSessionParseSessionPayload :"+data);
+	var data = xrxSessionParseSessionPayload( xrxStringToDom( response ) );
 	if(data != null) 
 	    data = xrxStringToDom( data );
-		//alert("after :"+data);
+	
 	return data;
 }
 

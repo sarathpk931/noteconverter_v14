@@ -143,7 +143,7 @@ export var XRX_XML_TYPE_BOOLEAN = 'xsi:type="xsd:boolean"';
 */
 export function xrxCallWebservice( url, envelope, callback_success, callback_failure, timeout, headers, username, password, async )
 {
-	//alert("inside xrxCallWebservice" + url);
+	
 	return xrxCallAjax( url, envelope, "POST", ((headers != undefined)?headers:null), callback_success, callback_failure, timeout, username, password, async );
 }
 
@@ -167,7 +167,7 @@ export function xrxCallWebservice( url, envelope, callback_success, callback_fai
 */
 export function xrxCallAjax( url, envelope, type, headers, callback_success, callback_failure, timeout, username, password, async )
 {
-	//alert("xrxCallAjax");
+	
 	// Ajax Request Object
 	var xrxXmlhttp = new XMLHttpRequest();
 	
@@ -179,7 +179,7 @@ export function xrxCallAjax( url, envelope, type, headers, callback_success, cal
 	
 	// Storage for Failure Callback Function Address
 	var xrxAjaxFailureCallback = null;
-	//alert("xrxCallAjax " + url);
+
 	if(async == undefined)
 	    async = true;
 
@@ -190,18 +190,18 @@ export function xrxCallAjax( url, envelope, type, headers, callback_success, cal
 	try
 	{
 	    if((username == undefined) || (password == undefined) || (username == null) || (password == null)) {
-			//alert("inside username ==''");
+			
 			xrxXmlhttp.open( type, url, async );
 		}
 	    else {
-			//alert("inside username else");
+			
 	        xrxXmlhttp.open( type, url, async, username, password );
 			xrxXmlhttp.withCredentials = true;
 		}
 	}
 	catch(exc)
 	{
-		//alert("Error :"+exc);
+		
         var errString = "";
         var uaString = navigator.userAgent;
         if(!async && (uaString != undefined) && (uaString != null) && ((uaString = uaString.toLowerCase()).indexOf( "galio" ) >= 0))
@@ -211,25 +211,24 @@ export function xrxCallAjax( url, envelope, type, headers, callback_success, cal
 	    xrxCallCallback( xrxAjaxSuccessCallback, xrxAjaxFailureCallback, xrxEnvelope, 0, errString );
 	    return errString;
 
-		alert(errString);
 	}
 	if(headers != null)
 	{
-		//alert("headers :"+headers);
+	
 		for(var i = 0;i < headers.length;++i)
 		{
 			xrxXmlhttp.setRequestHeader( headers[i][0], headers[i][1] );
 		}
 	} else
 	{
-		//alert("headers else case:");
+		
 	    xrxXmlhttp.setRequestHeader("SOAPAction", '""');
 	    xrxXmlhttp.setRequestHeader( "Content-Type", "text/xml" );
 	}
 	
 	if(async)
 	{
-		//alert("async :"+async);
+		
 		var xrxTimeout = (timeout == undefined || timeout == null) ? 0 : timeout;
 		xrxXmlhttp.timeout = xrxTimeout*1000;
 		xrxXmlhttp.ontimeout = function(e) {
@@ -238,30 +237,29 @@ export function xrxCallAjax( url, envelope, type, headers, callback_success, cal
 				xrxAjaxFailureCallback( xrxEnvelope, msg, -99 );
 			}
 		}
-		//alert("Time out :"+xrxTimeout);
+		
 		// response function
 	    xrxXmlhttp.onreadystatechange = function() 
 	    {
-			//alert("Inside readystate :"+xrxXmlhttp);
+			
 		    if((xrxXmlhttp != null) && (xrxXmlhttp.readyState == 4))
 		    {
 			    try
 			    {
-					//alert("Inside xrxXmlhttp != null");
+					
 					xrxCallCallback( xrxAjaxSuccessCallback, xrxAjaxFailureCallback, xrxEnvelope, xrxXmlhttp.status, xrxXmlhttp.responseText );
 			    }
 			    catch( e )
 			    {
-					alert("Async true :"+e.message.toString());
 				    xrxAjaxFailureCallback( xrxEnvelope, "<comm_error>" + e.toString() + "</comm_error>", 0 );
 			    }
 		    }
 	    }
-		//alert("before send :"+xrxEnvelope);
+		
 	    xrxXmlhttp.send( xrxEnvelope );
 	} else
 	{
-		//alert("async else:");
+		
 	    try
 	    {
 	        xrxXmlhttp.send( xrxEnvelope );
@@ -269,10 +267,10 @@ export function xrxCallAjax( url, envelope, type, headers, callback_success, cal
 	    }
 	    catch( e )
 	    {
-			//alert("Error "+e.message);
+			
 	        return "FAILURE: comm_error " + (((e != null) && (e.message != null))? e.message : "Exception" );
 	    }
-		//alert("http status :"+ xrxXmlhttp.status);
+		
         return ((xrxXmlhttp.status == 200) ? "" : "FAILURE: " + xrxXmlhttp.status + " - ") + xrxXmlhttp.responseText;
     }
     return "";
@@ -294,15 +292,13 @@ export function xrxCallCallback( xrxAjaxSuccessCallback, xrxAjaxFailureCallback,
 
     if((response == undefined) || (response == null))
         response = "";
-		//alert("Inside xrxCallCallback");
-		//alert("xrxAjaxSuccessCallback"+ xrxAjaxSuccessCallback);
-		//alert("Status :"+status);
+		
     if(status != 200) {
 		if(xrxAjaxFailureCallback != null) {
 			xrxAjaxFailureCallback( xrxEnvelope, response, status );   
 		} 
 	} else {
-		//alert("Inside else case of status != 200");
+	
 		if(xrxAjaxSuccessCallback != null) {
 			xrxAjaxSuccessCallback( xrxEnvelope, response );
 		}	

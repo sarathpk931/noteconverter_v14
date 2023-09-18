@@ -50,7 +50,7 @@ export function xrxScanV2GetInterfaceVersion( url, callback_success, callback_fa
 {
     if((url == null) || (url == ""))
         url = "http://127.0.0.1";
-    var sendUrl = url + XRX_SCANV2_PATH;//alert(sendUrl);
+    var sendUrl = url + XRX_SCANV2_PATH;
     var sendReq = xrxScanV2GetInterfaceVersionRequest();
 	return xrxCallWebservice( sendUrl, sendReq, callback_success, callback_failure, timeout, null, null, null, async );
 }
@@ -62,7 +62,7 @@ export function xrxScanV2GetInterfaceVersion( url, callback_success, callback_fa
 */
 export function xrxScanV2GetInterfaceVersionRequest()
 {
-	//alert("inside xrxScanV2GetInterfaceVersionRequest");
+	
 	return	XRX_SOAPSTART 
 			+ xrxCreateTag( 'GetInterfaceVersionRequest', XRX_SCANV2_NAMESPACE, '' ) 
 			+ XRX_SOAPEND;
